@@ -1,0 +1,4638 @@
+*wheel.txt*		File Group Manager for Vim and Neovim
+
+==============================================================================
+CONTENTS			*wheel*
+
+Introduction			|wheel-introduction|
+Step by step			|wheel-step-by-step|
+Workflow			|wheel-workflow|
+Straightforward functions	|wheel-straightforward-functions|
+Prompting functions		|wheel-prompting-functions|
+Dedicated buffers		|wheel-dedicated-buffers|
+Commands			|wheel-commands|
+Functions			|wheel-functions|
+Configuration			|wheel-configuration|
+Autocommands			|wheel-autocommands|
+Mappings			|wheel-mappings|
+Examples			|wheel-examples|
+Files				|wheel-files|
+
+==============================================================================
+INTRODUCTION						*wheel-introduction*
+
+What is it ?			|wheel-introduction-what|
+File groups			|wheel-introduction-file-groups|
+Features			|wheel-introduction-features|
+History				|wheel-introduction-history|
+Prerequisites			|wheel-introduction-prerequisites|
+
+------------------------------------------------------------------------------
+WHAT IS IT					*wheel-introduction-what*
+
+Wheel is a :
+
+- file group manager
+- navigation plugin
+- refactoring tool
+
+for Vim and Neovim.
+
+Our favorite editor has already plenty of nice navigation functions. Wheel
+enhances their interface by using :
+
+- intuitive completion with multi-pattern support for prompting functions
+- dedicated buffers, in which you can filter and select elements, besides using
+  the full power of your editor
+- a meta-command with subcommands, actions and completion
+- edit modes, that allow you to reflect your changes in a dedicated buffer to
+  wheel elements, or into file(s)
+
+All is written in lightweight, classical Vimscript.
+
+------------------------------------------------------------------------------
+FILE GROUPS				*wheel-introduction-file-groups*
+
+Wheel let you organize your files by creating as many file groups as
+you need, add the files you want to it and quickly navigate between :
+
+- files of the same group
+- file groups
+
+Note that :
+
+- a location contains a name, a filename, as well as a line & column number
+- a file group, in fact a location group, is called a circle
+- a set of file groups is called a torus (a circle of circles)
+- the list of toruses is called the wheel
+
+Why do you need three levels of grouping ?~
+
+At first glance, managing groups with circles in a torus seems to
+be sufficient. But with time, the torus grows big, and a third level
+helps you to organize your files by groups and categories:
+
+  - the wheel contains all the toruses
+  - each torus contains a category of files, e.g.:
+    + configuration, development, publication
+  - each circle contains a project, e.g.:
+    + kitty or vifm circles in configuration torus
+    + shell or vimscript in development torus
+    + tea or art in publication torus
+
+You can also organize a torus in subprojects. For instance, in the wheel
+torus, I have the following groups :
+
+  - plugin/ dir files
+  - autoload/ dir files
+  - doc files
+  - wiki files
+  - test files
+
+A wheel that follows you~
+    ~
+Wheel is designed to follow your workflow : you only add the files
+you want, where you want. For instance, if you have a `organize` group
+with agenda & todo files, you can quickly alternate them, or display
+them in two windows. Then, if you suddenly got an idea to tune vim,
+you switch to the `vim` group with your favorites configuration files in
+it. Same process, to cycle, alternate or display the files. Over time,
+your groups will grow and adapt to your style.
+
+------------------------------------------------------------------------------
+FEATURES				*wheel-introduction-features*
+
+- add
+  + files from anywhere in the filesystem
+  + a file in more than one group
+  + file:line-1 and file:line-2 in the same group
+- may be saved in wheel file (recommended)
+- on demand loading of files
+  + no slowdown of (neo)vim start
+- easy navigation
+  + switch to matching tab & window if available
+  + next / previous location, circle or torus
+  + single or multi-pattern completion in prompting functions
+  + choose file, group or category in dedicated buffer
+    * filter candidates
+    * selection tools
+    * preview
+    * folds matching wheel tree structure
+    * context menus
+  + auto |:lcd| to project root of current file
+  + history of wheel files
+    * anywhere
+    * in same group
+    * in same category
+  + signs displayed at wheel locations
+- search files
+  + using locate
+  + using find
+  + MRU files not found in wheel
+  + opened buffers
+  + visible buffers in tabs & windows
+- search inside files
+  + grep on group files
+    * navigate
+    * edit mode : edit and propagate changes by writing the dedicated buffer
+  + outline
+    * folds headers in group files (based on fold markers)
+    * markdown headers
+    * org mode headers
+  + tags
+  + markers
+  + jumps & changes lists
+- narrow
+  + current file
+  + all circle file with a pattern
+- yank ring using TextYankPost event
+  + paste before or after, linewise or characterwise
+  + switch register ring
+- reorganizing
+  + wheel elements
+  + tabs & windows
+- undo list
+  + diff between last & chosen state
+- command output in buffer
+  + :ex or !shell command
+  + async shell command
+  + result can be filtered, as usual
+- dedicated buffers ring to save your searches
+  + layer ring in each dedicated buffer
+- batch operations
+- autogroup files by extension or directory
+- save tabs & windows in minimal session file
+- display files
+  + split levels : torus, circle, location
+  + split
+    * vertical, golden vertical
+    * horizontal, golden horizontal
+    * main left, golden left
+    * main top, golden top
+    * grid
+  + mix of above
+    * circles on tabs, locations on split
+    * toruses on tabs, circles on split
+
+------------------------------------------------------------------------------
+HISTORY						*wheel-introduction-history*
+
+This project is inspired by :
+
+- torus : https://github.com/chimay/torus, a similar plugin for Emacs,
+  itself inspired by MTorus : https://www.emacswiki.org/emacs/MTorus
+
+- ctrlspace : https://github.com/vim-ctrlspace/vim-ctrlspace, a similar
+  plugin for Vim
+
+- unite : https://github.com/Shougo/unite.vim, a search & filter plugin
+  for arbitrary sources
+
+- quickfix-reflector : https://github.com/stefandtw/quickfix-reflector.vim,
+  for the grep edit mode
+
+- NrrwRgn : https://github.com/chrisbra/NrrwRgn, for the narrow dedicated buffers
+
+- YankRing : https://github.com/vim-scripts/YankRing.vim, whose name is
+  self-explanatory
+
+------------------------------------------------------------------------------
+PREREQUISITES				*wheel-introduction-prerequisites*
+
+- vim >= 8.2
+- neovim >= 0.6
+
+Basically, it assumes the existence of |:map-cmd| and `#{...}` syntax
+for dictionaries, see |literal-dict|.
+
+If your distribution uses an older version, you can resort to appimages :
+
+- https://github.com/vim/vim-appimage
+- https://appimage.github.io/neovim/
+
+These are fast evolving pieces of software, it's worth upgrading anyway.
+
+Operating system~
+
+Some outer rim functions assume a Unix-like OS, like Linux or BSD :
+
+- async functions
+- external commands, like locate
+- mirror the wheel structure in a filesystem tree
+
+Most of it should work out of the box on other OSes, however. If you
+encounter some problem, please let me know.
+
+==============================================================================
+STEP BY STEP						*wheel-step-by-step*
+
+Prefix				    |wheel-sbs-prefix|
+One map to ring them all	    |wheel-sbs-one-map-to-ring-them-all|
+One command to launch them all	    |wheel-sbs-one-command-to-launch-them-all|
+First circles			    |wheel-sbs-first-circles|
+Moving around			    |wheel-sbs-moving-around|
+Square the circle		    |wheel-sbs-square-the-circle|
+Tags				    |wheel-sbs-tags|
+
+------------------------------------------------------------------------------
+PREFIX						*wheel-sbs-prefix*
+
+In the following discussion, I assume that you have kept the default
+mapping prefix : >
+
+ let g:wheel_config.prefix = '<M-w>'
+<
+
+------------------------------------------------------------------------------
+ONE MAP TO RING THEM ALL		*wheel-sbs-one-map-to-ring-them-all*
+
+To get an overview of the Wheel, I suggest you take a look at the main
+menu. Press `<M-w><M-m>` and a new window will appear, listing the actions
+you can perform. Insert mode is used to filter the lines. Press enter
+in normal mode to trigger an action (if you know what you're doing),
+or `q` to quit the menu.
+
+To learn more about menus, see |wheel-dedicated-buffers-menus|.
+
+------------------------------------------------------------------------------
+ONE COMMAND TO LAUNCH THEM ALL		*wheel-sbs-one-command-to-launch-them-all*
+
+The |:Wheel| command can be used to launch any wheel functionality. The
+general syntax is : >
+
+    :Wheel {subcommand}
+    " or
+    :Wheel {subcommand} {action}
+<
+
+To see all possibilities, just hit tab after a space, e.g. : >
+
+    :Wheel <tab>
+    " or
+    :Wheel {subcommand} <tab>
+<
+
+For example, you can use : >
+
+    :Wheel dedibuf menu-main
+<
+
+to launch the main menu.
+
+------------------------------------------------------------------------------
+FIRST CIRCLES				    	    *wheel-sbs-first-circles*
+
+Let's say we have the files `Juice`, `Tea`, `Coffee` and we want to
+group them. So, we go to `Juice` and type `<M-w>a` to add a location to
+the wheel. If no category (no torus) is present in the wheel, it will
+create it and ask for a name. Let's say we name it `Food`. If no group
+(no circle) is found in the torus, it will be created and prompt for a
+name. Let's say we choose `Drinks`. Finally, we are asked to choose a
+name for our location. A completion is available : if we press `<Tab>`,
+we can choose between different flavours of the current filename :
+
+- without extension
+- with extension
+- relative path
+- absolute path
+
+In this case, we simply choose `Juice`, and our location is added to
+the group.
+
+Then, we go to `Tea` and type `<M-w>a` again. This time, it will just
+ask us if we want to keep the default location name. Press enter, and
+`Tea` is added to the `Drinks` group.
+
+Same process with `Coffee`. We now have a circle `Drink` containing
+three files.
+
+A group can contain more than one location of the same file. Suppose
+that in the `Juice` file, you have a Pineapple and a Mango sections,
+and you want to add both of them in the circle. Just go to the Pineapple
+section, and use `<M-w>a` ; we give it the `Juice-Pineapple` name. The
+location `Juice:pineapple-line:pineapple-col` is added to the current
+circle. Then, go to the Mango section, and do the same. Let's say
+we give it the `Juice-Mango` name. The `Juice:mango-line:mango-col`
+is also added to the circle.
+
+If you want to create another group (circle), let's say `Fruits`,
+simply launch `<M-w><C-a>`, and answer `Fruits` to the prompt. You can
+then add the files `Apple`, `Pear` and `Orange` to it. You can even also
+add `Juice`: a file can be added to more than one circle.
+
+If you want to create another category (torus), let's say `Books`,
+simply launch `<M-w><S-a>`, and answer `Books` to the prompt.
+
+Adding quicker~
+
+If you want to edit a file and add it at the same time, you can use
+`<M-w>+f` ; a file completion is available at the prompt. This map can
+also be used to edit a new file and add it to the wheel at once.
+
+If you want to add a buffer, you can use `<M-w>+b` ; a buffer completion
+is available.
+
+What happens if you have a lot of files ? Let's say the `novels`
+folder, located in the current directory, contains dozen of novels
+in plain text format. You can add all of them at once with the
+`add_glob` function. Press `<M-w>*` and wheel will ask you to enter a
+glob pattern. You can answer `novels/*` to add all files in there. If
+there are more levels of subdirs and you want to include all of them,
+you can enter `novels/**/*` instead. Then, it will ask if you want to
+add the files in a new circle. You can answer yes and call this circle
+`Novels`. And voilà, your new `Novels` group contain all the files in
+the `novels` folder.
+
+Don't forget to |:cd| to the right directory before launching this
+function.
+
+------------------------------------------------------------------------------
+MOVING AROUND					     *wheel-sbs-moving-around*
+
+Cycling~
+
+You can cycle the files of a circle with `<M-w><PageUp>` and
+`<M-w><PageDown>`. These are often used bindings, so I suggest you map
+them to more convenient keys, like `<M-PageUp>` and `<M-PageDown>`. See
+|wheel-mappings-level-10|.
+
+To cycle the circles, use `<M-w><C-PageUp>` and `<M-w><C-PageDown>`. You
+can also map them to more convenient keys, like `<C-PageUp>` and
+`<C-PageDown>`.
+
+To cycle the toruses, use `<M-w><S-PageUp>` and `<M-w><S-PageDown>`
+or map them to `<S-PageUp>` and `<S-PageDown>`.
+
+Switching~
+
+You can also switch wheel element by name :
+
+- `<M-w><Enter>`   : switch location by name
+- `<M-w><C-Enter>` : switch circle by name
+- `<M-w><S-Enter>` : switch torus by name
+
+A completion is available, see |wheel-prompting-functions-completion|.
+
+If you want to go to a far place in the wheel, use the wheel index :
+
+- switch to any location in the wheel index with `<M-w>x`
+- switch to any circle in the wheel index with `<M-w><C-x>`
+
+As usual, name completion is available at the prompt.
+
+Let's say you have these entries in the wheel :
+
+| torus  | circle  | location    |
+| ------ | ------- | ----------- |
+| config | browser | w3m         |
+| config | browser | elinks      |
+| config | browser | qutebrowser |
+| config | edit    | vim         |
+| config | edit    | neovim      |
+| config | edit    | emacs       |
+| script | shell   | autostart   |
+| script | shell   | autostop    |
+
+If you launch the "switch in index" action with `<M-w>x`, and pre-fill
+the prompt with "ed vi" before hitting `<Tab>`, the plugin will give
+you this completion candidates :
+
+- config > edit > vim
+- config > edit > neovim
+
+If you pre-fill the prompt with "ed vi neo" before hitting `<Tab>`,
+the plugin will only give you "config > edit > neovim".
+
+As usual, hit enter to validate you choice.
+
+Switching using a dedicated buffer~
+
+You can also switch location, circle or torus by chosing it in a wheel
+navigation buffer. See |wheel-dedicated-buffers-navigation|.
+
+------------------------------------------------------------------------------
+SQUARE THE CIRCLE				*wheel-sbs-square-the-circle*
+
+Over time, the number of circles will grow. Completion is great, but if
+you just want to alternate the last two locations in history, you'll
+probably prefer the alternate functions :
+
+| Default map    | Function                                      |
+| -------------- | --------------------------------------------- |
+| <M-w><C-^>     | alternate anywhere                            |
+| <M-w><M-^>     | alternate in the same circle                  |
+| <M-w><M-C-^>   | alternate in in same torus but another circle |
+| <M-w>^         | alternate menu                                |
+
+I strongly suggest you map a convenient key, like `<C-^>`, to
+alternate-anywhere, it's one of the most often used binding. Same
+thing with `<M-C-^>` and alternate-same-torus-other-circle.
+See |wheel-mappings-level-10| for more information.
+
+A common case is to alternate two files in the same circle, and two
+circles in the same torus. So, you have the square :
+
+ Alternate    | File 1	        | File 2
+--------------|-----------------|-----------------
+Circle Drinks | Juice           | Tea
+Circle Fruits | Apple           | Pear
+
+at your fingertips.
+
+------------------------------------------------------------------------------
+TAGS						*wheel-sbs-tags*
+
+If you use a tags file, you can jump to any tag with `<M-w>t`.
+Completion is available at the prompt.
+
+For instance, `pro fol<Tab>` gives me the function
+`wheel#projection#follow` straight away. Warp speed, Scotty.
+
+You can also search for a tag in a dedicated buffer with `<M-w><M-t>`.
+
+There are also functions for buffers, marks, jumps or changes.
+See |wheel-prompting-functions-switch|.
+
+==============================================================================
+WORKFLOW						*wheel-workflow*
+
+Interfaces				|wheel-workflow-interfaces|
+Mappings				|wheel-workflow-mappings|
+Autoread & write wheel			|wheel-workflow-auto-read-write|
+
+------------------------------------------------------------------------------
+INTERFACES						*wheel-workflow-approach*
+
+Wheel has four main interfaces :
+
+- straightforward functions : for action that does not require any user input
+- prompting functions : require user input at prompt
+    + advanced completion is available
+- dedicated buffers : for more advanced operations
+    + full power of (neo)vim buffer
+    + filter
+    + selection
+    + context menus
+    + edit mode
+- meta-command : with subcommands, actions and advanced completion
+
+See :
+
+- |wheel-straightforward-functions|
+- |wheel-prompting-functions|
+- |wheel-dedicated-buffers|
+- |wheel-commands|
+
+------------------------------------------------------------------------------
+MAPPINGS					    *wheel-workflow-mappings*
+
+To avoid conflict with your personal bindings, wheel mappings until level
+2 included are all using a generic prefix. The first step is to choose
+a prefix you are comfortable with. Here are some ideas you could use : >
+
+ " default
+ let g:wheel_config.prefix = '<M-w>'
+
+ " works on nvim-qt, not on gvim or in terminal
+ let g:wheel_config.prefix = '<D-w>'
+
+ " great if you don't use space as map leader
+ let g:wheel_config.prefix = '<Space>'
+
+ " if you don't use backslash as map leader
+ let g:wheel_config.prefix = '\'
+<
+
+This is fine, but can quickly become tedious for often used functions. In
+that case, prefix-less shortcuts are welcome.
+
+A whole set of these shortcuts is defined in level 10. There is a lot
+of them, so they would most likely interfere with your config. However,
+they can be used to choose functions you're interested in, or as a source
+of inspiration.
+
+So, two solutions :
+
+- you're happy with all of them : you can set `g:wheel_config.mappings` to 10
+- you set `g:wheel_config.mappings` to 2 or less, and cherrypick in level 10
+
+Define your own maps~
+
+Two possibilities here, either you use the plugs, like this : >
+
+    nmap <silent> <M-m> <plug>(wheel-menu-main)
+<
+
+or the meta-command : >
+
+    nnoremap <silent> <M-m> :Wheel dedibuf menu-main<cr>
+<
+
+Seel also |wheel-mappings-define-your-own-maps|.
+
+If you're looking for a specific Wheel function, see
+|wheel-mappings-exhaustive-list|.
+
+------------------------------------------------------------------------------
+AUTO READ AND WRITE				*wheel-workflow-auto-read-write*
+
+You probably want to make your files groups persistent. For that, you
+need to enable auto read & write of the wheel file : >
+
+    let g:wheel_config.autoread = 1
+    let g:wheel_config.autowrite = 1
+    augroup wheel
+        autocmd!
+        autocmd VimEnter * call wheel#void#init()
+        autocmd VimLeave * call wheel#void#exit()
+    augroup END
+>
+
+Don't worry about the size : I have 1000+ files in my groups, and it is
+still fluid, thanks to on-demand file loading.
+
+Generally speaking, this plugin is designed to let the user control the flow.
+If you want to automate more, take a look at |wheel-autocommands|.
+
+==============================================================================
+STRAIGHTFORWARD FUNCTIONS			*wheel-straightforward-functions*
+
+Navigation			    |wheel-straightforward-functions-navigation|
+Info				    |wheel-straightforward-functions-info|
+Sync				    |wheel-straightforward-functions-sync|
+
+------------------------------------------------------------------------------
+NAVIGATION				*wheel-straightforward-functions-navigation*
+
+Next~
+
+- location : `<M-w><PageDown>`
+- circle : `<M-w><C-PageDown>`
+- torus : `<M-w><S-PageDown>`
+
+Previous~
+
+- location : `<M-w><PageUp>`
+- circle : `<M-w><C-PageUp>`
+- torus : `<M-w><S-PageUp>`
+
+History~
+
+- older location in history : `<M-w><Home>`
+- newer location in history : `<M-w><End>`
+- older location in same circle : `<M-w><C-Home>`
+- newer location in same circle : `<M-w><C-End>`
+- older location in same torus : `<M-w><S-Home>`
+- newer location in same torus : `<M-w><S-End>`
+
+------------------------------------------------------------------------------
+INFO					*wheel-straightforward-functions-info*
+
+Display a dashboard indicating the wheel state : >
+
+    current torus > current circle > current location
+<
+
+Default mapping : `<M-w>i`
+
+------------------------------------------------------------------------------
+SYNC					*wheel-straightforward-functions-sync*
+
+Sync down : wheel -> vim state~
+
+The `jump` function loads the current file & position of the wheel in
+the current window. If the file is already displayed in another window,
+jump to it instead.
+
+This sync-down process is automatically run by every navigation map
+that deals with elements in the wheel.
+
+Sometimes however, you want to quickly edit a file that has nothing to
+do with your usual groups. You can then go back by manually launching
+the sync-down. The default binding is : >
+
+    <M-w>$
+<
+
+This process can be partly automated, see :
+
+Sync up : current file & position -> wheel~
+
+The `follow` function try to find the closest location in the wheel that
+matches the current file & position. If found, the wheel current location
+is synced with the current file.
+
+Let's say you edit a file, load a buffer or go to a tab or window
+without using a wheel map. The wheel state will then be distinct from
+your current file. You can ask the wheel to follow the current file by
+manually launch the sync-up process. The default mapping is : >
+
+    <M-w><M-$>
+<
+
+This process can be partly automated, see :
+
+- |wheel-autocommands-auto-follow|.
+- |wheel-autocommands-after-native|.
+
+Sync up : update current location line & column~
+
+The `update` function updates the current location to match cursor line
+& column.  It is called by the `follow` routine, so you can also use
+`<M-w><M-$>` to launch it.
+
+This process can be partly automated, see :
+
+- |wheel-autocommands-auto-update|.
+- |wheel-autocommands-before-jump|.
+
+==============================================================================
+PROMPTING FUNCTIONS				*wheel-prompting-functions*
+
+Completion			    |wheel-prompting-functions-completion|
+Switch				    |wheel-prompting-functions-switch|
+Search				    |wheel-prompting-functions-search|
+Add				    |wheel-prompting-functions-add|
+Delete				    |wheel-prompting-functions-delete|
+Rename				    |wheel-prompting-functions-rename|
+Copy				    |wheel-prompting-functions-copy|
+Move				    |wheel-prompting-functions-move|
+Yank ring			    |wheel-prompting-functions-yank|
+
+------------------------------------------------------------------------------
+COMPLETION			    *wheel-prompting-functions-completion*
+
+When a wheel function needs to prompt the user for input, it offers
+completion wherever possible. The completion type depends of course on
+the nature of the asked entry :
+
+- location, circle or torus
+- file, directory, buffer
+- tag
+- and so on
+
+Hitting |'wildchar'| (most likely `<Tab>`), will trigger the completion.
+
+If `pum` is in  |'wildoptions'|, the choices will be displayed in a nice
+pop-up menu.
+
+Multi-pattern~
+
+You can enter one or more patterns before hitting |'wildchar'| to narrow
+the completion list :
+
+- a space between two patterns is a logical and. So, `one two` will
+  display candidates containing both `one` and `two`
+- a pipe `|` between two patterns is a logical or. So, `one|two` will
+  display candidates containing `one` or `two`
+- a bang `!` beginning a filtering pattern is a logical not : all candidates
+  matching this pattern will be removed from the list
+
+Here, `one` and `two` can be any vim regex. Most of the time, they are
+simply litteral parts of the wanted result.
+
+For example, if you have the completion list `small flower`, `big flower`,
+`small fruit` and `big fruit` :
+
+- the pattern `fl` will narrow down to `small flower`, `big flower`
+- the pattern `sm` will narrow down to `small flower`, `small fruit`
+- the patterns `sm fl` will narrow down to `small flower`
+- the patterns `all !ower` will narrow down to `small fruit`
+- the patterns `al|owe` will narrow down to `small flower`, `small fruit`, `big flower`
+
+Builtin patterns~
+
+All builtin patterns remain available.
+
+If you want a classic completion matching only at the beginning of the
+string, you can use |/^|. For example, if you have the completion list
+`small flower`, `sunflower`, `flower`, `small fruit`, `big fruit` and
+`fruit` :
+
+- the pattern `^f` will narrow down to `flower`, `fruit`
+- the pattern `^s` will narrow down to `small flower`, `sunflower`, `small fruit`
+
+Vowels fuzzy~
+
+If `g:wheel_config.completion.vocalize` is greater than 0, the plugin adds
+vowels patterns between the chars you enter, to enable a kind of vowels-fuzzy
+completion.
+
+This way, if you have the completion list `profile`, `proof`, `wheel`
+and `organize` :
+
+- the pattern `prf` will narrow down to `profile`, `proof`
+- the pattern `hl` will narrow down to `wheel`
+- the pattern `gn` will narrow down to `organize`
+
+Word fuzzy~
+
+If `g:wheel_config.completion.wordize` is greater than 0, the plugin
+adds word-characters patterns between the chars you enter, to enable
+a kind of word-fuzzy completion.
+
+This way, if you have the completion list `profile`, `proof`, `wheel`
+and `organize` :
+
+- the pattern `pof` will narrow down to `profile`, `proof`
+- the pattern `we` will narrow down to `wheel`
+- the pattern `oai` will narrow down to `organize`
+
+Scores~
+
+If `g:wheel_config.completion.scores` is greater than 0, scores are computed,
+and matching results are sorted accordingly.
+
+Fuzzy~
+
+If `g:wheel_config.completion.fuzzy` is greater than 0, a full fuzzy
+completion is enabled, using |matchfuzzy()|. Beware that the or `|` operator
+is not available in this mode.
+
+File completion~
+
+Files and directories completes in different ways depending on the
+beginning fo your input :
+
+| Beginning of input | Completion list                         | Pattern(s) |
+| ------------------ | --------------------------------------- | ---------- |
+| ./                 | files and subdirs in current directory  | single     |
+| ../                | files and subdirs in parent directory   | single     |
+| /                  | files and subdirs in root directory     | single     |
+| ~ or ~/            | files and subdirs in home directory     | single     |
+| anything else      | current directory tree, recursive       | multi      |
+
+------------------------------------------------------------------------------
+SWITCH					    *wheel-prompting-functions-switch*
+
+Switch element in the wheel~
+
+| Function                 | Completion list              | Default binding |
+| ------------------------ | ---------------------------- | --------------- |
+| switch location          | locations of current circle  | <M-w><Enter>    |
+| switch circle            | circles of the current torus | <M-w><C-Enter>  |
+| switch torus             | toruses in the wheel         | <M-w><S-Enter>  |
+| multi switch             | toruses, circles & locations | <M-w><M-Enter>  |
+| switch location in index | index locations              | <M-w>x          |
+| switch circle in index   | index circles                | <M-w><C-x>      |
+| switch in history        | history entries              | <M-w>h          |
+| switch in frecency       | frecency entries             | <M-w>e          |
+
+Switch buffer~
+
+| Function         | Completion list                   | Default binding |
+| ---------------- | --------------------------------- | --------------- |
+| switch buffer    | listed buffers                    | <M-w>b          |
+| switch tabwin    | visible buffers in tabs & windows | <M-w>v          |
+
+Switch in (neo)vim lists~
+
+| Function              | Completion list    | Default binding |
+| ----------------      | ------------------ | --------------- |
+| switch marker         | markers            | <M-w>'          |
+| switch in jump list   | jumps              | <M-w>j          |
+| switch in change list | changes            | <M-w>,          |
+| switch tag            | tags               | <M-w>t          |
+
+Switch dedicated buffer~
+
+The default mapping is `<M-w><Up>`.
+
+See |wheel-dedicated-buffers-ring|.
+
+Switch layer in ring~
+
+You must be in a dedicated buffer to launch it. The local mapping is
+`<M-l>`, or `<C-Down>`.
+
+See also |wheel-dedicated-buffers-layers|.
+
+------------------------------------------------------------------------------
+SEARCH					    *wheel-prompting-functions-search*
+
+Search file~
+
+| Function         | Completion list                      | Default binding |
+| ---------------- | ------------------------------------ | --------------- |
+| find file        | find file in current dir tree        | <M-w>f          |
+| mru file         | most recently used, non wheel files  | <M-w>u          |
+
+Search inside file~
+
+| Function            | Completion list                           | Default binding |
+| ------------------- | ----------------------------------------  | --------------- |
+| occur : switch line | lines of current buffer                   | <M-w>o          |
+| outline             | outline for folds, markdown, org, vimwiki | <M-w><C-o>      |
+
+------------------------------------------------------------------------------
+ADD					    *wheel-prompting-functions-add*
+
+Add a new torus~
+
+The default mapping is `<M-w><S-a>`.
+
+Add a circle to the current torus~
+
+The default mapping is `<M-w><C-a>`.
+
+When you add a circle, you are prompted for a name. The completion is
+based on the current file directory. Different flavours are available :
+
+- simple : just the directory of the current file
+- path relative to the current local directory
+- absolute path
+
+You can of course adapt the completed name before confirming with
+`<Enter>`. In fact, the name you choose can be anything you want, as
+long as it is not already in the current torus.
+
+Add a location to the current circle~
+
+The default mapping is `<M-w>a`.
+
+When you add a location, you are prompted for a name. The completion is
+based on the current file name. Different flavours are available :
+
+- file name without extension
+- file name with extension
+- file name with relative path
+- file name with absolute path
+
+You can of course adapt the completed name before confirming with
+`<Enter>`. In fact, the name you choose can be anything you want, as
+long as it is not already in the current circle.
+
+You can also add :
+
+- a file with `<M-w>+f`
+- a buffer with `<M-w>+b`
+- all files matching a glob with `<M-w>*`
+
+------------------------------------------------------------------------------
+DELETE					    *wheel-prompting-functions-delete*
+
+Default mappings :
+
+- `<M-w>d`     : delete location
+- `<M-w><C-d>` : delete circle
+- `<M-w>D`     : delete torus
+
+------------------------------------------------------------------------------
+RENAME					    *wheel-prompting-functions-rename*
+
+Rename the current torus~
+
+The default mapping is `<M-w><S-n>`.
+
+Rename the current circle~
+
+The default mapping is `<M-w><C-n>`.
+
+The completion is the same as for adding a circle.
+
+Rename the current location~
+
+The default mapping is `<M-w>n`.
+
+The completion is the same as for adding a location.
+
+Rename current location & file~
+
+The default mapping is `<M-w><M-n>`.
+
+------------------------------------------------------------------------------
+COPY					    *wheel-prompting-functions-copy*
+
+- `<M-w>c`     : copy location to another circle
+- `<M-w><M-c>` : copy circle to another torus
+- `<M-w>C`     : copy torus
+
+------------------------------------------------------------------------------
+MOVE					    *wheel-prompting-functions-move*
+
+- `<M-w>m`     : copy location to another circle
+- `<M-w>M`   : copy circle to another torus
+
+------------------------------------------------------------------------------
+YANK RING					*wheel-prompting-functions-yank*
+
+- `<M-w><C-y>` : switch default register to use in yank functions
+- `<M-w>y`     : paste from yank ring linewise, after the sursor
+- `<M-w>p`     : paste from yank ring charwise, after the sursor
+- `<M-w>Y`     : paste from yank ring linewise, before the sursor
+- `<M-w>P`     : paste from yank ring charwise, before the sursor
+
+Linewise means that the paste is inserted after the current line.
+
+Charwise means that the paste is inserted into the current line.
+
+See also |linewise| and |charwise|.
+
+Each candidate of the completion list is one of your yanks, represented
+as a string.
+
+==============================================================================
+DEDICATED BUFFERS				    *wheel-dedicated-buffers*
+
+Introduction			|wheel-dedicated-buffers-introduction|
+Selection			|wheel-dedicated-buffers-selection|
+Filtering			|wheel-dedicated-buffers-filtering|
+Input history			|wheel-dedicated-buffers-input-history|
+Preview				|wheel-dedicated-buffers-preview|
+Folds				|wheel-dedicated-buffers-folds|
+Non writable			|wheel-dedicated-buffers-non-writable|
+Writable			|wheel-dedicated-buffers-writable|
+Dedicated buffers ring		|wheel-dedicated-buffers-ring|
+Layer ring			|wheel-dedicated-buffers-layers|
+Menu				|wheel-dedicated-buffers-menus|
+Context menus			|wheel-dedicated-buffers-context|
+Navigation			|wheel-dedicated-buffers-navigation|
+Within the wheel		|wheel-dedicated-buffers-within-wheel|
+Buffers				|wheel-dedicated-buffers-buffers|
+Tabs & windows in tree mode	|wheel-dedicated-buffers-tabwin-tree|
+Tabs & windows			|wheel-dedicated-buffers-tabwin|
+Find 				|wheel-dedicated-buffers-find|
+Async find 			|wheel-dedicated-buffers-async-find|
+MRU files			|wheel-dedicated-buffers-mru|
+Locate	 			|wheel-dedicated-buffers-locate|
+Occur				|wheel-dedicated-buffers-occur|
+Grep				|wheel-dedicated-buffers-grep|
+Outline				|wheel-dedicated-buffers-outline|
+Markers				|wheel-dedicated-buffers-markers|
+Jumps				|wheel-dedicated-buffers-jumps|
+Changes				|wheel-dedicated-buffers-changes|
+Tags				|wheel-dedicated-buffers-tags|
+Reorder				|wheel-dedicated-buffers-reorder|
+Rename			        |wheel-dedicated-buffers-rename|
+Delete			        |wheel-dedicated-buffers-delete|
+Copy and move		        |wheel-dedicated-buffers-copy-move|
+Reorganize			|wheel-dedicated-buffers-reorganize|
+Reorganize tabs & windows	|wheel-dedicated-buffers-reorg-tabwin|
+Grep edit mode			|wheel-dedicated-buffers-grep-edit|
+Narrow current file		|wheel-dedicated-buffers-narrow-file|
+Narrow all circle files		|wheel-dedicated-buffers-narrow-circle|
+Yank ring			|wheel-dedicated-buffers-yank|
+Undo list			|wheel-dedicated-buffers-undolist|
+Batch buffer			|wheel-dedicated-buffers-batch|
+Command output buffer		|wheel-dedicated-buffers-command|
+
+------------------------------------------------------------------------------
+INTRODUCTION				*wheel-dedicated-buffers-introduction*
+
+Wheel dedicated buffers, aka mandalas, allow you to perform Wheel
+operations intuitively, using full power of your editor : search, yank,
+paste, completion, and so on.
+
+The available actions depend on the buffer type :
+
+- menu buffers allow you to launch a wheel function
+- navigation buffers allow you to go to a :
+  + location, circle or torus
+  + buffer, window, tab
+  + MRU file, locate file
+  + grep result
+  + and so on
+- reorganizing buffers allow you to
+  + reorder locations, circles or toruses
+  + rename locations, circles or toruses
+  + rename files
+  + move, copy or delete locations, circles and toruses
+  + perform fine grain operation
+      + change locations settings like name, line, col
+  + reorganize tabs and windows
+- refactoring buffers allow you to
+  + edit grep results
+  + edit narrow of current file
+  + edit narrow of all circle files
+
+Help~
+
+The key `<F1>` display a basic help.
+
+The key `<F2>` displays local maps in a new layer. See
+|wheel-dedicated-buffers-layers|.
+
+Action~
+
+The main keys are :
+
+- `<Enter>` : trigger the default action, close the dedicated buffer
+- `g<Enter>` : trigger the default action, leave the dedicated buffer opened
+
+Reload~
+
+Press `r` and the dedicated buffer will reload its content.
+
+Available on most dedicated buffers.
+
+Quit~
+
+Press `q` to quit the dedicated buffer.
+
+Recall~
+
+When you quit a dedicated buffer, its window is closed but it's not
+lost : it's still there, hidden. You can reopen it in a new split with
+`<M-w><left>` or `<M-w><Right>`. See |wheel-dedicated-buffers-ring|
+for more information.
+
+Wrapping up things~
+
+In normal mode, the keys `j`/`k` and `<up>`/`<down>` wrap the buffer :
+
+- if on the first line, `k` or `<up>` will go to the last line
+- if on the last line, `j` or `<down>` will go to the first line
+
+------------------------------------------------------------------------------
+SELECTION				*wheel-dedicated-buffers-selection*
+
+Some dedicated buffers can act on selected entries. You can hit :
+
+- `=` or `<Space>` to toggle the selection of a line
+- `#` to reverse the selection of all visible lines
+- `*` to select all visible lines
+- `|` to clear the selection of all visible lines
+
+If a line is selected, it will begin with a distinctive marker.
+
+You can open all selected files in tabs, splits or vertical splits.
+
+------------------------------------------------------------------------------
+FILTERING				    *wheel-dedicated-buffers-filtering*
+
+In most dedicated buffers, the first line is left almost empty, with
+just a prompt. In insert mode, it is used as an input line to filter
+all the other lines with each pattern you enter.
+
+Going to filter line~
+
+In normal mode :
+
+- pressing `i` or `a` moves the cursor to the first line and starts insert mode
+  + same thing with `<M-i>` and `<Ins>`
+- pressing `cc` moves the cursor to the first line,
+  starts insert mode and clears the line content, except the prompt
+
+Reset filter~
+
+Pressing `dd` in normal mode clears the filter line, except the prompt,
+and show all unfiltered lines.
+
+Update candidates~
+
+In insert mode, these keys updates the candidates :
+
+- `<Space>` : plain space
+- `<C-w>`   : delete word before cursor
+- `<C-u>`   : delete until beginning of line
+- `<C-k>`   : delete until end of line
+- `<Esc>`   : leave insert mode
+- `<Enter>` : leave insert mode
+
+Note that `<C-w>` and `<C-u>` do not delete the prompt.
+
+The key `<C-c>` is not mapped, in case you need to go to normal mode
+without triggering the filter function.
+
+Movements~
+
+- `<M-f>` : move forward one word
+- `<M-b>` : move backward one word
+- `<C-a>` : moves at the beginning of the line, just after the prompt
+- `<C-e>` : moves at the end of the line.
+
+Patterns~
+
+A space between two patterns is a logical and. So, `one two` will
+display lines containing both `one` and `two`.
+
+A pipe `|` between two patterns is a logical or. So, `one|two` will
+display lines containing `one` or `two`.
+
+A bang `!` beginning a filtering pattern is a logical not : all lines
+matching this pattern will be removed from the buffer.
+
+Here, `one` and `two` can be any vim regex. Most of the time, they are
+simply part of the result you want.
+
+For example, if you have the completion list `small flower`, `big flower`,
+`small fruit` and `big fruit` :
+
+- the pattern `sm` will narrow down to `small flower`, `small fruit`
+- the patterns `sm fl` will narrow down to `small flower`
+- the patterns `all !ower` will narrow down to `small fruit`
+- the patterns `al|owe` will narrow down to `small flower`, `small fruit`, `big flower`
+
+Special keywords~
+
+Special filtering keywords are available :
+
+- `=s` or `=selection`   : the filtered elements will belong to the current selection
+- `!=s` or `!=selection` : the filtered elements will _not_ belong to the current selection
+
+If `small flower` and `big fruit` are selected :
+
+- the pattern `=s` will narrow down to `small flower`, `big fruit`
+- the patterns `=s fl` will narrow down to `small flower`
+- the patterns `=s bi` will narrow down to `big fruit`
+- the patterns `!=s bi` will narrow down to `big flower`
+
+------------------------------------------------------------------------------
+INPUT HISTORY				*wheel-dedicated-buffers-input-history*
+
+An input history is available in the filter line. You can insert the
+previous/next input in insert mode with `<Up>`/`<Down>` or `<M-p>`/`<M-n>`.
+
+The keys `<PageUp>`/`PageDown` or `<M-r>`/`<M-s>` will insert the
+previous/next input matching the beginning of the inserted line, until
+the cursor.
+
+------------------------------------------------------------------------------
+PREVIEW						*wheel-dedicated-buffers-preview*
+
+In navigation buffers, you can preview the buffer/location matching the
+cursor line with `p`. It is displayed in the previous window.
+
+You can go back any time in the original buffer with `o`.
+
+Follow mode~
+
+The key `f` enable the follow mode : the preview will then follow the cursor
+each time you press `j` or `k`.
+
+It's a toggle key : press `f` again and the follow mode is disabled. You
+should go back automatically to the original buffer.
+
+------------------------------------------------------------------------------
+FOLDS						*wheel-dedicated-buffers-folds*
+
+Some dedicated buffers use folding to reflect the treeish structure of the
+represented objects.
+
+Filtering in these buffers will keep surrounding folds ; only non matching
+empty folds will be removed.
+
+Main menu~
+
+In the main menu, each fold contains a category of actions.
+
+Default map : `<M-w><M-m>`
+
+Wheel tree~
+
+The index/tree buffer use folds to reflect the tree structure of the
+Wheel : toruses, circles and locations.
+
+Default map : `<M-w><M-x>`
+
+Tabs & windows~
+
+The tabwin/tree buffer use folds to reflect the tree structure of tabs
+and windows in (neo)vim.
+
+Default map : `<M-w><M-v>`
+
+------------------------------------------------------------------------------
+NON WRITABLE   				*wheel-dedicated-buffers-non-writable*
+
+Some dedicated buffers are not intended to be edited, except on the filter
+line.
+
+The |'readonly'| and |'nomodifiable'| are set, except when you use the
+filter on the first line.
+
+For example, navigation-only dedicated buffers are non writable.
+
+------------------------------------------------------------------------------
+WRITABLE    				*wheel-dedicated-buffers-writable*
+
+Some dedicated buffers are writable, i.e. :
+
+- you can edit all the lines
+- they have a |BufWriteCmd| autocommand, triggered when you |:write| the buffer
+
+Saving such a buffer will reflect the changes on the objects represented by
+the buffer lines.
+
+For instance, saving a rename/location buffer will rename the involved
+locations in the wheel.
+
+Confirmation before writing~
+
+A confirmation is asked if you use |:write|, but not if you use the bang
+version `:write!`.
+
+These buffer local maps are also defined :
+
+- `<leader>w` : equivalent to |:write|
+- `<leader>W` : equivalent to `:write!`
+
+Be careful with `:wall!` though, for it would save without warning any
+modified writable mandala.
+
+Prompt~
+
+To distinguish non-writable and writable dedicated buffers, the prompt are
+different. You can customize them, see |wheel-config-display-prompt|.
+
+Filter~
+
+On most writable buffers, a filter line is available. In that case,
+some adjustement are made to the local maps, so that you can edit the
+buffer with the usual vim keys.
+
+To access the filter line, press `<M-i>` or `<Ins>` instead of `i` and `a`.
+
+The key `dd` is not mapped, use `<M-d>` to reset the filter.
+
+To move to begin/end of filter line, use `<M-a>` and `<M-e>` instead of
+`<C-a>` and `<C-e>`.
+
+The input history is available only with `<M-p>`/`<M-n>` and `<M-r>`/`<M-s>`.
+
+Some keys have a distinct meaning if the cursor is on the first line or in
+another one.
+
+On the first line :
+
+- `<Enter>`, `<Esc>`, `<Space>`, `<C-w>` and `<C-u>` update the filter
+- `cc` and `<C-u>` do not delete the prompt
+
+On the other lines :
+
+- `<Enter>`, `<Esc>`, `<Space>` and `<C-w>` have their usual vim meaning
+- `cc` and `<C-u>` delete only the last field of the line
+
+Range~
+
+If you use an ex command to perform an operation on all the visible lines
+of a buffer with filter functionality, don't forget to skip the first line.
+
+E.g. :
+
+- `2,$substiture/before/after/g`
+- `2,$sort`
+
+Pressed the wrong button ?~
+
+If something goes wrong, you can quit the dedicated buffer and :
+
+- re-read the wheel variables with `<M-w>r`, if your changes implied the wheel
+- undo your changes in the buffers, or quit (neo)vim without saving your files
+  with `:qa!` if your changes implied files content
+
+Anyway, it's always a good thing to do a backup :
+
+- of the wheel with `<M-w>w`
+- of your files
+
+Working within a VCS repository, like git, is also a safety net.
+
+------------------------------------------------------------------------------
+DEDICATED BUFFERS RING  			*wheel-dedicated-buffers-ring*
+
+Wheel manages a dedicated buffers ring. You can :
+
+- add a new dedicated buffer as default one with `<M-w><Tab>`
+- switch to another dedicated buffer with `<M-w><Up>`, completion is available
+- cycle the dedicated buffers with `<M-w><Left>` or `<M-w><Right>`
+  + reopens the current dedicated buffer in a new window if it is closed
+- change the buffer label with `<M-n>`
+  + displayed in dedicated buffer statusline, or in the echo area
+  + defaults to a unique buffer id
+- remove the current dedicated buffer with `<M-w><Backspace>`
+  + it is removed from the stack and wiped from vim buffers
+
+When switching, you can complete by dedicated buffer labels & types, wich
+will lead you to the buffer you want. Example of completion candidates : >
+
+    0    | index/tree
+    1    | history
+    yank | yank/plain
+    menu | menu/main
+<
+
+A wheel dedicated buffer is also called a mandala.
+
+------------------------------------------------------------------------------
+LAYER RING				*wheel-dedicated-buffers-layers*
+
+Each dedicated buffer has its own layer ring.
+
+Each time you launch a wheel function involving a dedicated buffer, a new
+associated layer is added to a ring local to the buffer. You may see it
+as a kind of local history. You can :
+
+- go forward to the next layer by pressing `<M-j>`, or `<M-Down>`
+- go back to the previous layer by pressing `<M-k>`, or `<M-Up>`
+- switch to another layer with `<M-l>` or `<C-Down>`, completion is available
+- destroy current layer and go back to the previous one by pressing `<Backspace>`
+
+When switching, you can complete by layer index & types, wich will lead
+you to the layer you want. Example of completion candidates : >
+
+    0 | index/tree
+    1 | history
+    2 | yank/plain
+<
+
+The maximum size of the layer ring is determined by `g:wheel_config.maxim.layers`.
+
+So, there are two levels :
+
+- a dedicated buffer ring
+- a layer ring in each dedicated buffer
+
+A layer in a dedicated buffer is also called a leaf.
+
+------------------------------------------------------------------------------
+MENU						*wheel-dedicated-buffers-menus*
+
+Action~
+
+The local map `<Enter>` triggers the action and closes the menu, except
+if it needs an opened dedicated buffer.
+
+In menu buffers, `<Tab>` is a shortcut for `g<Enter>` : trigger action,
+and leave the menu opened.
+
+Since there is no need to select multiple elements, `<Space>` is also
+a synonym of `g<Enter>`.
+
+Main menu~
+
+The main menu is triggered with `<M-w><M-m>` by default. From there,
+you can launch an action by pressing `<Enter>` on its line.
+
+The available actions are grouped by themes and folded :
+
+- wheel help
+- wheel status
+- save & load wheel file, session file
+- wheel navigation
+- native (ie builtin) (neo)vim navigation using Wheel interface (buffer, marker, jump, change, tag, ...)
+- organize wheel
+- organize native (neo)vim elements (tabs, windows, ...)
+- refactoring
+- search file
+- search inside file
+- paste from yank ring
+- undo list
+- run a command and collect its output
+- layouts
+  + in tabs
+  + in windows
+  + in tabs & windows
+
+Just open a fold to access its content.
+
+Meta menu~
+
+Press `<M-w>=` to open the meta menu.
+
+Hitting `<Enter>` on a line launches a sub-menu. Each sub-menu holds
+actions of the same category.
+
+These categories are the same as in the main menu.
+
+In these sub-menus, you can use the keys :
+
+- `<Enter>`                      : launch the action on the cursor line
+- `g<Enter>`, `<Tab>`, `<Space>`     : launch action, leave the menu opened
+- `<M-k>`                        : leads you back to the meta menu
+- `<Backspace>`                  : back to the meta menu, delete submenu layer
+
+------------------------------------------------------------------------------
+CONTEXT MENUS				*wheel-dedicated-buffers-context*
+
+Some dedicated buffers have context menu support. In that case, pressing
+`<Tab>` will open a menu where you can choose the action you want to
+apply to the selected or cursor line(s).
+
+If you change your mind and wish to come back, just press `<M-k>` or
+`<Backspace>`.
+
+Navigation~
+
+Context menu of a navigation buffer :
+
+- open selection
+- open in tab(s)
+- open in horizontal split(s)
+- open in vertical split(s)
+- open in horizontal golden split(s)
+- open in vertical golden split(s)
+
+------------------------------------------------------------------------------
+NAVIGATION				*wheel-dedicated-buffers-navigation*
+
+The navigation buffers allow you to quickly switch to a Wheel or (neo)vim
+native location by pressing `<Enter>` on the matching line. You can also
+use the keys :
+
+- `t` : open element in a new tab
+- `h` : open element in a new split
+- `v` : open element in a new vsplit
+- `H` : open element in a new split with golden ratio
+- `V` : open element in a new vsplit with golden ratio
+
+Same keys as above, but leave the navigation buffer opened :
+
+- `g<Enter>` : same as `<Enter>`
+- `gt` : same as `t`
+- `gh` : same as `h`
+- `gv` : same as `v`
+- `gH` : same as `H`
+- `gV` : same as `V`
+
+The navigation buffers also have context menus support.
+See |wheel-dedicated-buffers-context|.
+
+Writable dedicated buffers~
+
+When a writable dedicated buffer has navigation abilities, local maps
+are adapted :
+
+- `<Enter>` : open element in current window
+- `<M-t>`   : open element in a new tab
+- `<M-h>`   : open element in a new split
+- `<M-v>`   : open element in a new vsplit
+- `<M-S-h>` : open element in a new split with golden ratio
+- `<M-S-v>` : open element in a new vsplit with golden ratio
+
+Same keys as above, but leave the navigation buffer opened :
+
+- `g<Enter>` : same as `<Enter>`
+- `g<M-t>`   : same as `<M-t>`
+- `g<M-h>`   : same as `<M-h>`
+- `g<M-v>`   : same as `<M-v>`
+- `g<M-S-h>` : same as `<M-S-h>`
+- `g<M-S-v>` : same as `<M-S-v>`
+
+Launching maps~
+
+The default mappings launching navigation buffers are :
+
+- `<M-w><Space>`   : go to location
+- `<M-w><C-space>` : go to current location of the chosen circle
+- `<M-w><S-space>` : go to current location of the chosen torus
+- `<M-w><M-x>`     : treeish index with folds
+- `<M-w>X`         : index of toruses > circles > locations
+- `<M-w><M-S-x>`   : index of toruses > circles
+- `<M-w><M-h>`     : history
+- `<M-w><M-e>`     : frecency
+- `<M-w>l`         : search files with `locate`
+- `<M-w><M-f>`     : find files in current directory tree using pattern
+- `<M-w>&f`        : search files with `find` in async mode
+- `<M-w><M-u>`     : most recently used files not found in wheel (mru)
+- `<M-w><M-b>`     : switch to buffer (opened file)
+- `<M-w><C-b>`     : switch to buffer, included unlisted ones
+- `<M-w><M-v>`     : switch to visible buffer in tab & window (tree fold mode)
+- `<M-w><C-v>`     : switch to visible buffer in tab & window (plain mode)
+- `<M-w><M-o>`     : occur in current file
+- `<M-w>g`         : grep in circle files
+- `<M-w><S-o>`     : outline headers in circle files
+- `<M-w><M-'>`     : markers
+- `<M-w><M-j>`     : jumps list
+- `<M-w>;`         : changes list
+- `<M-w><M-t>`     : tags
+
+------------------------------------------------------------------------------
+WITHIN THE WHEEL			*wheel-dedicated-buffers-within-wheel*
+
+The dedicated buffers that allow us to navigate in the wheel are :
+
+- `<M-w><Space>`   : location
+- `<M-w><C-space>` : current location of the chosen circle
+- `<M-w><S-space>` : current location of the chosen torus
+- `<M-w><M-x>`     : index with folds (see below)
+- `<M-w>X`         : index of toruses > circles > locations
+- `<M-w><M-S-x>`   : index of toruses > circles
+- `<M-w><M-h>`     : history
+- `<M-w><M-e>`     : frecency
+
+------------------------------------------------------------------------------
+BUFFERS						*wheel-dedicated-buffers-buffers*
+
+Go to buffer.
+
+The default mapping are :
+
+- `<M-w><M-b>` for ordinary buffers
+- `<M-w><C-b>` for all buffers, included unlisted ones
+
+Fields~
+
+This buffer displays the following columns :
+
+buffer number | indicator | line number | filename
+
+For the indicator meaning, see |:buffers|.
+
+------------------------------------------------------------------------------
+TABS AND WINDOWS IN TREE MODE		*wheel-dedicated-buffers-tabwin-tree*
+
+Go to visible buffer, displayed in a tab or window. Folding mode
+matching the tree of tabs and windows.
+
+The default mapping is `<M-w><M-v>`.
+
+------------------------------------------------------------------------------
+TABS AND WINDOWS				*wheel-dedicated-buffers-tabwin*
+
+Go to visible buffer, displayed in a tab or window.
+
+The default mapping is `<M-w><C-v>`.
+
+Fields~
+
+This buffer displays the following columns :
+
+tab number | window number | filename
+
+------------------------------------------------------------------------------
+FIND						*wheel-dedicated-buffers-find*
+
+Search files in current directory tree with |glob()|.
+
+You can enter a single or multiple word(s) pattern at the
+prompt : the files are filtered by each word. See
+|wheel-prompting-functions-completion|.
+
+The default mapping is `<M-w><M-f>`.
+
+------------------------------------------------------------------------------
+ASYNC FIND				*wheel-dedicated-buffers-async-find*
+
+Search files with unix `find` command in async mode.
+
+If you enter `pattern` at the prompt, the glob used to find files will be : >
+
+    *pattern*
+<
+
+The `find` command is recursive by default, so you don't need the
+double asterisk prefix.
+
+If you enter several words at the prompt, say `word-1 word-2` , the glob
+used to find files will be : >
+
+    *word-1*word-2*
+<
+
+The default mapping is `<M-w>&f`.
+
+You can stop the process by using `<c-s>` in the dedicated buffer.
+
+------------------------------------------------------------------------------
+MRU FILES				*wheel-dedicated-buffers-mru*
+
+Open file in Most Recently Used file list.
+
+The default mapping is `<M-w><M-u>`.
+
+Fields~
+
+This buffer displays the following columns :
+
+date & time of last edit | filename
+
+------------------------------------------------------------------------------
+LOCATE						*wheel-dedicated-buffers-locate*
+
+Search files with unix `locate` command.
+
+The default mapping is `<M-w>l`.
+
+------------------------------------------------------------------------------
+OCCUR						*wheel-dedicated-buffers-occur*
+
+List of lines matching a pattern.
+
+The default mapping is `<M-w><M-o>`.
+
+fields~
+
+this buffer displays the following columns :
+
+line number | line content
+
+------------------------------------------------------------------------------
+GREP						*wheel-dedicated-buffers-grep*
+
+The default mapping is `<M-w>g`.
+
+The navigation mappings are the same as usual : activate a buffer line
+will open the right file at the right place.
+
+Context menu~
+
+The context menu contains :
+
+- the usual navigation functionalities
+- an edit mode, see |wheel-dedicated-buffers-grep-edit|
+- a quickfix window opener
+
+Fields~
+
+This buffer displays the following columns :
+
+error number | line number | column number | filename | line content
+
+------------------------------------------------------------------------------
+OUTLINE					*wheel-dedicated-buffers-outline*
+
+The default mapping is `<M-w><S-o>`.
+
+An outline buffer is a grep buffer where all your headers are displayed. You
+can choose between the following header formats :
+
+- vim folds
+- markdown
+- org mode
+- vimwiki
+
+Fields~
+
+This buffer displays the following columns :
+
+error number | line number | column number | filename | line content
+
+------------------------------------------------------------------------------
+MARKERS						*wheel-dedicated-buffers-markers*
+
+Go to selected marker.
+
+The default mapping is `<M-w><M-'>`. It is inspired by the normal command |'a|.
+
+Fields~
+
+This buffer displays the following columns :
+
+mark | line number | column number | filename | line content
+
+------------------------------------------------------------------------------
+JUMPS					*wheel-dedicated-buffers-jumps*
+
+Go to element in jump list.
+
+The default mapping is `<M-w><M-j>`.
+
+Fields~
+
+This buffer displays the following columns :
+
+buffer number | line number | column number | filename | line content
+
+------------------------------------------------------------------------------
+CHANGES					*wheel-dedicated-buffers-changes*
+
+Go to element in changes list.
+
+The default mapping is `<M-w>;`. It is inspired by the normal commands |g;|.
+
+Fields~
+
+This buffer displays the following columns :
+
+line number | column number | line content
+
+------------------------------------------------------------------------------
+TAGS						*wheel-dedicated-buffers-tags*
+
+Go to selected tag.
+
+The default mapping is `<M-w><M-t>`.
+
+Fields~
+
+This buffer displays the following columns :
+
+tag type | tag iden | filename | search string
+
+------------------------------------------------------------------------------
+REORDER						*wheel-dedicated-buffers-reorder*
+
+The reordering buffers allow you to quickly reorder Wheel elements by
+reordering the buffer lines. You can use yank/delete/paste operations to
+perform the reordering.
+
+You can also sort them with |:sort|, but in that case, be sure not to
+include the first line in the range.
+
+Please yank/delete entire lines, or your data could loose their integrity.
+
+To validate your change, simply |:write| the buffer.
+
+The number of lines will be checked and, if there is missing or excedent
+lines, Wheel will refuse to apply your change.
+
+Mappings~
+
+The default mappings launching reordering buffers are :
+
+- `<M-w>@o`     : reorder locations
+- `<M-w>@<C-o>` : reorder circles
+- `<M-w>@O`     : reorder toruses
+
+Additional local maps~
+
+- `<M-s>` : sort the visible lines, except the filter : `2,$sort`
+- `<M-r>` : reversed sort of the visible lines, except the filter : `2,$sort!`
+
+------------------------------------------------------------------------------
+RENAME				    		*wheel-dedicated-buffers-rename*
+
+The renaming buffers allow you to batch rename Wheel elements by editing
+the buffer lines. You can use powerful native tools, like visual block
+or |:substitute| operations to perform the renaming.
+
+To validate your change, simply |:write| the buffer.
+
+The number of lines will be checked and, if there is missing or excedent
+lines, Wheel will refuse to apply your change.
+
+Rename locations & files~
+
+This function display two columns : the first one is for the locations, and the
+second one for the filenames. You can edit both of them.
+
+You can even use it to move your files to another directory ; any non-existent
+folder will be created if needed.
+
+Mappings~
+
+The default mappings launching renaming buffers are :
+
+- `<M-w>@n`     : rename locations
+- `<M-w>@<C-n>` : rename circles
+- `<M-w>@N`     : rename toruses
+- `<M-w>@<M-n>` : rename locations & files
+
+------------------------------------------------------------------------------
+DELETE			    		*wheel-dedicated-buffers-delete*
+
+The deleting buffers allow you to batch delete Wheel elements by selecting
+the buffer lines.
+
+When you're sure about it, just write the buffer.
+
+Mappings~
+
+The default mappings launching deleting buffers are :
+
+- `<M-w>@d`     : delete locations
+- `<M-w>@<C-d>` : delete circles
+- `<M-w>@D`     : delete toruses
+
+------------------------------------------------------------------------------
+COPY AND MOVE		    		*wheel-dedicated-buffers-copy-move*
+
+The copy & move buffers allow you to batch copy or move Wheel elements by
+selecting the buffer lines. To validate your selection, simply |:write|
+the buffer. It will ask you if you want to copy or move the selection.
+
+Mappings~
+
+The default mappings launching copy & move buffers are :
+
+- `<M-w>@c`     : copy/move locations
+- `<M-w>@<M-c>` : copy/move circles
+- `<M-w>@C`     : copy/move toruses
+
+------------------------------------------------------------------------------
+REORGANIZE				*wheel-dedicated-buffers-reorganize*
+
+The reorganizing buffer allows you to quickly reorganize the Wheel
+elements. All elements of the wheel are represented, and folds are used
+to reflect the tree structure of the Wheel :
+
+- torus names
+- circle names
+- locations (the dictionary lines)
+
+You can :
+
+- copy or move elements by copying or moving the buffer lines
+  + copy or move a location to another circle
+  + copy or move a circle to another torus
+  + reordering elements (but without check)
+- rename elements
+- change line or column of a location
+
+Please move or copy entire lines, or your data could loose their
+integrity. Be aware that removing a line will remove the corresponding
+element from the wheel.
+
+To validate your change, simply |:write| the buffer.
+
+Mappings~
+
+The default mapping is `<M-w><M-r>`.
+
+------------------------------------------------------------------------------
+REORGANIZE TABS AND WINDOWS		*wheel-dedicated-buffers-reorg-tabwin*
+
+In this buffer, you can :
+
+- add new tabs
+- add files in new windows
+  + the split will be horizontal or vertical, depending
+    on the aspect ratio of the preceding window
+- move, copy or delete tabs
+- move, copy or delete windows
+
+To validate your change, simply |:write| the buffer.
+
+Mappings~
+
+The default mapping is `<M-w><C-r>`.
+
+From context menu~
+
+This buffer can also be launched from the context menu of a tabs & windows
+navigation buffer.
+
+------------------------------------------------------------------------------
+GREP EDIT MODE				*wheel-dedicated-buffers-grep-edit*
+
+The edit mode will open a new buffer where you can edit the grep lines. If
+you write this buffer, the plugin will propagate your changes to the
+grepped file(s). There are some limitations, however :
+
+- you cannot add or remove entire lines
+- if you exchange or shuffle lines, they will be exchanged or shuffled in your
+  files too, which can lead to an undesired mess.
+
+Note that :
+
+- the plugin will not write the grepped files for you.
+  + if you are satisfied with the changes, just save all your modified
+    buffers as usual with |:wall|.
+- you can of course undo the changes you made if you are not happy with it
+
+Uses |:cdo| under the hood.
+
+Default mapping : `<M-w><M-g>`
+
+Fields~
+
+This buffer displays the following columns :
+
+error number | line number | column number | filename | line content
+
+------------------------------------------------------------------------------
+NARROW CURRENT FILE			*wheel-dedicated-buffers-narrow-file*
+
+This function narrow the current file lines. In the dedicated buffer, you can :
+
+- filter the lines
+- select lines
+- navigate to current or selected line(s)
+- edit visible lines
+
+You can edit the existing lines contents as much as you want, but avoid
+modifying the line number field. There is also a limited support to add
+line with buffer local maps :
+
+- `o` : add line below current one
+- `O` : add line above current one
+- `<M-y>` : duplicate line below current one
+- `<M-z>` : duplicate line above current one
+
+If you need to use the first-line filter, it's important to do it
+before adding new lines, or the numbering could be incorrect, which
+means possibly wrong propagation into your file.
+
+Just |:write| the buffer to propagate your changes to the original file.
+
+Default mappings :
+
+- `<M-w>--` : depends on the mode :
+  + in normal mode : waits for a movement or a |text-objects| to select
+    the range used in the narrow buffer
+  + in visual mode : open a narrow buffer with the visual range
+- `<M-w>-%` : open a narrow buffer with the entire original file content
+
+Fields~
+
+This buffer displays the following columns :
+
+line number | line content
+
+Substitution~
+
+The map `<M-s>` launch a |:substitute| wrapper. There are a few advantages
+to use it instead of a plain `:s/.../.../g`.
+
+First, only the line contents are modified, the other fields remain
+intact. If you are curious about how it is done, check |/\@<=|.
+
+Second, it asks you if you mean to replace only full word matches.
+This is useful if you want to replace e.g. the word `foo` but not `foo`
+in `foobar`.
+
+Third, if the replacing word is already present in the buffer, it will
+ask you confirmation before running the substitution. That way, you can
+avoid confusion in variable names, for instance.
+
+Only visible lines are affected for this function : it's just a wrapper
+for |:substitute|
+
+------------------------------------------------------------------------------
+NARROW ALL CIRCLE FILES			*wheel-dedicated-buffers-narrow-circle*
+
+This function narrow the lines of all circle files. In the dedicated
+buffer, you can :
+
+- filter the lines
+- select lines
+- navigate to current or selected line(s)
+- edit visible lines
+
+You can see it as a combination of |wheel-dedicated-buffers-grep| and
+|wheel-dedicated-buffers-grep-edit|.
+
+You can edit the lines content as much as you want, but avoid modifying
+the other fields. Adding or removing lines is currently not supported.
+
+Just |:write| the buffer to propagate your changes to the original file.
+
+It uses and fill the vim quickfix list under the hood.
+
+Default mapping : `<M-w>-c`
+
+Fields~
+
+This buffer displays the following columns :
+
+buffer number | line number | filename | line content
+
+Substitution~
+
+The map `<M-s>` launch a |:substitute| wrapper. There are a
+few advantages to use it instead of a plain `:s/.../.../g`, see
+|wheel-dedicated-buffers-narrow-file|.
+
+Context~
+
+The map `<M-c>` adds context lines to each grep result. You're asked
+how many lines to add.
+
+------------------------------------------------------------------------------
+YANK RING					*wheel-dedicated-buffers-yank*
+
+As usual, you can filter the elements in insert mode.
+The available local maps are :
+
+ - `<Enter>` : paste a yank after cursor
+ - `g<Enter>` : paste a yank after cursor, leave yank ring opened
+ - `p` : paste a yank linewise after cursor, leave yank ring opened
+ - `P` : paste a yank linewise before cursor, leave yank ring opened
+ - `gp` : paste a yank characterwise after cursor, leave yank ring opened
+ - `gP` : paste a yank characterwise before cursor, leave yank ring opened
+ - `s` : switch register ring to display
+
+Switching register~
+
+A yank dedicated buffer starts with the yank ring of the wheel default
+register.
+
+If you press `s`, a prompt asks you towards which register you want
+to switch. Completion is available with the register full names as
+candidates :
+
+unnamed    : "
+clipboard  : +
+primary    : *
+small      : -
+inserted   : .
+search     : /
+command    : :
+expression : =
+file       : %
+alternate  : #
+overview   : first three yanks of each register
+
+The buffer content is then replaced by the yank ring of the new register.
+
+If you press `<M-w><C-y>`, a prompt will ask you for a new starting
+default register. Register completion is there to help you. This map is
+also available in any regular buffer.
+
+Plain mode~
+
+The yank ring buffer in plain mode is launched by `<M-w><M-p>`.
+
+Each line of the dedicated buffer is a line of one of your yanks,
+represented as a string.
+
+Besides the usual yank maps, you can go to visual mode and paste your
+selection with `p`. The paste is done characterwise.
+
+Advantages :
+
+- flexible : you can use visual line, char or block mode
+
+Drawbacks :
+
+- more keystrockes to paste multiple lines :
+  + hit `p` on each one
+  + or select them and use `p` next
+  + or use visual mode
+
+List mode~
+
+The yank ring buffer in list mode is launched by `<M-w><M-y>`.
+
+Each line of the dedicated buffer is one of your yanks, represented as a
+list.
+
+Advantages :
+
+- you can paste a whole yank with a single keystroke
+
+Drawbacks :
+
+- less flexibility : it is not possible to use visual mode
+
+------------------------------------------------------------------------------
+UNDO LIST				*wheel-dedicated-buffers-undolist*
+
+In this buffer, you can navigate in the undo tree of the related buffer.
+
+Actions available :
+
+- `<Enter>` : go to the undo position of the current line
+- `-` : perform |:earlier| on the related buffer
+- `+` : perform |:later| on the related buffer
+- `u` : go back to the last undo state
+
+Before playing with this, be sure you have a backup of your file (VCS
+or so).
+
+Default mapping : `<M-w><C-u>`
+
+Diff mode~
+
+With `D`, you can visualize a diff split between :
+
+- the current state of your file
+- the chosen undo state
+
+You can even make some modifications with |do| and |dp| (or |:diffget|
+and |:diffput|).
+
+With `x`, you can close the diff split.
+
+Fields~
+
+This buffer displays the following columns :
+
+iden | time | written
+
+------------------------------------------------------------------------------
+BATCH						*wheel-dedicated-buffers-batch*
+
+See |wheel-batch-command|.
+
+------------------------------------------------------------------------------
+COMMAND OUTPUT					*wheel-dedicated-buffers-command*
+
+You can execute an ex or shell command and display the output in a wheel
+dedicated buffer. Shell commands must be prefixed by a `!`.
+
+Default mapping : `<M-w>:`
+
+Examples :
+
+- `<M-w>:` then `nmap <silent> <plug>(wheel-`
+- `<M-w>:` then `nmap <silent> <M-w>`
+- `<M-w>:` then `!ls -l % #`
+
+Async mode~
+
+You can run a shell command in async mode and display the output in a
+dedicated buffer.
+
+Default mapping : `<M-w>&&`
+
+You can stop the process by using `<c-s>` in the dedicated buffer.
+
+==============================================================================
+COMMANDS					*wheel-commands*
+
+Meta command				|wheel-commands-meta|
+Wheel status				|wheel-commands-status|
+Straight navigation			|wheel-commands-straight-navigation|
+Prompt					|wheel-commands-prompt|
+Read and write				|wheel-commands-read-and-write|
+Dedicated buffers			|wheel-commands-dedicated-buffers|
+Batch					|wheel-commands-batch|
+Autogroup				|wheel-commands-autogroup|
+Disc operations				|wheel-commands-disc-operations|
+Wheel tree in disc			|wheel-commands-tree-in-disc|
+
+------------------------------------------------------------------------------
+META COMMAND						*wheel-commands-meta*
+
+The main command is :
+
+:Wheel {subcommand}						*:Wheel*
+    Meta command that accepts a serie of sub-commands, described in
+    the following sections. Completion of sub-commands and subsequent
+    is available.
+
+Hitting tab after a space yields all the candidates.
+
+Hitting tab after a word character filter the candidates with the word.
+
+There is a slight difference with the usual wheel completion, however :
+if you want to filter with multi-patterns, separate them with a comma
+instead of a space, e.g. : >
+
+    :Wheel pr,t<tab> -> :Wheel prompt
+<
+
+You can also use a semicolon : >
+
+    :Wheel c;y<tab> -> :Wheel copy
+<
+
+Some subcommands expect a third word : >
+
+    :Wheel subcommand {action or file ...}
+<
+
+In the help submenu of the main or meta menu, you have access to the
+list of available subcommands and actions for |:Wheel|.
+
+------------------------------------------------------------------------------
+WHEEL STATUS						*wheel-commands-status*
+
+:Wheel info						*:Wheel-info*
+	Print information of the current wheel status in the format
+	`torus > circle > location`.
+
+:Wheel jump						*:Wheel-jump*
+	Jump to current wheel location
+
+:Wheel follow						*:Wheel-follow*
+	Find closest location in wheel matching current file & cursor
+
+------------------------------------------------------------------------------
+STRAIGHT NAVIGATION			*wheel-commands-straight-navigation*
+
+:Wheel next-location
+	Go to next location
+
+:Wheel previous-location
+	Go to previous location
+
+:Wheel next-circle
+	Go to next circle
+
+:Wheel previous-circle
+	Go to previous circle
+
+:Wheel next-torus
+	Go to next torus
+
+:Wheel previous-torus
+	Go to previous torus
+
+History~
+
+:Wheel newer
+	Go to newer location in history
+
+:Wheel older
+	Go to older location in history
+
+:Wheel newer-in-circle
+	Go to newer location in same circle
+
+:Wheel older-in-circle
+	Go to older location in same circle
+
+:Wheel newer-in-torus
+	Go to newer location in same torus
+
+:Wheel older-in-torus
+	Go to older location in same torus
+
+Alternate~
+
+:Wheel alternate-anywhere
+	Alternate two last locations in history
+
+:Wheel alternate-same-torus
+	Alternate two last locations in the same torus
+
+:Wheel alternate-same-circle
+	Alternate two last locations in the same circle
+
+:Wheel alternate-other-torus
+	Alternate two last locations in distinct torus
+
+:Wheel alternate-other-circle
+	Alternate two last locations in distinct circle
+
+:Wheel alternate-same-torus-other-circle
+	Alternate two last locations in the same torus, but not in the same
+	circle
+
+:Wheel alternate-window
+	Alternate two last windows in any tab
+
+------------------------------------------------------------------------------
+PROMPT							*wheel-commands-prompt*
+
+:Wheel prompt {action}						*:Wheel-prompt*
+    Launch prompting function given by action.
+
+Examples : >
+
+    :Wheel prompt location
+    :Wheel prompt history
+>
+
+------------------------------------------------------------------------------
+READ AND WRITE					*wheel-commands-read-and-write*
+
+:Wheel prompt read-wheel					*:Wheel-prompt-read-wheel*
+	Load wheel from file. The plugin will ask you the file name.
+	File completion in `g:wheel_config.storage.wheel.folder` is available.
+	Leaving empty choose the [file] under brackets.
+	Inserting the special value `=` choose `g:wheel_config.storage.wheel.name`.
+
+:Wheel prompt write-wheel					*:Wheel-prompt-write-wheel*
+	Save wheel in file. The plugin will ask you the file name.
+	File completion in `g:wheel_config.storage.wheel.folder` is available.
+	Leaving empty choose the [file] under brackets.
+	Inserting the special value `=` choose `g:wheel_config.storage.wheel.name`.
+
+:Wheel prompt read-session				*:Wheel-prompt-read-session*
+	Load session from file. The plugin will ask you the file name.
+	File completion in `g:wheel_config.storage.session.folder` is available.
+	Leaving empty choose the [file] under brackets.
+	Inserting the special value `=` choose `g:wheel_config.storage.session.name`.
+
+:Wheel prompt write-session				*:Wheel-prompt-write-session*
+	Save session in file. The plugin will ask you the file name.
+	File completion in `g:wheel_config.storage.session.folder` is available.
+	Leaving empty choose the [file] under brackets.
+	Inserting the special value `=` choose `g:wheel_config.storage.session.name`.
+
+------------------------------------------------------------------------------
+DEDICATED BUFFERS				*wheel-commands-dedicated-buffers*
+
+:Wheel dedibuf {action}						*:Wheel-dedibuf*
+    Launch dedicated buffer function given by action.
+
+Examples : >
+
+    :Wheel dedibuf index-location
+    :Wheel dedibuf frecency
+>
+
+------------------------------------------------------------------------------
+BATCH							*wheel-commands-batch*
+
+:Wheel batch {my_command}			      *:Wheel-batch*
+	Use the argument list to execute {my_command} on each location of the
+	current circle. The command can be a vim `:command` or an external shell
+	`!command`. The ouput is displayed in a dedicated buffer.
+
+Examples :
+
+- :Wheel batch !wc %
+
+Uses |:argdo| under the hood.
+
+------------------------------------------------------------------------------
+AUTOGROUP						*wheel-commands-autogroup*
+
+:Wheel autogroup				       *:Wheel-autogroup*
+	Autogroup locations of current torus using filename extensions or directories.
+	Creates a new torus where each group will occupy a circle.
+
+------------------------------------------------------------------------------
+DISC OPERATIONS					*wheel-commands-disc-operations*
+
+:Wheel mkdir {dirname}
+	Create recursively a directory if non existent
+
+:Wheel rename {source} {dest}
+	Rename a file
+
+:Wheel copy {source} {dest}
+	Copy a file
+
+:Wheel delete {filename}
+	Delete a file
+
+------------------------------------------------------------------------------
+WHEEL TREE IN DISC				*wheel-commands-tree-in-disc*
+
+:Wheel tree-script				*:WheelTreeScript*
+	Write a shell script that generates a tree of links or copies
+	following the wheel hierarchy : torus/circle/location.
+	Unix systems only.
+	The generated script is a lot faster than
+	|:WheelSymlinkTree| or |:WheelCopiedTree|.
+
+
+:Wheel symlink-tree				*:WheelSymlinkTree*
+	Generate a tree of symlinks following the wheel hierarchy :
+	torus/circle/link-to-location-file.
+	Unix systems only.
+
+
+:Wheel copied-tree				*:WheelCopiedTree*
+	Generate a tree of copies following the wheel hierarchy :
+	torus/circle/link-to-location-file.
+	Unix systems only.
+	Useful to make a backup of the wheel files.
+
+==============================================================================
+FUNCTIONS					        *wheel-functions*
+
+User interface			|wheel-functions-user-interface|
+Async process			|wheel-functions-async-process|
+
+------------------------------------------------------------------------------
+USER INTERFACE				*wheel-functions-user-interface*
+
+The functions used as User Interface are listed :
+
+- in the mappings of autoload/wheel/centre.vim
+- in the menus of autoload/wheel/crystal.vim
+
+------------------------------------------------------------------------------
+ASYNC PROCESS					*wheel-functions-async-process*
+
+wheel#wave#start({command}, {settings})		*wheel-wave-start*
+	For Unix systems only. Neovim version.
+	Start an async command and display its output in a dedicated buffer.
+	You can filter buffer content, as usual.
+	{settings} is a dictionary containing the following keys :
+	  - new_buffer : whether to open a dedicated buffer
+	    before launching the process (true by default)
+
+wheel#ripple#start({command}, {settings})		*wheel-ripple-start*
+	For Unix systems only. Vim version.
+	Same usage as |wheel#wave#start|.
+
+==============================================================================
+CONFIGURATION					    *wheel-configuration*
+
+Vim options				|wheel-config-vim-options|
+Dictionary				|wheel-config-dictionary|
+Mappings				|wheel-config-mappings|
+Prefix					|wheel-config-prefix|
+Locate database				|wheel-config-locate-db|
+Grep ex command				|wheel-config-grep|
+Project markers				|wheel-config-project-markers|
+Auto chdir project			|wheel-config-project-auto-chdir|
+Wheel folder				|wheel-config-wheel-folder|
+Wheel name				|wheel-config-wheel-name|
+Autoread wheel				|wheel-config-wheel-autoread|
+Autowrite wheel				|wheel-config-wheel-autowrite|
+Session folder				|wheel-config-session-folder|
+Session file				|wheel-config-session-name|
+Autoread session			|wheel-config-session-autoread|
+Autowrite session			|wheel-config-session-autowrite|
+Backups					|wheel-config-backups|
+Max history 				|wheel-config-maxim-history|
+Max input history 			|wheel-config-maxim-input|
+Max MRU					|wheel-config-maxim-mru|
+Max yanks 				|wheel-config-maxim-yanks|
+Max yank size 				|wheel-config-maxim-yank-size|
+Max layers in dedicated buffers		|wheel-config-maxim-layers|
+Max number of tabs			|wheel-config-maxim-tabs|
+Max number of horizontal splits		|wheel-config-maxim-horizontal|
+Max number of vertical splits		|wheel-config-maxim-vertical|
+Completion                     		|wheel-config-completion|
+Frecency                     		|wheel-config-frecency|
+Messages				|wheel-config-display-message|
+Statusline in dedicated buffers		|wheel-config-display-statusline|
+Filter prompt in dedicated buffers	|wheel-config-display-prompt|
+Selection marker			|wheel-config-display-selection|
+Signs					|wheel-config-display-sign|
+Tabline					|wheel-config-tabline|
+Example					|wheel-config-example|
+
+------------------------------------------------------------------------------
+VIM OPTIONS					*wheel-config-vim-options*
+
+To facilitate the navigation between buffers, the following vim options
+can be useful : >
+
+    set hidden
+    set bufhidden=hide
+<
+
+If you don't want to activate these options, remember to write your
+files before using a wheel navigation tool.
+
+To enable nice completion in prompting wheel functions : >
+
+    set wildmenu
+    set wildchar=<Tab>
+    set wildmode=full
+<
+
+See |'wildmode'| to adapt it to your taste.
+
+------------------------------------------------------------------------------
+DICTIONARY					  *wheel-config-dictionary*
+
+Customization is done using the `g:wheel_config` dictionary. You must
+first initialize it : >
+
+	let g:wheel_config                 = {}
+	let g:wheel_config.project         = {}
+	let g:wheel_config.storage         = {}
+	let g:wheel_config.storage.wheel   = {}
+	let g:wheel_config.storage.session = {}
+	let g:wheel_config.maxim           = {}
+	let g:wheel_config.completion      = {}
+	let g:wheel_config.frecency        = {}
+	let g:wheel_config.display         = {}
+	let g:wheel_config.display.sign    = {}
+
+<
+
+------------------------------------------------------------------------------
+MAPPINGS					    *wheel-config-mappings*
+
+Determine how many default mappings are available : >
+
+    let g:wheel_config.mappings = 10
+<
+
+See |wheel-mappings-levels| for more information.
+
+Default : 0
+
+------------------------------------------------------------------------------
+PREFIX						    *wheel-config-prefix*
+
+Prefix for mappings of level 0, 1, 2 : >
+
+    let g:wheel_config.prefix = '<my-wonderful-prefix>'
+<
+
+See |wheel-mappings-prefix| for more information.
+
+Default : `<M-w>`
+
+------------------------------------------------------------------------------
+LOCATE DATABASE			    		*wheel-config-locate-db*
+
+If you want to use a custom database when using `locate` : >
+
+  let g:wheel_config.locate_db = '~/my_locate.db'
+<
+
+Default : empty
+
+------------------------------------------------------------------------------
+GREP EX COMMAND			    		*wheel-config-grep*
+
+Whether to use internal |:vimgrep| or external |:grep| to grep files : >
+
+  let g:wheel_config.grep = 'vimgrep'
+  " or
+  let g:wheel_config.grep = 'grep'
+<
+
+Default : internal vimgrep, in case external grep is not available.
+
+------------------------------------------------------------------------------
+PROJECT MARKERS				*wheel-config-project-markers*
+
+File(s) or directories(s) marking a project root. Can take a string or
+list value. : >
+
+    let g:wheel_config.project.markers = '.git'
+    let g:wheel_config.project.markers = ['.git', '.my-project-root']
+<
+
+If a list is given, the project directory is found as soon as one marker
+of the list is found in it
+
+Default : `'.git'`
+
+------------------------------------------------------------------------------
+AUTO CHDIR PROJECT			*wheel-config-project-auto-chdir*
+
+Try to change directory to project root if > 0 : >
+
+    let g:wheel_config.project.auto_chdir = 1
+<
+
+To find the right folder, the plugin looks at files or dirs listed in
+`g:wheel_config.project_markers`.
+
+Default : 0
+
+------------------------------------------------------------------------------
+WHEEL FOLDER					   *wheel-config-wheel-folder*
+
+The plugin can save your wheel catégories & groups in wheel files.
+
+You can have as many wheel files as you want, they will be stored in
+a wheel folder.
+
+Folder where your wheels will be saved : >
+
+    let g:wheel_config.storage.wheel.folder = '~/.local/share/wheel'
+<
+
+It is highly recommended to define this folder and regularly save the
+wheel, either manually or automatically, using the autowrite config.
+
+Default~
+
+- vim : '~/.vim/wheel'
+- nvim : '~/.local/share/nvim/wheel'
+
+------------------------------------------------------------------------------
+WHEEL NAME					    *wheel-config-wheel-name*
+
+Name for the default wheel file : >
+
+    let g:wheel_config.storage.wheel.name = 'wheel.vim'
+<
+
+This file will be located in `g:wheel_config.storage.wheel.folder`
+
+Default : `wheel.vim`
+
+------------------------------------------------------------------------------
+AUTOREAD WHEEL				    *wheel-config-wheel-autoread*
+
+Auto read wheel file on startup if non null : >
+
+    let g:wheel_config.storage.wheel.autoread = 1
+<
+
+To enable it, you need to add an autocommand on vim enter : >
+
+    autocmd VimEnter * call wheel#void#init()
+<
+
+Default : 0
+
+------------------------------------------------------------------------------
+AUTOWRITE WHEEL				    *wheel-config-wheel-autowrite*
+
+Auto write wheel file on exit if non null : >
+
+    let g:wheel_config.storage.wheel.autowrite = 1
+<
+
+To enable it, you need to add an autocommand on vim leave : >
+
+    autocmd VimLeave * call wheel#void#exit()
+<
+
+Default : 0
+
+------------------------------------------------------------------------------
+SESSION FOLDER				   *wheel-config-session-folder*
+
+Wheel can save your tabs & windows layout in session files.
+
+You can have as many session files as you want, they will be stored in
+a session folder.
+
+Folder where your sessions will be saved : >
+
+    let g:wheel_config.storage.session.folder = '~/.local/share/wheel/session'
+<
+
+Default~
+
+- vim : '~/.vim/wheel/session'
+- nvim : '~/.local/share/nvim/wheel/session'
+
+------------------------------------------------------------------------------
+SESSION NAME					   *wheel-config-session-name*
+
+Name for the default session file : >
+
+    let g:wheel_config.storage.session.name = 'session.vim'
+<
+
+This file will be located in `g:wheel_config.storage.session.folder`
+
+Default : `session.vim`
+
+------------------------------------------------------------------------------
+AUTOREAD SESSION			    *wheel-config-session-autoread*
+
+Auto read current or default session file on startup if non null : >
+
+    let g:wheel_config.storage.session.autoread = 1
+<
+
+To enable it, you need to add an autocommand on vim enter : >
+
+  autocmd VimEnter * call wheel#void#init()
+<
+
+Default : 0
+
+------------------------------------------------------------------------------
+AUTOWRITE SESSION			    *wheel-config-session-autowrite*
+
+Auto write current or default session file on exit if non null : >
+
+    let g:wheel_config.storage.session.autowrite = 1
+<
+
+To enable it, you need to add an autocommand on vim leave : >
+
+    autocmd VimLeave * call wheel#void#exit()
+<
+
+Default : 0
+
+------------------------------------------------------------------------------
+BACKUPS						    *wheel-config-backups*
+
+Number of backups for wheel and session files : >
+
+    let g:wheel_config.storage.backups = 3
+<
+
+Assuming your wheel file is `wheel.vim`, the backups will be named
+`wheel.vim.1`, `wheel.vim.2`, `wheel.vim.3`, and so on.
+
+It is recommended to use backups, in case things get messed up
+accidentally.
+
+Default : 3
+
+------------------------------------------------------------------------------
+MAX NUMBER OF ELEMENTS IN HISTORY		   *wheel-config-maxim-history*
+
+Maximum number of elements in the wheel history : >
+
+    let g:wheel_config.maxim.history = 400
+<
+
+Default : 500
+
+------------------------------------------------------------------------------
+MAX NUMBER OF ELEMENTS IN INPUT HISTORY		   *wheel-config-maxim-input*
+
+Maximum number of elements in the input history : >
+
+    let g:wheel_config.maxim.input = 200
+<
+
+Default : 500
+
+------------------------------------------------------------------------------
+MAX NUMBER OF ELEMENTS IN MRU			*wheel-config-maxim-mru*
+
+Maximum number of elements in mru : >
+
+  let g:wheel_config.maxim.mru = 300
+<
+
+Default : 500
+
+------------------------------------------------------------------------------
+MAX NUMBER OF ELEMENTS IN YANK RING		   *wheel-config-maxim-yanks*
+
+Maximum number of elements in the yank ring for unnamed register : >
+
+    let g:wheel_config.maxim.unnamed_yanks = 700
+<
+
+Default : 500
+
+Maximum number of elements in the yank ring for other registers : >
+
+    let g:wheel_config.maxim.other_yanks = 100
+<
+
+Default : 50
+
+------------------------------------------------------------------------------
+MAX NUMBER OF LINES OF A YANK			   *wheel-config-maxim-yank-lines*
+
+Maximum number of lines of a yank added in the yank ring : >
+
+    let g:wheel_config.maxim.yank_lines = 50
+<
+
+Default : 30
+
+------------------------------------------------------------------------------
+MAX SIZE OF A YANK				   *wheel-config-maxim-yank-size*
+
+Maximum size of a yank added in the yank ring, in bytes : >
+
+    let g:wheel_config.maxim.yank_size = 3000
+<
+
+Default : 3000
+
+------------------------------------------------------------------------------
+MAX LAYERS IN DEDICATED BUFFERS		    *wheel-config-maxim-layers*
+
+Maximum size of layer ring in dedicated buffers : >
+
+	let g:wheel_config.maxim.layers = 5
+<
+
+Default : 5
+
+------------------------------------------------------------------------------
+MAX NUMBER OF TABS			    *wheel-config-maxim-tabs*
+
+Maximum number of tabs in tab layouts : >
+
+  let g:wheel_config.maxim.tabs = 12
+<
+
+Default : 15
+
+------------------------------------------------------------------------------
+MAX NUMBER OR HORIZONTAL SPLITS	    	*wheel-config-maxim-horizontal*
+
+Maximum number of horizontal splits in layouts : >
+
+  let g:wheel_config.maxim.horizontal = 3
+<
+
+Default : 3
+
+------------------------------------------------------------------------------
+MAX NUMBER OR VERTICAL SPLITS		    *wheel-config-maxim-vertical*
+
+Maximum number of vertical splits in layouts : >
+
+  let g:wheel_config.maxim.vertical = 4
+<
+
+Default : 4
+
+------------------------------------------------------------------------------
+COMPLETION					    *wheel-config-completion*
+
+To enable a kind of fuzzy-vowels completion : >
+
+ let g:wheel_config.completion.vocalize = 1
+<
+
+Default : 0
+
+To enable a kind of fuzzy-word completion : >
+
+ let g:wheel_config.completion.wordize = 1
+<
+
+Overrrides `g:wheel_config.completion.vocalize`.
+
+Default : 0
+
+To enable full fuzzy completion : >
+
+ let g:wheel_config.completion.fuzzy = 1
+<
+
+Overrrides vocalize and wordize settings.
+
+Default : 0
+
+See |wheel-prompting-functions-completion| for more information.
+
+------------------------------------------------------------------------------
+FRECENCY				    	    *wheel-config-frecency*
+
+The frecency (frequent & recent) algorithm is very simple :
+
+- when you jump to a location, its score is increased by a reward
+- the scores of all the other locations of the frecency list are decreased
+  by a penalty
+- when a score dives below 0, the location is removed from the list
+
+You can customize the reward : >
+
+  let g:wheel_config.frecency.reward = 150
+<
+
+and the penalty : >
+
+  let g:wheel_config.frecency.penalty = 1
+<
+
+The higher the reward/penaly ratio, the bigger your frecency list will be.
+
+Default~
+
+- reward : 50
+- penalty : 1
+
+------------------------------------------------------------------------------
+STATUSLINE IN DEDICATED BUFFERS		    	*wheel-config-display-statusline*
+
+By default, dedicated buffers status is displayed in the statusline. If
+you'd rather have it printed in the echo area, just set the statusline
+option to zero : >
+
+  let g:wheel_config.display.statusline = 0
+<
+
+Default : 1
+
+The highlight group is `WheelStatusLine`. You can customize it : >
+
+    highlight WheelStatusLine guifg=#5b3c11 guibg=#0 gui=bold,reverse
+<
+
+------------------------------------------------------------------------------
+MESSAGES				    	*wheel-config-display_message*
+
+You can ask wheel to print one-line message on dedicated buffers status : >
+
+    let g:wheel_config.display.dedibuf_msg = 'one-line'
+<
+
+or to accept multi-line messages : >
+
+    let g:wheel_config.display.dedibuf_msg = 'multi-line'
+<
+
+Default : `one-line`
+
+Note : it will print nothing if `g:wheel_config.display.statusline > 0`.
+
+if you set this option to multi-line, I recommend you set |'cmdheight'|
+option to a minimum of 3 : >
+
+    set cmdheight=3
+<
+
+------------------------------------------------------------------------------
+FILTER PROMPT IN REGULAR DEDICATED BUFFERS	*wheel-config-display-prompt*
+
+You can customize the filter prompt in dedicated buffers.
+
+For regular dedicated buffer, _without_ `BufWriteCmd` autocommand : >
+
+    let g:wheel_config.display.prompt = 'wheel $ '
+<
+
+Default : '☯ '
+
+For writable dedicated buffer, _with_ `BufWriteCmd` autocommand : >
+
+
+    let g:wheel_config.display.prompt_writable = 'wheel # '
+<
+
+Default : '☈ '
+
+------------------------------------------------------------------------------
+SELECTION MARKER				*wheel-config-display-selection*
+
+You can customize the selection marker in dedicated buffers : >
+
+
+    let g:wheel_config.display.selection = '-> '
+<
+
+Default : '☰ '
+
+------------------------------------------------------------------------------
+SIGNS						*wheel-config-display-sign*
+
+Switch~
+
+By default, signs are displayed at :
+
+- wheel locations
+- cursor line after a (neo)vim native jump using Wheel interface
+
+You can disable it if you want : >
+
+    let g:wheel_config.display.sign.switch = 0
+<
+
+Default : 1
+
+Settings~
+
+The sign settings for wheel location can be modified : >
+
+
+    let g:wheel_config.display.sign.settings = { 'text' : '@' }
+<
+
+Default : { 'text' : '☯' }
+
+Native settings~
+
+Sign settings for (neo)vim native navigation using Wheel interface : >
+
+
+    let g:wheel_config.display.sign.native_settings = { 'text' : '*' }
+<
+
+Default : { 'text' : '✻' }
+
+See also |sign.txt| and |:sign|.
+
+------------------------------------------------------------------------------
+TABLINE					*wheel-config-tabline*
+
+Text~
+
+If you want wheel to manage your tabline, use this function : >
+
+  set tabline=%!wheel#status#tabline()
+<
+
+The format is :
+
+- tabnumber:filename
+- tabnumber:filename[+] if at least a file is modified
+- tabnumber:filename(win_num) if there is more than one window
+
+Gui tabs of gvim~
+
+If you are using gui tabs in gvim, you can ask wheel to manage the
+labels : >
+
+  set guitablabel=%{wheel#status#guitablabel()}
+<
+
+Gui tabs of nvim-qt~
+
+If you find a way to customize gui tabs labels for nvim-qt, feel free
+to describe it in a github issue.
+
+If you prefer using text tabs even in nvim-qt, simply put : >
+
+    GuiTabline 0
+<
+
+in your `ginit.vim`.
+
+------------------------------------------------------------------------------
+EXAMPLE						        *wheel-config-example*
+
+Here is an example of a complete configuration : >
+
+  if ! exists("g:wheel_loaded")
+    " ---- DONT FORGET TO INITIALIZE DICTS BEFORE USING THEM
+    let g:wheel_config                 = {}
+    let g:wheel_config.project         = {}
+    let g:wheel_config.storage         = {}
+    let g:wheel_config.storage.wheel   = {}
+    let g:wheel_config.storage.session = {}
+    let g:wheel_config.maxim           = {}
+    let g:wheel_config.completion      = {}
+    let g:wheel_config.frecency        = {}
+    let g:wheel_config.display         = {}
+    let g:wheel_config.display.sign    = {}
+
+    " ---- The bigger it is, the more mappings available
+    let g:wheel_config.mappings = 10
+    " ---- Prefix for mappings
+    let g:wheel_config.prefix = '<M-w>'
+    " ---- Locate database ; default one if left empty
+    let g:wheel_config.locate_db = '~/index/locate/home.db'
+    " ---- Grep command : :grep or :vimpgrep
+    let g:wheel_config.grep = 'grep'
+
+    " Marker of project root
+    "let g:wheel_config.project.markers = '.git'
+    "let g:wheel_config.project.markers = '.project-root'
+    " List of markers
+    " The project dir is found as soon as one marker is found in it
+    let g:wheel_config.project.markers = ['.hg' , '.git', '.project-root']
+    " Auto cd to project root if > 0
+    let g:wheel_config.project.auto_chdir = 1
+
+    " The folder where toruses and circles will be stored and read
+    let g:wheel_config.storage.wheel.folder = '~/.local/share/wheel'
+    " Name of the default wheel file
+    let g:wheel_config.storage.wheel.name = 'wheel.vim'
+    " Auto read wheel file on startup if > 0
+    let g:wheel_config.storage.wheel.autoread = 1
+    " Auto write wheel file on exit if > 0
+    let g:wheel_config.storage.wheel.autowrite = 1
+    " The folder where sessions will be stored and read
+    let g:wheel_config.storage.session.folder = '~/.local/share/wheel/session'
+    " Name of the default session file
+    let g:wheel_config.storage.session.name = 'session.vim'
+    " Auto read default session file on startup if > 0
+    let g:wheel_config.storage.session.autoread = 1
+    " Auto write default session file on exit if > 0
+    let g:wheel_config.storage.session.autowrite = 1
+    " Number of backups for wheel & session files
+    let g:wheel_config.storage.backups = 5
+
+    " ---- Maximum number of elements in history
+    let g:wheel_config.maxim.history = 400
+    " ---- Maximum number of elements in input history
+    let g:wheel_config.maxim.input = 200
+
+    " ---- Maximum number of elements in mru
+    let g:wheel_config.maxim.mru = 300
+
+    " ---- Maximum number of elements in yank ring
+    let g:wheel_config.maxim.default_yanks = 700
+    let g:wheel_config.maxim.other_yanks = 100
+    " ---- Maximum lines of yank to add in yank ring
+    let g:wheel_config.maxim.yank_lines = 30
+    " ---- Maximum size of yank to add in yank ring
+    let g:wheel_config.maxim.yank_size = 3000
+
+    " ---- Maximum size of layer ring
+    let g:wheel_config.maxim.layers = 10
+
+    " ---- Maximum number of tabs in layouts
+    let g:wheel_config.maxim.tabs = 12
+    " ---- Maximum number of horizontal splits
+    let g:wheel_config.maxim.horizontal = 3
+    " ---- Maximum number of vertical splits
+    let g:wheel_config.maxim.vertical = 4
+
+    " ---- Completion
+    let g:wheel_config.completion.vocalize = 1
+    let g:wheel_config.completion.wordize = 1
+    let g:wheel_config.completion.fuzzy = 0
+    let g:wheel_config.completion.scores = 1
+
+    " ---- Frecency
+    let g:wheel_config.frecency.reward = 120
+    let g:wheel_config.frecency.penalty = 1
+
+    " ---- Mandala & leaf status in statusline ?
+    let g:wheel_config.display.statusline = 1
+    " ---- Wheel dedibuf message : one-line or multi-line
+    let g:wheel_config.display.dedibuf_msg = 'one-line'
+    " ---- Filter prompt in dedicated buffers
+    "let g:wheel_config.display.prompt = 'wheel $ '
+    "let g:wheel_config.display.prompt_writable = 'wheel # '
+    " ---- Selection marker in dedicated buffers
+    "let g:wheel_config.display.selection = '-> '
+    " ---- Signs
+    let g:wheel_config.display.sign.switch = 1
+    " ---- Signs at wheel locations
+    "let g:wheel_config.display.sign.settings = { 'text' : '@' }
+    " ---- Signs after using Wheel interface to native navigation (buffer, marker, jump, change, tag, ...)
+    "let g:wheel_config.display.sign.native_settings = { 'text' : '*' }
+
+    let g:wheel_config.debug = 0
+  endif
+<
+
+==============================================================================
+AUTOCOMMANDS					   *wheel-autocommands*
+
+Auto group			|wheel-autocommands-auto-group|
+Auto read			|wheel-autocommands-auto-read|
+Auto write			|wheel-autocommands-auto-write|
+Auto update			|wheel-autocommands-auto-update|
+Auto update alternate window	|wheel-autocommands-auto-update-alternate-window|
+Before jump			|wheel-autocommands-before-jump|
+Before organize			|wheel-autocommands-before-organize|
+Before write			|wheel-autocommands-before-write|
+After jump			|wheel-autocommands-after-jump|
+Auto follow			|wheel-autocommands-auto-follow|
+After native			|wheel-autocommands-after-native|
+MRU files			|wheel-autocommands-mru-files|
+Yank ring			|wheel-autocommands-yank|
+Example				|wheel-autocommands-example|
+
+------------------------------------------------------------------------------
+AUTO GROUP				*wheel-autocommands-autogroup*
+
+It's a good idea to group all your wheel autocommands, e.g. : >
+
+    augroup wheel
+	" -- clear the group
+	autocmd!
+	" -- add your autocommands
+	autocmd ...
+	autocmd ...
+	...
+    augroup END
+<
+
+This way, you can easily check the list of your wheel autocommands with : >
+
+    autocmd wheel
+<
+
+Be aware that the autogroup `wheel-mandala` is used for dedicated buffers
+local autocommands, so you can't use this name.
+
+------------------------------------------------------------------------------
+AUTO READ				*wheel-autocommands-auto-read*
+
+To enable autoread of the wheel file, you need to add an autocommand
+on vim enter : >
+
+    autocmd VimEnter * call wheel#void#init()
+<
+
+------------------------------------------------------------------------------
+AUTO WRITE				*wheel-autocommands-auto-write*
+
+To enable autowrite of the wheel file, you need to add an autocommand
+on vim leave : >
+
+    autocmd VimLeave * call wheel#void#exit()
+<
+
+------------------------------------------------------------------------------
+AUTO UPDATE					*wheel-autocommands-auto-update*
+
+By default, locations are only updated manually, with `<M-w><M-$>`. This
+way, you can update the wheel only when you want to do so.
+
+Nevertheless, if you want to update your cursor position each time you
+leave a buffer, you can use the classic BufLeave event : >
+
+  autocmd BufLeave * call wheel#vortex#update()
+<
+
+------------------------------------------------------------------------------
+AUTO UPDATE ALTERNATE WINDOW	*wheel-autocommands-auto-update-alternate-window*
+
+If you wish to use the generalized alternate window command, for all windows
+in all tabs : >
+
+  autocmd BufLeave * call wheel#caduceus#update_window()
+<
+
+------------------------------------------------------------------------------
+BEFORE JUMP					*wheel-autocommands-before-jump*
+
+It is possible to update automatically your locations before each
+jump to a new wheel location. Just add the update function to the
+`WheelBeforeJump` user event : >
+
+    autocmd User WheelBeforeJump call wheel#vortex#update()
+<
+
+This autocmd is run before any jump, as soon as you use a wheel navigation
+function :
+
+- next/previous element
+- switch to element
+- switch in index, history, frecency
+- ...
+
+------------------------------------------------------------------------------
+BEFORE ORGANIZE				*wheel-autocommands-before-organize*
+
+To update automatically your locations before each operation involving a
+wheel element, just add the update function to the `WheelBeforeOrganize`
+user event : >
+
+    autocmd User WheelBeforeOrganize call wheel#vortex#update()
+<
+
+This autocmd is run before each organizing function :
+
+- add
+- rename
+- remove
+- reorder
+- reorganize
+- ...
+
+------------------------------------------------------------------------------
+BEFORE WRITE				*wheel-autocommands-before-write*
+
+To update automatically your locations before writing the wheel to a file,
+just add the update function to the `WheelBeforeWrite` user event : >
+
+    autocmd User WheelBeforeWrite call wheel#vortex#update()
+<
+
+------------------------------------------------------------------------------
+AFTER JUMP				*wheel-autocommands-after-jump*
+
+The `WheelAfterJump` user event happens after any jump to a wheel
+location, as soon as you use a wheel navigation function.
+
+You can use it to add a post-jump operation.
+
+This example folds everything except the cursor line : >
+
+    autocmd User WheelAfterJump norm zMzx
+<
+
+This example opens recursively the folds under the cursor line : >
+
+    autocmd User WheelAfterJump norm zCzO
+<
+
+------------------------------------------------------------------------------
+AUTO FOLLOW			   		*wheel-autocommands-auto-follow*
+
+On switching tab or window~
+
+If you wish the wheel location to auto-follow the current buffer each
+time you enter a window, you can add this autocommand : >
+
+    autocmd WinEnter * call wheel#projection#follow()
+<
+
+This means that each time you enter a tab or a window by using a native
+command (like |gt|, |:tabnext|, |CTRL-W_CTRL-W| and so on), the plugin
+will check if the current file name is in the wheel. If true, it will
+adjust its state to match the file and cursor position.
+
+Launch it manually~
+
+You can launch the follow routine manually with `<M-w><M-$>` by default.
+
+Other events~
+
+I find these events less useful but they are worth mentioning, just in
+case you need them in your workflow.
+
+If you want to trigger the auto-follow process when you edit a file with a
+native vim command (like |:edit|), just add it to the `BufRead` event : >
+
+    autocmd BufRead * call wheel#projection#follow()
+<
+
+Same thing when you enter a buffer with a native vim command (like
+|:buffer|), just add it to the `BufEnter` event : >
+
+    autocmd BufEnter * call wheel#projection#follow()
+<
+
+------------------------------------------------------------------------------
+AFTER NATIVE					*wheel-autocommands-after-native*
+
+The `WheelAfterNative` user event happens after any jump using a Wheel
+interface to a native (neo)vim function.
+
+You can use it to auto-follow after a native operation : >
+
+    autocmd User WheelAfterNative call wheel#projection#follow()
+<
+
+------------------------------------------------------------------------------
+MRU FILES				    *wheel-autocommands-mru-files*
+
+If you want to record a list of the files you edited without adding them
+to the wheel : >
+
+  autocmd BufRead * call wheel#attic#record()
+<
+
+------------------------------------------------------------------------------
+YANK RING					*wheel-autocommands-yank*
+
+If you want to record your yanks/delete, you can add this autommand to
+your init file : >
+
+ autocmd TextYankPost * call wheel#codex#add()
+<
+
+------------------------------------------------------------------------------
+EXAMPLE					    *wheel-autocommands-example*
+
+Here is an example of a complete autocommands configuration : >
+
+    augroup wheel
+	" Clear the group
+	autocmd!
+	" On vim enter, for autoreading
+	autocmd VimEnter * call wheel#void#init()
+	" On vim leave, for autowriting
+	autocmd VimLeave * call wheel#void#exit()
+	" Update location line & col before leaving a window
+	autocmd BufLeave * call wheel#vortex#update()
+	" For the generalized alternate window command, for all windows in all tabs
+	autocmd BufLeave * call wheel#caduceus#update_window()
+	" Executed before jumping to a location
+	autocmd User WheelBeforeJump call wheel#vortex#update()
+	" Executed before organizing the wheel
+	autocmd User WheelBeforeOrganize call wheel#vortex#update()
+	" Executed before writing the wheel
+	autocmd User WheelBeforeWrite call wheel#vortex#update()
+	" Executed after jumping to a location
+	"autocmd User WheelAfterJump norm zMzx
+	" For current wheel location to auto follow window changes
+	autocmd WinEnter * call wheel#projection#follow()
+	" For current wheel location to follow on editing, buffer loading
+	"autocmd BufRead * call wheel#projection#follow()
+	" For current wheel location to follow on entering buffer
+	"autocmd BufEnter * call wheel#projection#follow()
+	" Executed after a native jump using Wheel interface (buffer, marker, jump, change, tag, ...)
+	"autocmd User WheelAfterNative call wheel#projection#follow()
+	" Add current non-wheel file to MRU files
+	autocmd BufRead * call wheel#attic#record()
+	" To record your yanks in the yank ring
+	autocmd TextYankPost * call wheel#codex#add()
+    augroup END
+<
+
+==============================================================================
+MAPPINGS						    *wheel-mappings*
+
+Levels				|wheel-mappings-levels|
+Prefix				|wheel-mappings-prefix|
+Mnemonic			|wheel-mappings-mnemonic|
+Level 0				|wheel-mappings-level-0|
+Level 1				|wheel-mappings-level-1|
+Level 2				|wheel-mappings-level-2|
+Level 10			|wheel-mappings-level-10|
+Level 20			|wheel-mappings-level-20|
+Define your own maps		|wheel-mappings-define-your-own-maps|
+Exhaustive list			|wheel-mappings-exhaustive-list|
+Other ideas			|wheel-mappings-ideas|
+
+------------------------------------------------------------------------------
+LEVELS						    *wheel-mappings-levels*
+
+The mappings are organized in levels :
+
+- level 0  : basic
+- level 1  : common
+- level 2  : advanced
+- level 10 : prefixless mappings
+
+If you set the option `g:wheel_config.mappings` to an integer `N`, all
+mappings of level less or equal to `N` will be bound to keys. So, the
+higher this option, the more mappings available.
+
+E.g., if you set it to 2 : >
+
+    let g:wheel_config.mappings = 2
+<
+mappings levels 0, 1 and 2 will be available.
+
+Level 1 or 2 is fine for most usages. Level 10 is interesting if you are
+looking for ideas of prefixless mappings. See |wheel-mappings-level-0| and
+subsequent for more information.
+
+------------------------------------------------------------------------------
+PREFIX						    *wheel-mappings-prefix*
+
+Default mappings of levels 0, 1, 2 use a prefix key. This prefix is `<M-w>` by
+default. You can customize it : >
+
+    let g:wheel_config.prefix = '<my-wonderful-prefix>'
+<
+
+I like to set it to `<D-w>`, but since the `<D-...>` mappings don't seem
+to work in terminal or with Gvim, it is not the default. It's working on
+Neovim-qt, though : >
+
+    let g:wheel_config.prefix = '<D-w>'
+<
+
+In the following discussion, I assume that you have kept the default
+`<M-w>` prefix.
+
+------------------------------------------------------------------------------
+MNEMONIC					*wheel-mappings-mnemonic*
+
+Most mappings respect the following convention :
+
+- prefix + `letter`     : location operation
+- prefix + `<C-letter>` : circle operation
+- prefix + `<S-letter>` : torus operation
+- prefix + `<M-letter>` : alternative operation
+
+------------------------------------------------------------------------------
+LEVEL 0						*wheel-mappings-level-0*
+
+Menus~
+
+The most useful mapping to discover wheel functions is `<M-w><M-m>` : it
+launches a menu in a dedicated buffer, and from there you can trigger
+all sort of actions on the Wheel. See |wheel-dedicated-buffers-menu|
+for more information.
+
+| Prefix + | With default prefix | Action                  |
+| -------- | ------------------- | ----------------------- |
+| <M-m>    | <M-w><M-m>          | Main menu               |
+| =        | <M-w>=              | Meta menu               |
+
+Info~
+
+| Prefix + | With default prefix | Action                  |
+| -------- | ------------------- | ----------------------- |
+| i        | <M-w>i              | Dashboard               |
+
+Sync~
+
+| Prefix + | With default prefix | Action                       |
+| -------- | ------------------- | ---------------------------- |
+| $        | <M-w>$              | Sync down, jump to location  |
+| <M-$>    | <M-w><M-$>          | Sync up, follow current file |
+
+Read / Write file~
+
+| Prefix + | With default prefix | Action                 |
+| r        | <M-w>r              | Load wheel from file   |
+| w        | <M-w>w              | Save wheel to file     |
+| -------- | ------------------- | ---------------------- |
+| R        | <M-w>R              | Load session from file |
+| W        | <M-w>W              | Save session to file   |
+
+Next / previous~
+
+| Prefix +     | With default prefix   | Action                  |
+| ----------   | --------------------- | ----------------------- |
+| <PageUp>     | <M-w><PageUp>         | Go to previous location |
+| <PageDown>   | <M-w><PageDown>       | Go to next location     |
+| ----------   | --------------------- | ----------------------- |
+| <C-PageUp>   | <M-w><C-PageUp>       | Go to previous circle   |
+| <C-PageDown> | <M-w><C-PageDown>     | Go to next circle       |
+| ----------   | --------------------- | ----------------------- |
+| <S-PageUp>   | <M-w><S-PageUp>       | Go to previous torus    |
+| <S-PageDown> | <M-w><S-PageDown>     | Go to next torus        |
+
+History~
+
+| Prefix +    | With default prefix | Action                                        |
+| ----------- | ------------------- | --------------------------------------------- |
+| <Home>      | <M-w><Home>         | Go to newer location in history               |
+| <End>       | <M-w><End>          | Go to older location in history               |
+| <C-Home>    | <M-w><C-Home>       | Go to newer location in circle                |
+| <C-End>     | <M-w><C-End>        | Go to older location in circle                |
+| <S-Home>    | <M-w><S-Home>       | Go to newer location in torus                 |
+| <S-End>     | <M-w><S-End>        | Go to older location in torus                 |
+| ----------- | ------------------- | --------------------------------------------- |
+| ^           | <M-w>^              | Alternate menu                                |
+| <C-^>       | <M-w><C-^>          | Alternate anywhere                            |
+| <M-^>       | <M-w><M-^>          | Alternate in the same circle                  |
+| <M-C-^>     | <M-w><M-C-^>        | Alternate in another circle of the same torus |
+
+Add~
+
+| Prefix +   | With default prefix   | Action                             |
+| ---------- | --------------------- | ---------------------------------- |
+| a          | <M-w>a                | Add location to the current circle |
+| <C-a>      | <M-w><C-a>            | Add circle to the current torus    |
+| A          | <M-w>A                | Add torus to the wheel             |
+| ---------- | --------------------- | ---------------------------------- |
+| +f         | <M-w>+f               | Edit and add a file                |
+| +b         | <M-w>+b               | Edit and add a buffer              |
+| *          | <M-w>*                | Add files matching glob            |
+
+------------------------------------------------------------------------------
+LEVEL 1						*wheel-mappings-level-1*
+
+Switch~
+
+Prompting functions :
+
+| Prefix +  | With default prefix | Action                                   |
+| --------- | ------------------- | ---------------------------------------- |
+| <Enter>   | <M-w><Enter>        | Switch to location                       |
+| <C-CR>    | <M-w><C-Enter>      | Switch to circle                         |
+| <S-CR>    | <M-w><S-Enter>      | Switch to torus                          |
+| <M-CR>    | <M-w><M-Enter>      | Switch to torus, circle & location       |
+| x         | <M-w>x              | Switch location in index                 |
+| <C-x>     | <M-w><C-x>          | Switch circle in index                   |
+| h         | <M-w>h              | Switch location in history               |
+| e         | <M-w>e              | Switch location in frecency              |
+
+Dedicated buffers :
+
+| Prefix +  | With default prefix | Action                                   |
+| --------- | ------------------- | ---------------------------------------- |
+| <Space>   | <M-w><Space>        | Go to location                           |
+| <C-Space> | <M-w><C-Space>      | Go to circle                             |
+| <S-Space> | <M-w><S-Space>      | Go to torus                              |
+| X         | <M-w>X              | Index of toruses > circles > locations   |
+| <M-x>     | <M-w><M-x>          | Treeish index with folds                 |
+| <M-S-x>   | <M-w><M-S-x>        | Index of toruses > circles               |
+| <M-h>     | <M-w><M-h>          | Go to location in history                |
+| <M-e>     | <M-w><M-e>          | Go to location in frecency               |
+
+Reorder~
+
+| Prefix +   | With default prefix   | Action                                   |
+| ---------- | --------------------- | ---------------------------------------- |
+| @o         | <M-w>@o               | Reorder locations in current circle      |
+| @<C-o>     | <M-w>@<C-o>           | Reorder circles in current torus         |
+| @O         | <M-w>@O               | Reorder toruses in wheel                 |
+
+Rename~
+
+Prompting functions :
+
+| Prefix + | With default prefix | Action                  |
+| -------- | ------------------- | ----------------------- |
+| n        | <M-w>n              | Rename current location |
+| <C-n>    | <M-w><C-n>          | Rename current circle   |
+| N        | <M-w>N              | Rename current torus    |
+
+Dedicated buffers :
+
+| Prefix +   | With default prefix   | Action                                   |
+| ---------- | --------------------- | ---------------------------------------- |
+| @n         | <M-w>@n               | Rename locations in current circle       |
+| @<C-n>     | <M-w>@<C-n>           | Rename circles in current torus          |
+| @N         | <M-w>@N               | Rename toruses in wheel                  |
+
+Delete~
+
+Prompting functions :
+
+| Prefix + | With default prefix | Action                  |
+| -------- | ------------------- | ----------------------- |
+| d        | <M-w>d              | Delete current location |
+| <C-d>    | <M-w><C-d>          | Delete current circle   |
+| D        | <M-w>D              | Delete current torus    |
+
+Dedicated buffers :
+
+| Prefix + | With default prefix | Action                  |
+| -------- | ------------------- | ----------------------- |
+| @d       | <M-w>@d             | Delete current location |
+| @<C-d>   | <M-w>@<C-d>         | Delete current circle   |
+| @D       | <M-w>@D             | Delete current torus    |
+
+Copy & Move~
+
+Prompting functions :
+
+| Prefix + | With default prefix | Action                  |
+| -------- | ------------------- | ----------------------- |
+| c        | <M-w>c              | Copy current location   |
+| <M-c>    | <M-w><M-c>          | Copy current circle     |
+| C        | <M-w>C              | Copy current torus      |
+| m        | <M-w>m              | Move current location   |
+| M        | <M-w>M              | Move current circle     |
+
+Dedicated buffers :
+
+| Prefix +   | With default prefix   | Action                                   |
+| ---------- | --------------------- | ---------------------------------------- |
+| @c         | <M-w>@c               | Copy or move locations in current circle |
+| @<M-c>     | <M-w>@<M-c>           | Copy or move circles in current torus    |
+| @C         | <M-w>@C               | Copy or move toruses in wheel            |
+
+------------------------------------------------------------------------------
+LEVEL 2						*wheel-mappings-level-2*
+
+Buffers~
+
+Prompting functions :
+
+| Prefix + | With default prefix | Action                               |
+| -------- | ------------------- | ------------------------------------ |
+| b        | <M-w>b              | Buffers (opened files)               |
+
+Dedicated buffers :
+
+| Prefix + | With default prefix | Action                               |
+| -------- | ------------------- | ------------------------------------ |
+| <M-b>    | <M-w><M-b>          | Buffers                              |
+| <C-b>    | <M-w><C-b>          | All buffers, including unlisted ones |
+
+Tabs & windows~
+
+Visible buffers displayed in tabs & windows.
+
+Prompting functions :
+
+| Prefix + | With default prefix | Action                     |
+| -------- | ------------------- | -------------------------- |
+| v        | <M-w>v              | Switch to visible buffer   |
+
+Dedicated buffers :
+
+| Prefix + | With default prefix | Action                            |
+| -------- | ------------------- | --------------------------------- |
+| <M-v>    | <M-w><M-v>          | Tree view of tabs & windows       |
+| <C-v>    | <M-w><C-v>          | Visible buffers in tabs & windows |
+
+Search for files~
+
+Prompting functions :
+
+| Prefix + | With default prefix | Action                                      |
+| -------- | ------------------- | ------------------------------------------- |
+| f        | <M-w>f              | Find file in current directory tree         |
+| u        | <M-w>u              | Most recently used files not found in wheel |
+
+Dedicated buffers :
+
+| Prefix + | With default prefix | Action                                      |
+| -------- | ------------------- | ------------------------------------------- |
+| <M-f>    | <M-w><M-f>          | Find file in current directory tree         |
+| &f       | <M-w>&f             | Search files with find in async mode        |
+| <M-u>    | <M-w><M-u>          | Most recently used files not found in wheel |
+| l        | <M-w>l              | Search files with locate                    |
+
+Search inside files~
+
+Prompting functions :
+
+| Prefix + | With default prefix | Action                                |
+| -------- | ------------------- | ------------------------------------- |
+| o        | <M-w>o              | Occur : search lines in current file  |
+| <C-o>    | <M-w><C-o>          | Outline : folds, markdown, org mode   |
+
+Dedicated buffer :
+
+| Prefix + | With default prefix | Action                                |
+| -------- | ------------------- | ------------------------------------- |
+| <M-o>    | <M-w><M-o>          | Occur : search lines in current file  |
+| g        | <M-w>g              | Search in circle files with grep      |
+| <S-o>    | <M-w><S-o>          | Outline : folds, markdown, org mode   |
+
+(Neo)vim lists~
+
+Prompting functions :
+
+| Prefix + | With default prefix | Action    |
+| -------- | ------------------- | --------- |
+| '        | <M-w>'              | Markers   |
+| j        | <M-w>j              | Jumps     |
+| ;        | <M-w>,              | Changes   |
+| t        | <M-w>t              | Tags      |
+
+Dedicated buffers :
+
+| Prefix + | With default prefix | Action     |
+| -------- | ------------------- | ---------- |
+| <M-'>    | <M-w><M-'>          | Markers    |
+| <M-j>    | <M-w><M-j>          | Jumps      |
+| ,        | <M-w>;              | Changes    |
+| <M-t>    | <M-w><M-t>          | Tags       |
+
+Reorganize~
+
+| Prefix + | With default prefix | Action                    |
+| -------- | ------------------- | ------------------------- |
+| <M-r>    | <M-w><M-r>          | Reorganize wheel elements |
+| <C-r>    | <M-w><C-r>          | Reorganize tabs & windows |
+
+Narrow~
+
+| Prefix + | With default prefix | Action                    |
+| -------- | ------------------- | ------------------------- |
+| -%       | <M-w>-%             | Narrow current file       |
+| -c       | <M-w>-c             | Narrow all circle files   |
+| <M-g>    | <M-w><M-g>          | Grep edit mode            |
+
+Operator command, waiting for a move :
+
+| Prefix + | With default prefix | Action               |
+| -------- | ------------------- | -------------------- |
+| --       | <M-w>--             | Narrow current file  |
+
+Visual mode :
+
+| Prefix + | With default prefix | Action               |
+| -------- | ------------------- | -------------------- |
+| --       | <M-w>--             | Narrow current file  |
+
+Yank ring~
+
+Prompting functions :
+
+| Prefix + | With default prefix | Action                                           |
+| -------- | ------------------- | ------------------------------------------------ |
+| <C-y>    | <M-w><C-y>          | Switch default register to use in yank functions |
+| y        | <M-w>y              | Yank ring prompt, linewise after                 |
+| p        | <M-w>p              | Yank ring prompt, charwise after                 |
+| Y        | <M-w>Y              | Yank ring prompt, linewise before                |
+| P        | <M-w>P              | Yank ring prompt, charwise before                |
+
+Dedicated buffers :
+
+| Prefix + | With default prefix | Action                     |
+| -------- | ------------------- | -------------------------- |
+| <M-y>    | <M-w><M-y>          | Yank ring in plain mode    |
+| <M-p>    | <M-w><M-p>          | Yank ring in list mode     |
+
+Undo~
+
+| Prefix + | With default prefix | Action     |
+| -------- | ------------------- | ---------- |
+| <C-u>    | <M-w><C-u>          | Undo list  |
+
+Command output buffer~
+
+| Prefix + | With default prefix | Action                      |
+| -------- | ------------------- | ----------------------------|
+| :        | <M-w>:              | Display ex or !shell output |
+| &        | <M-w>&              | Async sheel command         |
+
+Managing dedicated buffers~
+
+| Prefix +    | With default prefix | Action                             |
+| --------    | ------------------- | ---------------------------------  |
+| <Tab>       | <M-w><Tab>          | Add new dedicated buffer           |
+| <Backspace> | <M-w><Backspace>    | Delete dedicated buffer            |
+| <Left>      | <M-w><Left>         | Cycle dedicated buffers, leftward  |
+| <Right>     | <M-w><Right>        | Cycle dedicated buffers, rightward |
+| <Up>        | <M-w><Up>           | Switch to another dedicated buffer |
+
+Layouts~
+
+You can display all locations of the current circle, one location per
+tab or window. Same idea with circles and toruses.
+
+Available layouts are : horizontal or vertical split, main top, main
+left, grid.
+
+You can also display one circle per tab, and one location per window, or
+one torus per tab and one circle per window.
+
+Note that all layout mappings use the subprefix `z`, so all layout maps begin
+with `<M-w>z`.
+
+| Prefix +   | With default prefix   | Action                                |
+| --------   | -------------------   | --------------------                  |
+| zz         | <M-w>zz               | Zoom : one tab, one window            |
+| --------   | -------------------   | --------------------                  |
+| zt         | <M-w>zt               | One location per tab                  |
+| z<C-t>     | <M-w>z<C-t>           | One circle per tab                    |
+| zT         | <M-w>zT               | One torus per tab                     |
+| ---------- | --------------------- | --------------------------------      |
+| zs         | <M-w>zs               | Locations in horizontal splits        |
+| z<C-s>     | <M-w>z<C-s>           | Circles in horizontal splits          |
+| zS         | <M-w>zS               | Toruses in horizontal splits          |
+| ---------- | --------------------- | --------------------------------      |
+| zv         | <M-w>zv               | Location in vertical splits           |
+| z<C-v>     | <M-w>z<C-v>           | Circles in vertical splits            |
+| zV         | <M-w>zV               | Toruses in vertical splits            |
+| ---------- | --------------------- | --------------------------------      |
+| zm         | <M-w>zm               | Locations in main top layout          |
+| z<C-m>     | <M-w>z<C-m>           | Circles in main top layout            |
+| zM         | <M-w>zM               | Toruses in main top layout            |
+| ---------- | --------------------- | --------------------------------      |
+| zl         | <M-w>zl               | Locations in main left layout         |
+| z<C-l>     | <M-w>z<C-l>           | Circles in main left layout           |
+| zL         | <M-w>zL               | Toruses in main left layout           |
+| ---------- | --------------------- | --------------------------------      |
+| zg         | <M-w>zg               | Locations in grid layout              |
+| z<C-g>     | <M-w>z<C-g>           | Circles in grid layout                |
+| zG         | <M-w>zG               | Toruses in grid layout                |
+| --------   | -------------------   | ------------------------------------  |
+| z&         | <M-w>z&               | Circles in tabs, locations in windows |
+| z<M-&>     | <M-w>z<M-&>           | Toruses in tabs, circles in windows   |
+| ---------- | --------------------- | --------------------------------      |
+| z<up>      | <M-w>z<up>            | Rotate windows counter-clockwise      |
+| z<down>    | <M-w>z<down>          | Rotate windows clockwise              |
+
+------------------------------------------------------------------------------
+LEVEL 10					*wheel-mappings-level-10*
+
+The level 10 offers mappings without prefix for the most used wheel
+functions. You can set the mapping level to 10 to activate them, or
+adapt them to your taste and add them to your init file.
+
+Maps table~
+
+| Mapping        | Action                                          |
+| -------------- | ---------------------------------------------   |
+| <M-=>          | Meta menu                                       |
+| <M-m>          | Main menu                                       |
+| -------------- | ---------------------------------------------   |
+| <M-i>          | Wheel dashboard : torus > circle > location     |
+| <M-$>          | Sync up : find closest wheel location           |
+| <C-$>          | Sync down : jump to current location            |
+| -------------- | ---------------------------------------------   |
+| <M-PageUp>     | Go to previous location                         |
+| <M-PageDown>   | Go to next location                             |
+| <C-PageUp>     | Go to previous circle                           |
+| <C-PageDown>   | Go to next circle                               |
+| <S-PageUp>     | Go to previous torus                            |
+| <S-PageDown>   | Go to next torus                                |
+| -------------- | ---------------------------------------------   |
+| <M-Enter>      | Prompt for a location to switch to              |
+| <C-Enter>      | Prompt for a circle to switch to                |
+| <S-Enter>      | Prompt for a torus to switch to                 |
+| <M-Space>      | Choose location in dedicated buffer             |
+| <C-Space>      | Choose circle in dedicated buffer               |
+| <S-Space>      | Choose torus in dedicated buffer                |
+| -------------- | ---------------------------------------------   |
+| <M-x>          | Prompt for a location in index to switch to     |
+| <M-S-x>        | Index of toruses > circles > locations          |
+| <M-C-x>        | Choose element in wheel folding tree            |
+| -------------- | ---------------------------------------------   |
+| <M-Home>       | Go to newer location in history                 |
+| <M-End>        | Go to older location in history                 |
+| <C-Home>       | Go to newer location in same circle             |
+| <C-End>        | Go to older location in same circle             |
+| <S-Home>       | Go to newer location in same torus              |
+| <S-End>        | Go to older location in same torus              |
+| <M-h>          | History in prompt                               |
+| <M-C-h>        | History in dedicated buffer                     |
+| -------------- | ---------------------------------------------   |
+| <C-^>          | Alternate last two locations                    |
+| <M-^>          | Alternate in the same circle                    |
+| <M-C-^>        | Alternate in another circle of the same torus   |
+| -------------- | ---------------------------------------------   |
+| <M-e>          | Frecency in prompt                              |
+| <M-C-e>        | Frecency in dedicated buffer                    |
+| -------------- | ---------------------------------------------   |
+| <M-b>          | Buffers, prompting function                     |
+| <M-C-b>        | Buffers, dedicated buffer                       |
+| <M-S-b>        | All buffers, including unlisted ones            |
+| -------------- | ---------------------------------------------   |
+| <M-v>          | Go to tab & window, prompt mode                 |
+| <M-C-v>        | Tabs & windows in tree mode, dedicated buffer   |
+| <M-S-v>        | Tabs & windows, dedicated buffer                |
+| -------------- | ---------------------------------------------   |
+| <M-'>          | Markers, prompting function                     |
+| <M-k>          | Markers, prompting function                     |
+| <M-j>          | Jumps, prompting function                       |
+| <M-,>          | Changes, prompting function                     |
+| <M-t>          | Tags, prompting function                        |
+| <M-C-k>        | Markers, dedicated buffer                       |
+| <M-C-j>        | Jumps, dedicated buffer                         |
+| <M-;>          | Changes, dedicated buffer                       |
+| <M-C-t>        | Tags, dedicated buffer                          |
+| -------------- | ---------------------------------------------   |
+| <M-Insert>     | Add location to the current circle              |
+| <M-Del>        | Delete current location                         |
+| <M-r>          | Reorganize wheel elements                       |
+| -------------- | ---------------------------------------------   |
+| <M-C-r>        | Reorganize tabs and windows                     |
+| -------------- | ---------------------------------------------   |
+| <M-C-g>        | Grep in edit mode                               |
+| <M-n>          | Narrow current file                             |
+| <M-C-n>        | Narrow all circle files                         |
+| -------------- | ---------------------------------------------   |
+| <M-f>          | Find, prompting function                        |
+| <M-C-f>        | Find, dedicated buffer                          |
+| <M-C-&>        | Async find                                      |
+| <M-u>          | Most Recently Used files not found in wheel     |
+| <M-l>          | Locate                                          |
+| -------------- | ---------------------------------------------   |
+| <M-o>          | Occur in current file, prompting function       |
+| <M-C-o>        | Occur in current file, dedicated buffer         |
+| <M-g>          | Grep in current circle files                    |
+| <M-S-o>        | Outline in current circle files                 |
+| -------------- | ---------------------------------------------   |
+| <M-y>          | Paste yank ring element linewise, after cursor  |
+| <M-p>          | Paste yank ring element charwise, after cursor  |
+| <M-S-y>        | Paste yank ring element linewise, before cursor |
+| <M-S-p>        | Paste yank ring element charwise, before cursor |
+| <M-C-y>        | Yank ring dedicated buffer in plain mode        |
+| <M-C-p>        | Yank ring dedicated buffer in list mode         |
+| -------------- | ---------------------------------------------   |
+| <M-S-u>        | Undo list                                       |
+| -------------- | ---------------------------------------------   |
+| <M-!>          | Buffer with output of ex or shell command       |
+| <M-&>          | Async shell command in dedicated buffer         |
+| -------------- | ---------------------------------------------   |
+| <M-Tab>        | Add a new dedicated buffer                      |
+| <M-Backspace>  | Delete current dedicated buffer                 |
+| <M-Left>       | Cycle dedicated buffers, leftward               |
+| <M-Right>      | Cycle dedicated buffers, rightward              |
+| <C-Up>         | Switch dedicated buffer                         |
+| -------------- | ---------------------------------------------   |
+| <M-z>          | Zoom : one tab, one window                      |
+
+Excerpt of maps definition in centre.vim~
+
+Below is the default level 10. To customize it, first set your mapping
+level to less than 10, then copy and adapt some of the following lines : >
+
+    let nmap = 'nmap <silent>'
+    let vmap = 'vmap <silent>'
+    " Menus
+    exe nmap '<m-m>          <plug>(wheel-menu-main)'
+    exe nmap '<m-=>          <plug>(wheel-menu-meta)'
+    " Sync
+    exe nmap '<m-i>          <plug>(wheel-info)'
+    exe nmap '<m-$>          <plug>(wheel-sync-up)'
+    exe nmap '<c-$>          <plug>(wheel-sync-down)'
+    " ---- navigate in the wheel
+    " --  next / previous
+    exe nmap '<m-pageup>   <plug>(wheel-previous-location)'
+    exe nmap '<m-pagedown> <plug>(wheel-next-location)'
+    exe nmap '<c-pageup>   <plug>(wheel-previous-circle)'
+    exe nmap '<c-pagedown> <plug>(wheel-next-circle)'
+    exe nmap '<s-pageup>   <plug>(wheel-previous-torus)'
+    exe nmap '<s-pagedown> <plug>(wheel-next-torus)'
+    " -- switch
+    exe nmap '<m-cr>        <plug>(wheel-prompt-location)'
+    exe nmap '<c-cr>        <plug>(wheel-prompt-circle)'
+    exe nmap '<s-cr>        <plug>(wheel-prompt-torus)'
+    exe nmap '<m-space>     <plug>(wheel-dedibuf-location)'
+    exe nmap '<c-space>     <plug>(wheel-dedibuf-circle)'
+    exe nmap '<s-space>     <plug>(wheel-dedibuf-torus)'
+    " -- index
+    exe nmap '<m-x>         <plug>(wheel-prompt-index)'
+    exe nmap '<m-s-x>       <plug>(wheel-dedibuf-index)'
+    exe nmap '<m-c-x>       <plug>(wheel-dedibuf-index-tree)'
+    " -- history
+    exe nmap '<m-home>      <plug>(wheel-history-newer)'
+    exe nmap '<m-end>       <plug>(wheel-history-older)'
+    exe nmap '<c-home>      <plug>(wheel-history-newer-in-circle)'
+    exe nmap '<c-end>       <plug>(wheel-history-older-in-circle)'
+    exe nmap '<s-home>      <plug>(wheel-history-newer-in-torus)'
+    exe nmap '<s-end>       <plug>(wheel-history-older-in-torus)'
+    exe nmap '<m-h>         <plug>(wheel-prompt-history)'
+    exe nmap '<m-c-h>       <plug>(wheel-dedibuf-history)'
+    " -- alternate
+    exe nmap '<c-^>          <plug>(wheel-alternate-anywhere)'
+    exe nmap '<m-^>          <plug>(wheel-alternate-same-circle)'
+    exe nmap '<m-c-^>        <plug>(wheel-alternate-same-torus-other-circle)'
+    " -- frecency
+    exe nmap '<m-e>         <plug>(wheel-prompt-frecency)'
+    exe nmap '<m-c-e>       <plug>(wheel-dedibuf-frecency)'
+    " ---- navigate using Wheel interface to vim native tools
+    " -- buffers
+    exe nmap '<m-b>          <plug>(wheel-prompt-buffer)'
+    exe nmap '<m-c-b>        <plug>(wheel-dedibuf-buffer)'
+    exe nmap '<m-s-b>        <plug>(wheel-dedibuf-buffer-all)'
+    " -- tabs & windows : visible buffers
+    exe nmap '<m-v>          <plug>(wheel-prompt-tabwin)'
+    exe nmap '<m-c-v>        <plug>(wheel-dedibuf-tabwin-tree)'
+    exe nmap '<m-s-v>        <plug>(wheel-dedibuf-tabwin)'
+    " -- (neo)vim lists
+    exe nmap "<m-'>          <plug>(wheel-prompt-marker)"
+    exe nmap "<m-k>          <plug>(wheel-prompt-marker)"
+    exe nmap '<m-j>          <plug>(wheel-prompt-jump)'
+    exe nmap '<m-,>          <plug>(wheel-prompt-change)'
+    exe nmap '<m-c>          <plug>(wheel-prompt-change)'
+    exe nmap '<m-t>          <plug>(wheel-prompt-tag)'
+    exe nmap "<m-c-k>        <plug>(wheel-dedibuf-marker)"
+    exe nmap '<m-c-j>        <plug>(wheel-dedibuf-jump)'
+    exe nmap '<m-;>          <plug>(wheel-dedibuf-change)'
+    exe nmap '<m-c-t>        <plug>(wheel-dedibuf-tag)'
+    " ---- organize the wheel
+    exe nmap '<m-insert>     <plug>(wheel-prompt-add-here)'
+    exe nmap '<m-del>        <plug>(wheel-prompt-delete-location)'
+    exe nmap '<m-r>          <plug>(wheel-dedibuf-reorganize)'
+    " ---- organize other things
+    exe nmap '<m-c-r>        <plug>(wheel-dedibuf-reorg-tabwin)'
+    " ---- refactoring
+    exe nmap '<m-c-g>        <plug>(wheel-dedibuf-grep-edit)'
+    exe nmap '<m-n>          <plug>(wheel-dedibuf-narrow-operator)'
+    exe vmap '<m-n>          <plug>(wheel-dedibuf-narrow)'
+    exe nmap '<m-c-n>        <plug>(wheel-dedibuf-narrow-circle)'
+    " ---- search
+    " -- files
+    exe nmap '<m-f>          <plug>(wheel-prompt-find)'
+    exe nmap '<m-c-f>        <plug>(wheel-dedibuf-find)'
+    exe nmap '<m-c-&>        <plug>(wheel-dedibuf-async-find)'
+    exe nmap '<m-u>          <plug>(wheel-prompt-mru)'
+    exe nmap '<m-c-u>        <plug>(wheel-dedibuf-mru)'
+    exe nmap '<m-l>          <plug>(wheel-dedibuf-locate)'
+    " -- inside files
+    exe nmap '<m-o>          <plug>(wheel-prompt-occur)'
+    exe nmap '<m-c-o>        <plug>(wheel-dedibuf-occur)'
+    exe nmap '<m-g>          <plug>(wheel-dedibuf-grep)'
+    exe nmap '<m-s-o>        <plug>(wheel-prompt-outline)'
+    exe nmap '<c-s-o>        <plug>(wheel-dedibuf-outline)'
+    " ---- yank ring
+    exe nmap '<m-y>          <plug>(wheel-prompt-yank-plain-linewise-after)'
+    exe nmap '<m-p>          <plug>(wheel-prompt-yank-plain-charwise-after)'
+    exe nmap '<m-s-y>        <plug>(wheel-prompt-yank-plain-linewise-before)'
+    exe nmap '<m-s-p>        <plug>(wheel-prompt-yank-plain-charwise-before)'
+    exe nmap '<m-c-y>        <plug>(wheel-dedibuf-yank-plain)'
+    exe nmap '<m-c-p>        <plug>(wheel-dedibuf-yank-list)'
+    " ---- undo list
+    exe nmap '<m-s-u>        <plug>(wheel-dedibuf-undo-list)'
+    " ---- ex or shell command output
+    exe nmap '<m-!>          <plug>(wheel-dedibuf-command)'
+    exe nmap '<m-&>          <plug>(wheel-dedibuf-async)'
+    " ---- dedicated buffers
+    exe nmap '<m-tab>        <plug>(wheel-mandala-add)'
+    exe nmap '<m-backspace>  <plug>(wheel-mandala-delete)'
+    exe nmap '<m-left>       <plug>(wheel-mandala-backward)'
+    exe nmap '<m-right>      <plug>(wheel-mandala-forward)'
+    exe nmap '<c-up>         <plug>(wheel-mandala-switch)'
+    " ---- layouts
+    exe nmap '<m-z>          <plug>(wheel-zoom)'
+<
+
+Overwrite some level 10 maps~
+
+If you agree with almost all the proposed level 10 maps, except a few
+one, a simple solution is to overwrite some maps after all plugins have
+been loaded. Example : >
+
+  " your wheel config
+  let g:wheel_config.mappings = 10
+  " ...
+
+  " let's load all plugins
+  packloadall
+
+  " let's overwrite some maps
+  nnoremap <c-left> <c-w>W
+  nnoremap <c-right> <c-w>w
+  nnoremap <c-pageup> gT
+  nnoremap <c-pagedown> gt
+  nnoremap <c-home> <cmd>tabfirst<cr>
+  nnoremap <c-end> <cmd>tablast<cr>
+  nnoremap <c-s-pageup> <cmd>tabmove -1<cr>
+  nnoremap <c-s-pagedown> <cmd>tabmove +1<cr>
+<
+
+Trouble with xterm & fixkey~
+
+If you use vim in a xterm with the |fixkey| plugin, the map `<M-S-p>`
+can cause a strange in the empty buffer at startup. To avoid it, add : >
+
+    let g:Fixkey_setupDelay = 500
+<
+
+to your vimrc. If it doesn't work, try to rise the delay.
+
+------------------------------------------------------------------------------
+LEVEL 20						*wheel-mappings-level-20*
+
+For debugging only.
+
+| Prefix + | With default prefix | Action                               |
+| -------- | ------------------- | ------------------------------------ |
+| ZZ       | <M-w>ZZ             | Reset wheel variables to empty wheel |
+| Ze       | <M-w>Ze             | Clear echo area                      |
+| Zm       | <M-w>Zm             | Clear (neo)vim messages              |
+| Zs       | <M-w>Zs             | Clear locations margin signs         |
+| Zh       | <M-w>Zh             | History circuit, prompt              |
+| Z<M-h>   | <M-w>Z<M-h>         | History circuit, dedicated buffer    |
+
+------------------------------------------------------------------------------
+DEFINE YOUR OWN MAPS			*wheel-mappings-define-your-own-maps*
+
+The recommended approach is to use plug maps. Example : >
+
+    nmap <silent> <M-m> <plug>(wheel-menu-main)
+<
+
+Plug maps are middle men between wheel autoload functions and user
+mappings, so you have to use recursive maps. The above example would
+not work with |:nnoremap|.
+
+You can also use the meta-command : >
+
+    nnoremap <silent> <M-m> :Wheel dedibuf menu-main<cr>
+<
+
+In that case, no need for a recursive map.
+
+------------------------------------------------------------------------------
+EXHAUSTIVE LIST					*wheel-mappings-exhaustive-list*
+
+In the help submenu of the main or meta menu, you have access to :
+
+- the list of current wheel mappings
+- the list of available mappings
+
+You can then browse the maps and plugs in a dedicated wheel buffer. It
+is only a command output collector though, you can not launch any map
+from there.
+
+Convention~
+
+- prompting functions plugs : contain `-prompt-`
+- dedicated buffer functions plugs : contain `-dedibuf-`
+- layout functions plugs : contain `-layout-`
+
+Menus~
+
+| Plug maps                | Description  |
+| ------------------------ | ------------ |
+| <plug>(wheel-menu-main)  | main menu    |
+| <plug>(wheel-menu-meta)  | meta menu    |
+
+Dashboard~
+
+| Plug maps           | Description  |
+| ------------------- | ------------ |
+| <plug>(wheel-info)  | dashboard    |
+
+Sync up & down~
+
+| Plug maps                 | Description                            |
+| ------------------------- | -------------------------------------- |
+| <plug>(wheel-sync-down)   | jump to current file & pos in wheel    |
+| <plug>(wheel-sync-up)     | follow current file                    |
+
+Load & save~
+
+| Plug maps                          | Description            |
+| ---------------------------------- | ---------------------- |
+| <plug>(wheel-prompt-read-wheel)    | read wheel from file   |
+| <plug>(wheel-prompt-write-wheel)   | save wheel to file     |
+| <plug>(wheel-prompt-read-session)  | read wheel from file   |
+| <plug>(wheel-prompt-write-session) | save wheel to file     |
+
+Navigate in the wheel~
+
+| Plug maps                                       | Description                               |
+| ----------------------------------------------- | ----------------------------------------- |
+| <plug>(wheel-previous-location)                 | go to previous location                   |
+| <plug>(wheel-next-location)                     | go to next location                       |
+| <plug>(wheel-previous-circle)                   | go to previous circle                     |
+| <plug>(wheel-next-circle)                       | go to next circle                         |
+| <plug>(wheel-previous-torus)                    | go to previous torus                      |
+| <plug>(wheel-next-torus)                        | go to next torus                          |
+| ----------------------------------------------- | ----------------------------------------- |
+| <plug>(wheel-prompt-location)                   | switch location                           |
+| <plug>(wheel-prompt-circle)                     | switch circle                             |
+| <plug>(wheel-prompt-torus)                      | switch torus                              |
+| <plug>(wheel-prompt-multi-switch)               | switch torus, circle & location           |
+| <plug>(wheel-dedibuf-location)                  | switch location                           |
+| <plug>(wheel-dedibuf-circle)                    | switch circle                             |
+| <plug>(wheel-dedibuf-torus)                     | switch torus                              |
+| ----------------------------------------------- | ----------------------------------------- |
+| <plug>(wheel-prompt-index)                      | switch location in index                  |
+| <plug>(wheel-prompt-index-circles)              | switch circle in index                    |
+| <plug>(wheel-dedibuf-index)                     | index of locations                        |
+| <plug>(wheel-dedibuf-index-circles)             | index of circles                          |
+| <plug>(wheel-dedibuf-index-tree)                | index of locations in tree fold format    |
+| ----------------------------------------------- | ----------------------------------------- |
+| <plug>(wheel-history-newer)                     | go to previous location in history        |
+| <plug>(wheel-history-older)                     | go to next location in history            |
+| <plug>(wheel-history-newer-in-circle)           | go to previous location in circle         |
+| <plug>(wheel-history-older-in-circle)           | go to next location in circle             |
+| <plug>(wheel-history-newer-in-torus)            | go to previous location in torus          |
+| <plug>(wheel-history-older-in-torus)            | go to next location in torus              |
+| <plug>(wheel-prompt-history)                    | switch to element in history              |
+| <plug>(wheel-dedibuf-history)                   | go to location in history                 |
+| <plug>(wheel-prompt-frecency)                   | switch to element in frecency             |
+| <plug>(wheel-dedibuf-frecency)                  | go to location in frecency                |
+| ----------------------------------------------- | ----------------------------------------- |
+| <plug>(wheel-alternate-anywhere)                | alternate with last location              |
+| <plug>(wheel-alternate-same-torus)              | alternate locations in same torus         |
+| <plug>(wheel-alternate-same-circle)             | alternate locations in same circle        |
+| <plug>(wheel-alternate-other-torus)             | alternate locations in other torus        |
+| <plug>(wheel-alternate-other-circle)            | alternate locations in other circle       |
+| <plug>(wheel-alternate-same-torus-other-circle) | alternate in same torus, but other circle |
+| <plug>(wheel-alternate-window)                  | alternate window in any tab               |
+| <plug>(wheel-alternate-menu)                    | menu to alternate                         |
+
+Navigate using Wheel interface to vim native tools~
+
+| Plug maps                            | Description                              |
+| ------------------------------------ | ---------------------------------------- |
+| <plug>(wheel-prompt-buffer)          | switch to buffer                         |
+| <plug>(wheel-dedibuf-buffer)         | buffers                                  |
+| <plug>(wheel-dedibuf-buffer-all)     | all buffers, including unlisted ones     |
+| ------------------------------------ | ---------------------------------------- |
+| <plug>(wheel-prompt-tabwin)          | visible buffers in tabs & windows        |
+| <plug>(wheel-dedibuf-tabwin)         | visible buffers in tabs & windows        |
+| <plug>(wheel-dedibuf-tabwin-tree)    | tabs & windows in tree fold format       |
+| ------------------------------------ | ---------------------------------------- |
+| <plug>(wheel-prompt-marker)          | switch to marker                         |
+| <plug>(wheel-prompt-jump)            | switch to jump                           |
+| <plug>(wheel-prompt-change)          | switch to change                         |
+| <plug>(wheel-prompt-tag)             | switch to tag                            |
+| <plug>(wheel-dedibuf-marker)         | markers                                  |
+| <plug>(wheel-dedibuf-jump)           | vim jumps                                |
+| <plug>(wheel-dedibuf-change)         | vim changes                              |
+| <plug>(wheel-dedibuf-tag)            | tags                                     |
+
+Organize the wheel~
+
+| Plug maps                                       | Description                              |
+| ----------------------------------------------- | ---------------------------------------- |
+| <plug>(wheel-prompt-add-here)                   | add current file in the current circle   |
+| <plug>(wheel-prompt-add-circle)                 | add a new circle                         |
+| <plug>(wheel-prompt-add-torus)                  | add a new torus                          |
+| <plug>(wheel-prompt-add-file)                   | add a file in the current circle         |
+| <plug>(wheel-prompt-add-buffer)                 | add a buffer in the current circle       |
+| <plug>(wheel-prompt-add-glob)                   | add files matching glob in circle        |
+| ----------------------------------------------- | ---------------------------------------- |
+| <plug>(wheel-dedibuf-reorder-location)          | reorder locations                        |
+| <plug>(wheel-dedibuf-reorder-circle)            | reorder circles                          |
+| <plug>(wheel-dedibuf-reorder-torus)             | reorder toruses                          |
+| ----------------------------------------------- | ---------------------------------------- |
+| <plug>(wheel-prompt-rename-location)            | rename current location (not the file)   |
+| <plug>(wheel-prompt-rename-circle)              | rename current circle                    |
+| <plug>(wheel-prompt-rename-torus)               | rename current torus                     |
+| <plug>(wheel-prompt-rename-file)                | rename current file & location           |
+| <plug>(wheel-dedibuf-rename-location)           | rename locations                         |
+| <plug>(wheel-dedibuf-rename-circle)             | rename circles                           |
+| <plug>(wheel-dedibuf-rename-torus)              | rename toruses                           |
+| <plug>(wheel-dedibuf-rename-location-filename)  | rename locations & filenames             |
+| ----------------------------------------------- | --------------------------------------   |
+| <plug>(wheel-prompt-delete-location)            | delete current location                  |
+| <plug>(wheel-prompt-delete-circle)              | delete current circle                    |
+| <plug>(wheel-prompt-delete-torus)               | delete current torus                     |
+| ----------------------------------------------- | ---------------------------------------- |
+| <plug>(wheel-prompt-copy-location)              | copy current location                    |
+| <plug>(wheel-prompt-copy-circle)                | copy current circle                      |
+| <plug>(wheel-prompt-copy-torus)                 | copy current torus                       |
+| <plug>(wheel-prompt-move-location)              | move current location                    |
+| <plug>(wheel-prompt-move-circle)                | move current circle                      |
+| <plug>(wheel-dedibuf-copy-move-location)        | batch copy-move locations                |
+| <plug>(wheel-dedibuf-copy-move-circle)          | batch copy-move circles                  |
+| <plug>(wheel-dedibuf-copy-move-torus)           | batch copy-move toruses                  |
+| ----------------------------------------------- | ---------------------------------------- |
+| <plug>(wheel-dedibuf-reorganize)                | reorganize wheel treeish structure       |
+
+Organize other things~
+
+| Plug maps                           | Description                            |
+| ----------------------------------- | -------------------------------------- |
+| <plug>(wheel-dedibuf-reorg-tabwin)  | reorganize tabs & windows              |
+
+Refactoring~
+
+| Plug maps                             | Description                            |
+| ------------------------------------- | -------------------------------------- |
+| <plug>(wheel-dedibuf-grep-edit)       | grep circle files in edit mode         |
+| ------------------------------------- | -------------------------------------- |
+| <plug>(wheel-dedibuf-narrow)          | narrow current file                    |
+| <plug>(wheel-dedibuf-narrow-operator) | narrow current file, operator pending  |
+| <plug>(wheel-dedibuf-narrow-circle)   | narrow all circle files                |
+
+Search files~
+
+| Plug maps                          | Description                              |
+| ---------------------------------- | --------------------------------------   |
+| <plug>(wheel-prompt-mru)           | switch to mru non wheel file             |
+| <plug>(wheel-dedibuf-mru)          | most recently used files                 |
+| ---------------------------------- | --------------------------------------   |
+| <plug>(wheel-dedibuf-locate)       | search file with locate                  |
+| <plug>(wheel-dedibuf-find)         | find file in current dir                 |
+| <plug>(wheel-dedibuf-async-find)   | search file with !find in async mode     |
+
+Search inside files~
+
+| Plug maps                          | Description                            |
+| ---------------------------------- | -------------------------------------- |
+| <plug>(wheel-prompt-occur)         | switch to line in current file         |
+| <plug>(wheel-dedibuf-occur)        | occurences of pattern in current file  |
+| ---------------------------------- | -------------------------------------- |
+| <plug>(wheel-dedibuf-grep)         | grep pattern in all circle files       |
+| <plug>(wheel-dedibuf-outline)      | headers in all circle files            |
+
+Yank ring~
+
+| Plug maps                                       | Description                            |
+| ----------------------------------------------- | -------------------------------------- |
+| <plug>(wheel-prompt-switch-default-register)    | switch default register for yank ring  |
+| <plug>(wheel-prompt-yank-plain-linewise-after)  | yank ring plain, paste linewise after  |
+| <plug>(wheel-prompt-yank-plain-linewise-before) | yank ring plain, paste linewise before |
+| <plug>(wheel-prompt-yank-plain-charwise-after)  | yank ring plain, paste charwise after  |
+| <plug>(wheel-prompt-yank-plain-charwise-before) | yank ring plain, paste charwise before |
+| <plug>(wheel-prompt-yank-list-linewise-after)   | yank ring list, paste linewise after   |
+| <plug>(wheel-prompt-yank-list-linewise-before)  | yank ring list, paste linewise before  |
+| <plug>(wheel-prompt-yank-list-charwise-after)   | yank ring list, paste charwise after   |
+| <plug>(wheel-prompt-yank-list-charwise-before)  | yank ring list, paste charwise before  |
+| <plug>(wheel-dedibuf-yank-plain)                | yank ring in plain format              |
+| <plug>(wheel-dedibuf-yank-list)                 | yank ring in list format               |
+
+Undo list~
+
+| Plug maps                        | Description                           |
+| -------------------------------- | ------------------------------------- |
+| <plug>(wheel-dedibuf-undo-list)  | go to undo state, compare with diff   |
+
+Ex or shell command output~
+
+| Plug maps                        | Description                             |
+| -------------------------------- | --------------------------------------- |
+| <plug>(wheel-dedibuf-command)    | output of ex or shell command           |
+| <plug>(wheel-dedibuf-async)      | output of shell command in async mode   |
+
+Handling dedicated buffers~
+
+| Plug maps                                       | Description                            |
+| ----------------------------------------------- | -------------------------------------- |
+| <plug>(wheel-mandala-add)                       | add a new dedicated buffer             |
+| <plug>(wheel-mandala-delete)                    | delete current dedicated buffer        |
+| <plug>(wheel-mandala-forward)                   | go to next dedicated buffer            |
+| <plug>(wheel-mandala-backward)                  | go to previous dedicated buffer        |
+| <plug>(wheel-mandala-switch)                    | switch to another dedicated buffer     |
+
+Layouts~
+
+| Plug maps                                       | Description                            |
+| ----------------------------------------------- | -------------------------------------- |
+| <plug>(wheel-layout-zoom)                       | one tab, one window                    |
+| <plug>(wheel-layout-tabs-locations)             | one location of current circle per tab |
+| <plug>(wheel-layout-tabs-circles)               | one circle of current torus per tab    |
+| <plug>(wheel-layout-tabs-toruses)               | one torus per tab                      |
+| ----------------------------------------------- | -------------------------------------- |
+| <plug>(wheel-layout-split-locations)            | one location per split                 |
+| <plug>(wheel-layout-split-circles)              | one circle per split                   |
+| <plug>(wheel-layout-split-toruses)              | one torus per split                    |
+| <plug>(wheel-layout-vsplit-locations)           | one location per vertical split        |
+| <plug>(wheel-layout-vsplit-circles)             | one circle per vertical split          |
+| <plug>(wheel-layout-vsplit-toruses)             | one torus per vertical split           |
+| ----------------------------------------------- | -------------------------------------- |
+| <plug>(wheel-layout-main-top-locations)         | locations in main top layout           |
+| <plug>(wheel-layout-main-top-circles)           | circles in main top layout             |
+| <plug>(wheel-layout-main-top-toruses)           | toruses in main top layout             |
+| <plug>(wheel-layout-main-left-locations)        | locations in main top layout           |
+| <plug>(wheel-layout-main-left-circles)          | circles in main top layout             |
+| <plug>(wheel-layout-main-left-toruses)          | toruses in main top layout             |
+| <plug>(wheel-layout-grid-locations)             | locations in grid layout               |
+| <plug>(wheel-layout-grid-circles)               | circles in grid layout                 |
+| <plug>(wheel-layout-grid-toruses)               | toruses in grid layout                 |
+| <plug>(wheel-layout-tab-win-torus)              | torus in tabs, circles in windows      |
+| <plug>(wheel-layout-tab-win-circle)             | circles in tabs, locations in windows  |
+| ----------------------------------------------- | -------------------------------------- |
+| <plug>(wheel-layout-rotate-counter-clockwise)   | rotate windows counter clockwise       |
+| <plug>(wheel-layout-rotate-clockwise)           | rotate windows clockwise               |
+
+Miscellaneous~
+
+| Plug maps                     | Description                                |
+| ----------------------------- | ------------------------------------------ |
+| <plug>(wheel-spiral-cursor)   | put the cursor in a golden ratio position  |
+
+Debug~
+
+| Plug maps                              | Description                            |
+| -------------------------------------- | -------------------------------------- |
+| <plug>(wheel-debug-fresh-wheel)        | empty the wheel for debugging purpose  |
+| <plug>(wheel-debug-clear-echo-area)    | clear echo area                        |
+| <plug>(wheel-prompt-history-circuit)   | history circuit                        |
+| <plug>(wheel-dedibuf-history-circuit)  | history circuit                        |
+
+------------------------------------------------------------------------------
+OTHER IDEAS				*wheel-mappings-ideas*
+
+Some maps that you may find useful if the super key `<D-*>` bindings
+work in your setup : >
+
+    " index of locations in torus > circle > location format
+    nmap <silent> <d-x>       <plug>(wheel-dedibuf-index)
+    " index of locations, open in new tab
+    nmap <silent> <d-cr>      <cmd>call wheel#vortex#helix('tab')<cr>
+
+    " history
+    nmap <silent> <d-h>       <plug>(wheel-dedibuf-history)
+    " alternate
+    nmap <silent> <d-^>       <plug>(wheel-alternate-other-torus)
+    " frecency
+    nmap <silent> <d-e>       <plug>(wheel-dedibuf-frecency)
+
+    " visible buffers in tabs & windows
+    nmap <silent> <d-v>       <plug>(wheel-dedibuf-tabwin)
+
+    nmap <silent> <d-o>       <plug>(wheel-dedibuf-occur)
+    nmap <silent> <d-b>       <plug>(wheel-dedibuf-buffer-all)
+    nmap <silent> <d-k>       <plug>(wheel-dedibuf-marker)
+    nmap <silent> <d-j>       <plug>(wheel-dedibuf-jump)
+    nmap <silent> <d-c>       <plug>(wheel-dedibuf-change)
+    nmap <silent> <d-t>       <plug>(wheel-dedibuf-tag)
+
+    " narrow
+    nmap <silent> <d-n>       <plug>(wheel-dedibuf-narrow-operator)
+    vmap <silent> <d-n>       <plug>(wheel-dedibuf-narrow)
+
+    " yank ring
+    nmap <silent> <c-p>       <plug>(wheel-prompt-yank-plain-linewise-before)
+    nmap <silent> <c-n>       <plug>(wheel-prompt-yank-plain-linewise-after)
+    nmap <silent> <d-y>       <plug>(wheel-dedibuf-yank-plain)
+    nmap <silent> <d-p>       <plug>(wheel-dedibuf-yank-list)
+
+    " undo list
+    nmap <silent> <d-u>       <plug>(wheel-dedibuf-undo-list)
+
+    " reorganize tabs & windows (visible buffers)
+    nmap <silent> <d-r> <plug>(wheel-reorg-tabwin)
+
+    " j on the end of the buffer -> beginning
+    nmap <silent> j <cmd>call wheel#mandala#wrap_down()<cr>
+    " k on the beginning of the buffer -> end
+    nmap <silent> k <cmd>call wheel#mandala#wrap_up()<cr>
+
+    " clear search highlight and center the cursor with Fibonacci ratio
+    nmap <silent> <c-l> <cmd>nohlsearch<cr><plug>(wheel-spiral-cursor)
+    imap <silent> <c-l> <esc><cmd>nohlsearch<cr><plug>(wheel-spiral-cursor)a
+<
+
+==============================================================================
+EXAMPLES						*wheel-examples*
+
+Display some locations in tabs		   |wheel-examples-locations-in-tabs|
+Display vim files in splits	 	   |wheel-examples-matching-files-in-splits|
+Search and replace with grep edit	   |wheel-examples-search-replace-grep|
+Search and replace with narrow circle	   |wheel-examples-search-replace-narrow|
+Add a tab with a similar file		   |wheel-examples-similar-tab|
+List all tag of a kind 		 	   |wheel-examples-tag-kind|
+
+------------------------------------------------------------------------------
+DISPLAY SOME LOCATIONS IN TABS	    *wheel-examples-locations-in-tabs*
+
+Just press `<M-w><Space>` to launch the location navigator, select the
+locations you want and press `t`.
+
+------------------------------------------------------------------------------
+DISPLAY MATCHING FILES IN SPLITS    *wheel-examples-matching-files-in-split*
+
+- `<M-w><Space>` to launch the location navigator
+- `i` to go to insert mode & filter line
+- enter the pattern you want
+  + e.g. `\.vim$` if all your vim locations end with `.vim`
+- `<Enter>` to validate the pattern
+- `*` to select all the visible (filtered) locations
+- `v` to open all selected locations in vertical splits
+
+------------------------------------------------------------------------------
+SEARCH AND REPLACE WITH GREP EDIT     *wheel-examples-search-replace-grep*
+
+Let's say you want to refactory some shell scripts, and replace
+`old_var_name` by `new_var_name`.
+
+The first thing to do is to create a group that contains all of your
+scripts. To do that, first create a torus named e.g. `quickfix`. Then,
+|:cd| to the root directory of your scripts and add all the script files
+with `<M-w>*`. The routine will ask you the glob pattern ; you can type
+`**/*.sh` if all your scripts have the same `sh` extension. After that,
+you will be asked if you want to create a new circle. Answer yes, and
+call this circle `shell`.
+
+Now that you have your group ready, you can start the search with
+`<M-w><M-g>`. It will open the grep dedicated buffer in edit mode. You
+are now in a buffer where you can edit and propagate your changes. So,
+we use the classic |:substitute| (|:s| in short form) : >
+
+    :%s/old_var_name/new_var_name/g
+<
+
+to replace all the occurences of the old var name. Then, just |:write|
+the buffer to apply these changes to all your shell scripts.
+
+Satisfied with the changes ? Just save all your modified buffers with
+|:wall|.
+
+Want to go back to previous state ? You can undo your substitution in
+the dedicated buffer, and write again.
+
+You can of course reuse the `shell` group for later refactoring.
+
+Replace everywhere, except in a given file~
+
+Simply use the |:global| command in invert mode |:vglobal| (|:v| in
+short form), in combination with |:substitute| : >
+
+    :v/my_file/s/old_var_name/new_var_name/g
+<
+
+------------------------------------------------------------------------------
+SEARCH AND REPLACE WITH NARROW CIRCLE    *wheel-examples-search-replace-narrow*
+
+We open the narrow circle buffer with `<M-w>-c` and run a substitution
+with `<M-s>`.
+
+Then, just |:write| the buffer to apply these changes to all your shell
+scripts.
+
+Replace everywhere, except in a given file~
+
+Once in the narrow buffer, press `<m-i>`, insert `!my_file` in the first
+line and press `<Enter>` to apply the filter.
+
+You can then run a substitute on the visible lines and propagate your
+changes by writing the buffer.
+
+------------------------------------------------------------------------------
+ADD A TAB WITH A SIMILAR FILE	    *wheel-examples-similar-tab*
+
+- press `<M-w><C-r>` to launch the tabs & windows organizer
+- copy the line with the tab you want to duplicate
+  + with closed fold, to take the files in it
+- paste it where you want
+- open the fold of the new tab
+- modify the filename in it to match the file you want to edit
+  + you can even use `<C-x><C-f>` to use vim file completion
+- apply your changes with |:write|
+
+------------------------------------------------------------------------------
+LIST ALL TAG OF A KIND				*wheel-examples-tag-kind*
+
+- launch the tag navigator with `<M-w><M-t>`
+- type `i` to go to insert mode on filter line
+- enter `\<f\>` to keep only functions tags
+  + or `\<m\>` to keep only maps tags
+  + ...
+
+==============================================================================
+FILES							*wheel-files*
+
+Plugin~
+
+plugin/wheel.vim :
+
+- wheel initialization
+- define commands
+- link <plug> maps to wheel functions
+
+After~
+
+after/plugin/wheel.vim :
+
+- link keys to <plug> maps
+
+This way, we can know the customized value of `g:wheel_config.mappings`
+level.
+
+Autoload~
+
+Here is a list of files in `autoload/wheel/`, and a brief description
+of the modules within them.
+
+| File              | Description                                        |
+| ----------------- | -------------------------------------------------- |
+| attic.vim         | most recently used files                           |
+| book.vim          | layer ring for each dedicated buffer               |
+| boomerang.vim     | context menus in dedicated buffers                 |
+| caduceus.vim      | alternate locations                                |
+| centre.vim        | commands & mappings                                |
+| chain.vim         | list helpers                                       |
+| chakra.vim        | signs on wheel locations                           |
+| clipper.vim       | yank dedicated buffer                              |
+| codex.vim         | yank ring                                          |
+| complete.vim      | completion functions                               |
+| counterpoint.vim  | write functions to reorganize native elements      |
+| crystal.vim       | internal constants                                 |
+| cuboctahedron.vim | full information of each mandala line              |
+| cuckoo.vim        | frecency : frequent & recent                       |
+| curve.vim         | activate wheel line in dedicated buffers           |
+| cylinder.vim      | dedicated buffers ring                             |
+| delta.vim         | undo & diff                                        |
+| diadem.vim        | internal constants for commands                    |
+| disc.vim          | read & write wheel & session file                  |
+| flower.vim        | wheel content generators for prompt & mandalas     |
+| frigate.vim       | non-wheel navigation in dedicated buffers          |
+| gear.vim          | generic helpers                                    |
+| geode.vim         | internal constants for plugs & maps                |
+| group.vim         | auto grouping of files                             |
+| guru.vim          | help                                               |
+| harmony.vim       | write functions to reorganize wheel elements       |
+| helix.vim         | wheel indexes                                      |
+| helm.vim          | main & meta menus in dedicated buffers             |
+| kintsugi.vim      | check & fix wheel variables                        |
+| kyusu.vim         | filters for prompt & dedicated buffers             |
+| lagrange.vim      | extrema helpers                                    |
+| labyrinth.vim     | commands to reproduce tab & win layout             |
+| line.vim          | activate non-wheel line in dedicated buffers       |
+| loop.vim          | loops on dedicated buffers lines                   |
+| mandala.vim       | generic dedicated buffers                          |
+| matrix.vim        | nested lists & dictionaries                        |
+| metafun.vim       | functional helpers : functions of functions        |
+| mirror.vim        | organize native vim elements                       |
+| mosaic.vim        | windows & tabs layouts                             |
+| orbiter.vim       | preview for dedicated buffers                      |
+| origami.vim       | folding                                            |
+| ouroboros.vim     | clear, save & restore vars, maps, autocmds         |
+| pencil.vim        | selection in dedicated buffers                     |
+| pendulum.vim      | wheel history                                      |
+| perspective.vim   | non wheel content generators for prompt & mandalas |
+| polyphony.vim     | writable aspect of dedicated buffers               |
+| projection.vim    | find wheel location of current buffer              |
+| pyramid.vim       | mix of tabs & splits layouts                       |
+| quartz.vim        | internal constants for dedicated buffers menus     |
+| rectangle.vim     | tabs, windows & buffers                            |
+| referen.vim       | references to current wheel elements               |
+| ripple.vim        | async job for vim                                  |
+| river.vim         | navigation aspect of dedicated buffers             |
+| sailing.vim       | non wheel navigation                               |
+| scroll.vim        | input history in dedicated buffers                 |
+| shadow.vim        | refactoring dedicated buffers                      |
+| spiral.vim        | golden ratio                                       |
+| status.vim        | print wheel status                                 |
+| symbol.vim        | tags                                               |
+| taijitu.vim       | ring helpers, circular routines                    |
+| teapot.vim        | filter aspect of dedicated buffers                 |
+| tower.vim         | menu layer in dedicated buffers                    |
+| tree.vim          | organize wheel element : add, rename, ...          |
+| triangle.vim      | undo & diff dedicated buffer                       |
+| unicode.vim       | unicode characters library                         |
+| upstream.vim      | parent leaf of context menu                        |
+| vector.vim        | batch operations on current group files            |
+| void.vim          | initiaze & reset variables                         |
+| vortex.vim        | navigation in the wheel                            |
+| waterclock.vim    | navigation in history & frecency                   |
+| wave.vim          | async job for neovim                               |
+| whirl.vim         | wheel navigation in dedicated buffers              |
+| yggdrasil.vim     | organize wheel in dedicated buffers                |
+
+Doc~
+
+doc/wheel.txt : this file :)
+
+Unused~
+
+| File              | Description               |
+| ----------------- | ------------------------- |
+| layer.vim         | Layer stack               |
+| origami.vim       | Dedicated buffers folding |
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:noet:fen:
