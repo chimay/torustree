@@ -166,71 +166,33 @@ endfun
 
 " ---- add new element
 
-fun! wheeltree#tree#add_torus (...)
-	" Add torus
+fun! wheeltree#tree#add_tree (...)
+	" Add folder tree
 	if a:0 > 0
-		let torus_name = a:1
+		let tree_name = a:1
 	else
-		let torus_name = input('New torus name ? ')
+		let tree_name = input('New tree name ? ')
 	endif
-	" ---- torus name
-	let torus_name = wheeltree#tree#format_name (torus_name)
-	if empty(torus_name)
-		call wheeltree#status#message('Torus name cannot be empty')
+	" ---- tree name
+	let tree_name = wheeltree#tree#format_name (tree_name)
+	if empty(tree_name)
+		call wheeltree#status#message('Tree name cannot be empty')
 		return v:false
 	endif
 	" ---- check name is not already present
-	if wheeltree#chain#is_inside(torus_name, g:wheeltree.glossary)
-		call wheeltree#status#message('Torus', torus_name, 'already exists in wheeltree')
+	if wheeltree#chain#is_inside(tree_name, g:wheeltree.glossary)
+		call wheeltree#status#message('Tree', tree_name, 'already exists in wheeltree')
 		return v:false
 	endif
-	" ---- add torus
-	call wheeltree#status#message('Adding torus', torus_name)
+	" ---- add tree
+	call wheeltree#status#message('Adding tree', tree_name)
 	let index = g:wheeltree.current
-	let toruses = g:wheeltree.toruses
+	let trees = g:wheeltree.trees
 	let glossary = g:wheeltree.glossary
-	let template = wheeltree#void#template ({'name': torus_name, 'circles': []})
-	eval toruses->wheeltree#chain#insert_next(index, template)
-	eval glossary->wheeltree#chain#insert_next(index, torus_name)
+	let template = wheeltree#void#template ({'name': tree_name, 'circles': []})
+	eval trees->wheeltree#chain#insert_next(index, template)
+	eval glossary->wheeltree#chain#insert_next(index, tree_name)
 	let g:wheeltree.current += 1
-	let g:wheeltree.timestamp = wheeltree#pendulum#timestamp ()
-	return v:true
-endfun
-
-fun! wheeltree#tree#add_circle (...)
-	" Add circle
-	if a:0 > 0
-		let circle_name = a:1
-	else
-		let complete = 'customlist,wheeltree#complete#dir_or_subdir'
-		let circle_name = input('New circle name ? ', '', complete)
-	endif
-	let circle_name = wheeltree#tree#format_name (circle_name)
-	" ---- add first torus if needed
-	if empty(g:wheeltree.toruses)
-		call wheeltree#tree#add_torus()
-	endif
-	" ---- circle name
-	if empty(circle_name)
-		call wheeltree#status#message('Circle name cannot be empty')
-		return v:false
-	endif
-	" ---- check name is not already present
-	let torus = g:wheeltree.toruses[g:wheeltree.current]
-	if wheeltree#chain#is_inside(circle_name, torus.glossary)
-		let infolist = ['Circle', circle_name, 'already exists in torus', torus.name]
-		call wheeltree#status#message(infolist)
-		return v:false
-	endif
-	" ---- add circle
-	call wheeltree#status#message('Adding circle', circle_name)
-	let index = torus.current
-	let circles = torus.circles
-	let glossary = torus.glossary
-	let template = wheeltree#void#template ({'name': circle_name, 'locations': []})
-	eval circles->wheeltree#chain#insert_next(index, template)
-	eval glossary->wheeltree#chain#insert_next(index, circle_name)
-	let torus.current += 1
 	let g:wheeltree.timestamp = wheeltree#pendulum#timestamp ()
 	return v:true
 endfun
@@ -239,16 +201,6 @@ fun! wheeltree#tree#add_location (location, optional = 'default')
 	" Add location
 	let location = a:location
 	let optional = a:optional
-	" ---- add first torus if needed
-	if empty(g:wheeltree.toruses)
-		call wheeltree#tree#add_torus()
-	endif
-	let torus = g:wheeltree.toruses[g:wheeltree.current]
-	" ---- add first circle if needed
-	if empty(torus.circles)
-		call wheeltree#tree#add_circle()
-	endif
-	let circle = torus.circles[torus.current]
 	" ---- location name
 	let name = wheeltree#tree#add_name (location)
 	if empty(name)

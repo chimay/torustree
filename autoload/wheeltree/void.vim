@@ -43,8 +43,11 @@ fun! wheeltree#void#wheeltree ()
 	if ! exists('g:wheeltree')
 		let g:wheeltree = {}
 	endif
-	if ! has_key(g:wheeltree, 'elements')
-		let g:wheeltree.toruses = []
+	if ! has_key(g:wheeltree, 'locations')
+		let g:wheeltree.locations = []
+	endif
+	if ! has_key(g:wheeltree, 'trees')
+		let g:wheeltree.trees = []
 	endif
 	if ! has_key(g:wheeltree, 'glossary')
 		let g:wheeltree.glossary = []
