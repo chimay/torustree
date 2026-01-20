@@ -10,7 +10,7 @@ fun! wheel#helix#album ()
 	" Not worth caching it : updated too often,
 	" each time a line or col is changed in a location
 	let album = []
-	for torus in g:wheel.toruses
+	for torus in g:wheeltree.toruses
 		for circle in torus.circles
 			for location in circle.locations
 				let entry = [torus.name, circle.name, location]
@@ -24,9 +24,9 @@ endfun
 fun! wheel#helix#helix ()
 	" Index of locations coordinates in the wheel
 	" Each coordinate = [torus.name, circle.name, location.name]
-	if g:wheel.timestamp >= g:wheel_helix.timestamp
+	if g:wheeltree.timestamp >= g:wheeltree_helix.timestamp
 		let helix = []
-		for torus in g:wheel.toruses
+		for torus in g:wheeltree.toruses
 			for circle in torus.circles
 				for location in circle.locations
 					let coordin = [torus.name, circle.name, location.name]
@@ -34,10 +34,10 @@ fun! wheel#helix#helix ()
 				endfor
 			endfor
 		endfor
-		let g:wheel_helix.table = helix
-		let g:wheel_helix.timestamp = wheel#pendulum#timestamp()
+		let g:wheeltree_helix.table = helix
+		let g:wheeltree_helix.timestamp = wheel#pendulum#timestamp()
 	else
-		let helix = g:wheel_helix.table
+		let helix = g:wheeltree_helix.table
 	endif
 	return helix
 endfun
@@ -45,27 +45,27 @@ endfun
 fun! wheel#helix#grid ()
 	" Index of circles coordinates in the wheel
 	" Each coordinate = [torus.name, circle.name]
-	if g:wheel.timestamp >= g:wheel_grid.timestamp
+	if g:wheeltree.timestamp >= g:wheeltree_grid.timestamp
 		let grid = []
-		for torus in g:wheel.toruses
+		for torus in g:wheeltree.toruses
 			for circle in torus.circles
 				let coordin = [torus.name, circle.name]
 				let grid = add(grid, coordin)
 			endfor
 		endfor
-		let g:wheel_grid.table = grid
-		let g:wheel_grid.timestamp = wheel#pendulum#timestamp()
+		let g:wheeltree_grid.table = grid
+		let g:wheeltree_grid.timestamp = wheel#pendulum#timestamp()
 	else
-		let grid = g:wheel_grid.table
+		let grid = g:wheeltree_grid.table
 	endif
 	return grid
 endfun
 
 fun! wheel#helix#files ()
 	" Index of files in the wheel
-	if g:wheel.timestamp >= g:wheel_files.timestamp
+	if g:wheeltree.timestamp >= g:wheeltree_files.timestamp
 		let files = []
-		for torus in g:wheel.toruses
+		for torus in g:wheeltree.toruses
 			for circle in torus.circles
 				for location in circle.locations
 					let filename = location.file
@@ -74,10 +74,10 @@ fun! wheel#helix#files ()
 			endfor
 		endfor
 		let files = uniq(sort(files))
-		let g:wheel_files.table = files
-		let g:wheel_files.timestamp = wheel#pendulum#timestamp()
+		let g:wheeltree_files.table = files
+		let g:wheeltree_files.timestamp = wheel#pendulum#timestamp()
 	else
-		let files = g:wheel_files.table
+		let files = g:wheeltree_files.table
 	endif
 	return files
 endfun
@@ -86,11 +86,11 @@ fun! wheel#helix#rename_file(old, new)
 	" Rename all occurences old -> new filename
 	let old = a:old
 	let new = a:new
-	let files = g:wheel_files.table
+	let files = g:wheeltree_files.table
 	for index in wheel#chain#rangelen(files)
 		if files[index] ==# old
 			let files[index] = new
 		endif
 	endfor
-	let g:wheel_files.timestamp = wheel#pendulum#timestamp()
+	let g:wheeltree_files.timestamp = wheel#pendulum#timestamp()
 endfun

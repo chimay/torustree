@@ -110,7 +110,7 @@ endfun
 fun! wheel#flower#tree ()
 	" Folded tree representation of the wheel index
 	let returnlist = []
-	for torus in g:wheel.toruses
+	for torus in g:wheeltree.toruses
 		let entry = torus.name .. s:fold_1
 		eval returnlist->add(entry)
 		for circle in torus.circles
@@ -129,7 +129,7 @@ fun! wheel#flower#reorganize ()
 	" Content for reorganize buffer
 	" Return complete locations, not only the names
 	let returnlist = []
-	for torus in g:wheel.toruses
+	for torus in g:wheeltree.toruses
 		let entry = torus.name .. s:fold_1
 		eval returnlist->add(entry)
 		for circle in torus.circles
@@ -149,7 +149,7 @@ endfun
 fun! wheel#flower#history ()
 	" Naturally sorted timeline index
 	" Each entry is a string : date hour | torus > circle > location
-	let timeline = g:wheel_history.line
+	let timeline = g:wheeltree_history.line
 	let returnlist = []
 	for entry in timeline
 		let coordin = entry.coordin
@@ -164,7 +164,7 @@ endfun
 fun! wheel#flower#history_circuit ()
 	" History circuit
 	" Each entry is a string : date hour | torus > circle > location
-	let timeloop = g:wheel_history.circuit
+	let timeloop = g:wheeltree_history.circuit
 	let returnlist = []
 	for entry in timeloop
 		let coordin = entry.coordin
@@ -180,7 +180,7 @@ endfun
 
 fun! wheel#flower#frecency ()
 	" Frecency : frequent & recent
-	let frecency = g:wheel_history.frecency
+	let frecency = g:wheeltree_history.frecency
 	let returnlist = []
 	for entry in frecency
 		let score = printf('%7d', entry.score)

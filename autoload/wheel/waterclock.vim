@@ -28,29 +28,29 @@ lockvar s:field_separ
 " ---- newer & older
 
 fun! wheel#waterclock#newer_anywhere ()
-	" Go to newer entry in g:wheel_history.circuit
-	let timeloop = g:wheel_history.circuit
+	" Go to newer entry in g:wheeltree_history.circuit
+	let timeloop = g:wheeltree_history.circuit
 	let timeloop = wheel#taijitu#rotate_right (timeloop)
 	let coordin = timeloop[0].coordin
 	" rotate makes deepcopy
-	let g:wheel_history.circuit = timeloop
+	let g:wheeltree_history.circuit = timeloop
 	call wheel#vortex#chord(coordin)
 	return wheel#vortex#jump ()
 endfun
 
 fun! wheel#waterclock#older_anywhere ()
-	" Go to older entry in g:wheel_history.circuit
-	let timeloop = g:wheel_history.circuit
+	" Go to older entry in g:wheeltree_history.circuit
+	let timeloop = g:wheeltree_history.circuit
 	let timeloop = wheel#taijitu#rotate_left (timeloop)
 	let coordin = timeloop[0].coordin
 	" rotate makes deepcopy
-	let g:wheel_history.circuit = timeloop
+	let g:wheeltree_history.circuit = timeloop
 	call wheel#vortex#chord(coordin)
 	return wheel#vortex#jump ()
 endfun
 
 fun! wheel#waterclock#newer (level = 'wheel')
-	" Go to newer entry in g:wheel_history.circuit, same level
+	" Go to newer entry in g:wheeltree_history.circuit, same level
 	let level = a:level
 	if wheel#referen#is_empty(level)
 		echomsg 'wheel newer :' level 'is empty'
@@ -64,7 +64,7 @@ fun! wheel#waterclock#newer (level = 'wheel')
 	" ---- index for range in coordin
 	let level_index = wheel#referen#level_index_in_coordin (level)
 	" ---- back to the future
-	let timeloop = g:wheel_history.circuit
+	let timeloop = g:wheeltree_history.circuit
 	let range = wheel#chain#rangelen(timeloop)
 	let range = reverse(range)
 	for index in range[:-2]
@@ -80,14 +80,14 @@ fun! wheel#waterclock#newer (level = 'wheel')
 		return v:false
 	endif
 	" ---- update timeloop : rotate return a deepcopy
-	let g:wheel_history.circuit = timeloop
+	let g:wheeltree_history.circuit = timeloop
 	" ---- jump
 	call wheel#vortex#chord(coordin)
 	return wheel#vortex#jump ()
 endfun
 
 fun! wheel#waterclock#older (level = 'wheel')
-	" Go to older entry in g:wheel_history.circuit, same level
+	" Go to older entry in g:wheeltree_history.circuit, same level
 	let level = a:level
 	if wheel#referen#is_empty(level)
 		echomsg 'wheel older :' level 'is empty'
@@ -101,7 +101,7 @@ fun! wheel#waterclock#older (level = 'wheel')
 	" ---- index for range in coordin
 	let level_index = wheel#referen#level_index_in_coordin (level)
 	" ---- back in history
-	let timeloop = g:wheel_history.circuit
+	let timeloop = g:wheeltree_history.circuit
 	let range = wheel#chain#rangelen(timeloop)
 	for index in range[1:]
 		let coordin = timeloop[index].coordin
@@ -116,7 +116,7 @@ fun! wheel#waterclock#older (level = 'wheel')
 		return v:false
 	endif
 	" ---- update timeloop : rotate return a deepcopy
-	let g:wheel_history.circuit = timeloop
+	let g:wheeltree_history.circuit = timeloop
 	" ---- jump
 	call wheel#vortex#chord(coordin)
 	return wheel#vortex#jump ()

@@ -24,7 +24,7 @@ endfun
 fun! wheel#cuboctahedron#tree ()
 	" Tree representation of the wheel index
 	let returnlist = []
-	for torus in g:wheel.toruses
+	for torus in g:wheeltree.toruses
 		let entry = [torus.name]
 		eval returnlist->add(entry)
 		for circle in torus.circles
@@ -43,7 +43,7 @@ fun! wheel#cuboctahedron#tabwin ()
 	" Buffers visible in tabs & wins
 	let returnlist = []
 	let last_tab = tabpagenr('$')
-	let mandalas = g:wheel_bufring.mandalas
+	let mandalas = g:wheeltree_bufring.mandalas
 	for tabnum in range(1, last_tab)
 		let entry = [tabnum]
 		eval returnlist->add(entry)

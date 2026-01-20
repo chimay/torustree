@@ -174,7 +174,7 @@ fun! wheel#centre#mappings (level, mode = 'normal')
 	endif
 	let level_maps = s:level_{level}_{mode}_maps
 	" ---- variables
-	let prefix = g:wheel_config.prefix
+	let prefix = g:wheeltree_config.prefix
 	let begin = mapcmd .. ' <silent> ' .. prefix
 	let middle = '<plug>('
 	let end = ')'
@@ -304,24 +304,24 @@ endfun
 fun! wheel#centre#cables ()
 	" Link keys to <plug> mappings
 	" ---- basic
-	if g:wheel_config.mappings >= 0
+	if g:wheeltree_config.mappings >= 0
 		call wheel#centre#mappings (0)
 	endif
 	" ---- common
-	if g:wheel_config.mappings >= 1
+	if g:wheeltree_config.mappings >= 1
 		call wheel#centre#mappings (1)
 	endif
 	" ---- advanced
-	if g:wheel_config.mappings >= 2
+	if g:wheeltree_config.mappings >= 2
 		call wheel#centre#mappings (2)
 		call wheel#centre#mappings (2, 'visual')
 	endif
 	" ---- without prefix
-	if g:wheel_config.mappings >= 10
+	if g:wheeltree_config.mappings >= 10
 		call wheel#centre#prefixless ()
 	endif
 	" ---- debug
-	if g:wheel_config.mappings >= 20
+	if g:wheeltree_config.mappings >= 20
 		call wheel#centre#mappings (20)
 	endif
 endfun

@@ -250,7 +250,7 @@ fun! wheel#layer#push ()
 	call wheel#layer#init ()
 	let stack = b:wheel_stack
 	let length = wheel#layer#length ()
-	let maxim = g:wheel_config.maxim.layers
+	let maxim = g:wheeltree_config.maxim.layers
 	if length == 0
 		let stack.top = 0
 	endif

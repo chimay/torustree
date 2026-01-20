@@ -17,8 +17,8 @@ fun! wheel#mosaic#one_tab ()
 			return v:false
 		endif
 	endif
-	let g:wheel_shelve.layout.tab = 'none'
-	let g:wheel_shelve.layout.tabnames = []
+	let g:wheeltree_shelve.layout.tab = 'none'
+	let g:wheeltree_shelve.layout.tabnames = []
 	call wheel#projection#follow ()
 	return v:true
 endfun
@@ -34,8 +34,8 @@ fun! wheel#mosaic#one_window ()
 			return v:false
 		endif
 	endif
-	let g:wheel_shelve.layout.window = 'none'
-	let g:wheel_shelve.layout.split = 'none'
+	let g:wheeltree_shelve.layout.window = 'none'
+	let g:wheeltree_shelve.layout.split = 'none'
 	let w:coordin = [0, 0]
 	call wheel#projection#follow ()
 	return v:true
@@ -44,8 +44,8 @@ endfun
 fun! wheel#mosaic#rowcol (level)
 	" Number of rows and cols for grid layout
 	let ratio = wheel#rectangle#ratio ()
-	let rows = g:wheel_config.maxim.horizontal
-	let cols = g:wheel_config.maxim.vertical
+	let rows = g:wheeltree_config.maxim.horizontal
+	let cols = g:wheeltree_config.maxim.vertical
 	let upper = wheel#referen#upper (a:level)
 	let elements = wheel#referen#elements (upper)
 	let length = len(elements)
@@ -110,12 +110,12 @@ fun! wheel#mosaic#tabs (level)
 		return
 	endif
 	let level = a:level
-	let maxtabs = g:wheel_config.maxim.tabs
+	let maxtabs = g:wheeltree_config.maxim.tabs
 	let upper = wheel#referen#upper (level)
 	let upper_level = wheel#referen#upper_level_name (level)
 	let name = wheel#referen#current (level).name
 	let glossary = copy(upper.glossary)
-	let g:wheel_shelve.layout.tabnames = glossary[:maxtabs - 1]
+	let g:wheeltree_shelve.layout.tabnames = glossary[:maxtabs - 1]
 	let elements = wheel#referen#elements (upper)
 	let length = len(elements)
 	if length == 0
@@ -128,7 +128,7 @@ fun! wheel#mosaic#tabs (level)
 	endfor
 	tabrewind
 	call wheel#projection#follow (upper_level)
-	let g:wheel_shelve.layout.tab = level
+	let g:wheeltree_shelve.layout.tab = level
 endfun
 
 fun! wheel#mosaic#split (level, action = 'horizontal', ...)
@@ -163,8 +163,8 @@ fun! wheel#mosaic#split (level, action = 'horizontal', ...)
 	endfor
 	wincmd t
 	call wheel#projection#follow (upper_level)
-	let g:wheel_shelve.layout.window = level
-	let g:wheel_shelve.layout.split = action
+	let g:wheeltree_shelve.layout.window = level
+	let g:wheeltree_shelve.layout.split = action
 endfun
 
 fun! wheel#mosaic#golden (level, ...)
@@ -210,7 +210,7 @@ fun! wheel#mosaic#horizontal (...)
 		let w:coordin = [0, 0]
 	endif
 	let next = w:coordin[0] + 1
-	if next < g:wheel_config.maxim.horizontal
+	if next < g:wheeltree_config.maxim.horizontal
 		if settings.golden
 			call wheel#spiral#horizontal_split ()
 		else
@@ -237,7 +237,7 @@ fun! wheel#mosaic#vertical (...)
 		let w:coordin = [0, 0]
 	endif
 	let next = w:coordin[1] + 1
-	if next < g:wheel_config.maxim.vertical
+	if next < g:wheeltree_config.maxim.vertical
 		if settings.golden
 			call wheel#spiral#vertical_split ()
 		else
@@ -273,7 +273,7 @@ fun! wheel#mosaic#main_left (...)
 		return v:true
 	endif
 	let next = w:coordin[0] + 1
-	if next < g:wheel_config.maxim.horizontal
+	if next < g:wheeltree_config.maxim.horizontal
 		if settings.golden
 			call wheel#spiral#horizontal_split ()
 		else
@@ -309,7 +309,7 @@ fun! wheel#mosaic#main_top (...)
 		return v:true
 	endif
 	let next = w:coordin[1] + 1
-	if next < g:wheel_config.maxim.vertical
+	if next < g:wheeltree_config.maxim.vertical
 		if settings.golden
 			call wheel#spiral#vertical_split ()
 		else

@@ -241,7 +241,7 @@ fun! wheel#counterpoint#arrange_tabs (tabindexes)
 	endwhile
 	" Reorder
 	let counter = 0
-	let max_iter = 2 * g:wheel_config.maxim.tabs
+	let max_iter = 2 * g:wheeltree_config.maxim.tabs
 	let from = 0
 	" status : start from 0
 	" its elements will follow the reordering
@@ -361,10 +361,10 @@ fun! wheel#counterpoint#reorg_tabwin (ask = 'confirm')
 	endif
 	call wheel#cylinder#recall ()
 	" -- clean wheel shelve
-	let g:wheel_shelve.layout.window = 'none'
-	let g:wheel_shelve.layout.split = 'none'
-	let g:wheel_shelve.layout.tab = 'none'
-	let g:wheel_shelve.layout.tabnames = []
+	let g:wheeltree_shelve.layout.window = 'none'
+	let g:wheeltree_shelve.layout.split = 'none'
+	let g:wheeltree_shelve.layout.tab = 'none'
+	let g:wheeltree_shelve.layout.tabnames = []
 	" -- tell the world the job is done
 	setlocal nomodified
 	echomsg 'tabs & windows reorganized'

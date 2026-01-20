@@ -239,7 +239,7 @@ PREFIX						*wheel-sbs-prefix*
 In the following discussion, I assume that you have kept the default
 mapping prefix : >
 
- let g:wheel_config.prefix = '<M-w>'
+ let g:wheeltree_config.prefix = '<M-w>'
 <
 
 ------------------------------------------------------------------------------
@@ -490,16 +490,16 @@ To avoid conflict with your personal bindings, wheel mappings until level
 a prefix you are comfortable with. Here are some ideas you could use : >
 
  " default
- let g:wheel_config.prefix = '<M-w>'
+ let g:wheeltree_config.prefix = '<M-w>'
 
  " works on nvim-qt, not on gvim or in terminal
- let g:wheel_config.prefix = '<D-w>'
+ let g:wheeltree_config.prefix = '<D-w>'
 
  " great if you don't use space as map leader
- let g:wheel_config.prefix = '<Space>'
+ let g:wheeltree_config.prefix = '<Space>'
 
  " if you don't use backslash as map leader
- let g:wheel_config.prefix = '\'
+ let g:wheeltree_config.prefix = '\'
 <
 
 This is fine, but can quickly become tedious for often used functions. In
@@ -512,8 +512,8 @@ of inspiration.
 
 So, two solutions :
 
-- you're happy with all of them : you can set `g:wheel_config.mappings` to 10
-- you set `g:wheel_config.mappings` to 2 or less, and cherrypick in level 10
+- you're happy with all of them : you can set `g:wheeltree_config.mappings` to 10
+- you set `g:wheeltree_config.mappings` to 2 or less, and cherrypick in level 10
 
 Define your own maps~
 
@@ -538,8 +538,8 @@ AUTO READ AND WRITE				*wheel-workflow-auto-read-write*
 You probably want to make your files groups persistent. For that, you
 need to enable auto read & write of the wheel file : >
 
-    let g:wheel_config.autoread = 1
-    let g:wheel_config.autowrite = 1
+    let g:wheeltree_config.autoread = 1
+    let g:wheeltree_config.autowrite = 1
     augroup wheel
         autocmd!
         autocmd VimEnter * call wheel#void#init()
@@ -713,7 +713,7 @@ string, you can use |/^|. For example, if you have the completion list
 
 Vowels fuzzy~
 
-If `g:wheel_config.completion.vocalize` is greater than 0, the plugin adds
+If `g:wheeltree_config.completion.vocalize` is greater than 0, the plugin adds
 vowels patterns between the chars you enter, to enable a kind of vowels-fuzzy
 completion.
 
@@ -726,7 +726,7 @@ and `organize` :
 
 Word fuzzy~
 
-If `g:wheel_config.completion.wordize` is greater than 0, the plugin
+If `g:wheeltree_config.completion.wordize` is greater than 0, the plugin
 adds word-characters patterns between the chars you enter, to enable
 a kind of word-fuzzy completion.
 
@@ -739,12 +739,12 @@ and `organize` :
 
 Scores~
 
-If `g:wheel_config.completion.scores` is greater than 0, scores are computed,
+If `g:wheeltree_config.completion.scores` is greater than 0, scores are computed,
 and matching results are sorted accordingly.
 
 Fuzzy~
 
-If `g:wheel_config.completion.fuzzy` is greater than 0, a full fuzzy
+If `g:wheeltree_config.completion.fuzzy` is greater than 0, a full fuzzy
 completion is enabled, using |matchfuzzy()|. Beware that the or `|` operator
 is not available in this mode.
 
@@ -1335,7 +1335,7 @@ you to the layer you want. Example of completion candidates : >
     2 | yank/plain
 <
 
-The maximum size of the layer ring is determined by `g:wheel_config.maxim.layers`.
+The maximum size of the layer ring is determined by `g:wheeltree_config.maxim.layers`.
 
 So, there are two levels :
 
@@ -2261,27 +2261,27 @@ READ AND WRITE					*wheel-commands-read-and-write*
 
 :Wheel prompt read-wheel					*:Wheel-prompt-read-wheel*
 	Load wheel from file. The plugin will ask you the file name.
-	File completion in `g:wheel_config.storage.wheel.folder` is available.
+	File completion in `g:wheeltree_config.storage.wheel.folder` is available.
 	Leaving empty choose the [file] under brackets.
-	Inserting the special value `=` choose `g:wheel_config.storage.wheel.name`.
+	Inserting the special value `=` choose `g:wheeltree_config.storage.wheel.name`.
 
 :Wheel prompt write-wheel					*:Wheel-prompt-write-wheel*
 	Save wheel in file. The plugin will ask you the file name.
-	File completion in `g:wheel_config.storage.wheel.folder` is available.
+	File completion in `g:wheeltree_config.storage.wheel.folder` is available.
 	Leaving empty choose the [file] under brackets.
-	Inserting the special value `=` choose `g:wheel_config.storage.wheel.name`.
+	Inserting the special value `=` choose `g:wheeltree_config.storage.wheel.name`.
 
 :Wheel prompt read-session				*:Wheel-prompt-read-session*
 	Load session from file. The plugin will ask you the file name.
-	File completion in `g:wheel_config.storage.session.folder` is available.
+	File completion in `g:wheeltree_config.storage.session.folder` is available.
 	Leaving empty choose the [file] under brackets.
-	Inserting the special value `=` choose `g:wheel_config.storage.session.name`.
+	Inserting the special value `=` choose `g:wheeltree_config.storage.session.name`.
 
 :Wheel prompt write-session				*:Wheel-prompt-write-session*
 	Save session in file. The plugin will ask you the file name.
-	File completion in `g:wheel_config.storage.session.folder` is available.
+	File completion in `g:wheeltree_config.storage.session.folder` is available.
 	Leaving empty choose the [file] under brackets.
-	Inserting the special value `=` choose `g:wheel_config.storage.session.name`.
+	Inserting the special value `=` choose `g:wheeltree_config.storage.session.name`.
 
 ------------------------------------------------------------------------------
 DEDICATED BUFFERS				*wheel-commands-dedicated-buffers*
@@ -2447,19 +2447,19 @@ See |'wildmode'| to adapt it to your taste.
 ------------------------------------------------------------------------------
 DICTIONARY					  *wheel-config-dictionary*
 
-Customization is done using the `g:wheel_config` dictionary. You must
+Customization is done using the `g:wheeltree_config` dictionary. You must
 first initialize it : >
 
-	let g:wheel_config                 = {}
-	let g:wheel_config.project         = {}
-	let g:wheel_config.storage         = {}
-	let g:wheel_config.storage.wheel   = {}
-	let g:wheel_config.storage.session = {}
-	let g:wheel_config.maxim           = {}
-	let g:wheel_config.completion      = {}
-	let g:wheel_config.frecency        = {}
-	let g:wheel_config.display         = {}
-	let g:wheel_config.display.sign    = {}
+	let g:wheeltree_config                 = {}
+	let g:wheeltree_config.project         = {}
+	let g:wheeltree_config.storage         = {}
+	let g:wheeltree_config.storage.wheel   = {}
+	let g:wheeltree_config.storage.session = {}
+	let g:wheeltree_config.maxim           = {}
+	let g:wheeltree_config.completion      = {}
+	let g:wheeltree_config.frecency        = {}
+	let g:wheeltree_config.display         = {}
+	let g:wheeltree_config.display.sign    = {}
 
 <
 
@@ -2468,7 +2468,7 @@ MAPPINGS					    *wheel-config-mappings*
 
 Determine how many default mappings are available : >
 
-    let g:wheel_config.mappings = 10
+    let g:wheeltree_config.mappings = 10
 <
 
 See |wheel-mappings-levels| for more information.
@@ -2480,7 +2480,7 @@ PREFIX						    *wheel-config-prefix*
 
 Prefix for mappings of level 0, 1, 2 : >
 
-    let g:wheel_config.prefix = '<my-wonderful-prefix>'
+    let g:wheeltree_config.prefix = '<my-wonderful-prefix>'
 <
 
 See |wheel-mappings-prefix| for more information.
@@ -2492,7 +2492,7 @@ LOCATE DATABASE			    		*wheel-config-locate-db*
 
 If you want to use a custom database when using `locate` : >
 
-  let g:wheel_config.locate_db = '~/my_locate.db'
+  let g:wheeltree_config.locate_db = '~/my_locate.db'
 <
 
 Default : empty
@@ -2502,9 +2502,9 @@ GREP EX COMMAND			    		*wheel-config-grep*
 
 Whether to use internal |:vimgrep| or external |:grep| to grep files : >
 
-  let g:wheel_config.grep = 'vimgrep'
+  let g:wheeltree_config.grep = 'vimgrep'
   " or
-  let g:wheel_config.grep = 'grep'
+  let g:wheeltree_config.grep = 'grep'
 <
 
 Default : internal vimgrep, in case external grep is not available.
@@ -2515,8 +2515,8 @@ PROJECT MARKERS				*wheel-config-project-markers*
 File(s) or directories(s) marking a project root. Can take a string or
 list value. : >
 
-    let g:wheel_config.project.markers = '.git'
-    let g:wheel_config.project.markers = ['.git', '.my-project-root']
+    let g:wheeltree_config.project.markers = '.git'
+    let g:wheeltree_config.project.markers = ['.git', '.my-project-root']
 <
 
 If a list is given, the project directory is found as soon as one marker
@@ -2529,11 +2529,11 @@ AUTO CHDIR PROJECT			*wheel-config-project-auto-chdir*
 
 Try to change directory to project root if > 0 : >
 
-    let g:wheel_config.project.auto_chdir = 1
+    let g:wheeltree_config.project.auto_chdir = 1
 <
 
 To find the right folder, the plugin looks at files or dirs listed in
-`g:wheel_config.project_markers`.
+`g:wheeltree_config.project_markers`.
 
 Default : 0
 
@@ -2547,7 +2547,7 @@ a wheel folder.
 
 Folder where your wheels will be saved : >
 
-    let g:wheel_config.storage.wheel.folder = '~/.local/share/wheel'
+    let g:wheeltree_config.storage.wheel.folder = '~/.local/share/wheel'
 <
 
 It is highly recommended to define this folder and regularly save the
@@ -2563,10 +2563,10 @@ WHEEL NAME					    *wheel-config-wheel-name*
 
 Name for the default wheel file : >
 
-    let g:wheel_config.storage.wheel.name = 'wheel.vim'
+    let g:wheeltree_config.storage.wheel.name = 'wheel.vim'
 <
 
-This file will be located in `g:wheel_config.storage.wheel.folder`
+This file will be located in `g:wheeltree_config.storage.wheel.folder`
 
 Default : `wheel.vim`
 
@@ -2575,7 +2575,7 @@ AUTOREAD WHEEL				    *wheel-config-wheel-autoread*
 
 Auto read wheel file on startup if non null : >
 
-    let g:wheel_config.storage.wheel.autoread = 1
+    let g:wheeltree_config.storage.wheel.autoread = 1
 <
 
 To enable it, you need to add an autocommand on vim enter : >
@@ -2590,7 +2590,7 @@ AUTOWRITE WHEEL				    *wheel-config-wheel-autowrite*
 
 Auto write wheel file on exit if non null : >
 
-    let g:wheel_config.storage.wheel.autowrite = 1
+    let g:wheeltree_config.storage.wheel.autowrite = 1
 <
 
 To enable it, you need to add an autocommand on vim leave : >
@@ -2610,7 +2610,7 @@ a session folder.
 
 Folder where your sessions will be saved : >
 
-    let g:wheel_config.storage.session.folder = '~/.local/share/wheel/session'
+    let g:wheeltree_config.storage.session.folder = '~/.local/share/wheel/session'
 <
 
 Default~
@@ -2623,10 +2623,10 @@ SESSION NAME					   *wheel-config-session-name*
 
 Name for the default session file : >
 
-    let g:wheel_config.storage.session.name = 'session.vim'
+    let g:wheeltree_config.storage.session.name = 'session.vim'
 <
 
-This file will be located in `g:wheel_config.storage.session.folder`
+This file will be located in `g:wheeltree_config.storage.session.folder`
 
 Default : `session.vim`
 
@@ -2635,7 +2635,7 @@ AUTOREAD SESSION			    *wheel-config-session-autoread*
 
 Auto read current or default session file on startup if non null : >
 
-    let g:wheel_config.storage.session.autoread = 1
+    let g:wheeltree_config.storage.session.autoread = 1
 <
 
 To enable it, you need to add an autocommand on vim enter : >
@@ -2650,7 +2650,7 @@ AUTOWRITE SESSION			    *wheel-config-session-autowrite*
 
 Auto write current or default session file on exit if non null : >
 
-    let g:wheel_config.storage.session.autowrite = 1
+    let g:wheeltree_config.storage.session.autowrite = 1
 <
 
 To enable it, you need to add an autocommand on vim leave : >
@@ -2665,7 +2665,7 @@ BACKUPS						    *wheel-config-backups*
 
 Number of backups for wheel and session files : >
 
-    let g:wheel_config.storage.backups = 3
+    let g:wheeltree_config.storage.backups = 3
 <
 
 Assuming your wheel file is `wheel.vim`, the backups will be named
@@ -2681,7 +2681,7 @@ MAX NUMBER OF ELEMENTS IN HISTORY		   *wheel-config-maxim-history*
 
 Maximum number of elements in the wheel history : >
 
-    let g:wheel_config.maxim.history = 400
+    let g:wheeltree_config.maxim.history = 400
 <
 
 Default : 500
@@ -2691,7 +2691,7 @@ MAX NUMBER OF ELEMENTS IN INPUT HISTORY		   *wheel-config-maxim-input*
 
 Maximum number of elements in the input history : >
 
-    let g:wheel_config.maxim.input = 200
+    let g:wheeltree_config.maxim.input = 200
 <
 
 Default : 500
@@ -2701,7 +2701,7 @@ MAX NUMBER OF ELEMENTS IN MRU			*wheel-config-maxim-mru*
 
 Maximum number of elements in mru : >
 
-  let g:wheel_config.maxim.mru = 300
+  let g:wheeltree_config.maxim.mru = 300
 <
 
 Default : 500
@@ -2711,14 +2711,14 @@ MAX NUMBER OF ELEMENTS IN YANK RING		   *wheel-config-maxim-yanks*
 
 Maximum number of elements in the yank ring for unnamed register : >
 
-    let g:wheel_config.maxim.unnamed_yanks = 700
+    let g:wheeltree_config.maxim.unnamed_yanks = 700
 <
 
 Default : 500
 
 Maximum number of elements in the yank ring for other registers : >
 
-    let g:wheel_config.maxim.other_yanks = 100
+    let g:wheeltree_config.maxim.other_yanks = 100
 <
 
 Default : 50
@@ -2728,7 +2728,7 @@ MAX NUMBER OF LINES OF A YANK			   *wheel-config-maxim-yank-lines*
 
 Maximum number of lines of a yank added in the yank ring : >
 
-    let g:wheel_config.maxim.yank_lines = 50
+    let g:wheeltree_config.maxim.yank_lines = 50
 <
 
 Default : 30
@@ -2738,7 +2738,7 @@ MAX SIZE OF A YANK				   *wheel-config-maxim-yank-size*
 
 Maximum size of a yank added in the yank ring, in bytes : >
 
-    let g:wheel_config.maxim.yank_size = 3000
+    let g:wheeltree_config.maxim.yank_size = 3000
 <
 
 Default : 3000
@@ -2748,7 +2748,7 @@ MAX LAYERS IN DEDICATED BUFFERS		    *wheel-config-maxim-layers*
 
 Maximum size of layer ring in dedicated buffers : >
 
-	let g:wheel_config.maxim.layers = 5
+	let g:wheeltree_config.maxim.layers = 5
 <
 
 Default : 5
@@ -2758,7 +2758,7 @@ MAX NUMBER OF TABS			    *wheel-config-maxim-tabs*
 
 Maximum number of tabs in tab layouts : >
 
-  let g:wheel_config.maxim.tabs = 12
+  let g:wheeltree_config.maxim.tabs = 12
 <
 
 Default : 15
@@ -2768,7 +2768,7 @@ MAX NUMBER OR HORIZONTAL SPLITS	    	*wheel-config-maxim-horizontal*
 
 Maximum number of horizontal splits in layouts : >
 
-  let g:wheel_config.maxim.horizontal = 3
+  let g:wheeltree_config.maxim.horizontal = 3
 <
 
 Default : 3
@@ -2778,7 +2778,7 @@ MAX NUMBER OR VERTICAL SPLITS		    *wheel-config-maxim-vertical*
 
 Maximum number of vertical splits in layouts : >
 
-  let g:wheel_config.maxim.vertical = 4
+  let g:wheeltree_config.maxim.vertical = 4
 <
 
 Default : 4
@@ -2788,23 +2788,23 @@ COMPLETION					    *wheel-config-completion*
 
 To enable a kind of fuzzy-vowels completion : >
 
- let g:wheel_config.completion.vocalize = 1
+ let g:wheeltree_config.completion.vocalize = 1
 <
 
 Default : 0
 
 To enable a kind of fuzzy-word completion : >
 
- let g:wheel_config.completion.wordize = 1
+ let g:wheeltree_config.completion.wordize = 1
 <
 
-Overrrides `g:wheel_config.completion.vocalize`.
+Overrrides `g:wheeltree_config.completion.vocalize`.
 
 Default : 0
 
 To enable full fuzzy completion : >
 
- let g:wheel_config.completion.fuzzy = 1
+ let g:wheeltree_config.completion.fuzzy = 1
 <
 
 Overrrides vocalize and wordize settings.
@@ -2825,12 +2825,12 @@ The frecency (frequent & recent) algorithm is very simple :
 
 You can customize the reward : >
 
-  let g:wheel_config.frecency.reward = 150
+  let g:wheeltree_config.frecency.reward = 150
 <
 
 and the penalty : >
 
-  let g:wheel_config.frecency.penalty = 1
+  let g:wheeltree_config.frecency.penalty = 1
 <
 
 The higher the reward/penaly ratio, the bigger your frecency list will be.
@@ -2847,7 +2847,7 @@ By default, dedicated buffers status is displayed in the statusline. If
 you'd rather have it printed in the echo area, just set the statusline
 option to zero : >
 
-  let g:wheel_config.display.statusline = 0
+  let g:wheeltree_config.display.statusline = 0
 <
 
 Default : 1
@@ -2862,17 +2862,17 @@ MESSAGES				    	*wheel-config-display_message*
 
 You can ask wheel to print one-line message on dedicated buffers status : >
 
-    let g:wheel_config.display.dedibuf_msg = 'one-line'
+    let g:wheeltree_config.display.dedibuf_msg = 'one-line'
 <
 
 or to accept multi-line messages : >
 
-    let g:wheel_config.display.dedibuf_msg = 'multi-line'
+    let g:wheeltree_config.display.dedibuf_msg = 'multi-line'
 <
 
 Default : `one-line`
 
-Note : it will print nothing if `g:wheel_config.display.statusline > 0`.
+Note : it will print nothing if `g:wheeltree_config.display.statusline > 0`.
 
 if you set this option to multi-line, I recommend you set |'cmdheight'|
 option to a minimum of 3 : >
@@ -2887,7 +2887,7 @@ You can customize the filter prompt in dedicated buffers.
 
 For regular dedicated buffer, _without_ `BufWriteCmd` autocommand : >
 
-    let g:wheel_config.display.prompt = 'wheel $ '
+    let g:wheeltree_config.display.prompt = 'wheel $ '
 <
 
 Default : '☯ '
@@ -2895,7 +2895,7 @@ Default : '☯ '
 For writable dedicated buffer, _with_ `BufWriteCmd` autocommand : >
 
 
-    let g:wheel_config.display.prompt_writable = 'wheel # '
+    let g:wheeltree_config.display.prompt_writable = 'wheel # '
 <
 
 Default : '☈ '
@@ -2906,7 +2906,7 @@ SELECTION MARKER				*wheel-config-display-selection*
 You can customize the selection marker in dedicated buffers : >
 
 
-    let g:wheel_config.display.selection = '-> '
+    let g:wheeltree_config.display.selection = '-> '
 <
 
 Default : '☰ '
@@ -2923,7 +2923,7 @@ By default, signs are displayed at :
 
 You can disable it if you want : >
 
-    let g:wheel_config.display.sign.switch = 0
+    let g:wheeltree_config.display.sign.switch = 0
 <
 
 Default : 1
@@ -2933,7 +2933,7 @@ Settings~
 The sign settings for wheel location can be modified : >
 
 
-    let g:wheel_config.display.sign.settings = { 'text' : '@' }
+    let g:wheeltree_config.display.sign.settings = { 'text' : '@' }
 <
 
 Default : { 'text' : '☯' }
@@ -2943,7 +2943,7 @@ Native settings~
 Sign settings for (neo)vim native navigation using Wheel interface : >
 
 
-    let g:wheel_config.display.sign.native_settings = { 'text' : '*' }
+    let g:wheeltree_config.display.sign.native_settings = { 'text' : '*' }
 <
 
 Default : { 'text' : '✻' }
@@ -2991,109 +2991,109 @@ EXAMPLE						        *wheel-config-example*
 
 Here is an example of a complete configuration : >
 
-  if ! exists("g:wheel_loaded")
+  if ! exists("g:wheeltree_loaded")
     " ---- DONT FORGET TO INITIALIZE DICTS BEFORE USING THEM
-    let g:wheel_config                 = {}
-    let g:wheel_config.project         = {}
-    let g:wheel_config.storage         = {}
-    let g:wheel_config.storage.wheel   = {}
-    let g:wheel_config.storage.session = {}
-    let g:wheel_config.maxim           = {}
-    let g:wheel_config.completion      = {}
-    let g:wheel_config.frecency        = {}
-    let g:wheel_config.display         = {}
-    let g:wheel_config.display.sign    = {}
+    let g:wheeltree_config                 = {}
+    let g:wheeltree_config.project         = {}
+    let g:wheeltree_config.storage         = {}
+    let g:wheeltree_config.storage.wheel   = {}
+    let g:wheeltree_config.storage.session = {}
+    let g:wheeltree_config.maxim           = {}
+    let g:wheeltree_config.completion      = {}
+    let g:wheeltree_config.frecency        = {}
+    let g:wheeltree_config.display         = {}
+    let g:wheeltree_config.display.sign    = {}
 
     " ---- The bigger it is, the more mappings available
-    let g:wheel_config.mappings = 10
+    let g:wheeltree_config.mappings = 10
     " ---- Prefix for mappings
-    let g:wheel_config.prefix = '<M-w>'
+    let g:wheeltree_config.prefix = '<M-w>'
     " ---- Locate database ; default one if left empty
-    let g:wheel_config.locate_db = '~/index/locate/home.db'
+    let g:wheeltree_config.locate_db = '~/index/locate/home.db'
     " ---- Grep command : :grep or :vimpgrep
-    let g:wheel_config.grep = 'grep'
+    let g:wheeltree_config.grep = 'grep'
 
     " Marker of project root
-    "let g:wheel_config.project.markers = '.git'
-    "let g:wheel_config.project.markers = '.project-root'
+    "let g:wheeltree_config.project.markers = '.git'
+    "let g:wheeltree_config.project.markers = '.project-root'
     " List of markers
     " The project dir is found as soon as one marker is found in it
-    let g:wheel_config.project.markers = ['.hg' , '.git', '.project-root']
+    let g:wheeltree_config.project.markers = ['.hg' , '.git', '.project-root']
     " Auto cd to project root if > 0
-    let g:wheel_config.project.auto_chdir = 1
+    let g:wheeltree_config.project.auto_chdir = 1
 
     " The folder where toruses and circles will be stored and read
-    let g:wheel_config.storage.wheel.folder = '~/.local/share/wheel'
+    let g:wheeltree_config.storage.wheel.folder = '~/.local/share/wheel'
     " Name of the default wheel file
-    let g:wheel_config.storage.wheel.name = 'wheel.vim'
+    let g:wheeltree_config.storage.wheel.name = 'wheel.vim'
     " Auto read wheel file on startup if > 0
-    let g:wheel_config.storage.wheel.autoread = 1
+    let g:wheeltree_config.storage.wheel.autoread = 1
     " Auto write wheel file on exit if > 0
-    let g:wheel_config.storage.wheel.autowrite = 1
+    let g:wheeltree_config.storage.wheel.autowrite = 1
     " The folder where sessions will be stored and read
-    let g:wheel_config.storage.session.folder = '~/.local/share/wheel/session'
+    let g:wheeltree_config.storage.session.folder = '~/.local/share/wheel/session'
     " Name of the default session file
-    let g:wheel_config.storage.session.name = 'session.vim'
+    let g:wheeltree_config.storage.session.name = 'session.vim'
     " Auto read default session file on startup if > 0
-    let g:wheel_config.storage.session.autoread = 1
+    let g:wheeltree_config.storage.session.autoread = 1
     " Auto write default session file on exit if > 0
-    let g:wheel_config.storage.session.autowrite = 1
+    let g:wheeltree_config.storage.session.autowrite = 1
     " Number of backups for wheel & session files
-    let g:wheel_config.storage.backups = 5
+    let g:wheeltree_config.storage.backups = 5
 
     " ---- Maximum number of elements in history
-    let g:wheel_config.maxim.history = 400
+    let g:wheeltree_config.maxim.history = 400
     " ---- Maximum number of elements in input history
-    let g:wheel_config.maxim.input = 200
+    let g:wheeltree_config.maxim.input = 200
 
     " ---- Maximum number of elements in mru
-    let g:wheel_config.maxim.mru = 300
+    let g:wheeltree_config.maxim.mru = 300
 
     " ---- Maximum number of elements in yank ring
-    let g:wheel_config.maxim.default_yanks = 700
-    let g:wheel_config.maxim.other_yanks = 100
+    let g:wheeltree_config.maxim.default_yanks = 700
+    let g:wheeltree_config.maxim.other_yanks = 100
     " ---- Maximum lines of yank to add in yank ring
-    let g:wheel_config.maxim.yank_lines = 30
+    let g:wheeltree_config.maxim.yank_lines = 30
     " ---- Maximum size of yank to add in yank ring
-    let g:wheel_config.maxim.yank_size = 3000
+    let g:wheeltree_config.maxim.yank_size = 3000
 
     " ---- Maximum size of layer ring
-    let g:wheel_config.maxim.layers = 10
+    let g:wheeltree_config.maxim.layers = 10
 
     " ---- Maximum number of tabs in layouts
-    let g:wheel_config.maxim.tabs = 12
+    let g:wheeltree_config.maxim.tabs = 12
     " ---- Maximum number of horizontal splits
-    let g:wheel_config.maxim.horizontal = 3
+    let g:wheeltree_config.maxim.horizontal = 3
     " ---- Maximum number of vertical splits
-    let g:wheel_config.maxim.vertical = 4
+    let g:wheeltree_config.maxim.vertical = 4
 
     " ---- Completion
-    let g:wheel_config.completion.vocalize = 1
-    let g:wheel_config.completion.wordize = 1
-    let g:wheel_config.completion.fuzzy = 0
-    let g:wheel_config.completion.scores = 1
+    let g:wheeltree_config.completion.vocalize = 1
+    let g:wheeltree_config.completion.wordize = 1
+    let g:wheeltree_config.completion.fuzzy = 0
+    let g:wheeltree_config.completion.scores = 1
 
     " ---- Frecency
-    let g:wheel_config.frecency.reward = 120
-    let g:wheel_config.frecency.penalty = 1
+    let g:wheeltree_config.frecency.reward = 120
+    let g:wheeltree_config.frecency.penalty = 1
 
     " ---- Mandala & leaf status in statusline ?
-    let g:wheel_config.display.statusline = 1
+    let g:wheeltree_config.display.statusline = 1
     " ---- Wheel dedibuf message : one-line or multi-line
-    let g:wheel_config.display.dedibuf_msg = 'one-line'
+    let g:wheeltree_config.display.dedibuf_msg = 'one-line'
     " ---- Filter prompt in dedicated buffers
-    "let g:wheel_config.display.prompt = 'wheel $ '
-    "let g:wheel_config.display.prompt_writable = 'wheel # '
+    "let g:wheeltree_config.display.prompt = 'wheel $ '
+    "let g:wheeltree_config.display.prompt_writable = 'wheel # '
     " ---- Selection marker in dedicated buffers
-    "let g:wheel_config.display.selection = '-> '
+    "let g:wheeltree_config.display.selection = '-> '
     " ---- Signs
-    let g:wheel_config.display.sign.switch = 1
+    let g:wheeltree_config.display.sign.switch = 1
     " ---- Signs at wheel locations
-    "let g:wheel_config.display.sign.settings = { 'text' : '@' }
+    "let g:wheeltree_config.display.sign.settings = { 'text' : '@' }
     " ---- Signs after using Wheel interface to native navigation (buffer, marker, jump, change, tag, ...)
-    "let g:wheel_config.display.sign.native_settings = { 'text' : '*' }
+    "let g:wheeltree_config.display.sign.native_settings = { 'text' : '*' }
 
-    let g:wheel_config.debug = 0
+    let g:wheeltree_config.debug = 0
   endif
 <
 
@@ -3371,13 +3371,13 @@ The mappings are organized in levels :
 - level 2  : advanced
 - level 10 : prefixless mappings
 
-If you set the option `g:wheel_config.mappings` to an integer `N`, all
+If you set the option `g:wheeltree_config.mappings` to an integer `N`, all
 mappings of level less or equal to `N` will be bound to keys. So, the
 higher this option, the more mappings available.
 
 E.g., if you set it to 2 : >
 
-    let g:wheel_config.mappings = 2
+    let g:wheeltree_config.mappings = 2
 <
 mappings levels 0, 1 and 2 will be available.
 
@@ -3391,14 +3391,14 @@ PREFIX						    *wheel-mappings-prefix*
 Default mappings of levels 0, 1, 2 use a prefix key. This prefix is `<M-w>` by
 default. You can customize it : >
 
-    let g:wheel_config.prefix = '<my-wonderful-prefix>'
+    let g:wheeltree_config.prefix = '<my-wonderful-prefix>'
 <
 
 I like to set it to `<D-w>`, but since the `<D-...>` mappings don't seem
 to work in terminal or with Gvim, it is not the default. It's working on
 Neovim-qt, though : >
 
-    let g:wheel_config.prefix = '<D-w>'
+    let g:wheeltree_config.prefix = '<D-w>'
 <
 
 In the following discussion, I assume that you have kept the default
@@ -4028,7 +4028,7 @@ one, a simple solution is to overwrite some maps after all plugins have
 been loaded. Example : >
 
   " your wheel config
-  let g:wheel_config.mappings = 10
+  let g:wheeltree_config.mappings = 10
   " ...
 
   " let's load all plugins
@@ -4539,7 +4539,7 @@ after/plugin/wheel.vim :
 
 - link keys to <plug> maps
 
-This way, we can know the customized value of `g:wheel_config.mappings`
+This way, we can know the customized value of `g:wheeltree_config.mappings`
 level.
 
 Autoload~

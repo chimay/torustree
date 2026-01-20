@@ -108,7 +108,7 @@ endfun
 
 fun! wheel#status#mandalas ()
 	" Return bufring status
-	let bufring = g:wheel_bufring
+	let bufring = g:wheeltree_bufring
 	let names = copy(bufring.names)
 	let current = bufring.current
 	let names[current] = '[' .. names[current] .. ']'
@@ -157,7 +157,7 @@ endfun
 
 fun! wheel#status#mandala_leaf ()
 	" Mandala & leaf dashboard
-	let in_status = g:wheel_config.display.statusline
+	let in_status = g:wheeltree_config.display.statusline
 	if in_status > 0 && wheel#cylinder#is_mandala ()
 		call wheel#status#clear ()
 		setlocal statusline=%!wheel#status#statusline()
@@ -170,7 +170,7 @@ fun! wheel#status#mandala_leaf ()
 		echo 'wheel buffers: ' join(mandalas) "\n"
 		return v:true
 	endif
-	let oneline = g:wheel_config.display.dedibuf ==# 'one-line'
+	let oneline = g:wheeltree_config.display.dedibuf ==# 'one-line'
 	if oneline
 		echo 'wheel buf:' join(mandalas) '/ lay:' join(leaves)
 	else
@@ -205,10 +205,10 @@ fun! wheel#status#tablabel (tabnum)
 	if win_num > 1
 		let label ..= '(' .. win_num .. ')'
 	endif
-	if ! has_key(g:wheel_shelve.layout, 'tabnames')
+	if ! has_key(g:wheeltree_shelve.layout, 'tabnames')
 		return label
 	endif
-	let tabnames = g:wheel_shelve.layout.tabnames
+	let tabnames = g:wheeltree_shelve.layout.tabnames
 	if empty(tabnames)
 		return label
 	endif

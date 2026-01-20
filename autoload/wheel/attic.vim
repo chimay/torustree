@@ -17,10 +17,10 @@ lockvar s:is_mandala_file
 fun! wheel#attic#remove_if_present (entry)
 	" Remove entry from mru if file is already there
 	let entry = a:entry
-	let attic = g:wheel_attic
-	for elem in g:wheel_attic
+	let attic = g:wheeltree_attic
+	for elem in g:wheeltree_attic
 		if elem.file ==# entry.file
-			eval g:wheel_attic->wheel#chain#remove_element(elem)
+			eval g:wheeltree_attic->wheel#chain#remove_element(elem)
 		endif
 	endfor
 endfun
@@ -49,7 +49,7 @@ fun! wheel#attic#record (...)
 	endif
 	" ---- do not add mandala buffer
 	let bufnum = bufnr('%')
-	let mandalas = g:wheel_bufring.mandalas
+	let mandalas = g:wheeltree_bufring.mandalas
 	if wheel#chain#is_inside(bufnum, mandalas)
 		return v:false
 	endif
@@ -62,13 +62,13 @@ fun! wheel#attic#record (...)
 		return v:false
 	endif
 	" ---- record file
-	let attic = g:wheel_attic
+	let attic = g:wheeltree_attic
 	let entry = {}
 	let entry.file = filename
 	let entry.timestamp = wheel#pendulum#timestamp ()
 	call wheel#attic#remove_if_present (entry)
-	let g:wheel_attic = insert(g:wheel_attic, entry)
-	let max = g:wheel_config.maxim.mru
-	let g:wheel_attic = g:wheel_attic[:max - 1]
+	let g:wheeltree_attic = insert(g:wheeltree_attic, entry)
+	let max = g:wheeltree_config.maxim.mru
+	let g:wheeltree_attic = g:wheeltree_attic[:max - 1]
 	return v:true
 endfun

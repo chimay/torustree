@@ -14,9 +14,9 @@
 " Caduceus can be interpreted as a symbol of a polarized vortex
 
 fun! wheel#caduceus#update ()
-	" Update g:wheel_history.alternate
-	let timeline = g:wheel_history.line
-	let alternate = g:wheel_history.alternate
+	" Update g:wheeltree_history.alternate
+	let timeline = g:wheeltree_history.line
+	let alternate = g:wheeltree_history.alternate
 	let length = len(timeline)
 	if length < 2
 		return v:false
@@ -75,9 +75,9 @@ fun! wheel#caduceus#update ()
 endfun
 
 fun! wheel#caduceus#update_window ()
-	" Update g:wheel_history.alternate.window
+	" Update g:wheeltree_history.alternate.window
 	" to be called by wheel#vortex#jump ()
-	let g:wheel_history.alternate.window = win_getid ()
+	let g:wheeltree_history.alternate.window = win_getid ()
 	return v:true
 endfun
 
@@ -98,8 +98,8 @@ fun! wheel#caduceus#alternate (mode)
 	if ! wheel#referen#location_matches_file ()
 		return wheel#vortex#jump ()
 	endif
-	if has_key(g:wheel_history.alternate, a:mode)
-		let coordin = g:wheel_history.alternate[a:mode]
+	if has_key(g:wheeltree_history.alternate, a:mode)
+		let coordin = g:wheeltree_history.alternate[a:mode]
 		call wheel#vortex#chord(coordin)
 	endif
 	return wheel#vortex#jump ()
@@ -109,10 +109,10 @@ fun! wheel#caduceus#alternate_window ()
 	" Alternate with previous window in any tab,
 	" i.e. previous visible buffer
 	" Generalization of native vim : C-w p
-	if ! has_key(g:wheel_history.alternate, 'window')
+	if ! has_key(g:wheeltree_history.alternate, 'window')
 		return v:false
 	endif
-	let window = g:wheel_history.alternate.window
+	let window = g:wheeltree_history.alternate.window
 	call win_gotoid(window)
 	return v:true
 endfun

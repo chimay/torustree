@@ -28,14 +28,14 @@ lockvar s:list_keys
 
 fun! wheel#referen#wheel ()
 	" Wheel
-	return g:wheel
+	return g:wheeltree
 endfun
 
 fun! wheel#referen#torus ()
 	" Current torus
 	let cur_torus = {}
-	if ! empty(g:wheel.toruses)
-		let cur_torus = g:wheel.toruses[g:wheel.current]
+	if ! empty(g:wheeltree.toruses)
+		let cur_torus = g:wheeltree.toruses[g:wheeltree.current]
 	endif
 	return cur_torus
 endfun
@@ -50,8 +50,8 @@ fun! wheel#referen#circle (...)
 	endif
 	let cur_torus = {}
 	let cur_circle = {}
-	if ! empty(g:wheel.toruses)
-		let cur_torus = g:wheel.toruses[g:wheel.current]
+	if ! empty(g:wheeltree.toruses)
+		let cur_torus = g:wheeltree.toruses[g:wheeltree.current]
 		if ! empty(cur_torus.circles)
 			let cur_circle = cur_torus.circles[cur_torus.current]
 		endif
@@ -74,8 +74,8 @@ fun! wheel#referen#location (...)
 	let cur_torus = {}
 	let cur_circle = {}
 	let cur_location = {}
-	if ! empty(g:wheel.toruses)
-		let cur_torus = g:wheel.toruses[g:wheel.current]
+	if ! empty(g:wheeltree.toruses)
+		let cur_torus = g:wheeltree.toruses[g:wheeltree.current]
 		if ! empty(cur_torus.circles)
 			let cur_circle = cur_torus.circles[cur_torus.current]
 			if ! empty(cur_circle.locations)

@@ -9,7 +9,7 @@
 fun! wheel#cuckoo#slide (entry)
 	" Decrease score in frecency
 	let entry = a:entry
-	let entry.score -= g:wheel_config.frecency.penalty
+	let entry.score -= g:wheeltree_config.frecency.penalty
 	return entry
 endfun
 
@@ -17,7 +17,7 @@ endfun
 
 fun! wheel#cuckoo#record ()
 	" Record current torus, circle, location in frecency
-	let frecency = g:wheel_history.frecency
+	let frecency = g:wheeltree_history.frecency
 	let coordin = wheel#referen#coordinates()
 	let entry = {}
 	let length = len(frecency)
@@ -25,13 +25,13 @@ fun! wheel#cuckoo#record ()
 		let elem = frecency[index]
 		if elem.coordin == coordin
 			let entry = frecency->remove(index)
-			let entry.score += g:wheel_config.frecency.reward
+			let entry.score += g:wheeltree_config.frecency.reward
 			break
 		endif
 	endfor
 	if empty(entry)
 		let entry.coordin = coordin
-		let entry.score = g:wheel_config.frecency.reward
+		let entry.score = g:wheeltree_config.frecency.reward
 	endif
 	eval frecency->map({ _, val -> wheel#cuckoo#slide (val) })
 	eval frecency->filter({ _, val -> val.score >= 0 })

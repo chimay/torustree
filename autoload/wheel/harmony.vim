@@ -119,7 +119,7 @@ fun! wheel#harmony#rename (level, ask = 'confirm')
 		let elements[index].name = new_name
 		call wheel#pendulum#rename(level, old_name, new_name)
 	endfor
-	let g:wheel.timestamp = wheel#pendulum#timestamp ()
+	let g:wheeltree.timestamp = wheel#pendulum#timestamp ()
 	call wheel#rectangle#goto_previous ()
 	call wheel#vortex#jump()
 	call wheel#cylinder#recall()
@@ -178,7 +178,7 @@ fun! wheel#harmony#rename_file (ask = 'confirm')
 		let locations[index].name = new_name
 		call wheel#pendulum#rename('location', old_name, new_name)
 	endfor
-	let g:wheel.timestamp = wheel#pendulum#timestamp ()
+	let g:wheeltree.timestamp = wheel#pendulum#timestamp ()
 	" ---- rename file
 	for index in range(len_lines)
 		let fields = split(lines[index], s:field_separ)
@@ -251,7 +251,7 @@ fun! wheel#harmony#delete (level, ask = 'confirm')
 	" -- clean history
 	call wheel#pendulum#broom ()
 	" -- for index auto update at demand
-	let g:wheel.timestamp = wheel#pendulum#timestamp ()
+	let g:wheeltree.timestamp = wheel#pendulum#timestamp ()
 	setlocal nomodified
 	echomsg 'Changes written to wheel'
 	return elements
@@ -319,8 +319,8 @@ fun! wheel#harmony#copy_move (level, ask = 'confirm')
 	elseif level ==# 'torus'
 		for name in components
 			" mode must be copy at this stage
-			let index = g:wheel.glossary->index(name)
-			let torus = deepcopy(g:wheel.toruses[index])
+			let index = g:wheeltree.glossary->index(name)
+			let torus = deepcopy(g:wheeltree.toruses[index])
 			call wheel#tree#insert_torus (torus)
 		endfor
 	else
@@ -349,7 +349,7 @@ fun! wheel#harmony#copy_move (level, ask = 'confirm')
 			call wheel#tree#insert_location (location)
 		endfor
 	endif
-	let g:wheel.timestamp = wheel#pendulum#timestamp ()
+	let g:wheeltree.timestamp = wheel#pendulum#timestamp ()
 	setlocal nomodified
 	echomsg 'Changes written to wheel'
 	call wheel#rectangle#goto_previous ()
@@ -376,7 +376,7 @@ fun! wheel#harmony#reorganize (ask = 'confirm')
 	" ---- update lines in local vars from visible lines
 	call wheel#polyphony#update_var_lines ()
 	" ---- start from empty wheel
-	call wheel#ouroboros#unlet ('g:wheel')
+	call wheel#ouroboros#unlet ('g:wheeltree')
 	call wheel#void#wheel ()
 	" ---- loop over buffer lines
 	let linelist = wheel#teapot#all_lines ()
@@ -412,5 +412,5 @@ fun! wheel#harmony#reorganize (ask = 'confirm')
 	setlocal nomodified
 	echomsg 'Changes written to wheel'
 	" -- tune wheel coordinates to first entry in history
-	call wheel#vortex#chord(g:wheel_history.line[0].coordin)
+	call wheel#vortex#chord(g:wheeltree_history.line[0].coordin)
 endfun

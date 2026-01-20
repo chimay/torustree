@@ -27,7 +27,7 @@ fun! wheel#codex#climb (content, register = 'unnamed')
 	" Move content at beginning of yank ring
 	let content = a:content
 	let register = a:register
-	let yanks = g:wheel_yank[register]
+	let yanks = g:wheeltree_yank[register]
 	let index = yanks->index(content)
 	if index < 0
 		return v:false
@@ -43,7 +43,7 @@ fun! wheel#codex#register (register = 'unnamed')
 	" Add register to yank wheel
 	let register = a:register
 	" ---- ring
-	let yanks = g:wheel_yank[register]
+	let yanks = g:wheeltree_yank[register]
 	" ---- vim symbol of register
 	let symbols_dict = wheel#matrix#items2dict(s:registers_symbols)
 	let symbol = symbols_dict[register]
@@ -55,10 +55,10 @@ fun! wheel#codex#register (register = 'unnamed')
 	if len(content) == 1 && content[0] !~ '\m\w'
 		return v:false
 	endif
-	if len(content) > g:wheel_config.maxim.yank_lines
+	if len(content) > g:wheeltree_config.maxim.yank_lines
 		return v:false
 	endif
-	if strchars(join(content)) > g:wheel_config.maxim.yank_size
+	if strchars(join(content)) > g:wheeltree_config.maxim.yank_size
 		return v:false
 	endif
 	" -- treat special chars in inserted register
@@ -72,13 +72,13 @@ fun! wheel#codex#register (register = 'unnamed')
 	eval yanks->insert(content)
 	" ---- truncate if too big
 	if register ==# 'unnamed'
-		let maxim = g:wheel_config.maxim.unnamed_yanks
+		let maxim = g:wheeltree_config.maxim.unnamed_yanks
 	else
-		let maxim = g:wheel_config.maxim.other_yanks
+		let maxim = g:wheeltree_config.maxim.other_yanks
 	endif
-	" we need to use g:wheel_yank here
+	" we need to use g:wheeltree_yank here
 	" because yanks[:maxim - 1] makes a copy
-	let g:wheel_yank[register] = yanks[:maxim - 1]
+	let g:wheeltree_yank[register] = yanks[:maxim - 1]
 	return v:true
 endfun
 
@@ -102,7 +102,7 @@ fun! wheel#codex#switch_default_register ()
 	if empty(register)
 		return v:false
 	endif
-	let g:wheel_shelve.yank.default_register = register
+	let g:wheeltree_shelve.yank.default_register = register
 	return v:true
 endfun
 

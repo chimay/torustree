@@ -54,9 +54,9 @@ endfun
 fun! wheel#teapot#prompt ()
 	" Return prompt string
 	if wheel#polyphony#is_writable ()
-		return g:wheel_config.display.prompt_writable
+		return g:wheeltree_config.display.prompt_writable
 	else
-		return g:wheel_config.display.prompt
+		return g:wheeltree_config.display.prompt
 	endif
 endfun
 

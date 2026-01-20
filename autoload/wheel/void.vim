@@ -25,7 +25,7 @@ endfun
 " ---- helpers
 
 fun! wheel#void#template(init)
-	" Generate template to add to g:wheel lists
+	" Generate template to add to g:wheeltree lists
 	" Name = name in argument
 	" Optional arguments : keys initialized as empty list
 	let template = a:init
@@ -40,167 +40,167 @@ endfun
 
 fun! wheel#void#wheel ()
 	" Initialize wheel
-	if ! exists('g:wheel')
-		let g:wheel = {}
+	if ! exists('g:wheeltree')
+		let g:wheeltree = {}
 	endif
-	if ! has_key(g:wheel, 'toruses')
-		let g:wheel.toruses = []
+	if ! has_key(g:wheeltree, 'toruses')
+		let g:wheeltree.toruses = []
 	endif
-	if ! has_key(g:wheel, 'glossary')
-		let g:wheel.glossary = []
+	if ! has_key(g:wheeltree, 'glossary')
+		let g:wheeltree.glossary = []
 	endif
-	if ! has_key(g:wheel, 'current')
-		let g:wheel.current = -1
+	if ! has_key(g:wheeltree, 'current')
+		let g:wheeltree.current = -1
 	endif
-	if ! has_key(g:wheel, 'timestamp')
-		let g:wheel.timestamp = -1
+	if ! has_key(g:wheeltree, 'timestamp')
+		let g:wheeltree.timestamp = -1
 	endif
 endfun
 
 fun! wheel#void#helix ()
 	" Initialize helix : index of locations
-	if ! exists('g:wheel_helix')
-		let g:wheel_helix = {}
+	if ! exists('g:wheeltree_helix')
+		let g:wheeltree_helix = {}
 	endif
-	if ! has_key(g:wheel_helix, 'table')
-		let g:wheel_helix.table = []
+	if ! has_key(g:wheeltree_helix, 'table')
+		let g:wheeltree_helix.table = []
 	endif
-	if ! has_key(g:wheel_helix, 'timestamp')
-		let g:wheel_helix.timestamp = -1
+	if ! has_key(g:wheeltree_helix, 'timestamp')
+		let g:wheeltree_helix.timestamp = -1
 	endif
 endfun
 
 fun! wheel#void#grid ()
 	" Initialize grid : index of circles
-	if ! exists('g:wheel_grid')
-		let g:wheel_grid = {}
+	if ! exists('g:wheeltree_grid')
+		let g:wheeltree_grid = {}
 	endif
-	if ! has_key(g:wheel_grid, 'table')
-		let g:wheel_grid.table = []
+	if ! has_key(g:wheeltree_grid, 'table')
+		let g:wheeltree_grid.table = []
 	endif
-	if ! has_key(g:wheel_grid, 'timestamp')
-		let g:wheel_grid.timestamp = -1
+	if ! has_key(g:wheeltree_grid, 'timestamp')
+		let g:wheeltree_grid.timestamp = -1
 	endif
 endfun
 
 fun! wheel#void#files ()
 	" Initialize index of files
-	if ! exists('g:wheel_files')
-		let g:wheel_files = {}
+	if ! exists('g:wheeltree_files')
+		let g:wheeltree_files = {}
 	endif
-	if ! has_key(g:wheel_files, 'table')
-		let g:wheel_files.table = []
+	if ! has_key(g:wheeltree_files, 'table')
+		let g:wheeltree_files.table = []
 	endif
-	if ! has_key(g:wheel_files, 'timestamp')
-		let g:wheel_files.timestamp = -1
+	if ! has_key(g:wheeltree_files, 'timestamp')
+		let g:wheeltree_files.timestamp = -1
 	endif
 endfun
 
 fun! wheel#void#history ()
 	" Initialize history
-	if ! exists('g:wheel_history')
-		let g:wheel_history = {}
+	if ! exists('g:wheeltree_history')
+		let g:wheeltree_history = {}
 	endif
 	" ---- naturally sorted time line
-	if ! has_key(g:wheel_history, 'line')
-		let g:wheel_history.line = []
+	if ! has_key(g:wheeltree_history, 'line')
+		let g:wheeltree_history.line = []
 	endif
 	" ---- rolled time loop
-	if ! has_key(g:wheel_history, 'circuit')
-		let g:wheel_history.circuit = []
+	if ! has_key(g:wheeltree_history, 'circuit')
+		let g:wheeltree_history.circuit = []
 	endif
 	" ---- alternate locations
-	if ! has_key(g:wheel_history, 'alternate')
-		let g:wheel_history.alternate = {}
+	if ! has_key(g:wheeltree_history, 'alternate')
+		let g:wheeltree_history.alternate = {}
 	endif
 	" ---- frequent + recent
-	if ! has_key(g:wheel_history, 'frecency')
-		let g:wheel_history.frecency = []
+	if ! has_key(g:wheeltree_history, 'frecency')
+		let g:wheeltree_history.frecency = []
 	endif
 endfun
 
 fun! wheel#void#input ()
 	" Initialize input history
-	if ! exists('g:wheel_input')
-		let g:wheel_input = []
+	if ! exists('g:wheeltree_input')
+		let g:wheeltree_input = []
 	endif
 endfun
 
 fun! wheel#void#shelve ()
 	" Initialize shelve : misc status variables
-	if ! exists('g:wheel_shelve')
-		let g:wheel_shelve = {}
+	if ! exists('g:wheeltree_shelve')
+		let g:wheeltree_shelve = {}
 	endif
 	" ---- current
-	if ! has_key(g:wheel_shelve, 'current')
-		let g:wheel_shelve.current = {}
+	if ! has_key(g:wheeltree_shelve, 'current')
+		let g:wheeltree_shelve.current = {}
 	endif
 	" -- wheel file
-	if ! has_key(g:wheel_shelve.current, 'wheel')
-		let g:wheel_shelve.current.wheel = ''
+	if ! has_key(g:wheeltree_shelve.current, 'wheel')
+		let g:wheeltree_shelve.current.wheel = ''
 	endif
 	" -- session file
-	if ! has_key(g:wheel_shelve.current, 'session')
-		let g:wheel_shelve.current.session = ''
+	if ! has_key(g:wheeltree_shelve.current, 'session')
+		let g:wheeltree_shelve.current.session = ''
 	endif
 	" ---- yank ring
-	if ! has_key(g:wheel_shelve, 'yank')
-		let g:wheel_shelve.yank = {}
+	if ! has_key(g:wheeltree_shelve, 'yank')
+		let g:wheeltree_shelve.yank = {}
 	endif
-	if ! has_key(g:wheel_shelve.yank, 'default_register')
-		let g:wheel_shelve.yank.default_register = 'unnamed'
+	if ! has_key(g:wheeltree_shelve.yank, 'default_register')
+		let g:wheeltree_shelve.yank.default_register = 'unnamed'
 	endif
 	" ---- tabs and windows layouts
-	if ! has_key(g:wheel_shelve, 'layout')
-		let g:wheel_shelve.layout = {}
+	if ! has_key(g:wheeltree_shelve, 'layout')
+		let g:wheeltree_shelve.layout = {}
 	endif
 	" ---- backup some vars if needed
-	if ! has_key(g:wheel_shelve, 'backup')
-		let g:wheel_shelve.backup = {}
+	if ! has_key(g:wheeltree_shelve, 'backup')
+		let g:wheeltree_shelve.backup = {}
 	endif
 endfun
 
 fun! wheel#void#attic ()
 	" Initialize most recently used files
-	if ! exists('g:wheel_attic')
-		let g:wheel_attic = []
+	if ! exists('g:wheeltree_attic')
+		let g:wheeltree_attic = []
 	endif
 endfun
 
 fun! wheel#void#yank ()
 	" Initialize yank history
-	if ! exists('g:wheel_yank')
-		let g:wheel_yank = {}
+	if ! exists('g:wheeltree_yank')
+		let g:wheeltree_yank = {}
 	endif
-	if ! has_key(g:wheel_yank, 'unnamed')
-		let g:wheel_yank.unnamed = []
+	if ! has_key(g:wheeltree_yank, 'unnamed')
+		let g:wheeltree_yank.unnamed = []
 	endif
-	if ! has_key(g:wheel_yank, 'clipboard')
-		let g:wheel_yank.clipboard = []
+	if ! has_key(g:wheeltree_yank, 'clipboard')
+		let g:wheeltree_yank.clipboard = []
 	endif
-	if ! has_key(g:wheel_yank, 'primary')
-		let g:wheel_yank.primary = []
+	if ! has_key(g:wheeltree_yank, 'primary')
+		let g:wheeltree_yank.primary = []
 	endif
-	if ! has_key(g:wheel_yank, 'small')
-		let g:wheel_yank.small = []
+	if ! has_key(g:wheeltree_yank, 'small')
+		let g:wheeltree_yank.small = []
 	endif
-	if ! has_key(g:wheel_yank, 'inserted')
-		let g:wheel_yank.inserted = []
+	if ! has_key(g:wheeltree_yank, 'inserted')
+		let g:wheeltree_yank.inserted = []
 	endif
-	if ! has_key(g:wheel_yank, 'search')
-		let g:wheel_yank.search = []
+	if ! has_key(g:wheeltree_yank, 'search')
+		let g:wheeltree_yank.search = []
 	endif
-	if ! has_key(g:wheel_yank, 'command')
-		let g:wheel_yank.command = []
+	if ! has_key(g:wheeltree_yank, 'command')
+		let g:wheeltree_yank.command = []
 	endif
-	if ! has_key(g:wheel_yank, 'expression')
-		let g:wheel_yank.expression = []
+	if ! has_key(g:wheeltree_yank, 'expression')
+		let g:wheeltree_yank.expression = []
 	endif
-	if ! has_key(g:wheel_yank, 'file')
-		let g:wheel_yank.file = []
+	if ! has_key(g:wheeltree_yank, 'file')
+		let g:wheeltree_yank.file = []
 	endif
-	if ! has_key(g:wheel_yank, 'alternate')
-		let g:wheel_yank.alternate = []
+	if ! has_key(g:wheeltree_yank, 'alternate')
+		let g:wheeltree_yank.alternate = []
 	endif
 endfun
 
@@ -208,181 +208,181 @@ endfun
 
 fun! wheel#void#config ()
 	" Initialize config
-	if ! exists('g:wheel_config')
-		let g:wheel_config = {}
+	if ! exists('g:wheeltree_config')
+		let g:wheeltree_config = {}
 	endif
-	if ! has_key(g:wheel_config, 'mappings')
-		let g:wheel_config.mappings = 0
+	if ! has_key(g:wheeltree_config, 'mappings')
+		let g:wheeltree_config.mappings = 0
 	endif
-	if ! has_key(g:wheel_config, 'prefix')
-		let g:wheel_config.prefix = '<M-w>'
+	if ! has_key(g:wheeltree_config, 'prefix')
+		let g:wheeltree_config.prefix = '<M-w>'
 	endif
-	if ! has_key(g:wheel_config, 'locate_db')
-		let g:wheel_config.locate_db = ''
+	if ! has_key(g:wheeltree_config, 'locate_db')
+		let g:wheeltree_config.locate_db = ''
 	endif
-	if ! has_key(g:wheel_config, 'grep')
+	if ! has_key(g:wheeltree_config, 'grep')
 		" defaults to internal vimgrep,
 		" in case external grep is not available
-		let g:wheel_config.grep = 'vimgrep'
+		let g:wheeltree_config.grep = 'vimgrep'
 	endif
 	" ---- project
-	if ! has_key(g:wheel_config, 'project')
-		let g:wheel_config.project = {}
+	if ! has_key(g:wheeltree_config, 'project')
+		let g:wheeltree_config.project = {}
 	endif
-	if ! has_key(g:wheel_config.project, 'markers')
-		let g:wheel_config.project.markers = '.git'
+	if ! has_key(g:wheeltree_config.project, 'markers')
+		let g:wheeltree_config.project.markers = '.git'
 	endif
-	if ! has_key(g:wheel_config.project, 'auto_chdir')
-		let g:wheel_config.project.auto_chdir = 0
+	if ! has_key(g:wheeltree_config.project, 'auto_chdir')
+		let g:wheeltree_config.project.auto_chdir = 0
 	endif
 	" ---- storage
-	if ! has_key(g:wheel_config, 'storage')
-		let g:wheel_config.storage = {}
+	if ! has_key(g:wheeltree_config, 'storage')
+		let g:wheeltree_config.storage = {}
 	endif
 	" -- storage wheel
-	if ! has_key(g:wheel_config.storage, 'wheel')
-		let g:wheel_config.storage.wheel = {}
+	if ! has_key(g:wheeltree_config.storage, 'wheel')
+		let g:wheeltree_config.storage.wheel = {}
 	endif
-	if ! has_key(g:wheel_config.storage.wheel, 'folder')
+	if ! has_key(g:wheeltree_config.storage.wheel, 'folder')
 		if has('nvim')
-			let g:wheel_config.storage.wheel.folder = '~/.local/share/nvim/wheel'
+			let g:wheeltree_config.storage.wheel.folder = '~/.local/share/nvim/wheel'
 		else
-			let g:wheel_config.storage.wheel.folder = '~/.vim/wheel'
+			let g:wheeltree_config.storage.wheel.folder = '~/.vim/wheel'
 		endif
 	endif
-	if ! has_key(g:wheel_config.storage.wheel, 'name')
-		let g:wheel_config.storage.wheel.name = 'wheel.vim'
+	if ! has_key(g:wheeltree_config.storage.wheel, 'name')
+		let g:wheeltree_config.storage.wheel.name = 'wheel.vim'
 	endif
-	if ! has_key(g:wheel_config.storage.wheel, 'autowrite')
-		let g:wheel_config.storage.wheel.autowrite = 0
+	if ! has_key(g:wheeltree_config.storage.wheel, 'autowrite')
+		let g:wheeltree_config.storage.wheel.autowrite = 0
 	endif
-	if ! has_key(g:wheel_config.storage.wheel, 'autoread')
-		let g:wheel_config.storage.wheel.autoread = 0
+	if ! has_key(g:wheeltree_config.storage.wheel, 'autoread')
+		let g:wheeltree_config.storage.wheel.autoread = 0
 	endif
 	" -- storage session
-	if ! has_key(g:wheel_config.storage, 'session')
-		let g:wheel_config.storage.session = {}
+	if ! has_key(g:wheeltree_config.storage, 'session')
+		let g:wheeltree_config.storage.session = {}
 	endif
-	if ! has_key(g:wheel_config.storage.session, 'folder')
+	if ! has_key(g:wheeltree_config.storage.session, 'folder')
 		if has('nvim')
-			let g:wheel_config.storage.session.folder = '~/.local/share/nvim/wheel/session'
+			let g:wheeltree_config.storage.session.folder = '~/.local/share/nvim/wheel/session'
 		else
-			let g:wheel_config.storage.session.folder = '~/.vim/wheel/session'
+			let g:wheeltree_config.storage.session.folder = '~/.vim/wheel/session'
 		endif
 	endif
-	if ! has_key(g:wheel_config.storage.session, 'name')
-		let g:wheel_config.storage.session.name = 'session.vim'
+	if ! has_key(g:wheeltree_config.storage.session, 'name')
+		let g:wheeltree_config.storage.session.name = 'session.vim'
 	endif
-	if ! has_key(g:wheel_config.storage.session, 'autowrite')
-		let g:wheel_config.storage.session.autowrite = 0
+	if ! has_key(g:wheeltree_config.storage.session, 'autowrite')
+		let g:wheeltree_config.storage.session.autowrite = 0
 	endif
-	if ! has_key(g:wheel_config.storage.session, 'autoread')
-		let g:wheel_config.storage.session.autoread = 0
+	if ! has_key(g:wheeltree_config.storage.session, 'autoread')
+		let g:wheeltree_config.storage.session.autoread = 0
 	endif
 	" -- backups
-	if ! has_key(g:wheel_config.storage, 'backups')
-		let g:wheel_config.storage.backups = 3
+	if ! has_key(g:wheeltree_config.storage, 'backups')
+		let g:wheeltree_config.storage.backups = 3
 	endif
 	" ---- maxim
-	if ! has_key(g:wheel_config, 'maxim')
-		let g:wheel_config.maxim = {}
+	if ! has_key(g:wheeltree_config, 'maxim')
+		let g:wheeltree_config.maxim = {}
 	endif
-	if ! has_key(g:wheel_config.maxim, 'history')
-		let g:wheel_config.maxim.history = 500
+	if ! has_key(g:wheeltree_config.maxim, 'history')
+		let g:wheeltree_config.maxim.history = 500
 	endif
-	if ! has_key(g:wheel_config.maxim, 'input')
-		let g:wheel_config.maxim.input = 500
+	if ! has_key(g:wheeltree_config.maxim, 'input')
+		let g:wheeltree_config.maxim.input = 500
 	endif
-	if ! has_key(g:wheel_config.maxim, 'mru')
-		let g:wheel_config.maxim.mru = 500
+	if ! has_key(g:wheeltree_config.maxim, 'mru')
+		let g:wheeltree_config.maxim.mru = 500
 	endif
-	if ! has_key(g:wheel_config.maxim, 'unnamed_yanks')
-		let g:wheel_config.maxim.unnamed_yanks = 500
+	if ! has_key(g:wheeltree_config.maxim, 'unnamed_yanks')
+		let g:wheeltree_config.maxim.unnamed_yanks = 500
 	endif
-	if ! has_key(g:wheel_config.maxim, 'other_yanks')
-		let g:wheel_config.maxim.other_yanks = 50
+	if ! has_key(g:wheeltree_config.maxim, 'other_yanks')
+		let g:wheeltree_config.maxim.other_yanks = 50
 	endif
-	if ! has_key(g:wheel_config.maxim, 'yank_lines')
-		let g:wheel_config.maxim.yank_lines = 30
+	if ! has_key(g:wheeltree_config.maxim, 'yank_lines')
+		let g:wheeltree_config.maxim.yank_lines = 30
 	endif
-	if ! has_key(g:wheel_config.maxim, 'yank_size')
-		let g:wheel_config.maxim.yank_size = 3000
+	if ! has_key(g:wheeltree_config.maxim, 'yank_size')
+		let g:wheeltree_config.maxim.yank_size = 3000
 	endif
-	if ! has_key(g:wheel_config.maxim, 'layers')
-		let g:wheel_config.maxim.layers = 5
+	if ! has_key(g:wheeltree_config.maxim, 'layers')
+		let g:wheeltree_config.maxim.layers = 5
 	endif
-	if ! has_key(g:wheel_config.maxim, 'tabs')
-		let g:wheel_config.maxim.tabs = 15
+	if ! has_key(g:wheeltree_config.maxim, 'tabs')
+		let g:wheeltree_config.maxim.tabs = 15
 	endif
-	if ! has_key(g:wheel_config.maxim, 'horizontal')
-		let g:wheel_config.maxim.horizontal = 3
+	if ! has_key(g:wheeltree_config.maxim, 'horizontal')
+		let g:wheeltree_config.maxim.horizontal = 3
 	endif
-	if ! has_key(g:wheel_config.maxim, 'vertical')
-		let g:wheel_config.maxim.vertical = 4
+	if ! has_key(g:wheeltree_config.maxim, 'vertical')
+		let g:wheeltree_config.maxim.vertical = 4
 	endif
 	" ---- frecency
-	if ! has_key(g:wheel_config, 'frecency')
-		let g:wheel_config.frecency = {}
+	if ! has_key(g:wheeltree_config, 'frecency')
+		let g:wheeltree_config.frecency = {}
 	endif
-	if ! has_key(g:wheel_config.frecency, 'reward')
-		let g:wheel_config.frecency.reward = 50
+	if ! has_key(g:wheeltree_config.frecency, 'reward')
+		let g:wheeltree_config.frecency.reward = 50
 	endif
-	if ! has_key(g:wheel_config.frecency, 'penalty')
-		let g:wheel_config.frecency.penalty = 1
+	if ! has_key(g:wheeltree_config.frecency, 'penalty')
+		let g:wheeltree_config.frecency.penalty = 1
 	endif
 	" -- completion
-	if ! has_key(g:wheel_config, 'completion')
-		let g:wheel_config.completion = {}
+	if ! has_key(g:wheeltree_config, 'completion')
+		let g:wheeltree_config.completion = {}
 	endif
-	if ! has_key(g:wheel_config.completion, 'vocalize')
-		let g:wheel_config.completion.vocalize = 0
+	if ! has_key(g:wheeltree_config.completion, 'vocalize')
+		let g:wheeltree_config.completion.vocalize = 0
 	endif
-	if ! has_key(g:wheel_config.completion, 'wordize')
-		let g:wheel_config.completion.wordize = 0
+	if ! has_key(g:wheeltree_config.completion, 'wordize')
+		let g:wheeltree_config.completion.wordize = 0
 	endif
-	if ! has_key(g:wheel_config.completion, 'fuzzy')
-		let g:wheel_config.completion.fuzzy = 0
+	if ! has_key(g:wheeltree_config.completion, 'fuzzy')
+		let g:wheeltree_config.completion.fuzzy = 0
 	endif
-	if ! has_key(g:wheel_config.completion, 'scores')
-		let g:wheel_config.completion.scores = 0
+	if ! has_key(g:wheeltree_config.completion, 'scores')
+		let g:wheeltree_config.completion.scores = 0
 	endif
 	" ---- display
-	if ! has_key(g:wheel_config, 'display')
-		let g:wheel_config.display = {}
+	if ! has_key(g:wheeltree_config, 'display')
+		let g:wheeltree_config.display = {}
 	endif
-	if ! has_key(g:wheel_config.display, 'statusline')
-		let g:wheel_config.display.statusline = 1
+	if ! has_key(g:wheeltree_config.display, 'statusline')
+		let g:wheeltree_config.display.statusline = 1
 	endif
-	if ! has_key(g:wheel_config.display, 'dedibuf_msg')
-		let g:wheel_config.display.dedibuf_msg = 'one-line'
+	if ! has_key(g:wheeltree_config.display, 'dedibuf_msg')
+		let g:wheeltree_config.display.dedibuf_msg = 'one-line'
 	endif
-	if ! has_key(g:wheel_config.display, 'prompt')
-		let g:wheel_config.display.prompt = wheel#crystal#fetch ('mandala/prompt')
+	if ! has_key(g:wheeltree_config.display, 'prompt')
+		let g:wheeltree_config.display.prompt = wheel#crystal#fetch ('mandala/prompt')
 	endif
-	if ! has_key(g:wheel_config.display, 'prompt_writable')
-		let g:wheel_config.display.prompt_writable = wheel#crystal#fetch ('mandala/prompt/writable')
+	if ! has_key(g:wheeltree_config.display, 'prompt_writable')
+		let g:wheeltree_config.display.prompt_writable = wheel#crystal#fetch ('mandala/prompt/writable')
 	endif
-	if ! has_key(g:wheel_config.display, 'selection')
-		let g:wheel_config.display.selection = wheel#crystal#fetch ('selection/mark')
+	if ! has_key(g:wheeltree_config.display, 'selection')
+		let g:wheeltree_config.display.selection = wheel#crystal#fetch ('selection/mark')
 	endif
 	" -- display sign
-	if ! has_key(g:wheel_config.display, 'sign')
-		let g:wheel_config.display.sign = {}
+	if ! has_key(g:wheeltree_config.display, 'sign')
+		let g:wheeltree_config.display.sign = {}
 	endif
-	if ! has_key(g:wheel_config.display.sign, 'switch')
-		let g:wheel_config.display.sign.switch = 1
+	if ! has_key(g:wheeltree_config.display.sign, 'switch')
+		let g:wheeltree_config.display.sign.switch = 1
 	endif
-	if ! has_key(g:wheel_config.display.sign, 'settings')
+	if ! has_key(g:wheeltree_config.display.sign, 'settings')
 		let settings = deepcopy(wheel#crystal#fetch ('sign/settings'))
-		let g:wheel_config.display.sign.settings = settings
+		let g:wheeltree_config.display.sign.settings = settings
 	endif
-	if ! has_key(g:wheel_config.display.sign, 'native_settings')
+	if ! has_key(g:wheeltree_config.display.sign, 'native_settings')
 		let native_settings = deepcopy(wheel#crystal#fetch ('sign/settings/native'))
-		let g:wheel_config.display.sign.native_settings = native_settings
+		let g:wheeltree_config.display.sign.native_settings = native_settings
 	endif
 	" ---- debug
-	if ! has_key(g:wheel_config, 'debug')
-		let g:wheel_config.debug = 0
+	if ! has_key(g:wheeltree_config, 'debug')
+		let g:wheeltree_config.debug = 0
 	endif
 endfun
 
@@ -390,23 +390,23 @@ endfun
 
 fun! wheel#void#mandalas ()
 	" Initialize mandala buffers list
-	if ! exists('g:wheel_bufring')
-		let g:wheel_bufring = {}
+	if ! exists('g:wheeltree_bufring')
+		let g:wheeltree_bufring = {}
 	endif
-	if ! has_key(g:wheel_bufring, 'mandalas')
-		let g:wheel_bufring.mandalas = []
+	if ! has_key(g:wheeltree_bufring, 'mandalas')
+		let g:wheeltree_bufring.mandalas = []
 	endif
-	if ! has_key(g:wheel_bufring, 'current')
-		let g:wheel_bufring.current = -1
+	if ! has_key(g:wheeltree_bufring, 'current')
+		let g:wheeltree_bufring.current = -1
 	endif
-	if ! has_key(g:wheel_bufring, 'iden')
-		let g:wheel_bufring.iden = []
+	if ! has_key(g:wheeltree_bufring, 'iden')
+		let g:wheeltree_bufring.iden = []
 	endif
-	if ! has_key(g:wheel_bufring, 'names')
-		let g:wheel_bufring.names = []
+	if ! has_key(g:wheeltree_bufring, 'names')
+		let g:wheeltree_bufring.names = []
 	endif
-	if ! has_key(g:wheel_bufring, 'types')
-		let g:wheel_bufring.types = []
+	if ! has_key(g:wheeltree_bufring, 'types')
+		let g:wheeltree_bufring.types = []
 	endif
 endfun
 
@@ -419,57 +419,57 @@ endfun
 
 fun! wheel#void#signs ()
 	" Initialize signs list
-	if ! exists('g:wheel_signs')
-		let g:wheel_signs = {}
+	if ! exists('g:wheeltree_signs')
+		let g:wheeltree_signs = {}
 	endif
 	" ---- locations signs
-	if ! has_key(g:wheel_signs, 'iden')
-		let g:wheel_signs.iden = []
+	if ! has_key(g:wheeltree_signs, 'iden')
+		let g:wheeltree_signs.iden = []
 	endif
-	if ! has_key(g:wheel_signs, 'table')
-		let g:wheel_signs.table = []
+	if ! has_key(g:wheeltree_signs, 'table')
+		let g:wheeltree_signs.table = []
 	endif
 	" ---- native navigation signs
-	if ! has_key(g:wheel_signs, 'native_iden')
-		let g:wheel_signs.native_iden = []
+	if ! has_key(g:wheeltree_signs, 'native_iden')
+		let g:wheeltree_signs.native_iden = []
 	endif
-	if ! has_key(g:wheel_signs, 'native_table')
-		let g:wheel_signs.native_table = []
+	if ! has_key(g:wheeltree_signs, 'native_table')
+		let g:wheeltree_signs.native_table = []
 	endif
 endfun
 
 fun! wheel#void#wave ()
 	" Initialize jobs dictionary
 	" ---- for neovim
-	if has('nvim') && ! exists('g:wheel_wave')
-		let g:wheel_wave = []
+	if has('nvim') && ! exists('g:wheeltree_wave')
+		let g:wheeltree_wave = []
 	endif
 	" ---- same thing for vim
-	if ! has('nvim') && ! exists('g:wheel_ripple')
-		let g:wheel_ripple = []
+	if ! has('nvim') && ! exists('g:wheeltree_ripple')
+		let g:wheeltree_ripple = []
 	endif
 endfun
 
 fun! wheel#void#volatile ()
 	" Store non persistent state
-	if ! exists('g:wheel_volatile')
-		let g:wheel_volatile = {}
+	if ! exists('g:wheeltree_volatile')
+		let g:wheeltree_volatile = {}
 	endif
 	" ---- Remember number of file args at startup
 	" ---- before :argadd, :argdel or similar command
-	if ! has_key(g:wheel_volatile, 'argc')
-		let g:wheel_volatile.argc = argc()
+	if ! has_key(g:wheeltree_volatile, 'argc')
+		let g:wheeltree_volatile.argc = argc()
 	endif
-	if ! has_key(g:wheel_volatile, 'argv')
-		let g:wheel_volatile.argv = argv()
+	if ! has_key(g:wheeltree_volatile, 'argv')
+		let g:wheeltree_volatile.argv = argv()
 	endif
 	" ---- First time read / write
-	if ! has_key(g:wheel_volatile, 'first')
-		let g:wheel_volatile.first = {}
-		let g:wheel_volatile.first.write_wheel = v:true
-		let g:wheel_volatile.first.read_wheel = v:true
-		let g:wheel_volatile.first.write_session = v:true
-		let g:wheel_volatile.first.read_session = v:true
+	if ! has_key(g:wheeltree_volatile, 'first')
+		let g:wheeltree_volatile.first = {}
+		let g:wheeltree_volatile.first.write_wheel = v:true
+		let g:wheeltree_volatile.first.read_wheel = v:true
+		let g:wheeltree_volatile.first.write_session = v:true
+		let g:wheeltree_volatile.first.read_session = v:true
 	endif
 endfun
 
@@ -506,7 +506,7 @@ endfun
 fun! wheel#void#wipe_mandalas ()
 	" Wipe mandalas buffers
 	let buflist = getbufinfo()
-	let mandalas = g:wheel_bufring.mandalas
+	let mandalas = g:wheeltree_bufring.mandalas
 	for buffer in buflist
 		let bufnum = buffer.bufnr
 		if wheel#chain#is_inside(bufnum, mandalas)
@@ -520,39 +520,39 @@ endfun
 fun! wheel#void#clean ()
 	" Clean variables before writing wheel to file
 	" ---- wheel history
-	if has_key(g:wheel_history.alternate, 'window')
-		unlet g:wheel_history.alternate.window
+	if has_key(g:wheeltree_history.alternate, 'window')
+		unlet g:wheeltree_history.alternate.window
 	endif
 	" ---- wheel shelve
-	let g:wheel_shelve.layout.window = 'none'
-	let g:wheel_shelve.layout.split = 'none'
-	let g:wheel_shelve.layout.tab = 'none'
-	let g:wheel_shelve.layout.tabnames = []
+	let g:wheeltree_shelve.layout.window = 'none'
+	let g:wheeltree_shelve.layout.split = 'none'
+	let g:wheeltree_shelve.layout.tab = 'none'
+	let g:wheeltree_shelve.layout.tabnames = []
 endfun
 
 fun! wheel#void#vanish ()
 	" Unlet wheel variables
 	" No need to save them in viminfo or shada file
-	" since you can save them in g:wheel_config.storage.wheel.name
+	" since you can save them in g:wheeltree_config.storage.wheel.name
 	" ---- should not be necessary, since only
 	" ---- uppercase global vars are stored in viminfo / shada
 	return
 	let varlist = [
-				\ 'g:wheel',
-				\ 'g:wheel_helix',
-				\ 'g:wheel_grid',
-				\ 'g:wheel_files',
-				\ 'g:wheel_history',
-				\ 'g:wheel_input',
-				\ 'g:wheel_attic',
-				\ 'g:wheel_yank',
-				\ 'g:wheel_shelve',
-				\ 'g:wheel_config',
-				\ 'g:wheel_bufring',
-				\ 'g:wheel_wave',
-				\ 'g:wheel_ripple',
-				\ 'g:wheel_volatile',
-				\ 'g:wheel_signs',
+				\ 'g:wheeltree',
+				\ 'g:wheeltree_helix',
+				\ 'g:wheeltree_grid',
+				\ 'g:wheeltree_files',
+				\ 'g:wheeltree_history',
+				\ 'g:wheeltree_input',
+				\ 'g:wheeltree_attic',
+				\ 'g:wheeltree_yank',
+				\ 'g:wheeltree_shelve',
+				\ 'g:wheeltree_config',
+				\ 'g:wheeltree_bufring',
+				\ 'g:wheeltree_wave',
+				\ 'g:wheeltree_ripple',
+				\ 'g:wheeltree_volatile',
+				\ 'g:wheeltree_signs',
 				\ ]
 	call wheel#ouroboros#unlet (varlist)
 endfun
@@ -561,11 +561,11 @@ endfun
 
 fun! wheel#void#init ()
 	" Main init function
-	"if g:wheel_volatile.argc == 0 && has('nvim')
+	"if g:wheeltree_volatile.argc == 0 && has('nvim')
 		"echomsg 'wheel hello !'
 	"endif
 	" ---- keep tabs & wins ?
-	if g:wheel_volatile.argc == 0
+	if g:wheeltree_volatile.argc == 0
 		let keep_tabwins = 'dont-keep'
 	else
 		let keep_tabwins = 'keep'
@@ -573,18 +573,18 @@ fun! wheel#void#init ()
 	" ---- no message at vim enter
 	let verbose = v:false
 	" ---- read wheel
-	if g:wheel_config.storage.wheel.autoread > 0
+	if g:wheeltree_config.storage.wheel.autoread > 0
 		call wheel#disc#read_wheel ('', keep_tabwins, verbose)
 	endif
 	" ---- read session
-	if g:wheel_config.storage.session.autoread > 0
+	if g:wheeltree_config.storage.session.autoread > 0
 		call wheel#disc#read_session ('', keep_tabwins, verbose)
 	endif
 endfun
 
 fun! wheel#void#exit ()
 	" Main exit function
-	"if g:wheel_volatile.argc == 0 && has('nvim')
+	"if g:wheeltree_volatile.argc == 0 && has('nvim')
 		"echomsg 'wheel bye !'
 	"endif
 	" ---- clean vars before writing
@@ -592,11 +592,11 @@ fun! wheel#void#exit ()
 	" ---- no message at vim leave
 	let verbose = v:false
 	" ---- save session
-	if g:wheel_config.storage.session.autowrite > 0
+	if g:wheeltree_config.storage.session.autowrite > 0
 		call wheel#disc#write_session ('', verbose)
 	endif
 	" ---- save wheel, and unlet
-	if g:wheel_config.storage.wheel.autowrite > 0
+	if g:wheeltree_config.storage.wheel.autowrite > 0
 		call wheel#disc#write_wheel('', verbose)
 	endif
 	call wheel#void#wipe_mandalas ()
@@ -613,19 +613,19 @@ fun! wheel#void#fresh_wheel ()
 		call wheel#disc#write_wheel ()
 	endif
 	let varlist = [
-				\ 'g:wheel',
-				\ 'g:wheel_helix',
-				\ 'g:wheel_grid',
-				\ 'g:wheel_files',
-				\ 'g:wheel_history',
-				\ 'g:wheel_input',
-				\ 'g:wheel_attic',
-				\ 'g:wheel_wave',
-				\ 'g:wheel_ripple',
-				\ 'g:wheel_yank',
-				\ 'g:wheel_bufring',
-				\ 'g:wheel_signs',
-				\ 'g:wheel_shelve',
+				\ 'g:wheeltree',
+				\ 'g:wheeltree_helix',
+				\ 'g:wheeltree_grid',
+				\ 'g:wheeltree_files',
+				\ 'g:wheeltree_history',
+				\ 'g:wheeltree_input',
+				\ 'g:wheeltree_attic',
+				\ 'g:wheeltree_wave',
+				\ 'g:wheeltree_ripple',
+				\ 'g:wheeltree_yank',
+				\ 'g:wheeltree_bufring',
+				\ 'g:wheeltree_signs',
+				\ 'g:wheeltree_shelve',
 				\ ]
 	call wheel#ouroboros#unlet (varlist)
 	call wheel#void#foundation ()

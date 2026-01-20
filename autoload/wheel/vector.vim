@@ -121,9 +121,9 @@ fun! wheel#vector#grep (pattern, ...)
 		let pattern = '"' .. pattern .. '"'
 	endif
 	" Run grep
-	let grep = g:wheel_config.grep
+	let grep = g:wheeltree_config.grep
 	if ! wheel#chain#is_inside(grep, ['grep', 'vimgrep'])
-		echoerr 'wheel vector grep : bad g:wheel_config.grep value'
+		echoerr 'wheel vector grep : bad g:wheeltree_config.grep value'
 		return v:false
 	endif
 	let grep ..= '!'

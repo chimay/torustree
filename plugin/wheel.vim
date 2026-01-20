@@ -3,11 +3,11 @@
 
 scriptencoding utf-8
 
-if exists("g:wheel_loaded")
+if exists("g:wheeltree_loaded")
 	finish
 endif
 
-let g:wheel_loaded = 1
+let g:wheeltree_loaded = 1
 
 call wheel#void#foundation ()
 call wheel#centre#commands ()

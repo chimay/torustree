@@ -307,7 +307,7 @@ fun! wheel#frigate#outline (...)
 	endif
 	if mode == 1
 		let marker = split(&l:foldmarker, ',')[0]
-		let grep_ex_command = g:wheel_config.grep
+		let grep_ex_command = g:wheeltree_config.grep
 		if grep_ex_command =~ '^:\?grep' && &grepprg !~ '^grep'
 			let marker = escape(marker, '{')
 		endif

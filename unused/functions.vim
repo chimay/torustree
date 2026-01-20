@@ -45,7 +45,7 @@ fun! wheel#disc#read (file)
 endfun
 
 fun! wheel#pendulum#older (level = 'wheel')
-	" Go to older entry in g:wheel_history.circuit
+	" Go to older entry in g:wheeltree_history.circuit
 	let level = a:level
 	if wheel#referen#is_empty(level)
 		echomsg 'wheel older :' level 'is empty'
@@ -59,7 +59,7 @@ fun! wheel#pendulum#older (level = 'wheel')
 	" index for range in coordin
 	let level_index = wheel#referen#coordin_index (level)
 	" back in history
-	let timeloop = g:wheel_history.circuit
+	let timeloop = g:wheeltree_history.circuit
 	let timeloop = wheel#chain#rotate_left (timeloop)
 	let coordin = timeloop[0].coordin
 	let counter = 0
@@ -75,14 +75,14 @@ fun! wheel#pendulum#older (level = 'wheel')
 		return v:false
 	endif
 	" update timeloop : rotate left / right return a copy
-	let g:wheel_history.circuit = timeloop
+	let g:wheeltree_history.circuit = timeloop
 	" jump
 	call wheel#vortex#chord(coordin)
 	return wheel#vortex#jump ()
 endfun
 
 fun! wheel#pendulum#newer (level = 'wheel')
-	" Go to newer entry in g:wheel_history.circuit
+	" Go to newer entry in g:wheeltree_history.circuit
 	let level = a:level
 	if wheel#referen#is_empty(level)
 		echomsg 'wheel newer :' level 'is empty'
@@ -96,7 +96,7 @@ fun! wheel#pendulum#newer (level = 'wheel')
 	" index for range in coordin
 	let level_index = wheel#referen#coordin_index (level)
 	" back in history
-	let timeloop = g:wheel_history.circuit
+	let timeloop = g:wheeltree_history.circuit
 	let timeloop = wheel#chain#rotate_right (timeloop)
 	let coordin = timeloop[0].coordin
 	let counter = 0
@@ -112,7 +112,7 @@ fun! wheel#pendulum#newer (level = 'wheel')
 		return v:false
 	endif
 	" update timeloop : rotate left / right return a deepcopy
-	let g:wheel_history.circuit = timeloop
+	let g:wheeltree_history.circuit = timeloop
 	" jump
 	call wheel#vortex#chord(coordin)
 	return wheel#vortex#jump ()
@@ -124,8 +124,8 @@ fun! wheel#cylinder#first (window = 'furtive')
 	"   - furtive (default) : use current window and go back to previous buffer at the end
 	"   - split : use a split
 	let window = a:window
-	let bufring = g:wheel_bufring
-	let mandalas = g:wheel_bufring.mandalas
+	let bufring = g:wheeltree_bufring
+	let mandalas = g:wheeltree_bufring.mandalas
 	" ---- pre-checks
 	if ! window->wheel#chain#is_inside(['split', 'furtive'])
 		echomsg 'wheel cylinder first : bad window argument'
@@ -187,7 +187,7 @@ fun! wheel#cylinder#add (window = 'furtive')
 	"   - furtive (default) : use current window and go back to previous buffer at the end
 	"   - split : use a split
 	let window = a:window
-	let bufring = g:wheel_bufring
+	let bufring = g:wheeltree_bufring
 	" ---- pre-checks
 	if ! window->wheel#chain#is_inside(['split', 'furtive'])
 		echomsg 'wheel cylinder first : bad window argument'

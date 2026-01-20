@@ -80,7 +80,7 @@ fun! wheel#tree#insert_torus (torus)
 	" Insert torus into wheel
 	" No confirm prompt, no jump : internal use only
 	let torus = a:torus
-	let wheel = g:wheel
+	let wheel = g:wheeltree
 	let index = wheel.current
 	let glossary = wheel.glossary
 	let name = torus.name
@@ -109,7 +109,7 @@ fun! wheel#tree#insert_circle (circle)
 	" Insert circle into current torus
 	" No confirm prompt, no jump : internal use only
 	let circle = a:circle
-	let torus = g:wheel.toruses[g:wheel.current]
+	let torus = g:wheeltree.toruses[g:wheeltree.current]
 	let index = torus.current
 	let glossary = torus.glossary
 	let name = circle.name
@@ -130,7 +130,7 @@ fun! wheel#tree#insert_circle (circle)
 	eval torus.circles->wheel#chain#insert_next(index, circle)
 	let torus.current += 1
 	eval glossary->wheel#chain#insert_next(index, name)
-	let g:wheel.timestamp = wheel#pendulum#timestamp ()
+	let g:wheeltree.timestamp = wheel#pendulum#timestamp ()
 	return v:true
 endfun
 
@@ -138,7 +138,7 @@ fun! wheel#tree#insert_location (location)
 	" Insert location into current circle
 	" No confirm prompt, no jump : internal use only
 	let location = a:location
-	let torus = g:wheel.toruses[g:wheel.current]
+	let torus = g:wheeltree.toruses[g:wheeltree.current]
 	let circle = torus.circles[torus.current]
 	let index = circle.current
 	let glossary = circle.glossary
@@ -160,7 +160,7 @@ fun! wheel#tree#insert_location (location)
 	eval circle.locations->wheel#chain#insert_next(index, location)
 	let circle.current += 1
 	eval glossary->wheel#chain#insert_next(index, name)
-	let g:wheel.timestamp = wheel#pendulum#timestamp ()
+	let g:wheeltree.timestamp = wheel#pendulum#timestamp ()
 	return v:true
 endfun
 
@@ -180,20 +180,20 @@ fun! wheel#tree#add_torus (...)
 		return v:false
 	endif
 	" ---- check name is not already present
-	if wheel#chain#is_inside(torus_name, g:wheel.glossary)
+	if wheel#chain#is_inside(torus_name, g:wheeltree.glossary)
 		call wheel#status#message('Torus', torus_name, 'already exists in wheel')
 		return v:false
 	endif
 	" ---- add torus
 	call wheel#status#message('Adding torus', torus_name)
-	let index = g:wheel.current
-	let toruses = g:wheel.toruses
-	let glossary = g:wheel.glossary
+	let index = g:wheeltree.current
+	let toruses = g:wheeltree.toruses
+	let glossary = g:wheeltree.glossary
 	let template = wheel#void#template ({'name': torus_name, 'circles': []})
 	eval toruses->wheel#chain#insert_next(index, template)
 	eval glossary->wheel#chain#insert_next(index, torus_name)
-	let g:wheel.current += 1
-	let g:wheel.timestamp = wheel#pendulum#timestamp ()
+	let g:wheeltree.current += 1
+	let g:wheeltree.timestamp = wheel#pendulum#timestamp ()
 	return v:true
 endfun
 
@@ -207,7 +207,7 @@ fun! wheel#tree#add_circle (...)
 	endif
 	let circle_name = wheel#tree#format_name (circle_name)
 	" ---- add first torus if needed
-	if empty(g:wheel.toruses)
+	if empty(g:wheeltree.toruses)
 		call wheel#tree#add_torus()
 	endif
 	" ---- circle name
@@ -216,7 +216,7 @@ fun! wheel#tree#add_circle (...)
 		return v:false
 	endif
 	" ---- check name is not already present
-	let torus = g:wheel.toruses[g:wheel.current]
+	let torus = g:wheeltree.toruses[g:wheeltree.current]
 	if wheel#chain#is_inside(circle_name, torus.glossary)
 		let infolist = ['Circle', circle_name, 'already exists in torus', torus.name]
 		call wheel#status#message(infolist)
@@ -231,7 +231,7 @@ fun! wheel#tree#add_circle (...)
 	eval circles->wheel#chain#insert_next(index, template)
 	eval glossary->wheel#chain#insert_next(index, circle_name)
 	let torus.current += 1
-	let g:wheel.timestamp = wheel#pendulum#timestamp ()
+	let g:wheeltree.timestamp = wheel#pendulum#timestamp ()
 	return v:true
 endfun
 
@@ -240,10 +240,10 @@ fun! wheel#tree#add_location (location, optional = 'default')
 	let location = a:location
 	let optional = a:optional
 	" ---- add first torus if needed
-	if empty(g:wheel.toruses)
+	if empty(g:wheeltree.toruses)
 		call wheel#tree#add_torus()
 	endif
-	let torus = g:wheel.toruses[g:wheel.current]
+	let torus = g:wheeltree.toruses[g:wheeltree.current]
 	" ---- add first circle if needed
 	if empty(torus.circles)
 		call wheel#tree#add_circle()
@@ -272,7 +272,7 @@ fun! wheel#tree#add_location (location, optional = 'default')
 	eval locationlist->wheel#chain#insert_next(index, location)
 	eval glossary->wheel#chain#insert_next(index, name)
 	let circle.current += 1
-	let g:wheel.timestamp = wheel#pendulum#timestamp ()
+	let g:wheeltree.timestamp = wheel#pendulum#timestamp ()
 	if optional !=# 'dont-record'
 		call wheel#pendulum#record ()
 	endif
@@ -341,7 +341,7 @@ fun! wheel#tree#add_glob (...)
 	endif
 	silent doautocmd User WheelBeforeOrganize
 	" add first torus if needed
-	if empty(g:wheel.toruses)
+	if empty(g:wheeltree.toruses)
 		call wheel#tree#add_torus()
 	endif
 	" add files to a new circle ?
@@ -350,7 +350,7 @@ fun! wheel#tree#add_glob (...)
 		call wheel#tree#add_circle()
 	endif
 	" add first circle if needed
-	let torus = g:wheel.toruses[g:wheel.current]
+	let torus = g:wheeltree.toruses[g:wheeltree.current]
 	if empty(torus.circles)
 		call wheel#tree#add_circle()
 	endif
@@ -424,7 +424,7 @@ fun! wheel#tree#rename (level, ...)
 	call wheel#status#message('Renaming', level, old, '->', new)
 	let glossary = upper.glossary
 	let upper.glossary = glossary->wheel#chain#replace(old, new)
-	let g:wheel.timestamp = wheel#pendulum#timestamp ()
+	let g:wheeltree.timestamp = wheel#pendulum#timestamp ()
 	call wheel#pendulum#rename(level, old, new)
 	return v:true
 endfun
@@ -436,7 +436,7 @@ fun! wheel#tree#adapt_to_filename (old_filename, new_filename)
 	let old_filename = a:old_filename
 	let new_filename = a:new_filename
 	" ---- rename file in all involved locations of the wheel
-	for torus in g:wheel.toruses
+	for torus in g:wheeltree.toruses
 		for circle in torus.circles
 			for location in circle.locations
 				if location.file ==# old_filename
@@ -446,7 +446,7 @@ fun! wheel#tree#adapt_to_filename (old_filename, new_filename)
 		endfor
 	endfor
 	" ---- rename file in wheel index
-	let g:wheel.timestamp = wheel#pendulum#timestamp()
+	let g:wheeltree.timestamp = wheel#pendulum#timestamp()
 	call wheel#helix#rename_file(old_filename, new_filename)
 endfun
 
@@ -523,7 +523,7 @@ fun! wheel#tree#remove (level, name)
 	" ---- remove from glossary
 	eval glossary->wheel#chain#remove_element(name)
 	" ---- for index auto update at demand
-	let g:wheel.timestamp = wheel#pendulum#timestamp ()
+	let g:wheeltree.timestamp = wheel#pendulum#timestamp ()
 	" ---- adjust history
 	call wheel#pendulum#delete (level, coordin)
 	return v:true
@@ -572,7 +572,7 @@ fun! wheel#tree#delete (level, ask = 'confirm')
 		let upper.current = wheel#taijitu#circular_minus(index, length)
 	endif
 	eval upper.glossary->wheel#chain#remove_element(name)
-	let g:wheel.timestamp = wheel#pendulum#timestamp ()
+	let g:wheeltree.timestamp = wheel#pendulum#timestamp ()
 	call wheel#vortex#jump ()
 	" ---- adjust history
 	call wheel#pendulum#delete (level, coordin)

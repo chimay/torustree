@@ -4,13 +4,13 @@
 "
 " History
 
-" g:wheel_history keys :
+" g:wheeltree_history keys :
 "
 " - line : naturally sorted list of timestamps & wheel coordinates
 "		   each coordinate appear at most once
 "		   used :
 "				- in history dedicated buffer
-"				- to build & update g:wheel_history.alternate
+"				- to build & update g:wheeltree_history.alternate
 "
 " - circuit : unsorted list of timestamps & travelled wheel coordinates
 "			  used in newer & older functions
@@ -78,10 +78,10 @@ fun! wheel#pendulum#remove_if_present (entry)
 	let entry = a:entry
 	let Filter = function('wheel#pendulum#distinct_coordin', [2, entry])
 	" history line
-	let timeline = g:wheel_history.line
+	let timeline = g:wheeltree_history.line
 	eval timeline->filter(Filter)
 	" history circuit
-	let timeloop = g:wheel_history.circuit
+	let timeloop = g:wheeltree_history.circuit
 	eval timeloop->filter(Filter)
 endfun
 
@@ -94,16 +94,16 @@ fun! wheel#pendulum#record ()
 	" Update alternate & frecency coordinates
 	" -- new entry
 	let coordin = wheel#referen#coordinates()
-	let maxim = g:wheel_config.maxim.history
+	let maxim = g:wheeltree_config.maxim.history
 	let entry = {}
 	let entry.coordin = coordin
 	let entry.timestamp = wheel#pendulum#timestamp ()
 	call wheel#pendulum#remove_if_present (entry)
 	" -- new entry in history line
-	let timeline = g:wheel_history.line
+	let timeline = g:wheeltree_history.line
 	eval timeline->wheel#chain#push_max(entry, maxim)
 	" -- new entry in history circuit
-	let timeloop = g:wheel_history.circuit
+	let timeloop = g:wheeltree_history.circuit
 	eval timeloop->wheel#chain#push_max(entry, maxim)
 	" -- alternate history
 	call wheel#caduceus#update ()
@@ -124,21 +124,21 @@ fun! wheel#pendulum#rename (level, old, new)
 	let old_names = copy(new_names)
 	let old_names[level_index] = old
 	" -- history line
-	for elem in g:wheel_history.line
+	for elem in g:wheeltree_history.line
 		let coordin = elem.coordin
 		if coordin[:level_index] == old_names[:level_index]
 			let elem.coordin[level_index] = new
 		endif
 	endfor
 	" -- history circuit
-	for elem in g:wheel_history.circuit
+	for elem in g:wheeltree_history.circuit
 		let coordin = elem.coordin
 		if coordin[:level_index] == old_names[:level_index]
 			let elem.coordin[level_index] = new
 		endif
 	endfor
 	" -- frecency
-	for elem in g:wheel_history.frecency
+	for elem in g:wheeltree_history.frecency
 		let coordin = elem.coordin
 		if coordin[:level_index] == old_names[:level_index]
 			let elem.coordin[level_index] = new
@@ -159,13 +159,13 @@ fun! wheel#pendulum#delete (level, coordin)
 	let coordin = coordin
 	let Filter = function('wheel#pendulum#distinct_coordin', [level_index, coordin])
 	" -- history line
-	let timeline = g:wheel_history.line
+	let timeline = g:wheeltree_history.line
 	eval timeline->filter(Filter)
 	" -- history circuit
-	let timeloop = g:wheel_history.circuit
+	let timeloop = g:wheeltree_history.circuit
 	eval timeloop->filter(Filter)
 	" -- frecency
-	let frecency = g:wheel_history.frecency
+	let frecency = g:wheeltree_history.frecency
 	eval frecency->filter(Filter)
 	" -- alternate
 	call wheel#caduceus#update ()
@@ -175,13 +175,13 @@ fun! wheel#pendulum#broom ()
 	" Remove history entries that do not belong to the wheel anymore
 	let Filter = function('wheel#pendulum#coordin_inside_wheel')
 	" -- history line
-	let timeline = g:wheel_history.line
+	let timeline = g:wheeltree_history.line
 	eval timeline->filter(Filter)
 	" -- history circuit
-	let timeloop = g:wheel_history.circuit
+	let timeloop = g:wheeltree_history.circuit
 	eval timeloop->filter(Filter)
 	" -- frecency
-	let frecency = g:wheel_history.frecency
+	let frecency = g:wheeltree_history.frecency
 	eval frecency->filter(Filter)
 	" -- alternate
 	call wheel#caduceus#update ()

@@ -312,9 +312,9 @@ fun! wheel#disc#readfile (file)
 	endif
 	let lines = readfile(file)
 	" ---- loop on variables
-	let start = lines->match('^let g:wheel')
+	let start = lines->match('^let g:wheeltree')
 	while start >= 0
-		let end = lines->match('^let g:wheel', start + 1) - 1
+		let end = lines->match('^let g:wheeltree', start + 1) - 1
 		if end < 0
 			let slice = lines[start:]
 		else
@@ -336,7 +336,7 @@ endfun
 
 fun! wheel#disc#argc ()
 	" Number of file args at vim startup
-	return g:wheel_volatile.argc
+	return g:wheeltree_volatile.argc
 endfun
 
 " ---- roll backups
@@ -393,20 +393,20 @@ fun! wheel#disc#write_wheel_file (wheel_file, ...)
 	" ---- convert old data
 	call wheel#kintsugi#wheel_file ()
 	" ---- backups
-	call wheel#disc#roll_backups(wheel_file, g:wheel_config.storage.backups)
+	call wheel#disc#roll_backups(wheel_file, g:wheeltree_config.storage.backups)
 	" ---- write
 	"echomsg 'Writing wheel variables to file ..'
 	" -- replace >
-	call wheel#disc#writefile('g:wheel', wheel_file, '>')
+	call wheel#disc#writefile('g:wheeltree', wheel_file, '>')
 	" -- append >>
-	call wheel#disc#writefile('g:wheel_helix', wheel_file, '>>')
-	call wheel#disc#writefile('g:wheel_grid', wheel_file, '>>')
-	call wheel#disc#writefile('g:wheel_files', wheel_file, '>>')
-	call wheel#disc#writefile('g:wheel_history', wheel_file, '>>')
-	call wheel#disc#writefile('g:wheel_input', wheel_file, '>>')
-	call wheel#disc#writefile('g:wheel_shelve', wheel_file, '>>')
-	call wheel#disc#writefile('g:wheel_attic', wheel_file, '>>')
-	call wheel#disc#writefile('g:wheel_yank', wheel_file, '>>')
+	call wheel#disc#writefile('g:wheeltree_helix', wheel_file, '>>')
+	call wheel#disc#writefile('g:wheeltree_grid', wheel_file, '>>')
+	call wheel#disc#writefile('g:wheeltree_files', wheel_file, '>>')
+	call wheel#disc#writefile('g:wheeltree_history', wheel_file, '>>')
+	call wheel#disc#writefile('g:wheeltree_input', wheel_file, '>>')
+	call wheel#disc#writefile('g:wheeltree_shelve', wheel_file, '>>')
+	call wheel#disc#writefile('g:wheeltree_attic', wheel_file, '>>')
+	call wheel#disc#writefile('g:wheeltree_yank', wheel_file, '>>')
 	" ---- coda
 	if verbose
 		call wheel#status#clear ()
@@ -460,22 +460,22 @@ endfun
 
 fun! wheel#disc#write_wheel (...)
 	" Write all wheel variables to wheel file, in auto or prompt mode
-	" If given file is empty string, defaults to g:wheel_config.storage.wheel.name
+	" If given file is empty string, defaults to g:wheeltree_config.storage.wheel.name
 	" If no file is given, ask which file to use
 	" ---- automatic mode
 	if a:0 > 0
 		if ! empty(a:1)
 			let wheel_file = fnamemodify(a:1, ':p')
 		else
-			let wheel_folder = g:wheel_config.storage.wheel.folder
+			let wheel_folder = g:wheeltree_config.storage.wheel.folder
 			let wheel_folder = fnamemodify(wheel_folder, ':p')
 			if wheel_folder[-1:] !=# '/'
 				let wheel_folder = wheel_folder .. '/'
 			endif
-			if ! empty(g:wheel_shelve.current.wheel)
-				let wheel_name = g:wheel_shelve.current.wheel
+			if ! empty(g:wheeltree_shelve.current.wheel)
+				let wheel_name = g:wheeltree_shelve.current.wheel
 			else
-				let wheel_name = g:wheel_config.storage.wheel.name
+				let wheel_name = g:wheeltree_config.storage.wheel.name
 			endif
 			let wheel_file = wheel_folder .. wheel_name
 		endif
@@ -483,7 +483,7 @@ fun! wheel#disc#write_wheel (...)
 		return call('wheel#disc#write_wheel_file', arglist)
 	endif
 	" ---- wheel folder
-	let wheel_folder = g:wheel_config.storage.wheel.folder
+	let wheel_folder = g:wheeltree_config.storage.wheel.folder
 	let wheel_folder = fnamemodify(wheel_folder, ':p')
 	if wheel_folder[-1:] !=# '/'
 		let wheel_folder = wheel_folder .. '/'
@@ -494,10 +494,10 @@ fun! wheel#disc#write_wheel (...)
 		return v:false
 	endif
 	" ---- default wheel file
-	if ! empty(g:wheel_shelve.current.wheel)
-		let default_wheel = g:wheel_shelve.current.wheel
+	if ! empty(g:wheeltree_shelve.current.wheel)
+		let default_wheel = g:wheeltree_shelve.current.wheel
 	else
-		let default_wheel = g:wheel_config.storage.wheel.name
+		let default_wheel = g:wheeltree_config.storage.wheel.name
 	endif
 	let default_wheel = fnamemodify(default_wheel, ':t')
 	" ---- prompt for wheel file
@@ -510,7 +510,7 @@ fun! wheel#disc#write_wheel (...)
 	if empty(wheel_name)
 		let wheel_name = default_wheel
 	elseif wheel_name ==# '='
-		let wheel_name = g:wheel_config.storage.wheel.name
+		let wheel_name = g:wheeltree_config.storage.wheel.name
 	endif
 	execute 'lcd' current_dir
 	" ---- wheel file path
@@ -522,28 +522,28 @@ fun! wheel#disc#write_wheel (...)
 	let success = wheel#disc#write_wheel_file(wheel_file)
 	" ---- update current wheel in shelve
 	if success
-		let g:wheel_shelve.current.wheel = wheel_name
+		let g:wheeltree_shelve.current.wheel = wheel_name
 	endif
 endfun
 
 fun! wheel#disc#read_wheel (...)
 	" Read all wheel variables from wheel file, in auto or prompt mode
-	" If given file is empty string, defaults to g:wheel_config.storage.wheel.name
+	" If given file is empty string, defaults to g:wheeltree_config.storage.wheel.name
 	" If no file is given, ask which file to use
 	" ---- automatic mode
 	if a:0 > 0
 		if ! empty(a:1)
 			let wheel_file = fnamemodify(a:1, ':p')
 		else
-			let wheel_folder = g:wheel_config.storage.wheel.folder
+			let wheel_folder = g:wheeltree_config.storage.wheel.folder
 			let wheel_folder = fnamemodify(wheel_folder, ':p')
 			if wheel_folder[-1:] !=# '/'
 				let wheel_folder = wheel_folder .. '/'
 			endif
-			if ! empty(g:wheel_shelve.current.wheel)
-				let wheel_name = g:wheel_shelve.current.wheel
+			if ! empty(g:wheeltree_shelve.current.wheel)
+				let wheel_name = g:wheeltree_shelve.current.wheel
 			else
-				let wheel_name = g:wheel_config.storage.wheel.name
+				let wheel_name = g:wheeltree_config.storage.wheel.name
 			endif
 			let wheel_file = wheel_folder .. wheel_name
 		endif
@@ -551,12 +551,12 @@ fun! wheel#disc#read_wheel (...)
 		return call('wheel#disc#read_wheel_file', arglist)
 	endif
 	" ---- save last state of previous wheel
-	if g:wheel_config.storage.wheel.autowrite > 0
+	if g:wheeltree_config.storage.wheel.autowrite > 0
 		let verbose = v:false
 		call wheel#disc#write_wheel ('', verbose)
 	endif
 	" ---- wheel folder
-	let wheel_folder = g:wheel_config.storage.wheel.folder
+	let wheel_folder = g:wheeltree_config.storage.wheel.folder
 	let wheel_folder = fnamemodify(wheel_folder, ':p')
 	if wheel_folder[-1:] !=# '/'
 		let wheel_folder = wheel_folder .. '/'
@@ -566,10 +566,10 @@ fun! wheel#disc#read_wheel (...)
 		return v:false
 	endif
 	" ---- default wheel name
-	if ! empty(g:wheel_shelve.current.wheel)
-		let default_wheel = g:wheel_shelve.current.wheel
+	if ! empty(g:wheeltree_shelve.current.wheel)
+		let default_wheel = g:wheeltree_shelve.current.wheel
 	else
-		let default_wheel = g:wheel_config.storage.wheel.name
+		let default_wheel = g:wheeltree_config.storage.wheel.name
 	endif
 	let default_wheel = fnamemodify(default_wheel, ':t')
 	" ---- prompt for wheel name
@@ -582,7 +582,7 @@ fun! wheel#disc#read_wheel (...)
 	if empty(wheel_name)
 		let wheel_name = default_wheel
 	elseif wheel_name ==# '='
-		let wheel_name = g:wheel_config.storage.wheel.name
+		let wheel_name = g:wheeltree_config.storage.wheel.name
 	endif
 	execute 'lcd' current_dir
 	" ---- wheel file path
@@ -593,7 +593,7 @@ fun! wheel#disc#read_wheel (...)
 	let wheel_name = substitute(wheel_name, '\.[0-9]\+$', '', '')
 	" ---- update current wheel in shelve
 	if success
-		let g:wheel_shelve.current.wheel = wheel_name
+		let g:wheeltree_shelve.current.wheel = wheel_name
 	endif
 endfun
 
@@ -618,7 +618,7 @@ fun! wheel#disc#write_session_file (session_file, ...)
 		return v:false
 	endif
 	" ---- backups
-	call wheel#disc#roll_backups(session_file, g:wheel_config.storage.backups)
+	call wheel#disc#roll_backups(session_file, g:wheeltree_config.storage.backups)
 	" ----- writing session
 	let commandlist = wheel#labyrinth#session ()
 	let zero = writefile(commandlist, session_file)
@@ -679,21 +679,21 @@ endfun
 
 fun! wheel#disc#write_session (...)
 	" Ask where to write current session and write it
-	" File defaults to g:wheel_config.storage.session.name
+	" File defaults to g:wheeltree_config.storage.session.name
 	" ---- automatic mode
 	if a:0 > 0
 		if ! empty(a:1)
 			let session_file = fnamemodify(a:1, ':p')
 		else
-			let session_folder = g:wheel_config.storage.session.folder
+			let session_folder = g:wheeltree_config.storage.session.folder
 			let session_folder = fnamemodify(session_folder, ':p')
 			if session_folder[-1:] !=# '/'
 				let session_folder = session_folder .. '/'
 			endif
-			if ! empty(g:wheel_shelve.current.session)
-				let session_name = g:wheel_shelve.current.session
+			if ! empty(g:wheeltree_shelve.current.session)
+				let session_name = g:wheeltree_shelve.current.session
 			else
-				let session_name = g:wheel_config.storage.session.name
+				let session_name = g:wheeltree_config.storage.session.name
 			endif
 			let session_file = session_folder .. session_name
 		endif
@@ -701,7 +701,7 @@ fun! wheel#disc#write_session (...)
 		return call('wheel#disc#write_session_file', arglist)
 	endif
 	" ---- session dir
-	let session_folder = g:wheel_config.storage.session.folder
+	let session_folder = g:wheeltree_config.storage.session.folder
 	let session_folder = fnamemodify(session_folder, ':p')
 	if session_folder[-1:] !=# '/'
 		let session_folder = session_folder .. '/'
@@ -712,10 +712,10 @@ fun! wheel#disc#write_session (...)
 		return v:false
 	endif
 	" ---- default session file
-	if ! empty(g:wheel_shelve.current.session)
-		let default_session = g:wheel_shelve.current.session
+	if ! empty(g:wheeltree_shelve.current.session)
+		let default_session = g:wheeltree_shelve.current.session
 	else
-		let default_session = g:wheel_config.storage.session.name
+		let default_session = g:wheeltree_config.storage.session.name
 	endif
 	let default_session = fnamemodify(default_session, ':t')
 	" ---- prompt for session file
@@ -728,7 +728,7 @@ fun! wheel#disc#write_session (...)
 	if empty(session_name)
 		let session_name = default_session
 	elseif session_name ==# '='
-		let session_name = g:wheel_config.storage.session.name
+		let session_name = g:wheeltree_config.storage.session.name
 	endif
 	execute 'lcd' current_dir
 	" ---- session file path
@@ -740,26 +740,26 @@ fun! wheel#disc#write_session (...)
 	let success = wheel#disc#write_session_file(session_file)
 	" ---- update current session in shelve
 	if success
-		let g:wheel_shelve.current.session = session_name
+		let g:wheeltree_shelve.current.session = session_name
 	endif
 endfun
 
 fun! wheel#disc#read_session (...)
 	" Ask where to read current session and read it
-	" File defaults to g:wheel_config.storage.session.name
+	" File defaults to g:wheeltree_config.storage.session.name
 	" ---- automatic mode
 	if a:0 > 0
 		if ! empty(a:1)
 			let session_file = fnamemodify(a:1, ':p')
 		else
-			let session_folder = fnamemodify(g:wheel_config.storage.session.folder, ':p')
+			let session_folder = fnamemodify(g:wheeltree_config.storage.session.folder, ':p')
 			if session_folder[-1:] !=# '/'
 				let session_folder = session_folder .. '/'
 			endif
-			if ! empty(g:wheel_shelve.current.session)
-				let session_name = g:wheel_shelve.current.session
+			if ! empty(g:wheeltree_shelve.current.session)
+				let session_name = g:wheeltree_shelve.current.session
 			else
-				let session_name = g:wheel_config.storage.session.name
+				let session_name = g:wheeltree_config.storage.session.name
 			endif
 			let session_file = session_folder .. session_name
 		endif
@@ -767,12 +767,12 @@ fun! wheel#disc#read_session (...)
 		return call('wheel#disc#read_session_file', arglist)
 	endif
 	" ---- save last state of previous session
-	if g:wheel_config.storage.session.autowrite > 0
+	if g:wheeltree_config.storage.session.autowrite > 0
 		let verbose = v:false
 		call wheel#disc#write_session ('', verbose)
 	endif
 	" ---- session dir
-	let session_folder = g:wheel_config.storage.session.folder
+	let session_folder = g:wheeltree_config.storage.session.folder
 	let session_folder = fnamemodify(session_folder, ':p')
 	if session_folder[-1:] !=# '/'
 		let session_folder = session_folder .. '/'
@@ -782,10 +782,10 @@ fun! wheel#disc#read_session (...)
 		return v:false
 	endif
 	" ---- default session file
-	if ! empty(g:wheel_shelve.current.session)
-		let default_session = g:wheel_shelve.current.session
+	if ! empty(g:wheeltree_shelve.current.session)
+		let default_session = g:wheeltree_shelve.current.session
 	else
-		let default_session = g:wheel_config.storage.session.name
+		let default_session = g:wheeltree_config.storage.session.name
 	endif
 	let default_session = fnamemodify(default_session, ':t')
 	" ---- prompt for session name
@@ -798,7 +798,7 @@ fun! wheel#disc#read_session (...)
 	if empty(session_name)
 		let session_name = default_session
 	elseif session_name ==# '='
-		let session_name = g:wheel_config.storage.session.name
+		let session_name = g:wheeltree_config.storage.session.name
 	endif
 	execute 'lcd' current_dir
 	" ---- session file path
@@ -809,7 +809,7 @@ fun! wheel#disc#read_session (...)
 	let session_name = substitute(session_name, '\.[0-9]\+$', '', '')
 	" ---- update current session in shelve
 	if success
-		let g:wheel_shelve.current.session = session_name
+		let g:wheeltree_shelve.current.session = session_name
 	endif
 endfun
 
@@ -818,11 +818,11 @@ fun! wheel#disc#mksession (...)
 	if a:0 > 0
 		let session_file = fnamemodify(a:1, ':p')
 	else
-		if empty(g:wheel_config.session_file)
-			echomsg 'Please configure g:wheel_config.session_file = my_session_file'
+		if empty(g:wheeltree_config.session_file)
+			echomsg 'Please configure g:wheeltree_config.session_file = my_session_file'
 			return v:false
 		else
-			let session_file = fnamemodify(g:wheel_config.session_file, ':p')
+			let session_file = fnamemodify(g:wheeltree_config.session_file, ':p')
 		endif
 	endif
 	" backup value of sessionoptions
@@ -835,7 +835,7 @@ fun! wheel#disc#mksession (...)
 		return v:false
 	endif
 	" backup old sessions
-	call wheel#disc#roll_backups(session_file, g:wheel_config.backups)
+	call wheel#disc#roll_backups(session_file, g:wheeltree_config.backups)
 	" writing session
 	echomsg 'Writing session to file ..'
 	execute 'mksession!' session_file
@@ -889,7 +889,7 @@ fun! wheel#disc#tree_script (...)
 	eval script->add('cd ' .. soil)
 	eval script->add('mkdir -p wheel')
 	eval script->add('cd wheel')
-	for torus in g:wheel.toruses
+	for torus in g:wheeltree.toruses
 		let torus_dir = torus.name
 		eval script->add('mkdir -p ' .. torus_dir)
 		eval script->add('cd ' .. torus_dir)
@@ -948,7 +948,7 @@ fun! wheel#disc#symlink_tree (...)
 	let cd_wheel = 'cd wheel'
 	call execute(cd_wheel)
 	let counter = 0
-	for torus in g:wheel.toruses
+	for torus in g:wheeltree.toruses
 		let torus_dir = torus.name
 		let mkdir_torus = 'mkdir -p ' .. torus_dir
 		call system(mkdir_torus)
@@ -1013,7 +1013,7 @@ fun! wheel#disc#copied_tree ()
 	let cd_wheel = 'cd wheel'
 	call execute(cd_wheel)
 	let counter = 0
-	for torus in g:wheel.toruses
+	for torus in g:wheeltree.toruses
 		let torus_dir = torus.name
 		let mkdir_torus = 'mkdir -p ' .. torus_dir
 		call system(mkdir_torus)

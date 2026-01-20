@@ -3,17 +3,17 @@
 
 Changes of keys :
 
-- g:wheel_config.project_markers -> g:wheel_config.project.markers
-- g:wheel_config.auto_chdir_project -> g:wheel_config.project.auto_chdir
-- new key : g:wheel_config.storage.wheel.folder
-- g:wheel_config.file -> g:wheel_config.storage.wheel.name
-- g:wheel_config.autoread -> g:wheel_config.storage.wheel.autoread
-- g:wheel_config.autowrite -> g:wheel_config.storage.wheel.autowrite
-- g:wheel_config.session_dir -> g:wheel_config.storage.session.folder
-- g:wheel_config.session_file -> g:wheel_config.storage.session.name
-- g:wheel_config.autoread_session -> g:wheel_config.storage.session.autoread
-- g:wheel_config.autowrite_session -> g:wheel_config.storage.session.autowrite
-- g:wheel_config.backups -> g:wheel_config.storage.backups
+- g:wheeltree_config.project_markers -> g:wheeltree_config.project.markers
+- g:wheeltree_config.auto_chdir_project -> g:wheeltree_config.project.auto_chdir
+- new key : g:wheeltree_config.storage.wheel.folder
+- g:wheeltree_config.file -> g:wheeltree_config.storage.wheel.name
+- g:wheeltree_config.autoread -> g:wheeltree_config.storage.wheel.autoread
+- g:wheeltree_config.autowrite -> g:wheeltree_config.storage.wheel.autowrite
+- g:wheeltree_config.session_dir -> g:wheeltree_config.storage.session.folder
+- g:wheeltree_config.session_file -> g:wheeltree_config.storage.session.name
+- g:wheeltree_config.autoread_session -> g:wheeltree_config.storage.session.autoread
+- g:wheeltree_config.autowrite_session -> g:wheeltree_config.storage.session.autowrite
+- g:wheeltree_config.backups -> g:wheeltree_config.storage.backups
 
 # Version 3.7
 
@@ -30,4 +30,4 @@ Default session file has changed :
 
 Little change in config :
 
-g:wheel_config.display.message -> g:wheel_config.display.dedibuf_msg
+g:wheeltree_config.display.message -> g:wheeltree_config.display.dedibuf_msg
