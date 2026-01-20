@@ -47,7 +47,7 @@ fun! s:exit (chan, data, event) dict
 	let bufnum = self.bufnum
 	let code = a:data
 	let text = printf('%s %s : %s', self.name, a:event, code)
-	eval g:wheeltree_wave->torustree#chain#remove_element(self)
+	eval g:torustree_wave->torustree#chain#remove_element(self)
 	echomsg text
 endfun
 
@@ -112,7 +112,7 @@ fun! torustree#wave#start (command, ...)
 		return
 	endif
 	let job.iden = jobid
-	eval g:wheeltree_wave->add(job)
+	eval g:torustree_wave->add(job)
 	call torustree#wave#stop_map ()
 	return job
 endfun
@@ -129,13 +129,13 @@ fun! torustree#wave#stop (...)
 	if a:0 > 0
 		let job = a:1
 	else
-		if ! empty(g:wheeltree_wave)
-			let job = g:wheeltree_wave[-1]
+		if ! empty(g:torustree_wave)
+			let job = g:torustree_wave[-1]
 		else
 			echomsg 'torustree wave stop : no more job left'
 			return v:false
 		endif
 	endif
 	call jobstop(job.iden)
-	eval g:wheeltree_wave->torustree#chain#remove_element(job)
+	eval g:torustree_wave->torustree#chain#remove_element(job)
 endfun

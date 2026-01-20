@@ -412,5 +412,5 @@ fun! torustree#harmony#reorganize (ask = 'confirm')
 	setlocal nomodified
 	echomsg 'Changes written to torustree'
 	" -- tune torustree coordinates to first entry in history
-	call torustree#vortex#chord(g:wheeltree_history.line[0].coordin)
+	call torustree#vortex#chord(g:torustree_history.line[0].coordin)
 endfun

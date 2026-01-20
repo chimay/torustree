@@ -108,7 +108,7 @@ endfun
 
 fun! torustree#status#mandalas ()
 	" Return bufring status
-	let bufring = g:wheeltree_bufring
+	let bufring = g:torustree_bufring
 	let names = copy(bufring.names)
 	let current = bufring.current
 	let names[current] = '[' .. names[current] .. ']'
@@ -157,7 +157,7 @@ endfun
 
 fun! torustree#status#mandala_leaf ()
 	" Mandala & leaf dashboard
-	let in_status = g:wheeltree_config.display.statusline
+	let in_status = g:torustree_config.display.statusline
 	if in_status > 0 && torustree#cylinder#is_mandala ()
 		call torustree#status#clear ()
 		setlocal statusline=%!torustree#status#statusline()
@@ -170,7 +170,7 @@ fun! torustree#status#mandala_leaf ()
 		echo 'torustree buffers: ' join(mandalas) "\n"
 		return v:true
 	endif
-	let oneline = g:wheeltree_config.display.dedibuf ==# 'one-line'
+	let oneline = g:torustree_config.display.dedibuf ==# 'one-line'
 	if oneline
 		echo 'torustree buf:' join(mandalas) '/ lay:' join(leaves)
 	else
@@ -205,10 +205,10 @@ fun! torustree#status#tablabel (tabnum)
 	if win_num > 1
 		let label ..= '(' .. win_num .. ')'
 	endif
-	if ! has_key(g:wheeltree_shelve.layout, 'tabnames')
+	if ! has_key(g:torustree_shelve.layout, 'tabnames')
 		return label
 	endif
-	let tabnames = g:wheeltree_shelve.layout.tabnames
+	let tabnames = g:torustree_shelve.layout.tabnames
 	if empty(tabnames)
 		return label
 	endif

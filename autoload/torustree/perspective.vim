@@ -55,7 +55,7 @@ fun! torustree#perspective#buffer (scope = 'listed')
 		return []
 	endif
 	let returnlist = []
-	let mandalas = g:wheeltree_bufring.mandalas
+	let mandalas = g:torustree_bufring.mandalas
 	for buffer in buflist
 		let bufnum = printf('%3d', buffer.bufnr)
 		let linum = printf('%5d', buffer.lnum)
@@ -102,7 +102,7 @@ fun! torustree#perspective#tabwin ()
 	" Buffers visible in tabs & wins
 	let returnlist = []
 	let last_tab = tabpagenr('$')
-	let mandalas = g:wheeltree_bufring.mandalas
+	let mandalas = g:torustree_bufring.mandalas
 	for tabnum in range(1, last_tab)
 		let buflist = tabpagebuflist(tabnum)
 		let winum = 0
@@ -128,7 +128,7 @@ fun! torustree#perspective#tabwin_tree ()
 	" Buffers visible in folded tree of tabs & wins
 	let returnlist = []
 	let last_tab = tabpagenr('$')
-	let mandalas = g:wheeltree_bufring.mandalas
+	let mandalas = g:torustree_bufring.mandalas
 	for tabnum in range(1, last_tab)
 		let record = 'tab ' .. tabnum .. s:fold_1
 		eval returnlist->add(record)
@@ -164,7 +164,7 @@ fun! torustree#perspective#locate (pattern)
 		return v:false
 	endif
 	let pattern = a:pattern
-	let database = g:wheeltree_config.locate_db
+	let database = g:torustree_config.locate_db
 	if empty(database)
 		let runme = 'locate ' .. pattern
 	else
@@ -179,7 +179,7 @@ endfun
 fun! torustree#perspective#mru ()
 	" Sorted most recenty used files
 	" Each entry is a string : date hour | filename
-	let attic = deepcopy(g:wheeltree_attic)
+	let attic = deepcopy(g:torustree_attic)
 	let returnlist = []
 	for entry in attic
 		let filename = entry.file
@@ -248,7 +248,7 @@ endfun
 fun! torustree#perspective#jump ()
 	" Jumps
 	let returnlist = []
-	let mandalas = g:wheeltree_bufring.mandalas
+	let mandalas = g:torustree_bufring.mandalas
 	let jumplist = getjumplist()[0]
 	for jump in jumplist
 		let bufnum = jump.bufnr
@@ -405,7 +405,7 @@ fun! torustree#perspective#yank_prompt (mode, register = 'unnamed')
 	" Yank ring for prompting functions
 	let mode = a:mode
 	let register = a:register
-	let yank_dict = g:wheeltree_yank
+	let yank_dict = g:torustree_yank
 	" ---- yank list
 	if register ==# 'overview'
 		" -- overview of all registers
@@ -439,7 +439,7 @@ fun! torustree#perspective#yank_mandala (mode, register = 'unnamed')
 	" Yank ring for mandalas
 	let mode = a:mode
 	let register = a:register
-	let yank_dict = g:wheeltree_yank
+	let yank_dict = g:torustree_yank
 	" ---- yank list
 	if register ==# 'overview'
 		" -- overview of all registers

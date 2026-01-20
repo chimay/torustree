@@ -77,9 +77,9 @@ fun! torustree#kyusu#steep (wordlist, unused, value)
 	" unused argument is for compatibility with filter()
 	let wordlist = copy(a:wordlist)
 	let value = a:value
-	if g:wheeltree_config.completion.wordize > 0
+	if g:torustree_config.completion.wordize > 0
 		eval wordlist->map({ _, val -> torustree#kyusu#wordize(val) })
-	elseif g:wheeltree_config.completion.vocalize > 0
+	elseif g:torustree_config.completion.vocalize > 0
 		eval wordlist->map({ _, val -> torustree#kyusu#vocalize(val) })
 	endif
 	eval wordlist->map({ _, val -> substitute(val, '|', '\\|', 'g') })
@@ -110,9 +110,9 @@ fun! torustree#kyusu#infuse (wordlist, unused, value)
 	let wordlist = copy(a:wordlist)
 	let value = a:value
 	" ---- options
-	if g:wheeltree_config.completion.wordize > 0
+	if g:torustree_config.completion.wordize > 0
 		eval wordlist->map({ _, val -> torustree#kyusu#wordize(val) })
-	elseif g:wheeltree_config.completion.vocalize > 0
+	elseif g:torustree_config.completion.vocalize > 0
 		eval wordlist->map({ _, val -> torustree#kyusu#vocalize(val) })
 	endif
 	" --- logical or
@@ -166,13 +166,13 @@ fun! torustree#kyusu#pour (wordlist, list)
 	" Return elements of list matching words of wordlist
 	let wordlist = a:wordlist
 	let list = a:list
-	if g:wheeltree_config.completion.fuzzy > 0
+	if g:torustree_config.completion.fuzzy > 0
 		if empty(wordlist)
 			return list
 		endif
 		return list->matchfuzzy(join(wordlist))
 	endif
-	if g:wheeltree_config.completion.scores > 0
+	if g:torustree_config.completion.scores > 0
 		return torustree#kyusu#stream (wordlist, list)
 	endif
 	let list = deepcopy(list)
@@ -186,7 +186,7 @@ fun! torustree#kyusu#drop (wordlist, list)
 	" Disregard scores
 	let wordlist = a:wordlist
 	let list = a:list
-	if g:wheeltree_config.completion.fuzzy > 0
+	if g:torustree_config.completion.fuzzy > 0
 		if empty(wordlist)
 			return list
 		endif

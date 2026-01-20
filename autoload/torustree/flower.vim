@@ -149,7 +149,7 @@ endfun
 fun! torustree#flower#history ()
 	" Naturally sorted timeline index
 	" Each entry is a string : date hour | torus > circle > location
-	let timeline = g:wheeltree_history.line
+	let timeline = g:torustree_history.line
 	let returnlist = []
 	for entry in timeline
 		let coordin = entry.coordin
@@ -164,7 +164,7 @@ endfun
 fun! torustree#flower#history_circuit ()
 	" History circuit
 	" Each entry is a string : date hour | torus > circle > location
-	let timeloop = g:wheeltree_history.circuit
+	let timeloop = g:torustree_history.circuit
 	let returnlist = []
 	for entry in timeloop
 		let coordin = entry.coordin
@@ -180,7 +180,7 @@ endfun
 
 fun! torustree#flower#frecency ()
 	" Frecency : frequent & recent
-	let frecency = g:wheeltree_history.frecency
+	let frecency = g:torustree_history.frecency
 	let returnlist = []
 	for entry in frecency
 		let score = printf('%7d', entry.score)

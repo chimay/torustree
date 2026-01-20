@@ -130,7 +130,7 @@ endfun
 
 fun! torustree#complete#mandala (arglead, cmdline, cursorpos)
 	" Complete mandala buffer name
-	let bufring = g:wheeltree_bufring
+	let bufring = g:torustree_bufring
 	let names = bufring.names
 	let types = bufring.types
 	if empty(names)
@@ -327,7 +327,7 @@ endfun
 fun! torustree#complete#outline_folds (arglead, cmdline, cursorpos)
 	" Complete folds outline
 	let marker = split(&l:foldmarker, ',')[0]
-	let grep_ex_command = g:wheeltree_config.grep
+	let grep_ex_command = g:torustree_config.grep
 	if grep_ex_command =~ '^:\?grep' && &grepprg !~ '^grep'
 		let marker = escape(marker, '{')
 	endif
@@ -369,7 +369,7 @@ endfun
 
 fun! torustree#complete#yank_list (arglead, cmdline, cursorpos)
 	" Complete yank from yank ring in list mode
-	let register = g:wheeltree_shelve.yank.default_register
+	let register = g:torustree_shelve.yank.default_register
 	let choices = torustree#perspective#yank_prompt ('list', register)
 	let wordlist = split(a:cmdline)
 	return torustree#kyusu#pour(wordlist, choices)
@@ -377,7 +377,7 @@ endfun
 
 fun! torustree#complete#yank_plain (arglead, cmdline, cursorpos)
 	" Complete yank from yank ring in plain mode
-	let register = g:wheeltree_shelve.yank.default_register
+	let register = g:torustree_shelve.yank.default_register
 	let choices = torustree#perspective#yank_prompt ('plain', register)
 	let wordlist = split(a:cmdline)
 	return torustree#kyusu#pour(wordlist, choices)

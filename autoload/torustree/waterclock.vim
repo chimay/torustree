@@ -28,29 +28,29 @@ lockvar s:field_separ
 " ---- newer & older
 
 fun! torustree#waterclock#newer_anywhere ()
-	" Go to newer entry in g:wheeltree_history.circuit
-	let timeloop = g:wheeltree_history.circuit
+	" Go to newer entry in g:torustree_history.circuit
+	let timeloop = g:torustree_history.circuit
 	let timeloop = torustree#taijitu#rotate_right (timeloop)
 	let coordin = timeloop[0].coordin
 	" rotate makes deepcopy
-	let g:wheeltree_history.circuit = timeloop
+	let g:torustree_history.circuit = timeloop
 	call torustree#vortex#chord(coordin)
 	return torustree#vortex#jump ()
 endfun
 
 fun! torustree#waterclock#older_anywhere ()
-	" Go to older entry in g:wheeltree_history.circuit
-	let timeloop = g:wheeltree_history.circuit
+	" Go to older entry in g:torustree_history.circuit
+	let timeloop = g:torustree_history.circuit
 	let timeloop = torustree#taijitu#rotate_left (timeloop)
 	let coordin = timeloop[0].coordin
 	" rotate makes deepcopy
-	let g:wheeltree_history.circuit = timeloop
+	let g:torustree_history.circuit = timeloop
 	call torustree#vortex#chord(coordin)
 	return torustree#vortex#jump ()
 endfun
 
 fun! torustree#waterclock#newer (level = 'torustree')
-	" Go to newer entry in g:wheeltree_history.circuit, same level
+	" Go to newer entry in g:torustree_history.circuit, same level
 	let level = a:level
 	if torustree#referen#is_empty(level)
 		echomsg 'torustree newer :' level 'is empty'
@@ -64,7 +64,7 @@ fun! torustree#waterclock#newer (level = 'torustree')
 	" ---- index for range in coordin
 	let level_index = torustree#referen#level_index_in_coordin (level)
 	" ---- back to the future
-	let timeloop = g:wheeltree_history.circuit
+	let timeloop = g:torustree_history.circuit
 	let range = torustree#chain#rangelen(timeloop)
 	let range = reverse(range)
 	for index in range[:-2]
@@ -80,14 +80,14 @@ fun! torustree#waterclock#newer (level = 'torustree')
 		return v:false
 	endif
 	" ---- update timeloop : rotate return a deepcopy
-	let g:wheeltree_history.circuit = timeloop
+	let g:torustree_history.circuit = timeloop
 	" ---- jump
 	call torustree#vortex#chord(coordin)
 	return torustree#vortex#jump ()
 endfun
 
 fun! torustree#waterclock#older (level = 'torustree')
-	" Go to older entry in g:wheeltree_history.circuit, same level
+	" Go to older entry in g:torustree_history.circuit, same level
 	let level = a:level
 	if torustree#referen#is_empty(level)
 		echomsg 'torustree older :' level 'is empty'
@@ -101,7 +101,7 @@ fun! torustree#waterclock#older (level = 'torustree')
 	" ---- index for range in coordin
 	let level_index = torustree#referen#level_index_in_coordin (level)
 	" ---- back in history
-	let timeloop = g:wheeltree_history.circuit
+	let timeloop = g:torustree_history.circuit
 	let range = torustree#chain#rangelen(timeloop)
 	for index in range[1:]
 		let coordin = timeloop[index].coordin
@@ -116,7 +116,7 @@ fun! torustree#waterclock#older (level = 'torustree')
 		return v:false
 	endif
 	" ---- update timeloop : rotate return a deepcopy
-	let g:wheeltree_history.circuit = timeloop
+	let g:torustree_history.circuit = timeloop
 	" ---- jump
 	call torustree#vortex#chord(coordin)
 	return torustree#vortex#jump ()

@@ -336,7 +336,7 @@ endfun
 
 fun! torustree#disc#argc ()
 	" Number of file args at vim startup
-	return g:wheeltree_volatile.argc
+	return g:torustree_volatile.argc
 endfun
 
 " ---- roll backups
@@ -393,20 +393,20 @@ fun! torustree#disc#write_wheel_file (wheel_file, ...)
 	" ---- convert old data
 	call torustree#kintsugi#wheel_file ()
 	" ---- backups
-	call torustree#disc#roll_backups(wheel_file, g:wheeltree_config.storage.backups)
+	call torustree#disc#roll_backups(wheel_file, g:torustree_config.storage.backups)
 	" ---- write
 	"echomsg 'Writing torustree variables to file ..'
 	" -- replace >
 	call torustree#disc#writefile('g:torustree', wheel_file, '>')
 	" -- append >>
-	call torustree#disc#writefile('g:wheeltree_helix', wheel_file, '>>')
-	call torustree#disc#writefile('g:wheeltree_grid', wheel_file, '>>')
-	call torustree#disc#writefile('g:wheeltree_files', wheel_file, '>>')
-	call torustree#disc#writefile('g:wheeltree_history', wheel_file, '>>')
-	call torustree#disc#writefile('g:wheeltree_input', wheel_file, '>>')
-	call torustree#disc#writefile('g:wheeltree_shelve', wheel_file, '>>')
-	call torustree#disc#writefile('g:wheeltree_attic', wheel_file, '>>')
-	call torustree#disc#writefile('g:wheeltree_yank', wheel_file, '>>')
+	call torustree#disc#writefile('g:torustree_helix', wheel_file, '>>')
+	call torustree#disc#writefile('g:torustree_grid', wheel_file, '>>')
+	call torustree#disc#writefile('g:torustree_files', wheel_file, '>>')
+	call torustree#disc#writefile('g:torustree_history', wheel_file, '>>')
+	call torustree#disc#writefile('g:torustree_input', wheel_file, '>>')
+	call torustree#disc#writefile('g:torustree_shelve', wheel_file, '>>')
+	call torustree#disc#writefile('g:torustree_attic', wheel_file, '>>')
+	call torustree#disc#writefile('g:torustree_yank', wheel_file, '>>')
 	" ---- coda
 	if verbose
 		call torustree#status#clear ()
@@ -460,22 +460,22 @@ endfun
 
 fun! torustree#disc#write_wheel (...)
 	" Write all torustree variables to torustree file, in auto or prompt mode
-	" If given file is empty string, defaults to g:wheeltree_config.storage.torustree.name
+	" If given file is empty string, defaults to g:torustree_config.storage.torustree.name
 	" If no file is given, ask which file to use
 	" ---- automatic mode
 	if a:0 > 0
 		if ! empty(a:1)
 			let wheel_file = fnamemodify(a:1, ':p')
 		else
-			let wheel_folder = g:wheeltree_config.storage.torustree.folder
+			let wheel_folder = g:torustree_config.storage.torustree.folder
 			let wheel_folder = fnamemodify(wheel_folder, ':p')
 			if wheel_folder[-1:] !=# '/'
 				let wheel_folder = wheel_folder .. '/'
 			endif
-			if ! empty(g:wheeltree_shelve.current.torustree)
-				let wheel_name = g:wheeltree_shelve.current.torustree
+			if ! empty(g:torustree_shelve.current.torustree)
+				let wheel_name = g:torustree_shelve.current.torustree
 			else
-				let wheel_name = g:wheeltree_config.storage.torustree.name
+				let wheel_name = g:torustree_config.storage.torustree.name
 			endif
 			let wheel_file = wheel_folder .. wheel_name
 		endif
@@ -483,7 +483,7 @@ fun! torustree#disc#write_wheel (...)
 		return call('torustree#disc#write_wheel_file', arglist)
 	endif
 	" ---- torustree folder
-	let wheel_folder = g:wheeltree_config.storage.torustree.folder
+	let wheel_folder = g:torustree_config.storage.torustree.folder
 	let wheel_folder = fnamemodify(wheel_folder, ':p')
 	if wheel_folder[-1:] !=# '/'
 		let wheel_folder = wheel_folder .. '/'
@@ -494,10 +494,10 @@ fun! torustree#disc#write_wheel (...)
 		return v:false
 	endif
 	" ---- default torustree file
-	if ! empty(g:wheeltree_shelve.current.torustree)
-		let default_wheel = g:wheeltree_shelve.current.torustree
+	if ! empty(g:torustree_shelve.current.torustree)
+		let default_wheel = g:torustree_shelve.current.torustree
 	else
-		let default_wheel = g:wheeltree_config.storage.torustree.name
+		let default_wheel = g:torustree_config.storage.torustree.name
 	endif
 	let default_wheel = fnamemodify(default_wheel, ':t')
 	" ---- prompt for torustree file
@@ -510,7 +510,7 @@ fun! torustree#disc#write_wheel (...)
 	if empty(wheel_name)
 		let wheel_name = default_wheel
 	elseif wheel_name ==# '='
-		let wheel_name = g:wheeltree_config.storage.torustree.name
+		let wheel_name = g:torustree_config.storage.torustree.name
 	endif
 	execute 'lcd' current_dir
 	" ---- torustree file path
@@ -522,28 +522,28 @@ fun! torustree#disc#write_wheel (...)
 	let success = torustree#disc#write_wheel_file(wheel_file)
 	" ---- update current torustree in shelve
 	if success
-		let g:wheeltree_shelve.current.torustree = wheel_name
+		let g:torustree_shelve.current.torustree = wheel_name
 	endif
 endfun
 
 fun! torustree#disc#read_wheel (...)
 	" Read all torustree variables from torustree file, in auto or prompt mode
-	" If given file is empty string, defaults to g:wheeltree_config.storage.torustree.name
+	" If given file is empty string, defaults to g:torustree_config.storage.torustree.name
 	" If no file is given, ask which file to use
 	" ---- automatic mode
 	if a:0 > 0
 		if ! empty(a:1)
 			let wheel_file = fnamemodify(a:1, ':p')
 		else
-			let wheel_folder = g:wheeltree_config.storage.torustree.folder
+			let wheel_folder = g:torustree_config.storage.torustree.folder
 			let wheel_folder = fnamemodify(wheel_folder, ':p')
 			if wheel_folder[-1:] !=# '/'
 				let wheel_folder = wheel_folder .. '/'
 			endif
-			if ! empty(g:wheeltree_shelve.current.torustree)
-				let wheel_name = g:wheeltree_shelve.current.torustree
+			if ! empty(g:torustree_shelve.current.torustree)
+				let wheel_name = g:torustree_shelve.current.torustree
 			else
-				let wheel_name = g:wheeltree_config.storage.torustree.name
+				let wheel_name = g:torustree_config.storage.torustree.name
 			endif
 			let wheel_file = wheel_folder .. wheel_name
 		endif
@@ -551,12 +551,12 @@ fun! torustree#disc#read_wheel (...)
 		return call('torustree#disc#read_wheel_file', arglist)
 	endif
 	" ---- save last state of previous torustree
-	if g:wheeltree_config.storage.torustree.autowrite > 0
+	if g:torustree_config.storage.torustree.autowrite > 0
 		let verbose = v:false
 		call torustree#disc#write_wheel ('', verbose)
 	endif
 	" ---- torustree folder
-	let wheel_folder = g:wheeltree_config.storage.torustree.folder
+	let wheel_folder = g:torustree_config.storage.torustree.folder
 	let wheel_folder = fnamemodify(wheel_folder, ':p')
 	if wheel_folder[-1:] !=# '/'
 		let wheel_folder = wheel_folder .. '/'
@@ -566,10 +566,10 @@ fun! torustree#disc#read_wheel (...)
 		return v:false
 	endif
 	" ---- default torustree name
-	if ! empty(g:wheeltree_shelve.current.torustree)
-		let default_wheel = g:wheeltree_shelve.current.torustree
+	if ! empty(g:torustree_shelve.current.torustree)
+		let default_wheel = g:torustree_shelve.current.torustree
 	else
-		let default_wheel = g:wheeltree_config.storage.torustree.name
+		let default_wheel = g:torustree_config.storage.torustree.name
 	endif
 	let default_wheel = fnamemodify(default_wheel, ':t')
 	" ---- prompt for torustree name
@@ -582,7 +582,7 @@ fun! torustree#disc#read_wheel (...)
 	if empty(wheel_name)
 		let wheel_name = default_wheel
 	elseif wheel_name ==# '='
-		let wheel_name = g:wheeltree_config.storage.torustree.name
+		let wheel_name = g:torustree_config.storage.torustree.name
 	endif
 	execute 'lcd' current_dir
 	" ---- torustree file path
@@ -593,7 +593,7 @@ fun! torustree#disc#read_wheel (...)
 	let wheel_name = substitute(wheel_name, '\.[0-9]\+$', '', '')
 	" ---- update current torustree in shelve
 	if success
-		let g:wheeltree_shelve.current.torustree = wheel_name
+		let g:torustree_shelve.current.torustree = wheel_name
 	endif
 endfun
 
@@ -618,7 +618,7 @@ fun! torustree#disc#write_session_file (session_file, ...)
 		return v:false
 	endif
 	" ---- backups
-	call torustree#disc#roll_backups(session_file, g:wheeltree_config.storage.backups)
+	call torustree#disc#roll_backups(session_file, g:torustree_config.storage.backups)
 	" ----- writing session
 	let commandlist = torustree#labyrinth#session ()
 	let zero = writefile(commandlist, session_file)
@@ -679,21 +679,21 @@ endfun
 
 fun! torustree#disc#write_session (...)
 	" Ask where to write current session and write it
-	" File defaults to g:wheeltree_config.storage.session.name
+	" File defaults to g:torustree_config.storage.session.name
 	" ---- automatic mode
 	if a:0 > 0
 		if ! empty(a:1)
 			let session_file = fnamemodify(a:1, ':p')
 		else
-			let session_folder = g:wheeltree_config.storage.session.folder
+			let session_folder = g:torustree_config.storage.session.folder
 			let session_folder = fnamemodify(session_folder, ':p')
 			if session_folder[-1:] !=# '/'
 				let session_folder = session_folder .. '/'
 			endif
-			if ! empty(g:wheeltree_shelve.current.session)
-				let session_name = g:wheeltree_shelve.current.session
+			if ! empty(g:torustree_shelve.current.session)
+				let session_name = g:torustree_shelve.current.session
 			else
-				let session_name = g:wheeltree_config.storage.session.name
+				let session_name = g:torustree_config.storage.session.name
 			endif
 			let session_file = session_folder .. session_name
 		endif
@@ -701,7 +701,7 @@ fun! torustree#disc#write_session (...)
 		return call('torustree#disc#write_session_file', arglist)
 	endif
 	" ---- session dir
-	let session_folder = g:wheeltree_config.storage.session.folder
+	let session_folder = g:torustree_config.storage.session.folder
 	let session_folder = fnamemodify(session_folder, ':p')
 	if session_folder[-1:] !=# '/'
 		let session_folder = session_folder .. '/'
@@ -712,10 +712,10 @@ fun! torustree#disc#write_session (...)
 		return v:false
 	endif
 	" ---- default session file
-	if ! empty(g:wheeltree_shelve.current.session)
-		let default_session = g:wheeltree_shelve.current.session
+	if ! empty(g:torustree_shelve.current.session)
+		let default_session = g:torustree_shelve.current.session
 	else
-		let default_session = g:wheeltree_config.storage.session.name
+		let default_session = g:torustree_config.storage.session.name
 	endif
 	let default_session = fnamemodify(default_session, ':t')
 	" ---- prompt for session file
@@ -728,7 +728,7 @@ fun! torustree#disc#write_session (...)
 	if empty(session_name)
 		let session_name = default_session
 	elseif session_name ==# '='
-		let session_name = g:wheeltree_config.storage.session.name
+		let session_name = g:torustree_config.storage.session.name
 	endif
 	execute 'lcd' current_dir
 	" ---- session file path
@@ -740,26 +740,26 @@ fun! torustree#disc#write_session (...)
 	let success = torustree#disc#write_session_file(session_file)
 	" ---- update current session in shelve
 	if success
-		let g:wheeltree_shelve.current.session = session_name
+		let g:torustree_shelve.current.session = session_name
 	endif
 endfun
 
 fun! torustree#disc#read_session (...)
 	" Ask where to read current session and read it
-	" File defaults to g:wheeltree_config.storage.session.name
+	" File defaults to g:torustree_config.storage.session.name
 	" ---- automatic mode
 	if a:0 > 0
 		if ! empty(a:1)
 			let session_file = fnamemodify(a:1, ':p')
 		else
-			let session_folder = fnamemodify(g:wheeltree_config.storage.session.folder, ':p')
+			let session_folder = fnamemodify(g:torustree_config.storage.session.folder, ':p')
 			if session_folder[-1:] !=# '/'
 				let session_folder = session_folder .. '/'
 			endif
-			if ! empty(g:wheeltree_shelve.current.session)
-				let session_name = g:wheeltree_shelve.current.session
+			if ! empty(g:torustree_shelve.current.session)
+				let session_name = g:torustree_shelve.current.session
 			else
-				let session_name = g:wheeltree_config.storage.session.name
+				let session_name = g:torustree_config.storage.session.name
 			endif
 			let session_file = session_folder .. session_name
 		endif
@@ -767,12 +767,12 @@ fun! torustree#disc#read_session (...)
 		return call('torustree#disc#read_session_file', arglist)
 	endif
 	" ---- save last state of previous session
-	if g:wheeltree_config.storage.session.autowrite > 0
+	if g:torustree_config.storage.session.autowrite > 0
 		let verbose = v:false
 		call torustree#disc#write_session ('', verbose)
 	endif
 	" ---- session dir
-	let session_folder = g:wheeltree_config.storage.session.folder
+	let session_folder = g:torustree_config.storage.session.folder
 	let session_folder = fnamemodify(session_folder, ':p')
 	if session_folder[-1:] !=# '/'
 		let session_folder = session_folder .. '/'
@@ -782,10 +782,10 @@ fun! torustree#disc#read_session (...)
 		return v:false
 	endif
 	" ---- default session file
-	if ! empty(g:wheeltree_shelve.current.session)
-		let default_session = g:wheeltree_shelve.current.session
+	if ! empty(g:torustree_shelve.current.session)
+		let default_session = g:torustree_shelve.current.session
 	else
-		let default_session = g:wheeltree_config.storage.session.name
+		let default_session = g:torustree_config.storage.session.name
 	endif
 	let default_session = fnamemodify(default_session, ':t')
 	" ---- prompt for session name
@@ -798,7 +798,7 @@ fun! torustree#disc#read_session (...)
 	if empty(session_name)
 		let session_name = default_session
 	elseif session_name ==# '='
-		let session_name = g:wheeltree_config.storage.session.name
+		let session_name = g:torustree_config.storage.session.name
 	endif
 	execute 'lcd' current_dir
 	" ---- session file path
@@ -809,7 +809,7 @@ fun! torustree#disc#read_session (...)
 	let session_name = substitute(session_name, '\.[0-9]\+$', '', '')
 	" ---- update current session in shelve
 	if success
-		let g:wheeltree_shelve.current.session = session_name
+		let g:torustree_shelve.current.session = session_name
 	endif
 endfun
 
@@ -818,11 +818,11 @@ fun! torustree#disc#mksession (...)
 	if a:0 > 0
 		let session_file = fnamemodify(a:1, ':p')
 	else
-		if empty(g:wheeltree_config.session_file)
-			echomsg 'Please configure g:wheeltree_config.session_file = my_session_file'
+		if empty(g:torustree_config.session_file)
+			echomsg 'Please configure g:torustree_config.session_file = my_session_file'
 			return v:false
 		else
-			let session_file = fnamemodify(g:wheeltree_config.session_file, ':p')
+			let session_file = fnamemodify(g:torustree_config.session_file, ':p')
 		endif
 	endif
 	" backup value of sessionoptions
@@ -835,7 +835,7 @@ fun! torustree#disc#mksession (...)
 		return v:false
 	endif
 	" backup old sessions
-	call torustree#disc#roll_backups(session_file, g:wheeltree_config.backups)
+	call torustree#disc#roll_backups(session_file, g:torustree_config.backups)
 	" writing session
 	echomsg 'Writing session to file ..'
 	execute 'mksession!' session_file

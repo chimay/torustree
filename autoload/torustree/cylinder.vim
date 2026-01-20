@@ -32,14 +32,14 @@ fun! torustree#cylinder#is_mandala (...)
 	else
 		let bufnum = bufnr('%')
 	endif
-	let bufring = g:wheeltree_bufring
+	let bufring = g:torustree_bufring
 	let mandalas = bufring.mandalas
 	return torustree#chain#is_inside(bufnum, mandalas)
 endfun
 
 fun! torustree#cylinder#update_type ()
 	" Update last used type of current mandala buffer
-	let bufring = g:wheeltree_bufring
+	let bufring = g:torustree_bufring
 	let current = bufring.current
 	let types = bufring.types
 	let types[current] = b:wheel_nature.type
@@ -47,7 +47,7 @@ endfun
 
 fun! torustree#cylinder#check ()
 	" Remove non existent mandala buffers from ring
-	let bufring = g:wheeltree_bufring
+	let bufring = g:torustree_bufring
 	let mandalas = bufring.mandalas
 	let iden = bufring.iden
 	let names = bufring.names
@@ -78,7 +78,7 @@ endfun
 
 fun! torustree#cylinder#pseudo ()
 	" Return pseudo filename /torustree/<buf-id>
-	let bufring = g:wheeltree_bufring
+	let bufring = g:torustree_bufring
 	let current = bufring.current
 	let iden = bufring.iden[current]
 	let pseudo = '/torustree/' .. iden
@@ -102,7 +102,7 @@ fun! torustree#cylinder#goto (...)
 		return v:false
 	endif
 	" ---- go to mandala
-	let bufring = g:wheeltree_bufring
+	let bufring = g:torustree_bufring
 	let mandalas = bufring.mandalas
 	if empty(mandalas)
 		return v:false
@@ -144,7 +144,7 @@ endfun
 
 fun! torustree#cylinder#goto_or_load ()
 	" Go to current mandala window or load the buffer in a new split
-	let bufring = g:wheeltree_bufring
+	let bufring = g:torustree_bufring
 	let mandalas = bufring.mandalas
 	let current = bufring.current
 	" -- check
@@ -183,8 +183,8 @@ fun! torustree#cylinder#first (mood = 'linger')
 	"   - linger (default) : stay opened after operation
 	"   - furtive : close after operation
 	let mood = a:mood
-	let bufring = g:wheeltree_bufring
-	let mandalas = g:wheeltree_bufring.mandalas
+	let bufring = g:torustree_bufring
+	let mandalas = g:torustree_bufring.mandalas
 	" -- empty ring ?
 	if ! empty(mandalas)
 		echomsg 'torustree cylinder first : mandala ring is not empty'
@@ -223,7 +223,7 @@ fun! torustree#cylinder#add (mood = 'linger')
 	"   - linger (default) : stay opened after operation
 	"   - furtive : close after operation
 	let mood = a:mood
-	let bufring = g:wheeltree_bufring
+	let bufring = g:torustree_bufring
 	" ---- pre-checks
 	call torustree#cylinder#check ()
 	call torustree#cylinder#delete_unused ()
@@ -277,7 +277,7 @@ endfun
 fun! torustree#cylinder#delete ()
 	" Delete mandala buffer
 	call torustree#cylinder#check ()
-	let bufring = g:wheeltree_bufring
+	let bufring = g:torustree_bufring
 	let mandalas = bufring.mandalas
 	" do not delete element from empty ring
 	if empty(mandalas)
@@ -300,7 +300,7 @@ fun! torustree#cylinder#delete ()
 	eval types->remove(current)
 	let length = len(mandalas)
 	let current = torustree#taijitu#circular_minus(current, length)
-	let g:wheeltree_bufring.current = current
+	let g:torustree_bufring.current = current
 	let bufnum = bufnr('%')
 	if bufnum == removed || torustree#cylinder#is_mandala ()
 		let goto = mandalas[current]
@@ -313,7 +313,7 @@ endfun
 
 fun! torustree#cylinder#delete_unused ()
 	" Delete old, unused mandala
-	let bufring = g:wheeltree_bufring
+	let bufring = g:torustree_bufring
 	let mandalas = bufring.mandalas
 	" -- unused buffer list
 	let buflist = getbufinfo({'buflisted' : 1})
@@ -351,7 +351,7 @@ endfun
 fun! torustree#cylinder#rename ()
 	" Rename current mandala
 	" Used in status#mandala_leaf
-	let bufring = g:wheeltree_bufring
+	let bufring = g:torustree_bufring
 	let current = bufring.current
 	let names = bufring.names
 	let prompt = 'Relabel current dedicated buffer as ? '
@@ -401,7 +401,7 @@ endfun
 
 fun! torustree#cylinder#forward ()
 	" Go forward in mandalas ring
-	let bufring = g:wheeltree_bufring
+	let bufring = g:torustree_bufring
 	let mandalas = bufring.mandalas
 	let types = bufring.types
 	let length = len(mandalas)
@@ -409,11 +409,11 @@ fun! torustree#cylinder#forward ()
 		echomsg 'torustree mandala forward : empty ring'
 		return v:false
 	endif
-	let current = g:wheeltree_bufring.current
+	let current = g:torustree_bufring.current
 	let bufnum = bufnr('%')
 	if torustree#chain#is_inside(bufnum, mandalas)
 		let current = torustree#taijitu#circular_plus (current, length)
-		let g:wheeltree_bufring.current = current
+		let g:torustree_bufring.current = current
 	endif
 	call torustree#cylinder#recall ()
 	call torustree#status#mandala_leaf ()
@@ -421,7 +421,7 @@ endfun
 
 fun! torustree#cylinder#backward ()
 	" Go backward in mandalas ring
-	let bufring = g:wheeltree_bufring
+	let bufring = g:torustree_bufring
 	let mandalas = bufring.mandalas
 	let types = bufring.types
 	let length = len(mandalas)
@@ -429,11 +429,11 @@ fun! torustree#cylinder#backward ()
 		echomsg 'torustree mandala backward : empty ring'
 		return v:false
 	endif
-	let current = g:wheeltree_bufring.current
+	let current = g:torustree_bufring.current
 	let bufnum = bufnr('%')
 	if torustree#chain#is_inside(bufnum, mandalas)
 		let current = torustree#taijitu#circular_minus (current, length)
-		let g:wheeltree_bufring.current = current
+		let g:torustree_bufring.current = current
 	endif
 	call torustree#cylinder#recall ()
 	call torustree#status#mandala_leaf ()
@@ -443,7 +443,7 @@ endfun
 
 fun! torustree#cylinder#switch ()
 	" Switch to mandala with completion
-	let bufring = g:wheeltree_bufring
+	let bufring = g:torustree_bufring
 	let names = bufring.names
 	if empty(names)
 		echomsg 'torustree cylinder switch : empty buffer ring'
@@ -464,7 +464,7 @@ fun! torustree#cylinder#switch ()
 	if index < 0
 		return v:false
 	endif
-	let g:wheeltree_bufring.current = index
+	let g:torustree_bufring.current = index
 	call torustree#cylinder#recall ()
 	call torustree#status#mandala_leaf ()
 	return v:true

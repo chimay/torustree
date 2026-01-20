@@ -24,7 +24,7 @@ endfun
 fun! torustree#helix#helix ()
 	" Index of locations coordinates in the torustree
 	" Each coordinate = [torus.name, circle.name, location.name]
-	if g:torustree.timestamp >= g:wheeltree_helix.timestamp
+	if g:torustree.timestamp >= g:torustree_helix.timestamp
 		let helix = []
 		for torus in g:torustree.toruses
 			for circle in torus.circles
@@ -34,10 +34,10 @@ fun! torustree#helix#helix ()
 				endfor
 			endfor
 		endfor
-		let g:wheeltree_helix.table = helix
-		let g:wheeltree_helix.timestamp = torustree#pendulum#timestamp()
+		let g:torustree_helix.table = helix
+		let g:torustree_helix.timestamp = torustree#pendulum#timestamp()
 	else
-		let helix = g:wheeltree_helix.table
+		let helix = g:torustree_helix.table
 	endif
 	return helix
 endfun
@@ -45,7 +45,7 @@ endfun
 fun! torustree#helix#grid ()
 	" Index of circles coordinates in the torustree
 	" Each coordinate = [torus.name, circle.name]
-	if g:torustree.timestamp >= g:wheeltree_grid.timestamp
+	if g:torustree.timestamp >= g:torustree_grid.timestamp
 		let grid = []
 		for torus in g:torustree.toruses
 			for circle in torus.circles
@@ -53,17 +53,17 @@ fun! torustree#helix#grid ()
 				let grid = add(grid, coordin)
 			endfor
 		endfor
-		let g:wheeltree_grid.table = grid
-		let g:wheeltree_grid.timestamp = torustree#pendulum#timestamp()
+		let g:torustree_grid.table = grid
+		let g:torustree_grid.timestamp = torustree#pendulum#timestamp()
 	else
-		let grid = g:wheeltree_grid.table
+		let grid = g:torustree_grid.table
 	endif
 	return grid
 endfun
 
 fun! torustree#helix#files ()
 	" Index of files in the torustree
-	if g:torustree.timestamp >= g:wheeltree_files.timestamp
+	if g:torustree.timestamp >= g:torustree_files.timestamp
 		let files = []
 		for torus in g:torustree.toruses
 			for circle in torus.circles
@@ -74,10 +74,10 @@ fun! torustree#helix#files ()
 			endfor
 		endfor
 		let files = uniq(sort(files))
-		let g:wheeltree_files.table = files
-		let g:wheeltree_files.timestamp = torustree#pendulum#timestamp()
+		let g:torustree_files.table = files
+		let g:torustree_files.timestamp = torustree#pendulum#timestamp()
 	else
-		let files = g:wheeltree_files.table
+		let files = g:torustree_files.table
 	endif
 	return files
 endfun
@@ -86,11 +86,11 @@ fun! torustree#helix#rename_file(old, new)
 	" Rename all occurences old -> new filename
 	let old = a:old
 	let new = a:new
-	let files = g:wheeltree_files.table
+	let files = g:torustree_files.table
 	for index in torustree#chain#rangelen(files)
 		if files[index] ==# old
 			let files[index] = new
 		endif
 	endfor
-	let g:wheeltree_files.timestamp = torustree#pendulum#timestamp()
+	let g:torustree_files.timestamp = torustree#pendulum#timestamp()
 endfun

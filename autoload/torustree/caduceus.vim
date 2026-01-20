@@ -14,9 +14,9 @@
 " Caduceus can be interpreted as a symbol of a polarized vortex
 
 fun! torustree#caduceus#update ()
-	" Update g:wheeltree_history.alternate
-	let timeline = g:wheeltree_history.line
-	let alternate = g:wheeltree_history.alternate
+	" Update g:torustree_history.alternate
+	let timeline = g:torustree_history.line
+	let alternate = g:torustree_history.alternate
 	let length = len(timeline)
 	if length < 2
 		return v:false
@@ -75,9 +75,9 @@ fun! torustree#caduceus#update ()
 endfun
 
 fun! torustree#caduceus#update_window ()
-	" Update g:wheeltree_history.alternate.window
+	" Update g:torustree_history.alternate.window
 	" to be called by torustree#vortex#jump ()
-	let g:wheeltree_history.alternate.window = win_getid ()
+	let g:torustree_history.alternate.window = win_getid ()
 	return v:true
 endfun
 
@@ -98,8 +98,8 @@ fun! torustree#caduceus#alternate (mode)
 	if ! torustree#referen#location_matches_file ()
 		return torustree#vortex#jump ()
 	endif
-	if has_key(g:wheeltree_history.alternate, a:mode)
-		let coordin = g:wheeltree_history.alternate[a:mode]
+	if has_key(g:torustree_history.alternate, a:mode)
+		let coordin = g:torustree_history.alternate[a:mode]
 		call torustree#vortex#chord(coordin)
 	endif
 	return torustree#vortex#jump ()
@@ -109,10 +109,10 @@ fun! torustree#caduceus#alternate_window ()
 	" Alternate with previous window in any tab,
 	" i.e. previous visible buffer
 	" Generalization of native vim : C-w p
-	if ! has_key(g:wheeltree_history.alternate, 'window')
+	if ! has_key(g:torustree_history.alternate, 'window')
 		return v:false
 	endif
-	let window = g:wheeltree_history.alternate.window
+	let window = g:torustree_history.alternate.window
 	call win_gotoid(window)
 	return v:true
 endfun

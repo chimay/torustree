@@ -111,8 +111,8 @@ fun! torustree#projection#follow (...)
 	endif
 	" ---- tune
 	call torustree#vortex#chord (coordin)
-	if g:wheeltree_config.project.auto_chdir > 0
-		let markers = g:wheeltree_config.project.markers
+	if g:torustree_config.project.auto_chdir > 0
+		let markers = g:torustree_config.project.markers
 		call torustree#disc#project_root (markers)
 	endif
 	call torustree#pendulum#record ()

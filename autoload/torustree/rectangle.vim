@@ -192,7 +192,7 @@ fun! torustree#rectangle#hidden_buffers (scope = 'listed')
 		return []
 	endif
 	let alternate = bufname('#')
-	let mandalas = g:wheeltree_bufring.mandalas
+	let mandalas = g:torustree_bufring.mandalas
 	let hidden_nums = []
 	let hidden_names = []
 	for buffer in buflist

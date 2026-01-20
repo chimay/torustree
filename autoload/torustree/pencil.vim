@@ -35,7 +35,7 @@ endfun
 
 fun! torustree#pencil#has_select_mark (line)
 	" Whether line has selection mark
-	let selection_mark = g:wheeltree_config.display.selection
+	let selection_mark = g:torustree_config.display.selection
 	let selection_pattern = '\m^' .. selection_mark
 	return a:line =~ selection_pattern
 endfun
@@ -48,7 +48,7 @@ fun! torustree#pencil#marked (line)
 	if torustree#pencil#has_select_mark (line)
 		return line
 	endif
-	let selection_mark = g:wheeltree_config.display.selection
+	let selection_mark = g:torustree_config.display.selection
 	return substitute(line, '\m^', selection_mark, '')
 endfun
 
@@ -58,7 +58,7 @@ fun! torustree#pencil#unmarked (line)
 	if ! torustree#pencil#has_select_mark (line)
 		return line
 	endif
-	let selection_mark = g:wheeltree_config.display.selection
+	let selection_mark = g:torustree_config.display.selection
 	let selection_pattern = '\m^' .. selection_mark
 	return substitute(line, selection_pattern, '', '')
 endfun

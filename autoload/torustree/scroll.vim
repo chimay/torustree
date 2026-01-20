@@ -10,16 +10,16 @@ fun! torustree#scroll#record (content)
 	if type(content) == v:t_list
 		let content = join(content)
 	endif
-	let input = g:wheeltree_input
+	let input = g:torustree_input
 	let index = input->index(content)
 	if index >= 0
 		eval input->remove(index)
 	endif
 	eval input->insert(content)
-	let maxim = g:wheeltree_config.maxim.input
-	" we need to use g:wheeltree_input here
+	let maxim = g:torustree_config.maxim.input
+	" we need to use g:torustree_input here
 	" because input[:maxim - 1] makes a copy
-	let g:wheeltree_input = input[:maxim - 1]
+	let g:torustree_input = input[:maxim - 1]
 endfun
 
 fun! torustree#scroll#newer ()
@@ -27,14 +27,14 @@ fun! torustree#scroll#newer ()
 	if line('.') != 1
 		return v:false
 	endif
-	let input = g:wheeltree_input
+	let input = g:torustree_input
 	let line = torustree#teapot#without_prompt ()
 	if empty(line)
 		call torustree#teapot#set_prompt (input[0], 'dont-lock')
 		return v:true
 	endif
-	let g:wheeltree_input = torustree#taijitu#rotate_right (input)
-	call torustree#teapot#set_prompt (g:wheeltree_input[0], 'dont-lock')
+	let g:torustree_input = torustree#taijitu#rotate_right (input)
+	call torustree#teapot#set_prompt (g:torustree_input[0], 'dont-lock')
 	return v:true
 endfun
 
@@ -43,14 +43,14 @@ fun! torustree#scroll#older ()
 	if line('.') != 1
 		return v:false
 	endif
-	let input = g:wheeltree_input
+	let input = g:torustree_input
 	let line = torustree#teapot#without_prompt ()
 	if empty(line)
 		call torustree#teapot#set_prompt (input[0], 'dont-lock')
 		return v:true
 	endif
-	let g:wheeltree_input = torustree#taijitu#rotate_left (input)
-	call torustree#teapot#set_prompt (g:wheeltree_input[0], 'dont-lock')
+	let g:torustree_input = torustree#taijitu#rotate_left (input)
+	call torustree#teapot#set_prompt (g:torustree_input[0], 'dont-lock')
 	return v:true
 endfun
 
@@ -59,7 +59,7 @@ fun! torustree#scroll#filtered_newer ()
 	if line('.') != 1
 		return v:false
 	endif
-	let input = copy(g:wheeltree_input)
+	let input = copy(g:torustree_input)
 	let line = getline(1)
 	let colnum = col('.')
 	if empty(line)
@@ -73,8 +73,8 @@ fun! torustree#scroll#filtered_newer ()
 	let index = match(reversed, pattern, 0)
 	if index >= 0
 		let reversed = reversed->torustree#taijitu#roll_right(index)
-		let g:wheeltree_input = reverse(copy(reversed))
-		call torustree#teapot#set_prompt (g:wheeltree_input[0], 'dont-lock')
+		let g:torustree_input = reverse(copy(reversed))
+		call torustree#teapot#set_prompt (g:torustree_input[0], 'dont-lock')
 	endif
 	call cursor(1, colnum)
 	return v:true
@@ -85,7 +85,7 @@ fun! torustree#scroll#filtered_older ()
 	if line('.') != 1
 		return v:false
 	endif
-	let input = g:wheeltree_input
+	let input = g:torustree_input
 	let line = getline(1)
 	let colnum = col('.')
 	if empty(line)
@@ -97,8 +97,8 @@ fun! torustree#scroll#filtered_older ()
 	let pattern = '\m^' .. before
 	let index = match(input, pattern, 1)
 	if index >= 0
-		let g:wheeltree_input = g:wheeltree_input->torustree#taijitu#roll_left(index)
-		call torustree#teapot#set_prompt (g:wheeltree_input[0], 'dont-lock')
+		let g:torustree_input = g:torustree_input->torustree#taijitu#roll_left(index)
+		call torustree#teapot#set_prompt (g:torustree_input[0], 'dont-lock')
 	endif
 	call cursor(1, colnum)
 	return v:true

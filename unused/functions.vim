@@ -45,7 +45,7 @@ fun! torustree#disc#read (file)
 endfun
 
 fun! torustree#pendulum#older (level = 'torustree')
-	" Go to older entry in g:wheeltree_history.circuit
+	" Go to older entry in g:torustree_history.circuit
 	let level = a:level
 	if torustree#referen#is_empty(level)
 		echomsg 'torustree older :' level 'is empty'
@@ -59,7 +59,7 @@ fun! torustree#pendulum#older (level = 'torustree')
 	" index for range in coordin
 	let level_index = torustree#referen#coordin_index (level)
 	" back in history
-	let timeloop = g:wheeltree_history.circuit
+	let timeloop = g:torustree_history.circuit
 	let timeloop = torustree#chain#rotate_left (timeloop)
 	let coordin = timeloop[0].coordin
 	let counter = 0
@@ -75,14 +75,14 @@ fun! torustree#pendulum#older (level = 'torustree')
 		return v:false
 	endif
 	" update timeloop : rotate left / right return a copy
-	let g:wheeltree_history.circuit = timeloop
+	let g:torustree_history.circuit = timeloop
 	" jump
 	call torustree#vortex#chord(coordin)
 	return torustree#vortex#jump ()
 endfun
 
 fun! torustree#pendulum#newer (level = 'torustree')
-	" Go to newer entry in g:wheeltree_history.circuit
+	" Go to newer entry in g:torustree_history.circuit
 	let level = a:level
 	if torustree#referen#is_empty(level)
 		echomsg 'torustree newer :' level 'is empty'
@@ -96,7 +96,7 @@ fun! torustree#pendulum#newer (level = 'torustree')
 	" index for range in coordin
 	let level_index = torustree#referen#coordin_index (level)
 	" back in history
-	let timeloop = g:wheeltree_history.circuit
+	let timeloop = g:torustree_history.circuit
 	let timeloop = torustree#chain#rotate_right (timeloop)
 	let coordin = timeloop[0].coordin
 	let counter = 0
@@ -112,7 +112,7 @@ fun! torustree#pendulum#newer (level = 'torustree')
 		return v:false
 	endif
 	" update timeloop : rotate left / right return a deepcopy
-	let g:wheeltree_history.circuit = timeloop
+	let g:torustree_history.circuit = timeloop
 	" jump
 	call torustree#vortex#chord(coordin)
 	return torustree#vortex#jump ()
@@ -124,8 +124,8 @@ fun! torustree#cylinder#first (window = 'furtive')
 	"   - furtive (default) : use current window and go back to previous buffer at the end
 	"   - split : use a split
 	let window = a:window
-	let bufring = g:wheeltree_bufring
-	let mandalas = g:wheeltree_bufring.mandalas
+	let bufring = g:torustree_bufring
+	let mandalas = g:torustree_bufring.mandalas
 	" ---- pre-checks
 	if ! window->torustree#chain#is_inside(['split', 'furtive'])
 		echomsg 'torustree cylinder first : bad window argument'
@@ -187,7 +187,7 @@ fun! torustree#cylinder#add (window = 'furtive')
 	"   - furtive (default) : use current window and go back to previous buffer at the end
 	"   - split : use a split
 	let window = a:window
-	let bufring = g:wheeltree_bufring
+	let bufring = g:torustree_bufring
 	" ---- pre-checks
 	if ! window->torustree#chain#is_inside(['split', 'furtive'])
 		echomsg 'torustree cylinder first : bad window argument'

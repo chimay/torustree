@@ -24,7 +24,7 @@ endif
 fun! torustree#ripple#callback_exit (chan, code)
 	" Callback ou exit event
 	let text = printf('%s %s', a:chan, a:code)
-	eval g:wheeltree_ripple->remove(-1)
+	eval g:torustree_ripple->remove(-1)
 	echomsg text
 endfun
 
@@ -77,7 +77,7 @@ fun! torustree#ripple#start (command, ...)
 	let jobopts.out_name = bufname
 	let jobopts.exit_cb = 'torustree#ripple#callback_exit'
 	let job = job_start(command, jobopts)
-	eval g:wheeltree_ripple->add(job)
+	eval g:torustree_ripple->add(job)
 	call torustree#ripple#stop_map ()
 	return job
 endfun
@@ -87,13 +87,13 @@ fun! torustree#ripple#stop (...)
 	if a:0 > 0
 		let job = a:1
 	else
-		if ! empty(g:wheeltree_ripple)
-			let job = g:wheeltree_ripple[-1]
+		if ! empty(g:torustree_ripple)
+			let job = g:torustree_ripple[-1]
 		else
 			echomsg 'torustree ripple stop : no more job left'
 			return v:false
 		endif
 	endif
 	call job_stop(job)
-	" remove of job in g:wheeltree_ripple is done in callback_exit
+	" remove of job in g:torustree_ripple is done in callback_exit
 endfun

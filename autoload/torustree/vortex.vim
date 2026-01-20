@@ -135,8 +135,8 @@ fun! torustree#vortex#jump (where = 'search-window')
 		doautocmd BufEnter
 	endif
 	" ---- auto change dir to project root
-	if g:wheeltree_config.project.auto_chdir > 0
-		let markers = g:wheeltree_config.project.markers
+	if g:torustree_config.project.auto_chdir > 0
+		let markers = g:torustree_config.project.markers
 		call torustree#disc#project_root(markers)
 	endif
 	" ---- record in history

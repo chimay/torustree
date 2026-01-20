@@ -109,46 +109,46 @@ endfun
 fun! torustree#kintsugi#pre ()
 	" Convert old keys to new ones, called before config init
 	" Run in void foundation, before vars initialization
-	if ! exists('g:wheeltree_config')
+	if ! exists('g:torustree_config')
 		return v:false
 	endif
 	" ---- chdir project
-	if has_key(g:wheeltree_config, 'cd_project')
-		let g:wheeltree_config.project.auto_chdir = g:wheeltree_config.cd_project
-		unlet g:wheeltree_config.cd_project
+	if has_key(g:torustree_config, 'cd_project')
+		let g:torustree_config.project.auto_chdir = g:torustree_config.cd_project
+		unlet g:torustree_config.cd_project
 		let info = 'torustree config : cd_project is deprecated. '
 		let info ..= 'Please use project.auto_chdir instead.'
 		echomsg info
 	endif
 	" ---- default_yanks, other_yanks
-	if has_key(g:wheeltree_config.maxim, 'yanks')
-		let max_yanks = g:wheeltree_config.maxim.yanks
-		let g:wheeltree_config.maxim.unnamed_yanks = max_yanks
-		let g:wheeltree_config.maxim.other_yanks = float2nr(round(max_yanks/10))
-		unlet g:wheeltree_config.maxim.yanks
+	if has_key(g:torustree_config.maxim, 'yanks')
+		let max_yanks = g:torustree_config.maxim.yanks
+		let g:torustree_config.maxim.unnamed_yanks = max_yanks
+		let g:torustree_config.maxim.other_yanks = float2nr(round(max_yanks/10))
+		unlet g:torustree_config.maxim.yanks
 		let info = 'torustree config : maxim.yanks is deprecated. '
 		let info ..= 'Please use maxim.unnamed_yanks and maxim.other_yanks instead.'
 		echomsg info
 	endif
-	if has_key(g:wheeltree_config.maxim, 'default_yanks')
-		let max_yanks = g:wheeltree_config.maxim.default_yanks
-		let g:wheeltree_config.maxim.unnamed_yanks = max_yanks
-		unlet g:wheeltree_config.maxim.default_yanks
+	if has_key(g:torustree_config.maxim, 'default_yanks')
+		let max_yanks = g:torustree_config.maxim.default_yanks
+		let g:torustree_config.maxim.unnamed_yanks = max_yanks
+		unlet g:torustree_config.maxim.default_yanks
 		let info = 'torustree config : maxim.default_yanks is deprecated. '
 		let info ..= 'Please use maxim.unnamed_yanks instead.'
 		echomsg info
 	endif
 	" ---- display message -> display dedibuf_msg
-	if has_key(g:wheeltree_config.display, 'message')
-		let g:wheeltree_config.display.dedibuf_msg = g:wheeltree_config.display.message
-		unlet g:wheeltree_config.display.message
+	if has_key(g:torustree_config.display, 'message')
+		let g:torustree_config.display.dedibuf_msg = g:torustree_config.display.message
+		unlet g:torustree_config.display.message
 		let info = 'torustree config : display.message is deprecated. '
 		let info ..= 'Please use display.dedibuf_msg instead.'
 		echomsg info
 	endif
-	if has_key(g:wheeltree_config.display, 'dedibuf')
-		let g:wheeltree_config.display.dedibuf_msg = g:wheeltree_config.display.dedibuf
-		unlet g:wheeltree_config.display.dedibuf
+	if has_key(g:torustree_config.display, 'dedibuf')
+		let g:torustree_config.display.dedibuf_msg = g:torustree_config.display.dedibuf
+		unlet g:torustree_config.display.dedibuf
 		let info = 'torustree config : display.dedibuf is deprecated. '
 		let info ..= 'Please use display.dedibuf_msg instead.'
 		echomsg info
@@ -160,88 +160,88 @@ endfun
 fun! torustree#kintsugi#post ()
 	" Convert old keys to new ones, called after config init
 	" -- project
-	if has_key(g:wheeltree_config, 'project_markers')
-		let g:wheeltree_config.project.markers = g:wheeltree_config.project_markers
-		unlet g:wheeltree_config.project_markers
+	if has_key(g:torustree_config, 'project_markers')
+		let g:torustree_config.project.markers = g:torustree_config.project_markers
+		unlet g:torustree_config.project_markers
 		let info = 'torustree config : project_markers is deprecated. '
 		let info ..= 'Please use project.markers instead.'
 		echomsg info
 	endif
-	if has_key(g:wheeltree_config, 'auto_chdir_project')
-		let g:wheeltree_config.project.auto_chdir = g:wheeltree_config.auto_chdir_project
-		unlet g:wheeltree_config.project.auto_chdir_project
+	if has_key(g:torustree_config, 'auto_chdir_project')
+		let g:torustree_config.project.auto_chdir = g:torustree_config.auto_chdir_project
+		unlet g:torustree_config.project.auto_chdir_project
 		let info = 'torustree config : auto_chdir_project is deprecated. '
 		let info ..= 'Please use project.auto_chdir instead.'
 		echomsg info
 	endif
 	" ---- storage
 	" -- torustree
-	if has_key(g:wheeltree_config, 'file')
-		let path = g:wheeltree_config.file
-		let g:wheeltree_config.storage.torustree.folder = fnamemodify(path, ':h')
-		let g:wheeltree_config.storage.torustree.name = fnamemodify(path, ':t')
-		unlet g:wheeltree_config.file
+	if has_key(g:torustree_config, 'file')
+		let path = g:torustree_config.file
+		let g:torustree_config.storage.torustree.folder = fnamemodify(path, ':h')
+		let g:torustree_config.storage.torustree.name = fnamemodify(path, ':t')
+		unlet g:torustree_config.file
 		let info = 'torustree config : file is deprecated. '
 		let info ..= 'Please use storage.torustree.name instead.'
 		echomsg info
 	endif
-	if has_key(g:wheeltree_config, 'autoread')
-		let g:wheeltree_config.storage.torustree.autoread = g:wheeltree_config.autoread
-		unlet g:wheeltree_config.autoread
+	if has_key(g:torustree_config, 'autoread')
+		let g:torustree_config.storage.torustree.autoread = g:torustree_config.autoread
+		unlet g:torustree_config.autoread
 		let info = 'torustree config : autoread is deprecated. '
 		let info ..= 'Please use storage.torustree.autoread instead.'
 		echomsg info
 	endif
-	if has_key(g:wheeltree_config, 'autowrite')
-		let g:wheeltree_config.storage.torustree.autowrite = g:wheeltree_config.autowrite
-		unlet g:wheeltree_config.autowrite
+	if has_key(g:torustree_config, 'autowrite')
+		let g:torustree_config.storage.torustree.autowrite = g:torustree_config.autowrite
+		unlet g:torustree_config.autowrite
 		let info = 'torustree config : autowrite is deprecated. '
 		let info ..= 'Please use storage.torustree.autowrite instead.'
 		echomsg info
 	endif
 	" -- session
-	if has_key(g:wheeltree_config, 'session_file')
-		let path = g:wheeltree_config.session_file
-		let g:wheeltree_config.storage.session.folder = fnamemodify(path, ':h')
-		let g:wheeltree_config.storage.session.name = fnamemodify(path, ':t')
-		unlet g:wheeltree_config.session_file
+	if has_key(g:torustree_config, 'session_file')
+		let path = g:torustree_config.session_file
+		let g:torustree_config.storage.session.folder = fnamemodify(path, ':h')
+		let g:torustree_config.storage.session.name = fnamemodify(path, ':t')
+		unlet g:torustree_config.session_file
 		let info = 'torustree config : session_file is deprecated. '
 		let info ..= 'Please use storage.session.name instead.'
 		echomsg info
 	endif
-	if has_key(g:wheeltree_config, 'session_dir')
-		let g:wheeltree_config.storage.session.folder = g:wheeltree_config.session_dir
-		unlet g:wheeltree_config.session_dir
+	if has_key(g:torustree_config, 'session_dir')
+		let g:torustree_config.storage.session.folder = g:torustree_config.session_dir
+		unlet g:torustree_config.session_dir
 		let info = 'torustree config : session_dir is deprecated. '
 		let info ..= 'Please use storage.session.folder instead.'
 		echomsg info
 	endif
-	if has_key(g:wheeltree_config, 'autoread_session')
-		let g:wheeltree_config.storage.session.autoread = g:wheeltree_config.autoread_session
-		unlet g:wheeltree_config.autoread_session
+	if has_key(g:torustree_config, 'autoread_session')
+		let g:torustree_config.storage.session.autoread = g:torustree_config.autoread_session
+		unlet g:torustree_config.autoread_session
 		let info = 'torustree config : autoread_session is deprecated. '
 		let info ..= 'Please use storage.session.autoread instead.'
 		echomsg info
 	endif
-	if has_key(g:wheeltree_config, 'autowrite_session')
-		let g:wheeltree_config.storage.session.autowrite = g:wheeltree_config.autowrite_session
-		unlet g:wheeltree_config.autowrite_session
+	if has_key(g:torustree_config, 'autowrite_session')
+		let g:torustree_config.storage.session.autowrite = g:torustree_config.autowrite_session
+		unlet g:torustree_config.autowrite_session
 		let info = 'torustree config : autowrite_session is deprecated. '
 		let info ..= 'Please use storage.session.autowrite instead.'
 		echomsg info
 	endif
 	" -- backups
-	if has_key(g:wheeltree_config, 'backups')
-		let g:wheeltree_config.storage.backups = g:wheeltree_config.backups
-		unlet g:wheeltree_config.backups
+	if has_key(g:torustree_config, 'backups')
+		let g:torustree_config.storage.backups = g:torustree_config.backups
+		unlet g:torustree_config.backups
 		let info = 'torustree config : backups is deprecated. '
 		let info ..= 'Please use storage.backups instead.'
 		echomsg info
 	endif
 	" ---- shelve session_file
-	if has_key(g:wheeltree_shelve, 'session_file')
-		let g:wheeltree_shelve.current.session = g:wheeltree_shelve.session_file
-		unlet g:wheeltree_shelve.session_file
+	if has_key(g:torustree_shelve, 'session_file')
+		let g:torustree_shelve.current.session = g:torustree_shelve.session_file
+		unlet g:torustree_shelve.session_file
 	endif
 endfun
 
@@ -249,27 +249,27 @@ fun! torustree#kintsugi#wheel_file ()
 	" Convert old data structure to new one
 	" Run in read / write torustree file
 	" ---- history
-	if type(g:wheeltree_history) == v:t_list
+	if type(g:torustree_history) == v:t_list
 		let new_history = {}
-		let new_history.line = g:wheeltree_history
-		if exists('g:wheeltree_track')
-			let new_history.circuit = g:wheeltree_track
-			let new_history.alternate = g:wheeltree_alternate
+		let new_history.line = g:torustree_history
+		if exists('g:torustree_track')
+			let new_history.circuit = g:torustree_track
+			let new_history.alternate = g:torustree_alternate
 		else
-			let new_history.circuit = g:wheeltree_history
+			let new_history.circuit = g:torustree_history
 			let new_history.alternate = {}
 		endif
-		let g:wheeltree_history = new_history
-		unlet g:wheeltree_track
-		unlet g:wheeltree_alternate
+		let g:torustree_history = new_history
+		unlet g:torustree_track
+		unlet g:torustree_alternate
 	endif
-	if ! has_key(g:wheeltree_history, 'frecency')
-		let g:wheeltree_history.frecency = []
+	if ! has_key(g:torustree_history, 'frecency')
+		let g:torustree_history.frecency = []
 	endif
 	" ---- yank
-	if type(g:wheeltree_yank) == v:t_list
+	if type(g:torustree_yank) == v:t_list
 		let new_yank = {}
-		let new_yank.unnamed = g:wheeltree_yank
+		let new_yank.unnamed = g:torustree_yank
 		let new_yank.clipboard = []
 		let new_yank.primary = []
 		let new_yank.small = []
@@ -279,17 +279,17 @@ fun! torustree#kintsugi#wheel_file ()
 		let new_yank.expression = []
 		let new_yank.file = []
 		let new_yank.alternate = []
-		let g:wheeltree_yank = new_yank
+		let g:torustree_yank = new_yank
 	endif
-	if ! has_key(g:wheeltree_yank, 'unnamed')
-		let g:wheeltree_yank.unnamed = g:wheeltree_yank.default
-		unlet g:wheeltree_yank.default
+	if ! has_key(g:torustree_yank, 'unnamed')
+		let g:torustree_yank.unnamed = g:torustree_yank.default
+		unlet g:torustree_yank.default
 	endif
-	if ! has_key(g:wheeltree_shelve, 'yank')
-		let g:wheeltree_shelve.yank = {}
+	if ! has_key(g:torustree_shelve, 'yank')
+		let g:torustree_shelve.yank = {}
 	endif
-	if ! has_key(g:wheeltree_shelve.yank, 'default_register')
-		let g:wheeltree_shelve.yank.default_register = 'unnamed'
+	if ! has_key(g:torustree_shelve.yank, 'default_register')
+		let g:torustree_shelve.yank.default_register = 'unnamed'
 	endif
 	" ---- coda
 	return v:true

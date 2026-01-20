@@ -17,10 +17,10 @@ lockvar s:is_mandala_file
 fun! torustree#attic#remove_if_present (entry)
 	" Remove entry from mru if file is already there
 	let entry = a:entry
-	let attic = g:wheeltree_attic
-	for elem in g:wheeltree_attic
+	let attic = g:torustree_attic
+	for elem in g:torustree_attic
 		if elem.file ==# entry.file
-			eval g:wheeltree_attic->torustree#chain#remove_element(elem)
+			eval g:torustree_attic->torustree#chain#remove_element(elem)
 		endif
 	endfor
 endfun
@@ -49,7 +49,7 @@ fun! torustree#attic#record (...)
 	endif
 	" ---- do not add mandala buffer
 	let bufnum = bufnr('%')
-	let mandalas = g:wheeltree_bufring.mandalas
+	let mandalas = g:torustree_bufring.mandalas
 	if torustree#chain#is_inside(bufnum, mandalas)
 		return v:false
 	endif
@@ -62,13 +62,13 @@ fun! torustree#attic#record (...)
 		return v:false
 	endif
 	" ---- record file
-	let attic = g:wheeltree_attic
+	let attic = g:torustree_attic
 	let entry = {}
 	let entry.file = filename
 	let entry.timestamp = torustree#pendulum#timestamp ()
 	call torustree#attic#remove_if_present (entry)
-	let g:wheeltree_attic = insert(g:wheeltree_attic, entry)
-	let max = g:wheeltree_config.maxim.mru
-	let g:wheeltree_attic = g:wheeltree_attic[:max - 1]
+	let g:torustree_attic = insert(g:torustree_attic, entry)
+	let max = g:torustree_config.maxim.mru
+	let g:torustree_attic = g:torustree_attic[:max - 1]
 	return v:true
 endfun

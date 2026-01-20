@@ -174,7 +174,7 @@ fun! torustree#centre#mappings (level, mode = 'normal')
 	endif
 	let level_maps = s:level_{level}_{mode}_maps
 	" ---- variables
-	let prefix = g:wheeltree_config.prefix
+	let prefix = g:torustree_config.prefix
 	let begin = mapcmd .. ' <silent> ' .. prefix
 	let middle = '<plug>('
 	let end = ')'
@@ -304,24 +304,24 @@ endfun
 fun! torustree#centre#cables ()
 	" Link keys to <plug> mappings
 	" ---- basic
-	if g:wheeltree_config.mappings >= 0
+	if g:torustree_config.mappings >= 0
 		call torustree#centre#mappings (0)
 	endif
 	" ---- common
-	if g:wheeltree_config.mappings >= 1
+	if g:torustree_config.mappings >= 1
 		call torustree#centre#mappings (1)
 	endif
 	" ---- advanced
-	if g:wheeltree_config.mappings >= 2
+	if g:torustree_config.mappings >= 2
 		call torustree#centre#mappings (2)
 		call torustree#centre#mappings (2, 'visual')
 	endif
 	" ---- without prefix
-	if g:wheeltree_config.mappings >= 10
+	if g:torustree_config.mappings >= 10
 		call torustree#centre#prefixless ()
 	endif
 	" ---- debug
-	if g:wheeltree_config.mappings >= 20
+	if g:torustree_config.mappings >= 20
 		call torustree#centre#mappings (20)
 	endif
 endfun

@@ -250,7 +250,7 @@ fun! torustree#layer#push ()
 	call torustree#layer#init ()
 	let stack = b:wheel_stack
 	let length = torustree#layer#length ()
-	let maxim = g:wheeltree_config.maxim.layers
+	let maxim = g:torustree_config.maxim.layers
 	if length == 0
 		let stack.top = 0
 	endif

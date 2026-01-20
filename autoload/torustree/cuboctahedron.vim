@@ -43,7 +43,7 @@ fun! torustree#cuboctahedron#tabwin ()
 	" Buffers visible in tabs & wins
 	let returnlist = []
 	let last_tab = tabpagenr('$')
-	let mandalas = g:wheeltree_bufring.mandalas
+	let mandalas = g:torustree_bufring.mandalas
 	for tabnum in range(1, last_tab)
 		let entry = [tabnum]
 		eval returnlist->add(entry)

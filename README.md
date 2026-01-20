@@ -358,110 +358,110 @@ pages in the wiki.
 Here is an example of configuration :
 
 ~~~vim
-if ! exists("g:wheeltree_loaded")
+if ! exists("g:torustree_loaded")
   " ---- DONT FORGET TO INITIALIZE DICTS BEFORE USING THEM
-  let g:wheeltree_config                 = {}
-  let g:wheeltree_config.project         = {}
-  let g:wheeltree_config.storage         = {}
-  let g:wheeltree_config.storage.torustree   = {}
-  let g:wheeltree_config.storage.session = {}
-  let g:wheeltree_config.maxim           = {}
-  let g:wheeltree_config.completion      = {}
-  let g:wheeltree_config.frecency        = {}
-  let g:wheeltree_config.display         = {}
-  let g:wheeltree_config.display.sign    = {}
+  let g:torustree_config                 = {}
+  let g:torustree_config.project         = {}
+  let g:torustree_config.storage         = {}
+  let g:torustree_config.storage.torustree   = {}
+  let g:torustree_config.storage.session = {}
+  let g:torustree_config.maxim           = {}
+  let g:torustree_config.completion      = {}
+  let g:torustree_config.frecency        = {}
+  let g:torustree_config.display         = {}
+  let g:torustree_config.display.sign    = {}
 
   " ---- The bigger it is, the more mappings available
-  let g:wheeltree_config.mappings = 10
+  let g:torustree_config.mappings = 10
   " ---- Prefix for mappings
   " ---- Other ideas : '<space>', '<D-w>'
-  let g:wheeltree_config.prefix = '<M-w>'
+  let g:torustree_config.prefix = '<M-w>'
   " ---- Locate database ; default one if left empty
-  let g:wheeltree_config.locate_db = '~/index/locate/home.db'
+  let g:torustree_config.locate_db = '~/index/locate/home.db'
   " ---- Grep command : :grep or :vimpgrep
-  let g:wheeltree_config.grep = 'grep'
+  let g:torustree_config.grep = 'grep'
 
   " Marker of project root
-  "let g:wheeltree_config.project.markers = '.git'
-  "let g:wheeltree_config.project.markers = '.project-root'
+  "let g:torustree_config.project.markers = '.git'
+  "let g:torustree_config.project.markers = '.project-root'
   " List of markers
   " The project dir is found as soon as one marker is found in it
-  let g:wheeltree_config.project.markers = ['.hg' , '.git', '.project-root']
+  let g:torustree_config.project.markers = ['.hg' , '.git', '.project-root']
   " Auto cd to project root if > 0
-  let g:wheeltree_config.project.auto_chdir = 1
+  let g:torustree_config.project.auto_chdir = 1
 
   " The folder where toruses and circles will be stored and read
-  let g:wheeltree_config.storage.torustree.folder = '~/.local/share/torustree'
+  let g:torustree_config.storage.torustree.folder = '~/.local/share/torustree'
   " Name of the default torustree file
-  let g:wheeltree_config.storage.torustree.name = 'torustree.vim'
+  let g:torustree_config.storage.torustree.name = 'torustree.vim'
   " Auto read torustree file on startup if > 0
-  let g:wheeltree_config.storage.torustree.autoread = 1
+  let g:torustree_config.storage.torustree.autoread = 1
   " Auto write torustree file on exit if > 0
-  let g:wheeltree_config.storage.torustree.autowrite = 1
+  let g:torustree_config.storage.torustree.autowrite = 1
   " The folder where sessions will be stored and read
-  let g:wheeltree_config.storage.session.folder = '~/.local/share/torustree/session'
+  let g:torustree_config.storage.session.folder = '~/.local/share/torustree/session'
   " Name of the default session file
-  let g:wheeltree_config.storage.session.name = 'session.vim'
+  let g:torustree_config.storage.session.name = 'session.vim'
   " Auto read default session file on startup if > 0
-  let g:wheeltree_config.storage.session.autoread = 1
+  let g:torustree_config.storage.session.autoread = 1
   " Auto write default session file on exit if > 0
-  let g:wheeltree_config.storage.session.autowrite = 1
+  let g:torustree_config.storage.session.autowrite = 1
   " Number of backups for torustree & session files
-  let g:wheeltree_config.storage.backups = 5
+  let g:torustree_config.storage.backups = 5
 
   " ---- Maximum number of elements in history
-  let g:wheeltree_config.maxim.history = 400
+  let g:torustree_config.maxim.history = 400
   " ---- Maximum number of elements in input history
-  let g:wheeltree_config.maxim.input = 200
+  let g:torustree_config.maxim.input = 200
 
   " ---- Maximum number of elements in mru
-  let g:wheeltree_config.maxim.mru = 300
+  let g:torustree_config.maxim.mru = 300
 
   " ---- Maximum number of elements in yank ring
-  let g:wheeltree_config.maxim.default_yanks = 700
-  let g:wheeltree_config.maxim.other_yanks = 100
+  let g:torustree_config.maxim.default_yanks = 700
+  let g:torustree_config.maxim.other_yanks = 100
   " ---- Maximum lines of yank to add in yank ring
-  let g:wheeltree_config.maxim.yank_lines = 30
+  let g:torustree_config.maxim.yank_lines = 30
   " ---- Maximum size of yank to add in yank ring
-  let g:wheeltree_config.maxim.yank_size = 3000
+  let g:torustree_config.maxim.yank_size = 3000
 
   " ---- Maximum size of layer ring
-  let g:wheeltree_config.maxim.layers = 10
+  let g:torustree_config.maxim.layers = 10
 
   " ---- Maximum number of tabs in layouts
-  let g:wheeltree_config.maxim.tabs = 12
+  let g:torustree_config.maxim.tabs = 12
   " ---- Maximum number of horizontal splits
-  let g:wheeltree_config.maxim.horizontal = 3
+  let g:torustree_config.maxim.horizontal = 3
   " ---- Maximum number of vertical splits
-  let g:wheeltree_config.maxim.vertical = 4
+  let g:torustree_config.maxim.vertical = 4
 
   " ---- Completion
-  let g:wheeltree_config.completion.vocalize = 1
-  let g:wheeltree_config.completion.wordize = 1
-  let g:wheeltree_config.completion.fuzzy = 0
-  let g:wheeltree_config.completion.scores = 1
+  let g:torustree_config.completion.vocalize = 1
+  let g:torustree_config.completion.wordize = 1
+  let g:torustree_config.completion.fuzzy = 0
+  let g:torustree_config.completion.scores = 1
 
   " ---- Frecency
-  let g:wheeltree_config.frecency.reward = 120
-  let g:wheeltree_config.frecency.penalty = 1
+  let g:torustree_config.frecency.reward = 120
+  let g:torustree_config.frecency.penalty = 1
 
   " ---- Mandala & leaf status in statusline ?
-  let g:wheeltree_config.display.statusline = 1
+  let g:torustree_config.display.statusline = 1
   " ---- Torustree dedibuf message : one-line or multi-line
-  let g:wheeltree_config.display.dedibuf_msg = 'one-line'
+  let g:torustree_config.display.dedibuf_msg = 'one-line'
   " ---- Filter prompt in dedicated buffers
-  "let g:wheeltree_config.display.prompt = 'torustree $ '
-  "let g:wheeltree_config.display.prompt_writable = 'torustree # '
+  "let g:torustree_config.display.prompt = 'torustree $ '
+  "let g:torustree_config.display.prompt_writable = 'torustree # '
   " ---- Selection marker in dedicated buffers
-  "let g:wheeltree_config.display.selection = '-> '
+  "let g:torustree_config.display.selection = '-> '
   " ---- Signs
-  let g:wheeltree_config.display.sign.switch = 1
+  let g:torustree_config.display.sign.switch = 1
   " ---- Signs at torustree locations
-  "let g:wheeltree_config.display.sign.settings = { 'text' : '@' }
+  "let g:torustree_config.display.sign.settings = { 'text' : '@' }
   " ---- Signs after using Torustree interface to native navigation (buffer, marker, jump, change, tag, ...)
-  "let g:wheeltree_config.display.sign.native_settings = { 'text' : '*' }
+  "let g:torustree_config.display.sign.native_settings = { 'text' : '*' }
 
-  let g:wheeltree_config.debug = 0
+  let g:torustree_config.debug = 0
 endif
 
 augroup torustree

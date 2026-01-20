@@ -17,7 +17,7 @@ lockvar s:registers_symbols
 fun! torustree#clipper#yank (mode)
 	" Choose yank and paste
 	let mode = a:mode
-	let default_register = g:wheeltree_shelve.yank.default_register
+	let default_register = g:torustree_shelve.yank.default_register
 	let lines = torustree#perspective#yank_mandala (mode, default_register)
 	" ---- type from mode & register
 	if mode ==# 'plain'

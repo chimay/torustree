@@ -50,8 +50,8 @@ lockvar s:field_separ
 
 fun! torustree#book#indexes_to_keep ()
 	" Return list of indexes to keep & new current index
-	" Used to keep ring length <= g:wheeltree_config.maxim.layers
-	let maxim = g:wheeltree_config.maxim.layers
+	" Used to keep ring length <= g:torustree_config.maxim.layers
+	let maxim = g:torustree_config.maxim.layers
 	" ring
 	let ring = b:wheel_ring
 	let current = ring.current
@@ -84,8 +84,8 @@ endfun
 
 fun! torustree#book#limit ()
 	" Limit number of leaves to the configured maximum
-	" Used to keep ring length <= g:wheeltree_config.maxim.layers
-	let maxim = g:wheeltree_config.maxim.layers
+	" Used to keep ring length <= g:torustree_config.maxim.layers
+	let maxim = g:torustree_config.maxim.layers
 	" ring
 	let ring = b:wheel_ring
 	let leaves = ring.leaves

@@ -17,8 +17,8 @@ fun! torustree#mosaic#one_tab ()
 			return v:false
 		endif
 	endif
-	let g:wheeltree_shelve.layout.tab = 'none'
-	let g:wheeltree_shelve.layout.tabnames = []
+	let g:torustree_shelve.layout.tab = 'none'
+	let g:torustree_shelve.layout.tabnames = []
 	call torustree#projection#follow ()
 	return v:true
 endfun
@@ -34,8 +34,8 @@ fun! torustree#mosaic#one_window ()
 			return v:false
 		endif
 	endif
-	let g:wheeltree_shelve.layout.window = 'none'
-	let g:wheeltree_shelve.layout.split = 'none'
+	let g:torustree_shelve.layout.window = 'none'
+	let g:torustree_shelve.layout.split = 'none'
 	let w:coordin = [0, 0]
 	call torustree#projection#follow ()
 	return v:true
@@ -44,8 +44,8 @@ endfun
 fun! torustree#mosaic#rowcol (level)
 	" Number of rows and cols for grid layout
 	let ratio = torustree#rectangle#ratio ()
-	let rows = g:wheeltree_config.maxim.horizontal
-	let cols = g:wheeltree_config.maxim.vertical
+	let rows = g:torustree_config.maxim.horizontal
+	let cols = g:torustree_config.maxim.vertical
 	let upper = torustree#referen#upper (a:level)
 	let elements = torustree#referen#elements (upper)
 	let length = len(elements)
@@ -110,12 +110,12 @@ fun! torustree#mosaic#tabs (level)
 		return
 	endif
 	let level = a:level
-	let maxtabs = g:wheeltree_config.maxim.tabs
+	let maxtabs = g:torustree_config.maxim.tabs
 	let upper = torustree#referen#upper (level)
 	let upper_level = torustree#referen#upper_level_name (level)
 	let name = torustree#referen#current (level).name
 	let glossary = copy(upper.glossary)
-	let g:wheeltree_shelve.layout.tabnames = glossary[:maxtabs - 1]
+	let g:torustree_shelve.layout.tabnames = glossary[:maxtabs - 1]
 	let elements = torustree#referen#elements (upper)
 	let length = len(elements)
 	if length == 0
@@ -128,7 +128,7 @@ fun! torustree#mosaic#tabs (level)
 	endfor
 	tabrewind
 	call torustree#projection#follow (upper_level)
-	let g:wheeltree_shelve.layout.tab = level
+	let g:torustree_shelve.layout.tab = level
 endfun
 
 fun! torustree#mosaic#split (level, action = 'horizontal', ...)
@@ -163,8 +163,8 @@ fun! torustree#mosaic#split (level, action = 'horizontal', ...)
 	endfor
 	wincmd t
 	call torustree#projection#follow (upper_level)
-	let g:wheeltree_shelve.layout.window = level
-	let g:wheeltree_shelve.layout.split = action
+	let g:torustree_shelve.layout.window = level
+	let g:torustree_shelve.layout.split = action
 endfun
 
 fun! torustree#mosaic#golden (level, ...)
@@ -210,7 +210,7 @@ fun! torustree#mosaic#horizontal (...)
 		let w:coordin = [0, 0]
 	endif
 	let next = w:coordin[0] + 1
-	if next < g:wheeltree_config.maxim.horizontal
+	if next < g:torustree_config.maxim.horizontal
 		if settings.golden
 			call torustree#spiral#horizontal_split ()
 		else
@@ -237,7 +237,7 @@ fun! torustree#mosaic#vertical (...)
 		let w:coordin = [0, 0]
 	endif
 	let next = w:coordin[1] + 1
-	if next < g:wheeltree_config.maxim.vertical
+	if next < g:torustree_config.maxim.vertical
 		if settings.golden
 			call torustree#spiral#vertical_split ()
 		else
@@ -273,7 +273,7 @@ fun! torustree#mosaic#main_left (...)
 		return v:true
 	endif
 	let next = w:coordin[0] + 1
-	if next < g:wheeltree_config.maxim.horizontal
+	if next < g:torustree_config.maxim.horizontal
 		if settings.golden
 			call torustree#spiral#horizontal_split ()
 		else
@@ -309,7 +309,7 @@ fun! torustree#mosaic#main_top (...)
 		return v:true
 	endif
 	let next = w:coordin[1] + 1
-	if next < g:wheeltree_config.maxim.vertical
+	if next < g:torustree_config.maxim.vertical
 		if settings.golden
 			call torustree#spiral#vertical_split ()
 		else

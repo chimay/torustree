@@ -62,148 +62,148 @@ endfun
 
 fun! torustree#void#helix ()
 	" Initialize helix : index of locations
-	if ! exists('g:wheeltree_helix')
-		let g:wheeltree_helix = {}
+	if ! exists('g:torustree_helix')
+		let g:torustree_helix = {}
 	endif
-	if ! has_key(g:wheeltree_helix, 'table')
-		let g:wheeltree_helix.table = []
+	if ! has_key(g:torustree_helix, 'table')
+		let g:torustree_helix.table = []
 	endif
-	if ! has_key(g:wheeltree_helix, 'timestamp')
-		let g:wheeltree_helix.timestamp = -1
+	if ! has_key(g:torustree_helix, 'timestamp')
+		let g:torustree_helix.timestamp = -1
 	endif
 endfun
 
 fun! torustree#void#grid ()
 	" Initialize grid : index of circles
-	if ! exists('g:wheeltree_grid')
-		let g:wheeltree_grid = {}
+	if ! exists('g:torustree_grid')
+		let g:torustree_grid = {}
 	endif
-	if ! has_key(g:wheeltree_grid, 'table')
-		let g:wheeltree_grid.table = []
+	if ! has_key(g:torustree_grid, 'table')
+		let g:torustree_grid.table = []
 	endif
-	if ! has_key(g:wheeltree_grid, 'timestamp')
-		let g:wheeltree_grid.timestamp = -1
+	if ! has_key(g:torustree_grid, 'timestamp')
+		let g:torustree_grid.timestamp = -1
 	endif
 endfun
 
 fun! torustree#void#files ()
 	" Initialize index of files
-	if ! exists('g:wheeltree_files')
-		let g:wheeltree_files = {}
+	if ! exists('g:torustree_files')
+		let g:torustree_files = {}
 	endif
-	if ! has_key(g:wheeltree_files, 'table')
-		let g:wheeltree_files.table = []
+	if ! has_key(g:torustree_files, 'table')
+		let g:torustree_files.table = []
 	endif
-	if ! has_key(g:wheeltree_files, 'timestamp')
-		let g:wheeltree_files.timestamp = -1
+	if ! has_key(g:torustree_files, 'timestamp')
+		let g:torustree_files.timestamp = -1
 	endif
 endfun
 
 fun! torustree#void#history ()
 	" Initialize history
-	if ! exists('g:wheeltree_history')
-		let g:wheeltree_history = {}
+	if ! exists('g:torustree_history')
+		let g:torustree_history = {}
 	endif
 	" ---- naturally sorted time line
-	if ! has_key(g:wheeltree_history, 'line')
-		let g:wheeltree_history.line = []
+	if ! has_key(g:torustree_history, 'line')
+		let g:torustree_history.line = []
 	endif
 	" ---- rolled time loop
-	if ! has_key(g:wheeltree_history, 'circuit')
-		let g:wheeltree_history.circuit = []
+	if ! has_key(g:torustree_history, 'circuit')
+		let g:torustree_history.circuit = []
 	endif
 	" ---- alternate locations
-	if ! has_key(g:wheeltree_history, 'alternate')
-		let g:wheeltree_history.alternate = {}
+	if ! has_key(g:torustree_history, 'alternate')
+		let g:torustree_history.alternate = {}
 	endif
 	" ---- frequent + recent
-	if ! has_key(g:wheeltree_history, 'frecency')
-		let g:wheeltree_history.frecency = []
+	if ! has_key(g:torustree_history, 'frecency')
+		let g:torustree_history.frecency = []
 	endif
 endfun
 
 fun! torustree#void#input ()
 	" Initialize input history
-	if ! exists('g:wheeltree_input')
-		let g:wheeltree_input = []
+	if ! exists('g:torustree_input')
+		let g:torustree_input = []
 	endif
 endfun
 
 fun! torustree#void#shelve ()
 	" Initialize shelve : misc status variables
-	if ! exists('g:wheeltree_shelve')
-		let g:wheeltree_shelve = {}
+	if ! exists('g:torustree_shelve')
+		let g:torustree_shelve = {}
 	endif
 	" ---- current
-	if ! has_key(g:wheeltree_shelve, 'current')
-		let g:wheeltree_shelve.current = {}
+	if ! has_key(g:torustree_shelve, 'current')
+		let g:torustree_shelve.current = {}
 	endif
 	" -- torustree file
-	if ! has_key(g:wheeltree_shelve.current, 'torustree')
-		let g:wheeltree_shelve.current.torustree = ''
+	if ! has_key(g:torustree_shelve.current, 'torustree')
+		let g:torustree_shelve.current.torustree = ''
 	endif
 	" -- session file
-	if ! has_key(g:wheeltree_shelve.current, 'session')
-		let g:wheeltree_shelve.current.session = ''
+	if ! has_key(g:torustree_shelve.current, 'session')
+		let g:torustree_shelve.current.session = ''
 	endif
 	" ---- yank ring
-	if ! has_key(g:wheeltree_shelve, 'yank')
-		let g:wheeltree_shelve.yank = {}
+	if ! has_key(g:torustree_shelve, 'yank')
+		let g:torustree_shelve.yank = {}
 	endif
-	if ! has_key(g:wheeltree_shelve.yank, 'default_register')
-		let g:wheeltree_shelve.yank.default_register = 'unnamed'
+	if ! has_key(g:torustree_shelve.yank, 'default_register')
+		let g:torustree_shelve.yank.default_register = 'unnamed'
 	endif
 	" ---- tabs and windows layouts
-	if ! has_key(g:wheeltree_shelve, 'layout')
-		let g:wheeltree_shelve.layout = {}
+	if ! has_key(g:torustree_shelve, 'layout')
+		let g:torustree_shelve.layout = {}
 	endif
 	" ---- backup some vars if needed
-	if ! has_key(g:wheeltree_shelve, 'backup')
-		let g:wheeltree_shelve.backup = {}
+	if ! has_key(g:torustree_shelve, 'backup')
+		let g:torustree_shelve.backup = {}
 	endif
 endfun
 
 fun! torustree#void#attic ()
 	" Initialize most recently used files
-	if ! exists('g:wheeltree_attic')
-		let g:wheeltree_attic = []
+	if ! exists('g:torustree_attic')
+		let g:torustree_attic = []
 	endif
 endfun
 
 fun! torustree#void#yank ()
 	" Initialize yank history
-	if ! exists('g:wheeltree_yank')
-		let g:wheeltree_yank = {}
+	if ! exists('g:torustree_yank')
+		let g:torustree_yank = {}
 	endif
-	if ! has_key(g:wheeltree_yank, 'unnamed')
-		let g:wheeltree_yank.unnamed = []
+	if ! has_key(g:torustree_yank, 'unnamed')
+		let g:torustree_yank.unnamed = []
 	endif
-	if ! has_key(g:wheeltree_yank, 'clipboard')
-		let g:wheeltree_yank.clipboard = []
+	if ! has_key(g:torustree_yank, 'clipboard')
+		let g:torustree_yank.clipboard = []
 	endif
-	if ! has_key(g:wheeltree_yank, 'primary')
-		let g:wheeltree_yank.primary = []
+	if ! has_key(g:torustree_yank, 'primary')
+		let g:torustree_yank.primary = []
 	endif
-	if ! has_key(g:wheeltree_yank, 'small')
-		let g:wheeltree_yank.small = []
+	if ! has_key(g:torustree_yank, 'small')
+		let g:torustree_yank.small = []
 	endif
-	if ! has_key(g:wheeltree_yank, 'inserted')
-		let g:wheeltree_yank.inserted = []
+	if ! has_key(g:torustree_yank, 'inserted')
+		let g:torustree_yank.inserted = []
 	endif
-	if ! has_key(g:wheeltree_yank, 'search')
-		let g:wheeltree_yank.search = []
+	if ! has_key(g:torustree_yank, 'search')
+		let g:torustree_yank.search = []
 	endif
-	if ! has_key(g:wheeltree_yank, 'command')
-		let g:wheeltree_yank.command = []
+	if ! has_key(g:torustree_yank, 'command')
+		let g:torustree_yank.command = []
 	endif
-	if ! has_key(g:wheeltree_yank, 'expression')
-		let g:wheeltree_yank.expression = []
+	if ! has_key(g:torustree_yank, 'expression')
+		let g:torustree_yank.expression = []
 	endif
-	if ! has_key(g:wheeltree_yank, 'file')
-		let g:wheeltree_yank.file = []
+	if ! has_key(g:torustree_yank, 'file')
+		let g:torustree_yank.file = []
 	endif
-	if ! has_key(g:wheeltree_yank, 'alternate')
-		let g:wheeltree_yank.alternate = []
+	if ! has_key(g:torustree_yank, 'alternate')
+		let g:torustree_yank.alternate = []
 	endif
 endfun
 
@@ -211,181 +211,181 @@ endfun
 
 fun! torustree#void#config ()
 	" Initialize config
-	if ! exists('g:wheeltree_config')
-		let g:wheeltree_config = {}
+	if ! exists('g:torustree_config')
+		let g:torustree_config = {}
 	endif
-	if ! has_key(g:wheeltree_config, 'mappings')
-		let g:wheeltree_config.mappings = 0
+	if ! has_key(g:torustree_config, 'mappings')
+		let g:torustree_config.mappings = 0
 	endif
-	if ! has_key(g:wheeltree_config, 'prefix')
-		let g:wheeltree_config.prefix = '<M-w>'
+	if ! has_key(g:torustree_config, 'prefix')
+		let g:torustree_config.prefix = '<M-w>'
 	endif
-	if ! has_key(g:wheeltree_config, 'locate_db')
-		let g:wheeltree_config.locate_db = ''
+	if ! has_key(g:torustree_config, 'locate_db')
+		let g:torustree_config.locate_db = ''
 	endif
-	if ! has_key(g:wheeltree_config, 'grep')
+	if ! has_key(g:torustree_config, 'grep')
 		" defaults to internal vimgrep,
 		" in case external grep is not available
-		let g:wheeltree_config.grep = 'vimgrep'
+		let g:torustree_config.grep = 'vimgrep'
 	endif
 	" ---- project
-	if ! has_key(g:wheeltree_config, 'project')
-		let g:wheeltree_config.project = {}
+	if ! has_key(g:torustree_config, 'project')
+		let g:torustree_config.project = {}
 	endif
-	if ! has_key(g:wheeltree_config.project, 'markers')
-		let g:wheeltree_config.project.markers = '.git'
+	if ! has_key(g:torustree_config.project, 'markers')
+		let g:torustree_config.project.markers = '.git'
 	endif
-	if ! has_key(g:wheeltree_config.project, 'auto_chdir')
-		let g:wheeltree_config.project.auto_chdir = 0
+	if ! has_key(g:torustree_config.project, 'auto_chdir')
+		let g:torustree_config.project.auto_chdir = 0
 	endif
 	" ---- storage
-	if ! has_key(g:wheeltree_config, 'storage')
-		let g:wheeltree_config.storage = {}
+	if ! has_key(g:torustree_config, 'storage')
+		let g:torustree_config.storage = {}
 	endif
 	" -- storage torustree
-	if ! has_key(g:wheeltree_config.storage, 'torustree')
-		let g:wheeltree_config.storage.torustree = {}
+	if ! has_key(g:torustree_config.storage, 'torustree')
+		let g:torustree_config.storage.torustree = {}
 	endif
-	if ! has_key(g:wheeltree_config.storage.torustree, 'folder')
+	if ! has_key(g:torustree_config.storage.torustree, 'folder')
 		if has('nvim')
-			let g:wheeltree_config.storage.torustree.folder = '~/.local/share/nvim/torustree'
+			let g:torustree_config.storage.torustree.folder = '~/.local/share/nvim/torustree'
 		else
-			let g:wheeltree_config.storage.torustree.folder = '~/.vim/torustree'
+			let g:torustree_config.storage.torustree.folder = '~/.vim/torustree'
 		endif
 	endif
-	if ! has_key(g:wheeltree_config.storage.torustree, 'name')
-		let g:wheeltree_config.storage.torustree.name = 'torustree.vim'
+	if ! has_key(g:torustree_config.storage.torustree, 'name')
+		let g:torustree_config.storage.torustree.name = 'torustree.vim'
 	endif
-	if ! has_key(g:wheeltree_config.storage.torustree, 'autowrite')
-		let g:wheeltree_config.storage.torustree.autowrite = 0
+	if ! has_key(g:torustree_config.storage.torustree, 'autowrite')
+		let g:torustree_config.storage.torustree.autowrite = 0
 	endif
-	if ! has_key(g:wheeltree_config.storage.torustree, 'autoread')
-		let g:wheeltree_config.storage.torustree.autoread = 0
+	if ! has_key(g:torustree_config.storage.torustree, 'autoread')
+		let g:torustree_config.storage.torustree.autoread = 0
 	endif
 	" -- storage session
-	if ! has_key(g:wheeltree_config.storage, 'session')
-		let g:wheeltree_config.storage.session = {}
+	if ! has_key(g:torustree_config.storage, 'session')
+		let g:torustree_config.storage.session = {}
 	endif
-	if ! has_key(g:wheeltree_config.storage.session, 'folder')
+	if ! has_key(g:torustree_config.storage.session, 'folder')
 		if has('nvim')
-			let g:wheeltree_config.storage.session.folder = '~/.local/share/nvim/torustree/session'
+			let g:torustree_config.storage.session.folder = '~/.local/share/nvim/torustree/session'
 		else
-			let g:wheeltree_config.storage.session.folder = '~/.vim/torustree/session'
+			let g:torustree_config.storage.session.folder = '~/.vim/torustree/session'
 		endif
 	endif
-	if ! has_key(g:wheeltree_config.storage.session, 'name')
-		let g:wheeltree_config.storage.session.name = 'session.vim'
+	if ! has_key(g:torustree_config.storage.session, 'name')
+		let g:torustree_config.storage.session.name = 'session.vim'
 	endif
-	if ! has_key(g:wheeltree_config.storage.session, 'autowrite')
-		let g:wheeltree_config.storage.session.autowrite = 0
+	if ! has_key(g:torustree_config.storage.session, 'autowrite')
+		let g:torustree_config.storage.session.autowrite = 0
 	endif
-	if ! has_key(g:wheeltree_config.storage.session, 'autoread')
-		let g:wheeltree_config.storage.session.autoread = 0
+	if ! has_key(g:torustree_config.storage.session, 'autoread')
+		let g:torustree_config.storage.session.autoread = 0
 	endif
 	" -- backups
-	if ! has_key(g:wheeltree_config.storage, 'backups')
-		let g:wheeltree_config.storage.backups = 3
+	if ! has_key(g:torustree_config.storage, 'backups')
+		let g:torustree_config.storage.backups = 3
 	endif
 	" ---- maxim
-	if ! has_key(g:wheeltree_config, 'maxim')
-		let g:wheeltree_config.maxim = {}
+	if ! has_key(g:torustree_config, 'maxim')
+		let g:torustree_config.maxim = {}
 	endif
-	if ! has_key(g:wheeltree_config.maxim, 'history')
-		let g:wheeltree_config.maxim.history = 500
+	if ! has_key(g:torustree_config.maxim, 'history')
+		let g:torustree_config.maxim.history = 500
 	endif
-	if ! has_key(g:wheeltree_config.maxim, 'input')
-		let g:wheeltree_config.maxim.input = 500
+	if ! has_key(g:torustree_config.maxim, 'input')
+		let g:torustree_config.maxim.input = 500
 	endif
-	if ! has_key(g:wheeltree_config.maxim, 'mru')
-		let g:wheeltree_config.maxim.mru = 500
+	if ! has_key(g:torustree_config.maxim, 'mru')
+		let g:torustree_config.maxim.mru = 500
 	endif
-	if ! has_key(g:wheeltree_config.maxim, 'unnamed_yanks')
-		let g:wheeltree_config.maxim.unnamed_yanks = 500
+	if ! has_key(g:torustree_config.maxim, 'unnamed_yanks')
+		let g:torustree_config.maxim.unnamed_yanks = 500
 	endif
-	if ! has_key(g:wheeltree_config.maxim, 'other_yanks')
-		let g:wheeltree_config.maxim.other_yanks = 50
+	if ! has_key(g:torustree_config.maxim, 'other_yanks')
+		let g:torustree_config.maxim.other_yanks = 50
 	endif
-	if ! has_key(g:wheeltree_config.maxim, 'yank_lines')
-		let g:wheeltree_config.maxim.yank_lines = 30
+	if ! has_key(g:torustree_config.maxim, 'yank_lines')
+		let g:torustree_config.maxim.yank_lines = 30
 	endif
-	if ! has_key(g:wheeltree_config.maxim, 'yank_size')
-		let g:wheeltree_config.maxim.yank_size = 3000
+	if ! has_key(g:torustree_config.maxim, 'yank_size')
+		let g:torustree_config.maxim.yank_size = 3000
 	endif
-	if ! has_key(g:wheeltree_config.maxim, 'layers')
-		let g:wheeltree_config.maxim.layers = 5
+	if ! has_key(g:torustree_config.maxim, 'layers')
+		let g:torustree_config.maxim.layers = 5
 	endif
-	if ! has_key(g:wheeltree_config.maxim, 'tabs')
-		let g:wheeltree_config.maxim.tabs = 15
+	if ! has_key(g:torustree_config.maxim, 'tabs')
+		let g:torustree_config.maxim.tabs = 15
 	endif
-	if ! has_key(g:wheeltree_config.maxim, 'horizontal')
-		let g:wheeltree_config.maxim.horizontal = 3
+	if ! has_key(g:torustree_config.maxim, 'horizontal')
+		let g:torustree_config.maxim.horizontal = 3
 	endif
-	if ! has_key(g:wheeltree_config.maxim, 'vertical')
-		let g:wheeltree_config.maxim.vertical = 4
+	if ! has_key(g:torustree_config.maxim, 'vertical')
+		let g:torustree_config.maxim.vertical = 4
 	endif
 	" ---- frecency
-	if ! has_key(g:wheeltree_config, 'frecency')
-		let g:wheeltree_config.frecency = {}
+	if ! has_key(g:torustree_config, 'frecency')
+		let g:torustree_config.frecency = {}
 	endif
-	if ! has_key(g:wheeltree_config.frecency, 'reward')
-		let g:wheeltree_config.frecency.reward = 50
+	if ! has_key(g:torustree_config.frecency, 'reward')
+		let g:torustree_config.frecency.reward = 50
 	endif
-	if ! has_key(g:wheeltree_config.frecency, 'penalty')
-		let g:wheeltree_config.frecency.penalty = 1
+	if ! has_key(g:torustree_config.frecency, 'penalty')
+		let g:torustree_config.frecency.penalty = 1
 	endif
 	" -- completion
-	if ! has_key(g:wheeltree_config, 'completion')
-		let g:wheeltree_config.completion = {}
+	if ! has_key(g:torustree_config, 'completion')
+		let g:torustree_config.completion = {}
 	endif
-	if ! has_key(g:wheeltree_config.completion, 'vocalize')
-		let g:wheeltree_config.completion.vocalize = 0
+	if ! has_key(g:torustree_config.completion, 'vocalize')
+		let g:torustree_config.completion.vocalize = 0
 	endif
-	if ! has_key(g:wheeltree_config.completion, 'wordize')
-		let g:wheeltree_config.completion.wordize = 0
+	if ! has_key(g:torustree_config.completion, 'wordize')
+		let g:torustree_config.completion.wordize = 0
 	endif
-	if ! has_key(g:wheeltree_config.completion, 'fuzzy')
-		let g:wheeltree_config.completion.fuzzy = 0
+	if ! has_key(g:torustree_config.completion, 'fuzzy')
+		let g:torustree_config.completion.fuzzy = 0
 	endif
-	if ! has_key(g:wheeltree_config.completion, 'scores')
-		let g:wheeltree_config.completion.scores = 0
+	if ! has_key(g:torustree_config.completion, 'scores')
+		let g:torustree_config.completion.scores = 0
 	endif
 	" ---- display
-	if ! has_key(g:wheeltree_config, 'display')
-		let g:wheeltree_config.display = {}
+	if ! has_key(g:torustree_config, 'display')
+		let g:torustree_config.display = {}
 	endif
-	if ! has_key(g:wheeltree_config.display, 'statusline')
-		let g:wheeltree_config.display.statusline = 1
+	if ! has_key(g:torustree_config.display, 'statusline')
+		let g:torustree_config.display.statusline = 1
 	endif
-	if ! has_key(g:wheeltree_config.display, 'dedibuf_msg')
-		let g:wheeltree_config.display.dedibuf_msg = 'one-line'
+	if ! has_key(g:torustree_config.display, 'dedibuf_msg')
+		let g:torustree_config.display.dedibuf_msg = 'one-line'
 	endif
-	if ! has_key(g:wheeltree_config.display, 'prompt')
-		let g:wheeltree_config.display.prompt = torustree#crystal#fetch ('mandala/prompt')
+	if ! has_key(g:torustree_config.display, 'prompt')
+		let g:torustree_config.display.prompt = torustree#crystal#fetch ('mandala/prompt')
 	endif
-	if ! has_key(g:wheeltree_config.display, 'prompt_writable')
-		let g:wheeltree_config.display.prompt_writable = torustree#crystal#fetch ('mandala/prompt/writable')
+	if ! has_key(g:torustree_config.display, 'prompt_writable')
+		let g:torustree_config.display.prompt_writable = torustree#crystal#fetch ('mandala/prompt/writable')
 	endif
-	if ! has_key(g:wheeltree_config.display, 'selection')
-		let g:wheeltree_config.display.selection = torustree#crystal#fetch ('selection/mark')
+	if ! has_key(g:torustree_config.display, 'selection')
+		let g:torustree_config.display.selection = torustree#crystal#fetch ('selection/mark')
 	endif
 	" -- display sign
-	if ! has_key(g:wheeltree_config.display, 'sign')
-		let g:wheeltree_config.display.sign = {}
+	if ! has_key(g:torustree_config.display, 'sign')
+		let g:torustree_config.display.sign = {}
 	endif
-	if ! has_key(g:wheeltree_config.display.sign, 'switch')
-		let g:wheeltree_config.display.sign.switch = 1
+	if ! has_key(g:torustree_config.display.sign, 'switch')
+		let g:torustree_config.display.sign.switch = 1
 	endif
-	if ! has_key(g:wheeltree_config.display.sign, 'settings')
+	if ! has_key(g:torustree_config.display.sign, 'settings')
 		let settings = deepcopy(torustree#crystal#fetch ('sign/settings'))
-		let g:wheeltree_config.display.sign.settings = settings
+		let g:torustree_config.display.sign.settings = settings
 	endif
-	if ! has_key(g:wheeltree_config.display.sign, 'native_settings')
+	if ! has_key(g:torustree_config.display.sign, 'native_settings')
 		let native_settings = deepcopy(torustree#crystal#fetch ('sign/settings/native'))
-		let g:wheeltree_config.display.sign.native_settings = native_settings
+		let g:torustree_config.display.sign.native_settings = native_settings
 	endif
 	" ---- debug
-	if ! has_key(g:wheeltree_config, 'debug')
-		let g:wheeltree_config.debug = 0
+	if ! has_key(g:torustree_config, 'debug')
+		let g:torustree_config.debug = 0
 	endif
 endfun
 
@@ -393,23 +393,23 @@ endfun
 
 fun! torustree#void#mandalas ()
 	" Initialize mandala buffers list
-	if ! exists('g:wheeltree_bufring')
-		let g:wheeltree_bufring = {}
+	if ! exists('g:torustree_bufring')
+		let g:torustree_bufring = {}
 	endif
-	if ! has_key(g:wheeltree_bufring, 'mandalas')
-		let g:wheeltree_bufring.mandalas = []
+	if ! has_key(g:torustree_bufring, 'mandalas')
+		let g:torustree_bufring.mandalas = []
 	endif
-	if ! has_key(g:wheeltree_bufring, 'current')
-		let g:wheeltree_bufring.current = -1
+	if ! has_key(g:torustree_bufring, 'current')
+		let g:torustree_bufring.current = -1
 	endif
-	if ! has_key(g:wheeltree_bufring, 'iden')
-		let g:wheeltree_bufring.iden = []
+	if ! has_key(g:torustree_bufring, 'iden')
+		let g:torustree_bufring.iden = []
 	endif
-	if ! has_key(g:wheeltree_bufring, 'names')
-		let g:wheeltree_bufring.names = []
+	if ! has_key(g:torustree_bufring, 'names')
+		let g:torustree_bufring.names = []
 	endif
-	if ! has_key(g:wheeltree_bufring, 'types')
-		let g:wheeltree_bufring.types = []
+	if ! has_key(g:torustree_bufring, 'types')
+		let g:torustree_bufring.types = []
 	endif
 endfun
 
@@ -422,57 +422,57 @@ endfun
 
 fun! torustree#void#signs ()
 	" Initialize signs list
-	if ! exists('g:wheeltree_signs')
-		let g:wheeltree_signs = {}
+	if ! exists('g:torustree_signs')
+		let g:torustree_signs = {}
 	endif
 	" ---- locations signs
-	if ! has_key(g:wheeltree_signs, 'iden')
-		let g:wheeltree_signs.iden = []
+	if ! has_key(g:torustree_signs, 'iden')
+		let g:torustree_signs.iden = []
 	endif
-	if ! has_key(g:wheeltree_signs, 'table')
-		let g:wheeltree_signs.table = []
+	if ! has_key(g:torustree_signs, 'table')
+		let g:torustree_signs.table = []
 	endif
 	" ---- native navigation signs
-	if ! has_key(g:wheeltree_signs, 'native_iden')
-		let g:wheeltree_signs.native_iden = []
+	if ! has_key(g:torustree_signs, 'native_iden')
+		let g:torustree_signs.native_iden = []
 	endif
-	if ! has_key(g:wheeltree_signs, 'native_table')
-		let g:wheeltree_signs.native_table = []
+	if ! has_key(g:torustree_signs, 'native_table')
+		let g:torustree_signs.native_table = []
 	endif
 endfun
 
 fun! torustree#void#wave ()
 	" Initialize jobs dictionary
 	" ---- for neovim
-	if has('nvim') && ! exists('g:wheeltree_wave')
-		let g:wheeltree_wave = []
+	if has('nvim') && ! exists('g:torustree_wave')
+		let g:torustree_wave = []
 	endif
 	" ---- same thing for vim
-	if ! has('nvim') && ! exists('g:wheeltree_ripple')
-		let g:wheeltree_ripple = []
+	if ! has('nvim') && ! exists('g:torustree_ripple')
+		let g:torustree_ripple = []
 	endif
 endfun
 
 fun! torustree#void#volatile ()
 	" Store non persistent state
-	if ! exists('g:wheeltree_volatile')
-		let g:wheeltree_volatile = {}
+	if ! exists('g:torustree_volatile')
+		let g:torustree_volatile = {}
 	endif
 	" ---- Remember number of file args at startup
 	" ---- before :argadd, :argdel or similar command
-	if ! has_key(g:wheeltree_volatile, 'argc')
-		let g:wheeltree_volatile.argc = argc()
+	if ! has_key(g:torustree_volatile, 'argc')
+		let g:torustree_volatile.argc = argc()
 	endif
-	if ! has_key(g:wheeltree_volatile, 'argv')
-		let g:wheeltree_volatile.argv = argv()
+	if ! has_key(g:torustree_volatile, 'argv')
+		let g:torustree_volatile.argv = argv()
 	endif
 	" ---- First time read / write
-	if ! has_key(g:wheeltree_volatile, 'first')
-		let g:wheeltree_volatile.first = {}
-		let g:wheeltree_volatile.first.write_wheel = v:true
-		let g:wheeltree_volatile.first.read_wheel = v:true
-		let g:wheeltree_volatile.first.write_session = v:true
-		let g:wheeltree_volatile.first.read_session = v:true
+	if ! has_key(g:torustree_volatile, 'first')
+		let g:torustree_volatile.first = {}
+		let g:torustree_volatile.first.write_wheel = v:true
+		let g:torustree_volatile.first.read_wheel = v:true
+		let g:torustree_volatile.first.write_session = v:true
+		let g:torustree_volatile.first.read_session = v:true
 	endif
 endfun
 
@@ -509,7 +509,7 @@ endfun
 fun! torustree#void#wipe_mandalas ()
 	" Wipe mandalas buffers
 	let buflist = getbufinfo()
-	let mandalas = g:wheeltree_bufring.mandalas
+	let mandalas = g:torustree_bufring.mandalas
 	for buffer in buflist
 		let bufnum = buffer.bufnr
 		if torustree#chain#is_inside(bufnum, mandalas)
@@ -523,39 +523,39 @@ endfun
 fun! torustree#void#clean ()
 	" Clean variables before writing torustree to file
 	" ---- torustree history
-	if has_key(g:wheeltree_history.alternate, 'window')
-		unlet g:wheeltree_history.alternate.window
+	if has_key(g:torustree_history.alternate, 'window')
+		unlet g:torustree_history.alternate.window
 	endif
 	" ---- torustree shelve
-	let g:wheeltree_shelve.layout.window = 'none'
-	let g:wheeltree_shelve.layout.split = 'none'
-	let g:wheeltree_shelve.layout.tab = 'none'
-	let g:wheeltree_shelve.layout.tabnames = []
+	let g:torustree_shelve.layout.window = 'none'
+	let g:torustree_shelve.layout.split = 'none'
+	let g:torustree_shelve.layout.tab = 'none'
+	let g:torustree_shelve.layout.tabnames = []
 endfun
 
 fun! torustree#void#vanish ()
 	" Unlet torustree variables
 	" No need to save them in viminfo or shada file
-	" since you can save them in g:wheeltree_config.storage.torustree.name
+	" since you can save them in g:torustree_config.storage.torustree.name
 	" ---- should not be necessary, since only
 	" ---- uppercase global vars are stored in viminfo / shada
 	return
 	let varlist = [
 				\ 'g:torustree',
-				\ 'g:wheeltree_helix',
-				\ 'g:wheeltree_grid',
-				\ 'g:wheeltree_files',
-				\ 'g:wheeltree_history',
-				\ 'g:wheeltree_input',
-				\ 'g:wheeltree_attic',
-				\ 'g:wheeltree_yank',
-				\ 'g:wheeltree_shelve',
-				\ 'g:wheeltree_config',
-				\ 'g:wheeltree_bufring',
-				\ 'g:wheeltree_wave',
-				\ 'g:wheeltree_ripple',
-				\ 'g:wheeltree_volatile',
-				\ 'g:wheeltree_signs',
+				\ 'g:torustree_helix',
+				\ 'g:torustree_grid',
+				\ 'g:torustree_files',
+				\ 'g:torustree_history',
+				\ 'g:torustree_input',
+				\ 'g:torustree_attic',
+				\ 'g:torustree_yank',
+				\ 'g:torustree_shelve',
+				\ 'g:torustree_config',
+				\ 'g:torustree_bufring',
+				\ 'g:torustree_wave',
+				\ 'g:torustree_ripple',
+				\ 'g:torustree_volatile',
+				\ 'g:torustree_signs',
 				\ ]
 	call torustree#ouroboros#unlet (varlist)
 endfun
@@ -564,11 +564,11 @@ endfun
 
 fun! torustree#void#init ()
 	" Main init function
-	"if g:wheeltree_volatile.argc == 0 && has('nvim')
+	"if g:torustree_volatile.argc == 0 && has('nvim')
 		"echomsg 'torustree hello !'
 	"endif
 	" ---- keep tabs & wins ?
-	if g:wheeltree_volatile.argc == 0
+	if g:torustree_volatile.argc == 0
 		let keep_tabwins = 'dont-keep'
 	else
 		let keep_tabwins = 'keep'
@@ -576,18 +576,18 @@ fun! torustree#void#init ()
 	" ---- no message at vim enter
 	let verbose = v:false
 	" ---- read torustree
-	if g:wheeltree_config.storage.torustree.autoread > 0
+	if g:torustree_config.storage.torustree.autoread > 0
 		call torustree#disc#read_wheel ('', keep_tabwins, verbose)
 	endif
 	" ---- read session
-	if g:wheeltree_config.storage.session.autoread > 0
+	if g:torustree_config.storage.session.autoread > 0
 		call torustree#disc#read_session ('', keep_tabwins, verbose)
 	endif
 endfun
 
 fun! torustree#void#exit ()
 	" Main exit function
-	"if g:wheeltree_volatile.argc == 0 && has('nvim')
+	"if g:torustree_volatile.argc == 0 && has('nvim')
 		"echomsg 'torustree bye !'
 	"endif
 	" ---- clean vars before writing
@@ -595,11 +595,11 @@ fun! torustree#void#exit ()
 	" ---- no message at vim leave
 	let verbose = v:false
 	" ---- save session
-	if g:wheeltree_config.storage.session.autowrite > 0
+	if g:torustree_config.storage.session.autowrite > 0
 		call torustree#disc#write_session ('', verbose)
 	endif
 	" ---- save torustree, and unlet
-	if g:wheeltree_config.storage.torustree.autowrite > 0
+	if g:torustree_config.storage.torustree.autowrite > 0
 		call torustree#disc#write_wheel('', verbose)
 	endif
 	call torustree#void#wipe_mandalas ()
@@ -617,18 +617,18 @@ fun! torustree#void#fresh_wheel ()
 	endif
 	let varlist = [
 				\ 'g:torustree',
-				\ 'g:wheeltree_helix',
-				\ 'g:wheeltree_grid',
-				\ 'g:wheeltree_files',
-				\ 'g:wheeltree_history',
-				\ 'g:wheeltree_input',
-				\ 'g:wheeltree_attic',
-				\ 'g:wheeltree_wave',
-				\ 'g:wheeltree_ripple',
-				\ 'g:wheeltree_yank',
-				\ 'g:wheeltree_bufring',
-				\ 'g:wheeltree_signs',
-				\ 'g:wheeltree_shelve',
+				\ 'g:torustree_helix',
+				\ 'g:torustree_grid',
+				\ 'g:torustree_files',
+				\ 'g:torustree_history',
+				\ 'g:torustree_input',
+				\ 'g:torustree_attic',
+				\ 'g:torustree_wave',
+				\ 'g:torustree_ripple',
+				\ 'g:torustree_yank',
+				\ 'g:torustree_bufring',
+				\ 'g:torustree_signs',
+				\ 'g:torustree_shelve',
 				\ ]
 	call torustree#ouroboros#unlet (varlist)
 	call torustree#void#foundation ()

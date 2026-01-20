@@ -3,11 +3,11 @@
 
 scriptencoding utf-8
 
-if exists("g:wheeltree_loaded")
+if exists("g:torustree_loaded")
 	finish
 endif
 
-let g:wheeltree_loaded = 1
+let g:torustree_loaded = 1
 
 call torustree#void#foundation ()
 call torustree#centre#commands ()

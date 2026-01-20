@@ -241,7 +241,7 @@ fun! torustree#counterpoint#arrange_tabs (tabindexes)
 	endwhile
 	" Reorder
 	let counter = 0
-	let max_iter = 2 * g:wheeltree_config.maxim.tabs
+	let max_iter = 2 * g:torustree_config.maxim.tabs
 	let from = 0
 	" status : start from 0
 	" its elements will follow the reordering
@@ -361,10 +361,10 @@ fun! torustree#counterpoint#reorg_tabwin (ask = 'confirm')
 	endif
 	call torustree#cylinder#recall ()
 	" -- clean torustree shelve
-	let g:wheeltree_shelve.layout.window = 'none'
-	let g:wheeltree_shelve.layout.split = 'none'
-	let g:wheeltree_shelve.layout.tab = 'none'
-	let g:wheeltree_shelve.layout.tabnames = []
+	let g:torustree_shelve.layout.window = 'none'
+	let g:torustree_shelve.layout.split = 'none'
+	let g:torustree_shelve.layout.tab = 'none'
+	let g:torustree_shelve.layout.tabnames = []
 	" -- tell the world the job is done
 	setlocal nomodified
 	echomsg 'tabs & windows reorganized'

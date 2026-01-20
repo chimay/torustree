@@ -121,9 +121,9 @@ fun! torustree#vector#grep (pattern, ...)
 		let pattern = '"' .. pattern .. '"'
 	endif
 	" Run grep
-	let grep = g:wheeltree_config.grep
+	let grep = g:torustree_config.grep
 	if ! torustree#chain#is_inside(grep, ['grep', 'vimgrep'])
-		echoerr 'torustree vector grep : bad g:wheeltree_config.grep value'
+		echoerr 'torustree vector grep : bad g:torustree_config.grep value'
 		return v:false
 	endif
 	let grep ..= '!'

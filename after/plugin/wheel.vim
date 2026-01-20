@@ -1,7 +1,7 @@
 " vim: set filetype=vim:
 
-if exists("g:wheeltree_loaded_after")
+if exists("g:torustree_loaded_after")
 	finish
 endif
 
-let g:wheeltree_loaded_after = 1
+let g:torustree_loaded_after = 1

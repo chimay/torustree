@@ -54,9 +54,9 @@ endfun
 fun! torustree#teapot#prompt ()
 	" Return prompt string
 	if torustree#polyphony#is_writable ()
-		return g:wheeltree_config.display.prompt_writable
+		return g:torustree_config.display.prompt_writable
 	else
-		return g:wheeltree_config.display.prompt
+		return g:torustree_config.display.prompt
 	endif
 endfun
 
