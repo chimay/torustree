@@ -1,0 +1,289 @@
+" vim: set ft=vim fdm=indent iskeyword&:
+
+" Codex
+"
+" Yank ring
+"
+" Takes advantage of TextYankPost event
+
+" codex were written by copists
+"
+" other names ideas for this file :
+"
+" scroll, coil, spool
+" scriptorium
+
+" ---- script constants
+
+if exists('s:registers_symbols')
+	unlockvar s:registers_symbols
+endif
+let s:registers_symbols = wheeltree#crystal#fetch('registers-symbols')
+lockvar s:registers_symbols
+
+" ---- helpers
+
+fun! wheeltree#codex#climb (content, register = 'unnamed')
+	" Move content at beginning of yank ring
+	let content = a:content
+	let register = a:register
+	let yanks = g:wheeltree_yank[register]
+	let index = yanks->index(content)
+	if index < 0
+		return v:false
+	endif
+	eval yanks->remove(index)
+	eval yanks->insert(content)
+	return v:true
+endfun
+
+" ---- register
+
+fun! wheeltree#codex#register (register = 'unnamed')
+	" Add register to yank wheeltree
+	let register = a:register
+	" ---- ring
+	let yanks = g:wheeltree_yank[register]
+	" ---- vim symbol of register
+	let symbols_dict = wheeltree#matrix#items2dict(s:registers_symbols)
+	let symbol = symbols_dict[register]
+	" ---- content
+	let content = getreg(symbol, 1, v:true)
+	if empty(content)
+		return v:false
+	endif
+	if len(content) == 1 && content[0] !~ '\m\w'
+		return v:false
+	endif
+	if len(content) > g:wheeltree_config.maxim.yank_lines
+		return v:false
+	endif
+	if strchars(join(content)) > g:wheeltree_config.maxim.yank_size
+		return v:false
+	endif
+	" -- treat special chars in inserted register
+	eval content->map({ _, val -> split(val, "\n") })
+	let content = wheeltree#matrix#flatten (content)
+	" ---- add
+	let index = yanks->index(content)
+	if index >= 0
+		eval yanks->remove(index)
+	endif
+	eval yanks->insert(content)
+	" ---- truncate if too big
+	if register ==# 'unnamed'
+		let maxim = g:wheeltree_config.maxim.unnamed_yanks
+	else
+		let maxim = g:wheeltree_config.maxim.other_yanks
+	endif
+	" we need to use g:wheeltree_yank here
+	" because yanks[:maxim - 1] makes a copy
+	let g:wheeltree_yank[register] = yanks[:maxim - 1]
+	return v:true
+endfun
+
+" --- add : for TextYankPost
+
+fun! wheeltree#codex#add ()
+	" Insert registers in yank wheeltree
+	let register_list = wheeltree#matrix#items2keys(s:registers_symbols)
+	for register in register_list
+		call wheeltree#codex#register (register)
+	endfor
+endfun
+
+" ---- prompt
+
+fun! wheeltree#codex#switch_default_register ()
+	" Switch register in yank prompting functions
+	let prompt = 'Default register for wheeltree yank ring functions : '
+	let complete = 'customlist,wheeltree#complete#register'
+	let register = input(prompt, '', complete)
+	if empty(register)
+		return v:false
+	endif
+	let g:wheeltree_shelve.yank.default_register = register
+	return v:true
+endfun
+
+fun! wheeltree#codex#yank_plain (where = 'linewise-after')
+	" Paste yank from yank ring in plain mode
+	let where = a:where
+	let prompt = 'Yank element (' .. where .. ') : '
+	let complete = 'customlist,wheeltree#complete#yank_plain'
+	let content = input(prompt, '', complete)
+	if empty(content)
+		return v:false
+	endif
+	call wheeltree#codex#climb([ content ])
+	let clipreg = substitute(&clipboard, 'unnamedplus', '+', '')
+	let clipreg = substitute(clipreg, 'unnamed', '*', '')
+	let clipboard = [ '"' ]->extend(split(clipreg, ','))
+	if where ==# 'linewise-after'
+		for register in clipboard
+			call setreg(register, content, 'l')
+		endfor
+		silent put =content
+	elseif where ==# 'linewise-before'
+		for register in clipboard
+			call setreg(register, content, 'l')
+		endfor
+		silent put! =content
+	elseif where ==# 'charwise-after'
+		for register in clipboard
+			call setreg(register, content, 'c')
+		endfor
+		silent normal! p
+	elseif where ==# 'charwise-before'
+		for register in clipboard
+			call setreg(register, content, 'c')
+		endfor
+		silent normal! P
+	endif
+	return v:true
+endfun
+
+fun! wheeltree#codex#yank_list (where = 'linewise-after')
+	" Paste yank from yank ring in list mode
+	let where = a:where
+	let prompt = 'Yank list element (' .. where .. ') : '
+	let complete = 'customlist,wheeltree#complete#yank_list'
+	let line = input(prompt, '', complete)
+	if empty(line)
+		return v:false
+	endif
+	let content = eval(line)
+	call wheeltree#codex#climb(content)
+	let clipreg = substitute(&clipboard, 'unnamedplus', '+', '')
+	let clipreg = substitute(clipreg, 'unnamed', '*', '')
+	let clipboard = [ '"' ]->extend(split(clipreg, ','))
+	if where ==# 'linewise-after'
+		for register in clipboard
+			call setreg(register, content, 'l')
+		endfor
+		silent put =content
+	elseif where ==# 'linewise-before'
+		for register in clipboard
+			call setreg(register, content, 'l')
+		endfor
+		silent put! =content
+	elseif where ==# 'charwise-after'
+		for register in clipboard
+			call setreg(register, content, 'c')
+		endfor
+		silent normal! p
+	elseif where ==# 'charwise-before'
+		for register in clipboard
+			call setreg(register, content, 'c')
+		endfor
+		silent normal! P
+	endif
+	return v:true
+endfun
+
+" ---- mandala
+
+fun! wheeltree#codex#mandala_switch (mode)
+	" Switch register in yank mandala
+	let mode = a:mode
+	let prompt = 'Switch to register : '
+	let complete = 'customlist,wheeltree#complete#register'
+	let register = input(prompt, '', complete)
+	if empty(register)
+		return v:false
+	endif
+	" ---- type
+	if mode ==# 'plain'
+		let type = 'yank/'
+	elseif mode ==# 'list'
+		let type = 'yank/list/'
+	endif
+	if register ==# 'overview'
+		let type ..= 'overview'
+	elseif register ==# 'file'
+		let type ..= '%%'
+	else
+		let symbols_dict = wheeltree#matrix#items2dict(s:registers_symbols)
+		let type ..= symbols_dict[register]
+	endif
+	" ---- properties
+	let b:wheel_nature.type = type
+	let b:wheel_settings.yank.register = register
+	" ---- lines
+	let lines = wheeltree#perspective#yank_mandala(mode, register)
+	call wheeltree#teapot#reset ()
+	call wheeltree#mandala#fill(lines)
+	" ---- status
+	call wheeltree#cylinder#update_type ()
+	call wheeltree#status#mandala_leaf ()
+	return v:true
+endfun
+
+fun! wheeltree#codex#undo ()
+	" Undo action in previous window
+	call wheeltree#rectangle#goto_previous ()
+	undo
+	call wheeltree#cylinder#recall ()
+endfun
+
+fun! wheeltree#codex#redo ()
+	" Redo action in previous window
+	call wheeltree#rectangle#goto_previous ()
+	redo
+	call wheeltree#cylinder#recall ()
+endfun
+
+fun! wheeltree#codex#options (mode)
+	" Set local yank options
+	setlocal nowrap
+	if a:mode ==# 'plain'
+		setlocal nocursorline
+	endif
+endfun
+
+fun! wheeltree#codex#mappings (mode)
+	" Define local yank maps
+	let nmap = 'nnoremap <buffer>'
+	let mode = a:mode
+	if mode ==# 'list'
+		let paste = 'wheeltree#line#paste_list'
+	elseif mode ==# 'plain'
+		let paste = 'wheeltree#line#paste_plain'
+	endif
+	" ---- normal mode
+	let nmap = 'nnoremap <buffer>'
+	execute nmap '<cr>  <cmd>call' paste "('linewise-after', 'close')<cr>"
+	execute nmap 'g<cr> <cmd>call' paste "('linewise-after', 'open')<cr>"
+	execute nmap 'p     <cmd>call' paste "('linewise-after', 'open')<cr>"
+	execute nmap 'P     <cmd>call' paste "('linewise-before', 'open')<cr>"
+	execute nmap 'gp    <cmd>call' paste "('charwise-after', 'open')<cr>"
+	execute nmap 'gP    <cmd>call' paste "('charwise-before', 'open')<cr>"
+	" -- switch register
+	execute nmap 's     <cmd>call wheeltree#codex#mandala_switch(' .. string(mode) .. ')<cr>'
+	" ---- visual mode
+	if mode ==# 'plain'
+		let paste_visual = 'wheeltree#line#paste_visual'
+		let vmap = 'vnoremap <silent> <buffer>'
+		execute vmap '<cr>  :<c-u>call' paste_visual "('after', 'close')<cr>"
+		execute vmap 'g<cr> :<c-u>call' paste_visual "('after', 'open')<cr>"
+		execute vmap 'p     :<c-u>call' paste_visual "('after', 'open')<cr>"
+		execute vmap 'P     :<c-u>call' paste_visual "('before', 'open')<cr>"
+	endif
+	" ---- undo, redo
+	nnoremap <buffer> u <cmd>call wheeltree#codex#undo()<cr>
+	nnoremap <buffer> <c-r> <cmd>call wheeltree#codex#redo()<cr>
+	" ---- context menu
+	let menu = 'yank/' .. mode
+	call wheeltree#boomerang#launch_map (menu)
+endfun
+
+fun! wheeltree#codex#template (settings)
+	" Template
+	let settings = a:settings
+	let mode = settings.mode
+	call wheeltree#mandala#template (settings)
+	call wheeltree#codex#options (mode)
+	call wheeltree#codex#mappings (mode)
+	" selection
+	call wheeltree#pencil#mappings ()
+endfun

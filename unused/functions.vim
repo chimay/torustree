@@ -2,7 +2,7 @@
 
 " Unused functions
 
-fun! wheel#disc#write (pointer, file, where = '>')
+fun! wheeltree#disc#write (pointer, file, where = '>')
 	" Write variable referenced by pointer to file
 	" in a format that can be :sourced
 	" Note : pointer = variable name in vim script
@@ -19,7 +19,7 @@ fun! wheel#disc#write (pointer, file, where = '>')
 	let where = a:where
 	" create directory if needed
 	let directory = fnamemodify(file, ':h')
-	let returnstring = wheel#disc#mkdir(directory)
+	let returnstring = wheeltree#disc#mkdir(directory)
 	if returnstring ==# 'failure'
 		return v:false
 	endif
@@ -35,7 +35,7 @@ fun! wheel#disc#write (pointer, file, where = '>')
 	redir END
 endfun
 
-fun! wheel#disc#read (file)
+fun! wheeltree#disc#read (file)
 	" Read file
 	let file = fnamemodify(a:file, ':p')
 	if ! filereadable(file)
@@ -44,81 +44,81 @@ fun! wheel#disc#read (file)
 	execute 'source' file
 endfun
 
-fun! wheel#pendulum#older (level = 'wheel')
+fun! wheeltree#pendulum#older (level = 'wheeltree')
 	" Go to older entry in g:wheeltree_history.circuit
 	let level = a:level
-	if wheel#referen#is_empty(level)
-		echomsg 'wheel older :' level 'is empty'
+	if wheeltree#referen#is_empty(level)
+		echomsg 'wheeltree older :' level 'is empty'
 		return v:false
 	endif
-	if level ==# 'wheel'
-		return wheel#pendulum#older_anywhere ()
+	if level ==# 'wheeltree'
+		return wheeltree#pendulum#older_anywhere ()
 	endif
 	" current coordin
-	let names = wheel#referen#names ()
+	let names = wheeltree#referen#names ()
 	" index for range in coordin
-	let level_index = wheel#referen#coordin_index (level)
+	let level_index = wheeltree#referen#coordin_index (level)
 	" back in history
 	let timeloop = g:wheeltree_history.circuit
-	let timeloop = wheel#chain#rotate_left (timeloop)
+	let timeloop = wheeltree#chain#rotate_left (timeloop)
 	let coordin = timeloop[0].coordin
 	let counter = 0
 	let length = len(timeloop)
 	while names[:level_index] != coordin[:level_index] && counter < length
-		let timeloop = wheel#chain#rotate_left (timeloop)
+		let timeloop = wheeltree#chain#rotate_left (timeloop)
 		let coordin = timeloop[0].coordin
 		let counter += 1
 	endwhile
 	" older found in same torus or circle ?
 	if names[:level_index] != coordin[:level_index]
-		echomsg 'wheel older : no location found in same' level
+		echomsg 'wheeltree older : no location found in same' level
 		return v:false
 	endif
 	" update timeloop : rotate left / right return a copy
 	let g:wheeltree_history.circuit = timeloop
 	" jump
-	call wheel#vortex#chord(coordin)
-	return wheel#vortex#jump ()
+	call wheeltree#vortex#chord(coordin)
+	return wheeltree#vortex#jump ()
 endfun
 
-fun! wheel#pendulum#newer (level = 'wheel')
+fun! wheeltree#pendulum#newer (level = 'wheeltree')
 	" Go to newer entry in g:wheeltree_history.circuit
 	let level = a:level
-	if wheel#referen#is_empty(level)
-		echomsg 'wheel newer :' level 'is empty'
+	if wheeltree#referen#is_empty(level)
+		echomsg 'wheeltree newer :' level 'is empty'
 		return v:false
 	endif
-	if level ==# 'wheel'
-		return wheel#pendulum#newer_anywhere ()
+	if level ==# 'wheeltree'
+		return wheeltree#pendulum#newer_anywhere ()
 	endif
 	" current coordin
-	let names = wheel#referen#names ()
+	let names = wheeltree#referen#names ()
 	" index for range in coordin
-	let level_index = wheel#referen#coordin_index (level)
+	let level_index = wheeltree#referen#coordin_index (level)
 	" back in history
 	let timeloop = g:wheeltree_history.circuit
-	let timeloop = wheel#chain#rotate_right (timeloop)
+	let timeloop = wheeltree#chain#rotate_right (timeloop)
 	let coordin = timeloop[0].coordin
 	let counter = 0
 	let length = len(timeloop)
 	while names[:level_index] != coordin[:level_index] && counter < length
-		let timeloop = wheel#chain#rotate_right (timeloop)
+		let timeloop = wheeltree#chain#rotate_right (timeloop)
 		let coordin = timeloop[0].coordin
 		let counter += 1
 	endwhile
 	" newer found in same torus or circle ?
 	if names[:level_index] != coordin[:level_index]
-		echomsg 'wheel newer : no location found in same' level
+		echomsg 'wheeltree newer : no location found in same' level
 		return v:false
 	endif
 	" update timeloop : rotate left / right return a deepcopy
 	let g:wheeltree_history.circuit = timeloop
 	" jump
-	call wheel#vortex#chord(coordin)
-	return wheel#vortex#jump ()
+	call wheeltree#vortex#chord(coordin)
+	return wheeltree#vortex#jump ()
 endfun
 
-fun! wheel#cylinder#first (window = 'furtive')
+fun! wheeltree#cylinder#first (window = 'furtive')
 	" Add first mandala buffer
 	" Optional argument :
 	"   - furtive (default) : use current window and go back to previous buffer at the end
@@ -127,22 +127,22 @@ fun! wheel#cylinder#first (window = 'furtive')
 	let bufring = g:wheeltree_bufring
 	let mandalas = g:wheeltree_bufring.mandalas
 	" ---- pre-checks
-	if ! window->wheel#chain#is_inside(['split', 'furtive'])
-		echomsg 'wheel cylinder first : bad window argument'
+	if ! window->wheeltree#chain#is_inside(['split', 'furtive'])
+		echomsg 'wheeltree cylinder first : bad window argument'
 		return v:false
 	endif
 	" -- empty ring ?
 	if ! empty(mandalas)
-		echomsg 'wheel cylinder first : mandala ring is not empty'
+		echomsg 'wheeltree cylinder first : mandala ring is not empty'
 		return v:false
 	endif
-	call wheel#cylinder#delete_unused ()
+	call wheeltree#cylinder#delete_unused ()
 	" ---- pre op buffer
 	let cur_buffer = bufnr('%')
 	let empty_cur_buffer = empty(bufname(cur_buffer))
 	" ---- new buffer
 	if window ==# 'split'
-		call wheel#cylinder#split ()
+		call wheeltree#cylinder#split ()
 		hide enew
 	else
 		if empty_cur_buffer
@@ -164,10 +164,10 @@ fun! wheel#cylinder#first (window = 'furtive')
 	eval names->add('0')
 	eval types->add('')
 	" ---- set filename
-	call wheel#cylinder#filename ()
+	call wheeltree#cylinder#filename ()
 	" ---- init mandala
-	call wheel#mandala#init ()
-	call wheel#mandala#common_maps ()
+	call wheeltree#mandala#init ()
+	call wheeltree#mandala#common_maps ()
 	" ---- coda
 	if window ==# 'furtive'
 		if empty_cur_buffer
@@ -177,11 +177,11 @@ fun! wheel#cylinder#first (window = 'furtive')
 			execute 'silent hide buffer' cur_buffer
 		endif
 	endif
-	call wheel#status#mandala_leaf ()
+	call wheeltree#status#mandala_leaf ()
 	return v:true
 endfun
 
-fun! wheel#cylinder#add (window = 'furtive')
+fun! wheeltree#cylinder#add (window = 'furtive')
 	" Add new mandala buffer
 	" Optional argument :
 	"   - furtive (default) : use current window and go back to previous buffer at the end
@@ -189,33 +189,33 @@ fun! wheel#cylinder#add (window = 'furtive')
 	let window = a:window
 	let bufring = g:wheeltree_bufring
 	" ---- pre-checks
-	if ! window->wheel#chain#is_inside(['split', 'furtive'])
-		echomsg 'wheel cylinder first : bad window argument'
+	if ! window->wheeltree#chain#is_inside(['split', 'furtive'])
+		echomsg 'wheeltree cylinder first : bad window argument'
 		return v:false
 	endif
-	call wheel#cylinder#check ()
-	call wheel#cylinder#delete_unused ()
+	call wheeltree#cylinder#check ()
+	call wheeltree#cylinder#delete_unused ()
 	" ---- first one
 	let mandalas = bufring.mandalas
 	if empty(mandalas)
-		return wheel#cylinder#first (window)
+		return wheeltree#cylinder#first (window)
 	endif
 	" ---- not the first one
 	" -- is current buffer a mandala buffer ?
-	let was_mandala = wheel#cylinder#is_mandala ()
+	let was_mandala = wheeltree#cylinder#is_mandala ()
 	" -- previous current mandala
 	let current = bufring.current
 	let elder = mandalas[current]
 	" -- mandala window
 	if window ==# 'split'
-		call wheel#cylinder#window ('window')
+		call wheeltree#cylinder#window ('window')
 	endif
 	" -- pre op buffer
 	let cur_buffer = bufnr('%')
 	let empty_cur_buffer = empty(bufname(cur_buffer))
 	" -- new buffer
 	if window ==# 'split'
-		call wheel#cylinder#split ()
+		call wheeltree#cylinder#split ()
 		hide enew
 	else
 		if empty_cur_buffer
@@ -228,7 +228,7 @@ fun! wheel#cylinder#add (window = 'furtive')
 	endif
 	let novice = bufnr('%')
 	if novice == elder
-		echomsg 'wheel mandala add : buffer' novice 'already in ring'
+		echomsg 'wheeltree mandala add : buffer' novice 'already in ring'
 		return v:false
 	endif
 	" -- add
@@ -238,16 +238,16 @@ fun! wheel#cylinder#add (window = 'furtive')
 	let iden = bufring.iden
 	let names = bufring.names
 	let types = bufring.types
-	let novice_iden = wheel#chain#lowest_outside (iden)
+	let novice_iden = wheeltree#chain#lowest_outside (iden)
 	let novice_name = string(novice_iden)
 	eval iden->insert(novice_iden, next)
 	eval names->insert(novice_name, next)
 	eval types->insert('', next)
 	" -- set filename
-	call wheel#cylinder#filename ()
+	call wheeltree#cylinder#filename ()
 	" -- init mandala
-	call wheel#mandala#init ()
-	call wheel#mandala#common_maps ()
+	call wheeltree#mandala#init ()
+	call wheeltree#mandala#common_maps ()
 	" -- coda
 	if window ==# 'furtive' && ! was_mandala
 		if empty_cur_buffer
@@ -257,7 +257,7 @@ fun! wheel#cylinder#add (window = 'furtive')
 			execute 'silent hide buffer' cur_buffer
 		endif
 	endif
-	call wheel#status#mandala_leaf ()
+	call wheeltree#status#mandala_leaf ()
 	return v:true
 endfun
 
@@ -270,21 +270,21 @@ endfun
 " Script constants
 
 if ! exists('s:fold_1')
-	let s:fold_1 = wheel#crystal#fetch('fold/one')
+	let s:fold_1 = wheeltree#crystal#fetch('fold/one')
 	lockvar s:fold_1
 endif
 
 if ! exists('s:fold_2')
-	let s:fold_2 = wheel#crystal#fetch('fold/two')
+	let s:fold_2 = wheeltree#crystal#fetch('fold/two')
 	lockvar s:fold_2
 endif
 
 " Fold for torus, circle and location
 
-fun! wheel#origami#chord_level ()
-	" Wheel level of fold line : torus, circle or location
+fun! wheeltree#origami#chord_level ()
+	" Wheeltree level of fold line : torus, circle or location
 	if ! &l:foldenable
-		echomsg 'wheel gear fold level : fold is disabled in buffer'
+		echomsg 'wheeltree gear fold level : fold is disabled in buffer'
 		return v:false
 	endif
 	let line = getline('.')
@@ -297,9 +297,9 @@ fun! wheel#origami#chord_level ()
 	endif
 endfun
 
-fun! wheel#origami#chord_parent ()
-	" Go to line of parent fold in wheel tree
-	let level = wheel#origami#chord_level ()
+fun! wheeltree#origami#chord_parent ()
+	" Go to line of parent fold in wheeltree tree
+	let level = wheeltree#origami#chord_level ()
 	if level ==# 'circle'
 		let pattern = '\m' .. s:fold_1 .. '$'
 	elseif level ==# 'location'
@@ -311,16 +311,16 @@ fun! wheel#origami#chord_parent ()
 	call search(pattern, 'b')
 endfun
 
-fun! wheel#origami#chord ()
-	" Return wheel coordinates of line in folded mandala buffer
+fun! wheeltree#origami#chord ()
+	" Return wheeltree coordinates of line in folded mandala buffer
 	let position = getcurpos()
 	let cursor_line = getline('.')
-	let cursor_line = wheel#pencil#unmarked (cursor_line)
+	let cursor_line = wheeltree#pencil#unmarked (cursor_line)
 	let cursor_list = split(cursor_line)
 	if empty(cursor_line)
 		return []
 	endif
-	let level = wheel#origami#chord_level ()
+	let level = wheeltree#origami#chord_level ()
 	if level ==# 'torus'
 		" torus line
 		let torus = cursor_list[0]
@@ -328,39 +328,39 @@ fun! wheel#origami#chord ()
 	elseif level ==# 'circle'
 		" circle line : search torus
 		let circle = cursor_list[0]
-		call wheel#origami#chord_parent ()
+		call wheeltree#origami#chord_parent ()
 		let line = getline('.')
-		let line = wheel#pencil#unmarked (line)
+		let line = wheeltree#pencil#unmarked (line)
 		let fields = split(line)
 		let torus = fields[0]
 		let coordin = [torus, circle]
 	elseif level ==# 'location'
 		" location line : search circle & torus
 		let location = cursor_line
-		call wheel#origami#chord_parent ()
+		call wheeltree#origami#chord_parent ()
 		let line = getline('.')
-		let line = wheel#pencil#unmarked (line)
+		let line = wheeltree#pencil#unmarked (line)
 		let fields = split(line)
 		let circle = fields[0]
-		call wheel#origami#chord_parent ()
+		call wheeltree#origami#chord_parent ()
 		let line = getline('.')
-		let line = wheel#pencil#unmarked (line)
+		let line = wheeltree#pencil#unmarked (line)
 		let fields = split(line)
 		let torus = fields[0]
 		let coordin = [torus, circle, location]
 	else
-		echomsg 'wheel line coordin : wrong fold level'
+		echomsg 'wheeltree line coordin : wrong fold level'
 	endif
-	call wheel#gear#restore_cursor (position)
+	call wheeltree#gear#restore_cursor (position)
 	return coordin
 endfun
 
 " Fold for tabs & windows
 
-fun! wheel#origami#tabwin_level ()
+fun! wheeltree#origami#tabwin_level ()
 	" Tab & window : level of fold line, tab or filename
 	if ! &l:foldenable
-		echomsg 'wheel gear fold level : fold is disabled in buffer'
+		echomsg 'wheeltree gear fold level : fold is disabled in buffer'
 		return v:false
 	endif
 	let line = getline('.')
@@ -371,9 +371,9 @@ fun! wheel#origami#tabwin_level ()
 	endif
 endfun
 
-fun! wheel#origami#tabwin_parent ()
+fun! wheeltree#origami#tabwin_parent ()
 	" Go to line of parent fold in tabwin tree
-	let level = wheel#origami#tabwin_level ()
+	let level = wheeltree#origami#tabwin_level ()
 	if level ==# 'filename'
 		let pattern = '\m' .. s:fold_1 .. '$'
 		call search(pattern, 'b')
@@ -383,16 +383,16 @@ fun! wheel#origami#tabwin_parent ()
 	endif
 endfun
 
-fun! wheel#origami#tabwin ()
+fun! wheeltree#origami#tabwin ()
 	" Return tab & filename of line in folded mandala buffer
 	let position = getcurpos()
 	let cursor_line = getline('.')
-	let cursor_line = wheel#pencil#unmarked (cursor_line)
+	let cursor_line = wheeltree#pencil#unmarked (cursor_line)
 	let cursor_list = split(cursor_line)
 	if empty(cursor_line)
 		return []
 	endif
-	let level = wheel#origami#tabwin_level ()
+	let level = wheeltree#origami#tabwin_level ()
 	if level ==# 'tab'
 		" tab line
 		let tabnum = str2nr(cursor_list[1])
@@ -401,17 +401,17 @@ fun! wheel#origami#tabwin ()
 		" filename line : find window tab-local number & tab index
 		let filename = cursor_list[0]
 		let fileline = line('.')
-		call wheel#origami#tabwin_parent ()
+		call wheeltree#origami#tabwin_parent ()
 		let tabline = line('.')
 		let winum = fileline - tabline
 		let line = getline('.')
-		let line = wheel#pencil#unmarked (line)
+		let line = wheeltree#pencil#unmarked (line)
 		let fields = split(line)
 		let tabnum = str2nr(fields[1])
 		let coordin = [tabnum, winum, filename]
 	else
 		echomsg 'tabwin hierarchy : wrong fold level'
 	endif
-	call wheel#gear#restore_cursor (position)
+	call wheeltree#gear#restore_cursor (position)
 	return coordin
 endfun
