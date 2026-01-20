@@ -1,0 +1,36 @@
+" vim: set ft=vim fdm=indent iskeyword&:
+
+" Lagrange
+"
+" Extrema helpers
+"
+" Joseph-Louis Lagrange is a mathematician, pioneer in :
+"   - extrema of a function with constraints
+"   - functionals
+"   - variation calculus
+
+fun! torustree#lagrange#argmin (list)
+	" Returns indexes where list[index] = min(list)
+	let list = a:list
+	let minimum = min(list)
+	let indexes = []
+	for ind in torustree#chain#rangelen(list)
+		if list[ind] == minimum
+			eval indexes->add(ind)
+		endif
+	endfor
+	return indexes
+endfun
+
+fun! torustree#lagrange#argmax (list)
+	" Returns indexes where list[index] = max(list)
+	let list = a:list
+	let maximum = max(list)
+	let indexes = []
+	for ind in torustree#chain#rangelen(list)
+		if list[ind] == maximum
+			eval indexes->add(ind)
+		endif
+	endfor
+	return indexes
+endfun

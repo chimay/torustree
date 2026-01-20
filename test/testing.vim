@@ -34,7 +34,7 @@ com! Inlist  :echo input('Var ? ', '', 'customlist,CompleteList')
 " Script variables {{{1
 
 " Does not work
-"source autoload/wheeltree/hub.vim
+"source autoload/torustree/hub.vim
 "echo 'alternate : ' s:alternate
 
 " }}}1
@@ -252,8 +252,8 @@ call s:Vars ()
 
 " }}}1
 
-" Wheeltree {{{1
+" Torustree {{{1
 
-" {'file': '/home/david/racine/public/wheeltree/test/test.vim', 'col': 8, 'name': 'test', 'line': 54}
+" {'file': '/home/david/racine/public/torustree/test/test.vim', 'col': 8, 'name': 'test', 'line': 54}
 
 " }}}1

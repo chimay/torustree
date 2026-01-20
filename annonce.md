@@ -2,7 +2,7 @@
 
 ## Goal
 
-[Wheeltree](https://github.com/chimay/wheeltree) is a plugin for Vim or Neovim
+[Torustree](https://github.com/chimay/torustree) is a plugin for Vim or Neovim
 aimed at managing buffer groups.
 
 In short, it let you organize your buffers by creating as many buffer
@@ -17,7 +17,7 @@ Note that :
 - A location contains a name, a filename, as well as a line & column number
 - A buffer group, in fact a location group, is called a circle
 - A set of buffer groups, or a category, is called a torus (a circle of circles)
-- The list of toruses is called the wheeltree
+- The list of toruses is called the torustree
 
 ## Features
 
@@ -30,9 +30,9 @@ Note that :
   + Jump to matching tab & window if available
   + Choose file, group or category in special buffer
     * Filter candidates
-	* Folds matching wheeltree tree structure
+	* Folds matching torustree tree structure
   + Auto `:lcd` to project root of current file
-- May be saved in wheeltree file
+- May be saved in torustree file
 - Reordering elements
 - Moving elements
 - Display files
@@ -48,16 +48,16 @@ Note that :
 Simply add this line to your initialisation file :
 
 ```vim
-call minpac#add('chimay/wheeltree', { 'type' : 'start' })
+call minpac#add('chimay/torustree', { 'type' : 'start' })
 ```
 
 and it’s done.
 
 # Documentation
 
-Your guide on the wheeltree tracks :
+Your guide on the torustree tracks :
 
 ```vim
- :help wheeltree.txt
+ :help torustree.txt
  ```
 

@@ -1,35 +1,35 @@
-*wheeltree.txt*		File Group Manager for Vim and Neovim
+*torustree.txt*		File Group Manager for Vim and Neovim
 
 ==============================================================================
-CONTENTS			*wheeltree*
+CONTENTS			*torustree*
 
-Introduction			|wheeltree-introduction|
-Step by step			|wheeltree-step-by-step|
-Workflow			|wheeltree-workflow|
-Straightforward functions	|wheeltree-straightforward-functions|
-Prompting functions		|wheeltree-prompting-functions|
-Dedicated buffers		|wheeltree-dedicated-buffers|
-Commands			|wheeltree-commands|
-Functions			|wheeltree-functions|
-Configuration			|wheeltree-configuration|
-Autocommands			|wheeltree-autocommands|
-Mappings			|wheeltree-mappings|
-Examples			|wheeltree-examples|
-Files				|wheeltree-files|
+Introduction			|torustree-introduction|
+Step by step			|torustree-step-by-step|
+Workflow			|torustree-workflow|
+Straightforward functions	|torustree-straightforward-functions|
+Prompting functions		|torustree-prompting-functions|
+Dedicated buffers		|torustree-dedicated-buffers|
+Commands			|torustree-commands|
+Functions			|torustree-functions|
+Configuration			|torustree-configuration|
+Autocommands			|torustree-autocommands|
+Mappings			|torustree-mappings|
+Examples			|torustree-examples|
+Files				|torustree-files|
 
 ==============================================================================
-INTRODUCTION						*wheeltree-introduction*
+INTRODUCTION						*torustree-introduction*
 
-What is it ?			|wheeltree-introduction-what|
-File groups			|wheeltree-introduction-file-groups|
-Features			|wheeltree-introduction-features|
-History				|wheeltree-introduction-history|
-Prerequisites			|wheeltree-introduction-prerequisites|
+What is it ?			|torustree-introduction-what|
+File groups			|torustree-introduction-file-groups|
+Features			|torustree-introduction-features|
+History				|torustree-introduction-history|
+Prerequisites			|torustree-introduction-prerequisites|
 
 ------------------------------------------------------------------------------
-WHAT IS IT					*wheeltree-introduction-what*
+WHAT IS IT					*torustree-introduction-what*
 
-Wheeltree is a :
+Torustree is a :
 
 - file group manager
 - navigation plugin
@@ -37,7 +37,7 @@ Wheeltree is a :
 
 for Vim and Neovim.
 
-Our favorite editor has already plenty of nice navigation functions. Wheeltree
+Our favorite editor has already plenty of nice navigation functions. Torustree
 enhances their interface by using :
 
 - intuitive completion with multi-pattern support for prompting functions
@@ -45,14 +45,14 @@ enhances their interface by using :
   the full power of your editor
 - a meta-command with subcommands, actions and completion
 - edit modes, that allow you to reflect your changes in a dedicated buffer to
-  wheeltree elements, or into file(s)
+  torustree elements, or into file(s)
 
 All is written in lightweight, classical Vimscript.
 
 ------------------------------------------------------------------------------
-FILE GROUPS				*wheeltree-introduction-file-groups*
+FILE GROUPS				*torustree-introduction-file-groups*
 
-Wheeltree let you organize your files by creating as many file groups as
+Torustree let you organize your files by creating as many file groups as
 you need, add the files you want to it and quickly navigate between :
 
 - files of the same group
@@ -63,7 +63,7 @@ Note that :
 - a location contains a name, a filename, as well as a line & column number
 - a file group, in fact a location group, is called a circle
 - a set of file groups is called a torus (a circle of circles)
-- the list of toruses is called the wheeltree
+- the list of toruses is called the torustree
 
 Why do you need three levels of grouping ?~
 
@@ -71,7 +71,7 @@ At first glance, managing groups with circles in a torus seems to
 be sufficient. But with time, the torus grows big, and a third level
 helps you to organize your files by groups and categories:
 
-  - the wheeltree contains all the toruses
+  - the torustree contains all the toruses
   - each torus contains a category of files, e.g.:
     + configuration, development, publication
   - each circle contains a project, e.g.:
@@ -79,7 +79,7 @@ helps you to organize your files by groups and categories:
     + shell or vimscript in development torus
     + tea or art in publication torus
 
-You can also organize a torus in subprojects. For instance, in the wheeltree
+You can also organize a torus in subprojects. For instance, in the torustree
 torus, I have the following groups :
 
   - plugin/ dir files
@@ -88,9 +88,9 @@ torus, I have the following groups :
   - wiki files
   - test files
 
-A wheeltree that follows you~
+A torustree that follows you~
     ~
-Wheeltree is designed to follow your workflow : you only add the files
+Torustree is designed to follow your workflow : you only add the files
 you want, where you want. For instance, if you have a `organize` group
 with agenda & todo files, you can quickly alternate them, or display
 them in two windows. Then, if you suddenly got an idea to tune vim,
@@ -99,13 +99,13 @@ it. Same process, to cycle, alternate or display the files. Over time,
 your groups will grow and adapt to your style.
 
 ------------------------------------------------------------------------------
-FEATURES				*wheeltree-introduction-features*
+FEATURES				*torustree-introduction-features*
 
 - add
   + files from anywhere in the filesystem
   + a file in more than one group
   + file:line-1 and file:line-2 in the same group
-- may be saved in wheeltree file (recommended)
+- may be saved in torustree file (recommended)
 - on demand loading of files
   + no slowdown of (neo)vim start
 - easy navigation
@@ -116,18 +116,18 @@ FEATURES				*wheeltree-introduction-features*
     * filter candidates
     * selection tools
     * preview
-    * folds matching wheeltree tree structure
+    * folds matching torustree tree structure
     * context menus
   + auto |:lcd| to project root of current file
-  + history of wheeltree files
+  + history of torustree files
     * anywhere
     * in same group
     * in same category
-  + signs displayed at wheeltree locations
+  + signs displayed at torustree locations
 - search files
   + using locate
   + using find
-  + MRU files not found in wheeltree
+  + MRU files not found in torustree
   + opened buffers
   + visible buffers in tabs & windows
 - search inside files
@@ -148,7 +148,7 @@ FEATURES				*wheeltree-introduction-features*
   + paste before or after, linewise or characterwise
   + switch register ring
 - reorganizing
-  + wheeltree elements
+  + torustree elements
   + tabs & windows
 - undo list
   + diff between last & chosen state
@@ -174,7 +174,7 @@ FEATURES				*wheeltree-introduction-features*
     * toruses on tabs, circles on split
 
 ------------------------------------------------------------------------------
-HISTORY						*wheeltree-introduction-history*
+HISTORY						*torustree-introduction-history*
 
 This project is inspired by :
 
@@ -196,7 +196,7 @@ This project is inspired by :
   self-explanatory
 
 ------------------------------------------------------------------------------
-PREREQUISITES				*wheeltree-introduction-prerequisites*
+PREREQUISITES				*torustree-introduction-prerequisites*
 
 - vim >= 8.2
 - neovim >= 0.6
@@ -217,24 +217,24 @@ Some outer rim functions assume a Unix-like OS, like Linux or BSD :
 
 - async functions
 - external commands, like locate
-- mirror the wheeltree structure in a filesystem tree
+- mirror the torustree structure in a filesystem tree
 
 Most of it should work out of the box on other OSes, however. If you
 encounter some problem, please let me know.
 
 ==============================================================================
-STEP BY STEP						*wheeltree-step-by-step*
+STEP BY STEP						*torustree-step-by-step*
 
-Prefix				    |wheeltree-sbs-prefix|
-One map to ring them all	    |wheeltree-sbs-one-map-to-ring-them-all|
-One command to launch them all	    |wheeltree-sbs-one-command-to-launch-them-all|
-First circles			    |wheeltree-sbs-first-circles|
-Moving around			    |wheeltree-sbs-moving-around|
-Square the circle		    |wheeltree-sbs-square-the-circle|
-Tags				    |wheeltree-sbs-tags|
+Prefix				    |torustree-sbs-prefix|
+One map to ring them all	    |torustree-sbs-one-map-to-ring-them-all|
+One command to launch them all	    |torustree-sbs-one-command-to-launch-them-all|
+First circles			    |torustree-sbs-first-circles|
+Moving around			    |torustree-sbs-moving-around|
+Square the circle		    |torustree-sbs-square-the-circle|
+Tags				    |torustree-sbs-tags|
 
 ------------------------------------------------------------------------------
-PREFIX						*wheeltree-sbs-prefix*
+PREFIX						*torustree-sbs-prefix*
 
 In the following discussion, I assume that you have kept the default
 mapping prefix : >
@@ -243,47 +243,47 @@ mapping prefix : >
 <
 
 ------------------------------------------------------------------------------
-ONE MAP TO RING THEM ALL		*wheeltree-sbs-one-map-to-ring-them-all*
+ONE MAP TO RING THEM ALL		*torustree-sbs-one-map-to-ring-them-all*
 
-To get an overview of the Wheeltree, I suggest you take a look at the main
+To get an overview of the Torustree, I suggest you take a look at the main
 menu. Press `<M-w><M-m>` and a new window will appear, listing the actions
 you can perform. Insert mode is used to filter the lines. Press enter
 in normal mode to trigger an action (if you know what you're doing),
 or `q` to quit the menu.
 
-To learn more about menus, see |wheeltree-dedicated-buffers-menus|.
+To learn more about menus, see |torustree-dedicated-buffers-menus|.
 
 ------------------------------------------------------------------------------
-ONE COMMAND TO LAUNCH THEM ALL		*wheeltree-sbs-one-command-to-launch-them-all*
+ONE COMMAND TO LAUNCH THEM ALL		*torustree-sbs-one-command-to-launch-them-all*
 
-The |:Wheeltree| command can be used to launch any wheeltree functionality. The
+The |:Torustree| command can be used to launch any torustree functionality. The
 general syntax is : >
 
-    :Wheeltree {subcommand}
+    :Torustree {subcommand}
     " or
-    :Wheeltree {subcommand} {action}
+    :Torustree {subcommand} {action}
 <
 
 To see all possibilities, just hit tab after a space, e.g. : >
 
-    :Wheeltree <tab>
+    :Torustree <tab>
     " or
-    :Wheeltree {subcommand} <tab>
+    :Torustree {subcommand} <tab>
 <
 
 For example, you can use : >
 
-    :Wheeltree dedibuf menu-main
+    :Torustree dedibuf menu-main
 <
 
 to launch the main menu.
 
 ------------------------------------------------------------------------------
-FIRST CIRCLES				    	    *wheeltree-sbs-first-circles*
+FIRST CIRCLES				    	    *torustree-sbs-first-circles*
 
 Let's say we have the files `Juice`, `Tea`, `Coffee` and we want to
 group them. So, we go to `Juice` and type `<M-w>a` to add a location to
-the wheeltree. If no category (no torus) is present in the wheeltree, it will
+the torustree. If no category (no torus) is present in the torustree, it will
 create it and ask for a name. Let's say we name it `Food`. If no group
 (no circle) is found in the torus, it will be created and prompt for a
 name. Let's say we choose `Drinks`. Finally, we are asked to choose a
@@ -326,7 +326,7 @@ Adding quicker~
 
 If you want to edit a file and add it at the same time, you can use
 `<M-w>+f` ; a file completion is available at the prompt. This map can
-also be used to edit a new file and add it to the wheeltree at once.
+also be used to edit a new file and add it to the torustree at once.
 
 If you want to add a buffer, you can use `<M-w>+b` ; a buffer completion
 is available.
@@ -334,7 +334,7 @@ is available.
 What happens if you have a lot of files ? Let's say the `novels`
 folder, located in the current directory, contains dozen of novels
 in plain text format. You can add all of them at once with the
-`add_glob` function. Press `<M-w>*` and wheeltree will ask you to enter a
+`add_glob` function. Press `<M-w>*` and torustree will ask you to enter a
 glob pattern. You can answer `novels/*` to add all files in there. If
 there are more levels of subdirs and you want to include all of them,
 you can enter `novels/**/*` instead. Then, it will ask if you want to
@@ -346,14 +346,14 @@ Don't forget to |:cd| to the right directory before launching this
 function.
 
 ------------------------------------------------------------------------------
-MOVING AROUND					     *wheeltree-sbs-moving-around*
+MOVING AROUND					     *torustree-sbs-moving-around*
 
 Cycling~
 
 You can cycle the files of a circle with `<M-w><PageUp>` and
 `<M-w><PageDown>`. These are often used bindings, so I suggest you map
 them to more convenient keys, like `<M-PageUp>` and `<M-PageDown>`. See
-|wheeltree-mappings-level-10|.
+|torustree-mappings-level-10|.
 
 To cycle the circles, use `<M-w><C-PageUp>` and `<M-w><C-PageDown>`. You
 can also map them to more convenient keys, like `<C-PageUp>` and
@@ -364,22 +364,22 @@ or map them to `<S-PageUp>` and `<S-PageDown>`.
 
 Switching~
 
-You can also switch wheeltree element by name :
+You can also switch torustree element by name :
 
 - `<M-w><Enter>`   : switch location by name
 - `<M-w><C-Enter>` : switch circle by name
 - `<M-w><S-Enter>` : switch torus by name
 
-A completion is available, see |wheeltree-prompting-functions-completion|.
+A completion is available, see |torustree-prompting-functions-completion|.
 
-If you want to go to a far place in the wheeltree, use the wheeltree index :
+If you want to go to a far place in the torustree, use the torustree index :
 
-- switch to any location in the wheeltree index with `<M-w>x`
-- switch to any circle in the wheeltree index with `<M-w><C-x>`
+- switch to any location in the torustree index with `<M-w>x`
+- switch to any circle in the torustree index with `<M-w><C-x>`
 
 As usual, name completion is available at the prompt.
 
-Let's say you have these entries in the wheeltree :
+Let's say you have these entries in the torustree :
 
 | torus  | circle  | location    |
 | ------ | ------- | ----------- |
@@ -406,11 +406,11 @@ As usual, hit enter to validate you choice.
 
 Switching using a dedicated buffer~
 
-You can also switch location, circle or torus by chosing it in a wheeltree
-navigation buffer. See |wheeltree-dedicated-buffers-navigation|.
+You can also switch location, circle or torus by chosing it in a torustree
+navigation buffer. See |torustree-dedicated-buffers-navigation|.
 
 ------------------------------------------------------------------------------
-SQUARE THE CIRCLE				*wheeltree-sbs-square-the-circle*
+SQUARE THE CIRCLE				*torustree-sbs-square-the-circle*
 
 Over time, the number of circles will grow. Completion is great, but if
 you just want to alternate the last two locations in history, you'll
@@ -426,7 +426,7 @@ probably prefer the alternate functions :
 I strongly suggest you map a convenient key, like `<C-^>`, to
 alternate-anywhere, it's one of the most often used binding. Same
 thing with `<M-C-^>` and alternate-same-torus-other-circle.
-See |wheeltree-mappings-level-10| for more information.
+See |torustree-mappings-level-10| for more information.
 
 A common case is to alternate two files in the same circle, and two
 circles in the same torus. So, you have the square :
@@ -439,30 +439,30 @@ Circle Fruits | Apple           | Pear
 at your fingertips.
 
 ------------------------------------------------------------------------------
-TAGS						*wheeltree-sbs-tags*
+TAGS						*torustree-sbs-tags*
 
 If you use a tags file, you can jump to any tag with `<M-w>t`.
 Completion is available at the prompt.
 
 For instance, `pro fol<Tab>` gives me the function
-`wheeltree#projection#follow` straight away. Warp speed, Scotty.
+`torustree#projection#follow` straight away. Warp speed, Scotty.
 
 You can also search for a tag in a dedicated buffer with `<M-w><M-t>`.
 
 There are also functions for buffers, marks, jumps or changes.
-See |wheeltree-prompting-functions-switch|.
+See |torustree-prompting-functions-switch|.
 
 ==============================================================================
-WORKFLOW						*wheeltree-workflow*
+WORKFLOW						*torustree-workflow*
 
-Interfaces				|wheeltree-workflow-interfaces|
-Mappings				|wheeltree-workflow-mappings|
-Autoread & write wheeltree			|wheeltree-workflow-auto-read-write|
+Interfaces				|torustree-workflow-interfaces|
+Mappings				|torustree-workflow-mappings|
+Autoread & write torustree			|torustree-workflow-auto-read-write|
 
 ------------------------------------------------------------------------------
-INTERFACES						*wheeltree-workflow-approach*
+INTERFACES						*torustree-workflow-approach*
 
-Wheeltree has four main interfaces :
+Torustree has four main interfaces :
 
 - straightforward functions : for action that does not require any user input
 - prompting functions : require user input at prompt
@@ -477,15 +477,15 @@ Wheeltree has four main interfaces :
 
 See :
 
-- |wheeltree-straightforward-functions|
-- |wheeltree-prompting-functions|
-- |wheeltree-dedicated-buffers|
-- |wheeltree-commands|
+- |torustree-straightforward-functions|
+- |torustree-prompting-functions|
+- |torustree-dedicated-buffers|
+- |torustree-commands|
 
 ------------------------------------------------------------------------------
-MAPPINGS					    *wheeltree-workflow-mappings*
+MAPPINGS					    *torustree-workflow-mappings*
 
-To avoid conflict with your personal bindings, wheeltree mappings until level
+To avoid conflict with your personal bindings, torustree mappings until level
 2 included are all using a generic prefix. The first step is to choose
 a prefix you are comfortable with. Here are some ideas you could use : >
 
@@ -519,31 +519,31 @@ Define your own maps~
 
 Two possibilities here, either you use the plugs, like this : >
 
-    nmap <silent> <M-m> <plug>(wheeltree-menu-main)
+    nmap <silent> <M-m> <plug>(torustree-menu-main)
 <
 
 or the meta-command : >
 
-    nnoremap <silent> <M-m> :Wheeltree dedibuf menu-main<cr>
+    nnoremap <silent> <M-m> :Torustree dedibuf menu-main<cr>
 <
 
-Seel also |wheeltree-mappings-define-your-own-maps|.
+Seel also |torustree-mappings-define-your-own-maps|.
 
-If you're looking for a specific Wheeltree function, see
-|wheeltree-mappings-exhaustive-list|.
+If you're looking for a specific Torustree function, see
+|torustree-mappings-exhaustive-list|.
 
 ------------------------------------------------------------------------------
-AUTO READ AND WRITE				*wheeltree-workflow-auto-read-write*
+AUTO READ AND WRITE				*torustree-workflow-auto-read-write*
 
 You probably want to make your files groups persistent. For that, you
-need to enable auto read & write of the wheeltree file : >
+need to enable auto read & write of the torustree file : >
 
     let g:wheeltree_config.autoread = 1
     let g:wheeltree_config.autowrite = 1
-    augroup wheeltree
+    augroup torustree
         autocmd!
-        autocmd VimEnter * call wheeltree#void#init()
-        autocmd VimLeave * call wheeltree#void#exit()
+        autocmd VimEnter * call torustree#void#init()
+        autocmd VimLeave * call torustree#void#exit()
     augroup END
 >
 
@@ -551,17 +551,17 @@ Don't worry about the size : I have 1000+ files in my groups, and it is
 still fluid, thanks to on-demand file loading.
 
 Generally speaking, this plugin is designed to let the user control the flow.
-If you want to automate more, take a look at |wheeltree-autocommands|.
+If you want to automate more, take a look at |torustree-autocommands|.
 
 ==============================================================================
-STRAIGHTFORWARD FUNCTIONS			*wheeltree-straightforward-functions*
+STRAIGHTFORWARD FUNCTIONS			*torustree-straightforward-functions*
 
-Navigation			    |wheeltree-straightforward-functions-navigation|
-Info				    |wheeltree-straightforward-functions-info|
-Sync				    |wheeltree-straightforward-functions-sync|
+Navigation			    |torustree-straightforward-functions-navigation|
+Info				    |torustree-straightforward-functions-info|
+Sync				    |torustree-straightforward-functions-sync|
 
 ------------------------------------------------------------------------------
-NAVIGATION				*wheeltree-straightforward-functions-navigation*
+NAVIGATION				*torustree-straightforward-functions-navigation*
 
 Next~
 
@@ -585,9 +585,9 @@ History~
 - newer location in same torus : `<M-w><S-End>`
 
 ------------------------------------------------------------------------------
-INFO					*wheeltree-straightforward-functions-info*
+INFO					*torustree-straightforward-functions-info*
 
-Display a dashboard indicating the wheeltree state : >
+Display a dashboard indicating the torustree state : >
 
     current torus > current circle > current location
 <
@@ -595,16 +595,16 @@ Display a dashboard indicating the wheeltree state : >
 Default mapping : `<M-w>i`
 
 ------------------------------------------------------------------------------
-SYNC					*wheeltree-straightforward-functions-sync*
+SYNC					*torustree-straightforward-functions-sync*
 
-Sync down : wheeltree -> vim state~
+Sync down : torustree -> vim state~
 
-The `jump` function loads the current file & position of the wheeltree in
+The `jump` function loads the current file & position of the torustree in
 the current window. If the file is already displayed in another window,
 jump to it instead.
 
 This sync-down process is automatically run by every navigation map
-that deals with elements in the wheeltree.
+that deals with elements in the torustree.
 
 Sometimes however, you want to quickly edit a file that has nothing to
 do with your usual groups. You can then go back by manually launching
@@ -615,15 +615,15 @@ the sync-down. The default binding is : >
 
 This process can be partly automated, see :
 
-Sync up : current file & position -> wheeltree~
+Sync up : current file & position -> torustree~
 
-The `follow` function try to find the closest location in the wheeltree that
-matches the current file & position. If found, the wheeltree current location
+The `follow` function try to find the closest location in the torustree that
+matches the current file & position. If found, the torustree current location
 is synced with the current file.
 
 Let's say you edit a file, load a buffer or go to a tab or window
-without using a wheeltree map. The wheeltree state will then be distinct from
-your current file. You can ask the wheeltree to follow the current file by
+without using a torustree map. The torustree state will then be distinct from
+your current file. You can ask the torustree to follow the current file by
 manually launch the sync-up process. The default mapping is : >
 
     <M-w><M-$>
@@ -631,8 +631,8 @@ manually launch the sync-up process. The default mapping is : >
 
 This process can be partly automated, see :
 
-- |wheeltree-autocommands-auto-follow|.
-- |wheeltree-autocommands-after-native|.
+- |torustree-autocommands-auto-follow|.
+- |torustree-autocommands-after-native|.
 
 Sync up : update current location line & column~
 
@@ -642,26 +642,26 @@ The `update` function updates the current location to match cursor line
 
 This process can be partly automated, see :
 
-- |wheeltree-autocommands-auto-update|.
-- |wheeltree-autocommands-before-jump|.
+- |torustree-autocommands-auto-update|.
+- |torustree-autocommands-before-jump|.
 
 ==============================================================================
-PROMPTING FUNCTIONS				*wheeltree-prompting-functions*
+PROMPTING FUNCTIONS				*torustree-prompting-functions*
 
-Completion			    |wheeltree-prompting-functions-completion|
-Switch				    |wheeltree-prompting-functions-switch|
-Search				    |wheeltree-prompting-functions-search|
-Add				    |wheeltree-prompting-functions-add|
-Delete				    |wheeltree-prompting-functions-delete|
-Rename				    |wheeltree-prompting-functions-rename|
-Copy				    |wheeltree-prompting-functions-copy|
-Move				    |wheeltree-prompting-functions-move|
-Yank ring			    |wheeltree-prompting-functions-yank|
+Completion			    |torustree-prompting-functions-completion|
+Switch				    |torustree-prompting-functions-switch|
+Search				    |torustree-prompting-functions-search|
+Add				    |torustree-prompting-functions-add|
+Delete				    |torustree-prompting-functions-delete|
+Rename				    |torustree-prompting-functions-rename|
+Copy				    |torustree-prompting-functions-copy|
+Move				    |torustree-prompting-functions-move|
+Yank ring			    |torustree-prompting-functions-yank|
 
 ------------------------------------------------------------------------------
-COMPLETION			    *wheeltree-prompting-functions-completion*
+COMPLETION			    *torustree-prompting-functions-completion*
 
-When a wheeltree function needs to prompt the user for input, it offers
+When a torustree function needs to prompt the user for input, it offers
 completion wherever possible. The completion type depends of course on
 the nature of the asked entry :
 
@@ -717,11 +717,11 @@ If `g:wheeltree_config.completion.vocalize` is greater than 0, the plugin adds
 vowels patterns between the chars you enter, to enable a kind of vowels-fuzzy
 completion.
 
-This way, if you have the completion list `profile`, `proof`, `wheeltree`
+This way, if you have the completion list `profile`, `proof`, `torustree`
 and `organize` :
 
 - the pattern `prf` will narrow down to `profile`, `proof`
-- the pattern `hl` will narrow down to `wheeltree`
+- the pattern `hl` will narrow down to `torustree`
 - the pattern `gn` will narrow down to `organize`
 
 Word fuzzy~
@@ -730,11 +730,11 @@ If `g:wheeltree_config.completion.wordize` is greater than 0, the plugin
 adds word-characters patterns between the chars you enter, to enable
 a kind of word-fuzzy completion.
 
-This way, if you have the completion list `profile`, `proof`, `wheeltree`
+This way, if you have the completion list `profile`, `proof`, `torustree`
 and `organize` :
 
 - the pattern `pof` will narrow down to `profile`, `proof`
-- the pattern `we` will narrow down to `wheeltree`
+- the pattern `we` will narrow down to `torustree`
 - the pattern `oai` will narrow down to `organize`
 
 Scores~
@@ -762,15 +762,15 @@ beginning fo your input :
 | anything else      | current directory tree, recursive       | multi      |
 
 ------------------------------------------------------------------------------
-SWITCH					    *wheeltree-prompting-functions-switch*
+SWITCH					    *torustree-prompting-functions-switch*
 
-Switch element in the wheeltree~
+Switch element in the torustree~
 
 | Function                 | Completion list              | Default binding |
 | ------------------------ | ---------------------------- | --------------- |
 | switch location          | locations of current circle  | <M-w><Enter>    |
 | switch circle            | circles of the current torus | <M-w><C-Enter>  |
-| switch torus             | toruses in the wheeltree         | <M-w><S-Enter>  |
+| switch torus             | toruses in the torustree         | <M-w><S-Enter>  |
 | multi switch             | toruses, circles & locations | <M-w><M-Enter>  |
 | switch location in index | index locations              | <M-w>x          |
 | switch circle in index   | index circles                | <M-w><C-x>      |
@@ -797,24 +797,24 @@ Switch dedicated buffer~
 
 The default mapping is `<M-w><Up>`.
 
-See |wheeltree-dedicated-buffers-ring|.
+See |torustree-dedicated-buffers-ring|.
 
 Switch layer in ring~
 
 You must be in a dedicated buffer to launch it. The local mapping is
 `<M-l>`, or `<C-Down>`.
 
-See also |wheeltree-dedicated-buffers-layers|.
+See also |torustree-dedicated-buffers-layers|.
 
 ------------------------------------------------------------------------------
-SEARCH					    *wheeltree-prompting-functions-search*
+SEARCH					    *torustree-prompting-functions-search*
 
 Search file~
 
 | Function         | Completion list                      | Default binding |
 | ---------------- | ------------------------------------ | --------------- |
 | find file        | find file in current dir tree        | <M-w>f          |
-| mru file         | most recently used, non wheeltree files  | <M-w>u          |
+| mru file         | most recently used, non torustree files  | <M-w>u          |
 
 Search inside file~
 
@@ -824,7 +824,7 @@ Search inside file~
 | outline             | outline for folds, markdown, org, vimwiki | <M-w><C-o>      |
 
 ------------------------------------------------------------------------------
-ADD					    *wheeltree-prompting-functions-add*
+ADD					    *torustree-prompting-functions-add*
 
 Add a new torus~
 
@@ -868,7 +868,7 @@ You can also add :
 - all files matching a glob with `<M-w>*`
 
 ------------------------------------------------------------------------------
-DELETE					    *wheeltree-prompting-functions-delete*
+DELETE					    *torustree-prompting-functions-delete*
 
 Default mappings :
 
@@ -877,7 +877,7 @@ Default mappings :
 - `<M-w>D`     : delete torus
 
 ------------------------------------------------------------------------------
-RENAME					    *wheeltree-prompting-functions-rename*
+RENAME					    *torustree-prompting-functions-rename*
 
 Rename the current torus~
 
@@ -900,20 +900,20 @@ Rename current location & file~
 The default mapping is `<M-w><M-n>`.
 
 ------------------------------------------------------------------------------
-COPY					    *wheeltree-prompting-functions-copy*
+COPY					    *torustree-prompting-functions-copy*
 
 - `<M-w>c`     : copy location to another circle
 - `<M-w><M-c>` : copy circle to another torus
 - `<M-w>C`     : copy torus
 
 ------------------------------------------------------------------------------
-MOVE					    *wheeltree-prompting-functions-move*
+MOVE					    *torustree-prompting-functions-move*
 
 - `<M-w>m`     : copy location to another circle
 - `<M-w>M`   : copy circle to another torus
 
 ------------------------------------------------------------------------------
-YANK RING					*wheeltree-prompting-functions-yank*
+YANK RING					*torustree-prompting-functions-yank*
 
 - `<M-w><C-y>` : switch default register to use in yank functions
 - `<M-w>y`     : paste from yank ring linewise, after the sursor
@@ -931,60 +931,60 @@ Each candidate of the completion list is one of your yanks, represented
 as a string.
 
 ==============================================================================
-DEDICATED BUFFERS				    *wheeltree-dedicated-buffers*
+DEDICATED BUFFERS				    *torustree-dedicated-buffers*
 
-Introduction			|wheeltree-dedicated-buffers-introduction|
-Selection			|wheeltree-dedicated-buffers-selection|
-Filtering			|wheeltree-dedicated-buffers-filtering|
-Input history			|wheeltree-dedicated-buffers-input-history|
-Preview				|wheeltree-dedicated-buffers-preview|
-Folds				|wheeltree-dedicated-buffers-folds|
-Non writable			|wheeltree-dedicated-buffers-non-writable|
-Writable			|wheeltree-dedicated-buffers-writable|
-Dedicated buffers ring		|wheeltree-dedicated-buffers-ring|
-Layer ring			|wheeltree-dedicated-buffers-layers|
-Menu				|wheeltree-dedicated-buffers-menus|
-Context menus			|wheeltree-dedicated-buffers-context|
-Navigation			|wheeltree-dedicated-buffers-navigation|
-Within the wheeltree		|wheeltree-dedicated-buffers-within-wheeltree|
-Buffers				|wheeltree-dedicated-buffers-buffers|
-Tabs & windows in tree mode	|wheeltree-dedicated-buffers-tabwin-tree|
-Tabs & windows			|wheeltree-dedicated-buffers-tabwin|
-Find 				|wheeltree-dedicated-buffers-find|
-Async find 			|wheeltree-dedicated-buffers-async-find|
-MRU files			|wheeltree-dedicated-buffers-mru|
-Locate	 			|wheeltree-dedicated-buffers-locate|
-Occur				|wheeltree-dedicated-buffers-occur|
-Grep				|wheeltree-dedicated-buffers-grep|
-Outline				|wheeltree-dedicated-buffers-outline|
-Markers				|wheeltree-dedicated-buffers-markers|
-Jumps				|wheeltree-dedicated-buffers-jumps|
-Changes				|wheeltree-dedicated-buffers-changes|
-Tags				|wheeltree-dedicated-buffers-tags|
-Reorder				|wheeltree-dedicated-buffers-reorder|
-Rename			        |wheeltree-dedicated-buffers-rename|
-Delete			        |wheeltree-dedicated-buffers-delete|
-Copy and move		        |wheeltree-dedicated-buffers-copy-move|
-Reorganize			|wheeltree-dedicated-buffers-reorganize|
-Reorganize tabs & windows	|wheeltree-dedicated-buffers-reorg-tabwin|
-Grep edit mode			|wheeltree-dedicated-buffers-grep-edit|
-Narrow current file		|wheeltree-dedicated-buffers-narrow-file|
-Narrow all circle files		|wheeltree-dedicated-buffers-narrow-circle|
-Yank ring			|wheeltree-dedicated-buffers-yank|
-Undo list			|wheeltree-dedicated-buffers-undolist|
-Batch buffer			|wheeltree-dedicated-buffers-batch|
-Command output buffer		|wheeltree-dedicated-buffers-command|
+Introduction			|torustree-dedicated-buffers-introduction|
+Selection			|torustree-dedicated-buffers-selection|
+Filtering			|torustree-dedicated-buffers-filtering|
+Input history			|torustree-dedicated-buffers-input-history|
+Preview				|torustree-dedicated-buffers-preview|
+Folds				|torustree-dedicated-buffers-folds|
+Non writable			|torustree-dedicated-buffers-non-writable|
+Writable			|torustree-dedicated-buffers-writable|
+Dedicated buffers ring		|torustree-dedicated-buffers-ring|
+Layer ring			|torustree-dedicated-buffers-layers|
+Menu				|torustree-dedicated-buffers-menus|
+Context menus			|torustree-dedicated-buffers-context|
+Navigation			|torustree-dedicated-buffers-navigation|
+Within the torustree		|torustree-dedicated-buffers-within-torustree|
+Buffers				|torustree-dedicated-buffers-buffers|
+Tabs & windows in tree mode	|torustree-dedicated-buffers-tabwin-tree|
+Tabs & windows			|torustree-dedicated-buffers-tabwin|
+Find 				|torustree-dedicated-buffers-find|
+Async find 			|torustree-dedicated-buffers-async-find|
+MRU files			|torustree-dedicated-buffers-mru|
+Locate	 			|torustree-dedicated-buffers-locate|
+Occur				|torustree-dedicated-buffers-occur|
+Grep				|torustree-dedicated-buffers-grep|
+Outline				|torustree-dedicated-buffers-outline|
+Markers				|torustree-dedicated-buffers-markers|
+Jumps				|torustree-dedicated-buffers-jumps|
+Changes				|torustree-dedicated-buffers-changes|
+Tags				|torustree-dedicated-buffers-tags|
+Reorder				|torustree-dedicated-buffers-reorder|
+Rename			        |torustree-dedicated-buffers-rename|
+Delete			        |torustree-dedicated-buffers-delete|
+Copy and move		        |torustree-dedicated-buffers-copy-move|
+Reorganize			|torustree-dedicated-buffers-reorganize|
+Reorganize tabs & windows	|torustree-dedicated-buffers-reorg-tabwin|
+Grep edit mode			|torustree-dedicated-buffers-grep-edit|
+Narrow current file		|torustree-dedicated-buffers-narrow-file|
+Narrow all circle files		|torustree-dedicated-buffers-narrow-circle|
+Yank ring			|torustree-dedicated-buffers-yank|
+Undo list			|torustree-dedicated-buffers-undolist|
+Batch buffer			|torustree-dedicated-buffers-batch|
+Command output buffer		|torustree-dedicated-buffers-command|
 
 ------------------------------------------------------------------------------
-INTRODUCTION				*wheeltree-dedicated-buffers-introduction*
+INTRODUCTION				*torustree-dedicated-buffers-introduction*
 
-Wheeltree dedicated buffers, aka mandalas, allow you to perform Wheeltree
+Torustree dedicated buffers, aka mandalas, allow you to perform Torustree
 operations intuitively, using full power of your editor : search, yank,
 paste, completion, and so on.
 
 The available actions depend on the buffer type :
 
-- menu buffers allow you to launch a wheeltree function
+- menu buffers allow you to launch a torustree function
 - navigation buffers allow you to go to a :
   + location, circle or torus
   + buffer, window, tab
@@ -1009,7 +1009,7 @@ Help~
 The key `<F1>` display a basic help.
 
 The key `<F2>` displays local maps in a new layer. See
-|wheeltree-dedicated-buffers-layers|.
+|torustree-dedicated-buffers-layers|.
 
 Action~
 
@@ -1032,7 +1032,7 @@ Recall~
 
 When you quit a dedicated buffer, its window is closed but it's not
 lost : it's still there, hidden. You can reopen it in a new split with
-`<M-w><left>` or `<M-w><Right>`. See |wheeltree-dedicated-buffers-ring|
+`<M-w><left>` or `<M-w><Right>`. See |torustree-dedicated-buffers-ring|
 for more information.
 
 Wrapping up things~
@@ -1043,7 +1043,7 @@ In normal mode, the keys `j`/`k` and `<up>`/`<down>` wrap the buffer :
 - if on the last line, `j` or `<down>` will go to the first line
 
 ------------------------------------------------------------------------------
-SELECTION				*wheeltree-dedicated-buffers-selection*
+SELECTION				*torustree-dedicated-buffers-selection*
 
 Some dedicated buffers can act on selected entries. You can hit :
 
@@ -1057,7 +1057,7 @@ If a line is selected, it will begin with a distinctive marker.
 You can open all selected files in tabs, splits or vertical splits.
 
 ------------------------------------------------------------------------------
-FILTERING				    *wheeltree-dedicated-buffers-filtering*
+FILTERING				    *torustree-dedicated-buffers-filtering*
 
 In most dedicated buffers, the first line is left almost empty, with
 just a prompt. In insert mode, it is used as an input line to filter
@@ -1137,7 +1137,7 @@ If `small flower` and `big fruit` are selected :
 - the patterns `!=s bi` will narrow down to `big flower`
 
 ------------------------------------------------------------------------------
-INPUT HISTORY				*wheeltree-dedicated-buffers-input-history*
+INPUT HISTORY				*torustree-dedicated-buffers-input-history*
 
 An input history is available in the filter line. You can insert the
 previous/next input in insert mode with `<Up>`/`<Down>` or `<M-p>`/`<M-n>`.
@@ -1147,7 +1147,7 @@ previous/next input matching the beginning of the inserted line, until
 the cursor.
 
 ------------------------------------------------------------------------------
-PREVIEW						*wheeltree-dedicated-buffers-preview*
+PREVIEW						*torustree-dedicated-buffers-preview*
 
 In navigation buffers, you can preview the buffer/location matching the
 cursor line with `p`. It is displayed in the previous window.
@@ -1163,7 +1163,7 @@ It's a toggle key : press `f` again and the follow mode is disabled. You
 should go back automatically to the original buffer.
 
 ------------------------------------------------------------------------------
-FOLDS						*wheeltree-dedicated-buffers-folds*
+FOLDS						*torustree-dedicated-buffers-folds*
 
 Some dedicated buffers use folding to reflect the treeish structure of the
 represented objects.
@@ -1177,10 +1177,10 @@ In the main menu, each fold contains a category of actions.
 
 Default map : `<M-w><M-m>`
 
-Wheeltree tree~
+Torustree tree~
 
 The index/tree buffer use folds to reflect the tree structure of the
-Wheeltree : toruses, circles and locations.
+Torustree : toruses, circles and locations.
 
 Default map : `<M-w><M-x>`
 
@@ -1192,7 +1192,7 @@ and windows in (neo)vim.
 Default map : `<M-w><M-v>`
 
 ------------------------------------------------------------------------------
-NON WRITABLE   				*wheeltree-dedicated-buffers-non-writable*
+NON WRITABLE   				*torustree-dedicated-buffers-non-writable*
 
 Some dedicated buffers are not intended to be edited, except on the filter
 line.
@@ -1203,7 +1203,7 @@ filter on the first line.
 For example, navigation-only dedicated buffers are non writable.
 
 ------------------------------------------------------------------------------
-WRITABLE    				*wheeltree-dedicated-buffers-writable*
+WRITABLE    				*torustree-dedicated-buffers-writable*
 
 Some dedicated buffers are writable, i.e. :
 
@@ -1214,7 +1214,7 @@ Saving such a buffer will reflect the changes on the objects represented by
 the buffer lines.
 
 For instance, saving a rename/location buffer will rename the involved
-locations in the wheeltree.
+locations in the torustree.
 
 Confirmation before writing~
 
@@ -1232,7 +1232,7 @@ modified writable mandala.
 Prompt~
 
 To distinguish non-writable and writable dedicated buffers, the prompt are
-different. You can customize them, see |wheeltree-config-display-prompt|.
+different. You can customize them, see |torustree-config-display-prompt|.
 
 Filter~
 
@@ -1276,21 +1276,21 @@ Pressed the wrong button ?~
 
 If something goes wrong, you can quit the dedicated buffer and :
 
-- re-read the wheeltree variables with `<M-w>r`, if your changes implied the wheeltree
+- re-read the torustree variables with `<M-w>r`, if your changes implied the torustree
 - undo your changes in the buffers, or quit (neo)vim without saving your files
   with `:qa!` if your changes implied files content
 
 Anyway, it's always a good thing to do a backup :
 
-- of the wheeltree with `<M-w>w`
+- of the torustree with `<M-w>w`
 - of your files
 
 Working within a VCS repository, like git, is also a safety net.
 
 ------------------------------------------------------------------------------
-DEDICATED BUFFERS RING  			*wheeltree-dedicated-buffers-ring*
+DEDICATED BUFFERS RING  			*torustree-dedicated-buffers-ring*
 
-Wheeltree manages a dedicated buffers ring. You can :
+Torustree manages a dedicated buffers ring. You can :
 
 - add a new dedicated buffer as default one with `<M-w><Tab>`
 - switch to another dedicated buffer with `<M-w><Up>`, completion is available
@@ -1311,14 +1311,14 @@ will lead you to the buffer you want. Example of completion candidates : >
     menu | menu/main
 <
 
-A wheeltree dedicated buffer is also called a mandala.
+A torustree dedicated buffer is also called a mandala.
 
 ------------------------------------------------------------------------------
-LAYER RING				*wheeltree-dedicated-buffers-layers*
+LAYER RING				*torustree-dedicated-buffers-layers*
 
 Each dedicated buffer has its own layer ring.
 
-Each time you launch a wheeltree function involving a dedicated buffer, a new
+Each time you launch a torustree function involving a dedicated buffer, a new
 associated layer is added to a ring local to the buffer. You may see it
 as a kind of local history. You can :
 
@@ -1345,7 +1345,7 @@ So, there are two levels :
 A layer in a dedicated buffer is also called a leaf.
 
 ------------------------------------------------------------------------------
-MENU						*wheeltree-dedicated-buffers-menus*
+MENU						*torustree-dedicated-buffers-menus*
 
 Action~
 
@@ -1365,12 +1365,12 @@ you can launch an action by pressing `<Enter>` on its line.
 
 The available actions are grouped by themes and folded :
 
-- wheeltree help
-- wheeltree status
-- save & load wheeltree file, session file
-- wheeltree navigation
-- native (ie builtin) (neo)vim navigation using Wheeltree interface (buffer, marker, jump, change, tag, ...)
-- organize wheeltree
+- torustree help
+- torustree status
+- save & load torustree file, session file
+- torustree navigation
+- native (ie builtin) (neo)vim navigation using Torustree interface (buffer, marker, jump, change, tag, ...)
+- organize torustree
 - organize native (neo)vim elements (tabs, windows, ...)
 - refactoring
 - search file
@@ -1402,7 +1402,7 @@ In these sub-menus, you can use the keys :
 - `<Backspace>`                  : back to the meta menu, delete submenu layer
 
 ------------------------------------------------------------------------------
-CONTEXT MENUS				*wheeltree-dedicated-buffers-context*
+CONTEXT MENUS				*torustree-dedicated-buffers-context*
 
 Some dedicated buffers have context menu support. In that case, pressing
 `<Tab>` will open a menu where you can choose the action you want to
@@ -1423,9 +1423,9 @@ Context menu of a navigation buffer :
 - open in vertical golden split(s)
 
 ------------------------------------------------------------------------------
-NAVIGATION				*wheeltree-dedicated-buffers-navigation*
+NAVIGATION				*torustree-dedicated-buffers-navigation*
 
-The navigation buffers allow you to quickly switch to a Wheeltree or (neo)vim
+The navigation buffers allow you to quickly switch to a Torustree or (neo)vim
 native location by pressing `<Enter>` on the matching line. You can also
 use the keys :
 
@@ -1445,7 +1445,7 @@ Same keys as above, but leave the navigation buffer opened :
 - `gV` : same as `V`
 
 The navigation buffers also have context menus support.
-See |wheeltree-dedicated-buffers-context|.
+See |torustree-dedicated-buffers-context|.
 
 Writable dedicated buffers~
 
@@ -1483,7 +1483,7 @@ The default mappings launching navigation buffers are :
 - `<M-w>l`         : search files with `locate`
 - `<M-w><M-f>`     : find files in current directory tree using pattern
 - `<M-w>&f`        : search files with `find` in async mode
-- `<M-w><M-u>`     : most recently used files not found in wheeltree (mru)
+- `<M-w><M-u>`     : most recently used files not found in torustree (mru)
 - `<M-w><M-b>`     : switch to buffer (opened file)
 - `<M-w><C-b>`     : switch to buffer, included unlisted ones
 - `<M-w><M-v>`     : switch to visible buffer in tab & window (tree fold mode)
@@ -1497,9 +1497,9 @@ The default mappings launching navigation buffers are :
 - `<M-w><M-t>`     : tags
 
 ------------------------------------------------------------------------------
-WITHIN THE WHEELTREE			*wheeltree-dedicated-buffers-within-wheeltree*
+WITHIN THE TORUSTREE			*torustree-dedicated-buffers-within-torustree*
 
-The dedicated buffers that allow us to navigate in the wheeltree are :
+The dedicated buffers that allow us to navigate in the torustree are :
 
 - `<M-w><Space>`   : location
 - `<M-w><C-space>` : current location of the chosen circle
@@ -1511,7 +1511,7 @@ The dedicated buffers that allow us to navigate in the wheeltree are :
 - `<M-w><M-e>`     : frecency
 
 ------------------------------------------------------------------------------
-BUFFERS						*wheeltree-dedicated-buffers-buffers*
+BUFFERS						*torustree-dedicated-buffers-buffers*
 
 Go to buffer.
 
@@ -1529,7 +1529,7 @@ buffer number | indicator | line number | filename
 For the indicator meaning, see |:buffers|.
 
 ------------------------------------------------------------------------------
-TABS AND WINDOWS IN TREE MODE		*wheeltree-dedicated-buffers-tabwin-tree*
+TABS AND WINDOWS IN TREE MODE		*torustree-dedicated-buffers-tabwin-tree*
 
 Go to visible buffer, displayed in a tab or window. Folding mode
 matching the tree of tabs and windows.
@@ -1537,7 +1537,7 @@ matching the tree of tabs and windows.
 The default mapping is `<M-w><M-v>`.
 
 ------------------------------------------------------------------------------
-TABS AND WINDOWS				*wheeltree-dedicated-buffers-tabwin*
+TABS AND WINDOWS				*torustree-dedicated-buffers-tabwin*
 
 Go to visible buffer, displayed in a tab or window.
 
@@ -1550,18 +1550,18 @@ This buffer displays the following columns :
 tab number | window number | filename
 
 ------------------------------------------------------------------------------
-FIND						*wheeltree-dedicated-buffers-find*
+FIND						*torustree-dedicated-buffers-find*
 
 Search files in current directory tree with |glob()|.
 
 You can enter a single or multiple word(s) pattern at the
 prompt : the files are filtered by each word. See
-|wheeltree-prompting-functions-completion|.
+|torustree-prompting-functions-completion|.
 
 The default mapping is `<M-w><M-f>`.
 
 ------------------------------------------------------------------------------
-ASYNC FIND				*wheeltree-dedicated-buffers-async-find*
+ASYNC FIND				*torustree-dedicated-buffers-async-find*
 
 Search files with unix `find` command in async mode.
 
@@ -1584,7 +1584,7 @@ The default mapping is `<M-w>&f`.
 You can stop the process by using `<c-s>` in the dedicated buffer.
 
 ------------------------------------------------------------------------------
-MRU FILES				*wheeltree-dedicated-buffers-mru*
+MRU FILES				*torustree-dedicated-buffers-mru*
 
 Open file in Most Recently Used file list.
 
@@ -1597,14 +1597,14 @@ This buffer displays the following columns :
 date & time of last edit | filename
 
 ------------------------------------------------------------------------------
-LOCATE						*wheeltree-dedicated-buffers-locate*
+LOCATE						*torustree-dedicated-buffers-locate*
 
 Search files with unix `locate` command.
 
 The default mapping is `<M-w>l`.
 
 ------------------------------------------------------------------------------
-OCCUR						*wheeltree-dedicated-buffers-occur*
+OCCUR						*torustree-dedicated-buffers-occur*
 
 List of lines matching a pattern.
 
@@ -1617,7 +1617,7 @@ this buffer displays the following columns :
 line number | line content
 
 ------------------------------------------------------------------------------
-GREP						*wheeltree-dedicated-buffers-grep*
+GREP						*torustree-dedicated-buffers-grep*
 
 The default mapping is `<M-w>g`.
 
@@ -1629,7 +1629,7 @@ Context menu~
 The context menu contains :
 
 - the usual navigation functionalities
-- an edit mode, see |wheeltree-dedicated-buffers-grep-edit|
+- an edit mode, see |torustree-dedicated-buffers-grep-edit|
 - a quickfix window opener
 
 Fields~
@@ -1639,7 +1639,7 @@ This buffer displays the following columns :
 error number | line number | column number | filename | line content
 
 ------------------------------------------------------------------------------
-OUTLINE					*wheeltree-dedicated-buffers-outline*
+OUTLINE					*torustree-dedicated-buffers-outline*
 
 The default mapping is `<M-w><S-o>`.
 
@@ -1658,7 +1658,7 @@ This buffer displays the following columns :
 error number | line number | column number | filename | line content
 
 ------------------------------------------------------------------------------
-MARKERS						*wheeltree-dedicated-buffers-markers*
+MARKERS						*torustree-dedicated-buffers-markers*
 
 Go to selected marker.
 
@@ -1671,7 +1671,7 @@ This buffer displays the following columns :
 mark | line number | column number | filename | line content
 
 ------------------------------------------------------------------------------
-JUMPS					*wheeltree-dedicated-buffers-jumps*
+JUMPS					*torustree-dedicated-buffers-jumps*
 
 Go to element in jump list.
 
@@ -1684,7 +1684,7 @@ This buffer displays the following columns :
 buffer number | line number | column number | filename | line content
 
 ------------------------------------------------------------------------------
-CHANGES					*wheeltree-dedicated-buffers-changes*
+CHANGES					*torustree-dedicated-buffers-changes*
 
 Go to element in changes list.
 
@@ -1697,7 +1697,7 @@ This buffer displays the following columns :
 line number | column number | line content
 
 ------------------------------------------------------------------------------
-TAGS						*wheeltree-dedicated-buffers-tags*
+TAGS						*torustree-dedicated-buffers-tags*
 
 Go to selected tag.
 
@@ -1710,9 +1710,9 @@ This buffer displays the following columns :
 tag type | tag iden | filename | search string
 
 ------------------------------------------------------------------------------
-REORDER						*wheeltree-dedicated-buffers-reorder*
+REORDER						*torustree-dedicated-buffers-reorder*
 
-The reordering buffers allow you to quickly reorder Wheeltree elements by
+The reordering buffers allow you to quickly reorder Torustree elements by
 reordering the buffer lines. You can use yank/delete/paste operations to
 perform the reordering.
 
@@ -1724,7 +1724,7 @@ Please yank/delete entire lines, or your data could loose their integrity.
 To validate your change, simply |:write| the buffer.
 
 The number of lines will be checked and, if there is missing or excedent
-lines, Wheeltree will refuse to apply your change.
+lines, Torustree will refuse to apply your change.
 
 Mappings~
 
@@ -1740,16 +1740,16 @@ Additional local maps~
 - `<M-r>` : reversed sort of the visible lines, except the filter : `2,$sort!`
 
 ------------------------------------------------------------------------------
-RENAME				    		*wheeltree-dedicated-buffers-rename*
+RENAME				    		*torustree-dedicated-buffers-rename*
 
-The renaming buffers allow you to batch rename Wheeltree elements by editing
+The renaming buffers allow you to batch rename Torustree elements by editing
 the buffer lines. You can use powerful native tools, like visual block
 or |:substitute| operations to perform the renaming.
 
 To validate your change, simply |:write| the buffer.
 
 The number of lines will be checked and, if there is missing or excedent
-lines, Wheeltree will refuse to apply your change.
+lines, Torustree will refuse to apply your change.
 
 Rename locations & files~
 
@@ -1769,9 +1769,9 @@ The default mappings launching renaming buffers are :
 - `<M-w>@<M-n>` : rename locations & files
 
 ------------------------------------------------------------------------------
-DELETE			    		*wheeltree-dedicated-buffers-delete*
+DELETE			    		*torustree-dedicated-buffers-delete*
 
-The deleting buffers allow you to batch delete Wheeltree elements by selecting
+The deleting buffers allow you to batch delete Torustree elements by selecting
 the buffer lines.
 
 When you're sure about it, just write the buffer.
@@ -1785,9 +1785,9 @@ The default mappings launching deleting buffers are :
 - `<M-w>@D`     : delete toruses
 
 ------------------------------------------------------------------------------
-COPY AND MOVE		    		*wheeltree-dedicated-buffers-copy-move*
+COPY AND MOVE		    		*torustree-dedicated-buffers-copy-move*
 
-The copy & move buffers allow you to batch copy or move Wheeltree elements by
+The copy & move buffers allow you to batch copy or move Torustree elements by
 selecting the buffer lines. To validate your selection, simply |:write|
 the buffer. It will ask you if you want to copy or move the selection.
 
@@ -1800,11 +1800,11 @@ The default mappings launching copy & move buffers are :
 - `<M-w>@C`     : copy/move toruses
 
 ------------------------------------------------------------------------------
-REORGANIZE				*wheeltree-dedicated-buffers-reorganize*
+REORGANIZE				*torustree-dedicated-buffers-reorganize*
 
-The reorganizing buffer allows you to quickly reorganize the Wheeltree
-elements. All elements of the wheeltree are represented, and folds are used
-to reflect the tree structure of the Wheeltree :
+The reorganizing buffer allows you to quickly reorganize the Torustree
+elements. All elements of the torustree are represented, and folds are used
+to reflect the tree structure of the Torustree :
 
 - torus names
 - circle names
@@ -1821,7 +1821,7 @@ You can :
 
 Please move or copy entire lines, or your data could loose their
 integrity. Be aware that removing a line will remove the corresponding
-element from the wheeltree.
+element from the torustree.
 
 To validate your change, simply |:write| the buffer.
 
@@ -1830,7 +1830,7 @@ Mappings~
 The default mapping is `<M-w><M-r>`.
 
 ------------------------------------------------------------------------------
-REORGANIZE TABS AND WINDOWS		*wheeltree-dedicated-buffers-reorg-tabwin*
+REORGANIZE TABS AND WINDOWS		*torustree-dedicated-buffers-reorg-tabwin*
 
 In this buffer, you can :
 
@@ -1853,7 +1853,7 @@ This buffer can also be launched from the context menu of a tabs & windows
 navigation buffer.
 
 ------------------------------------------------------------------------------
-GREP EDIT MODE				*wheeltree-dedicated-buffers-grep-edit*
+GREP EDIT MODE				*torustree-dedicated-buffers-grep-edit*
 
 The edit mode will open a new buffer where you can edit the grep lines. If
 you write this buffer, the plugin will propagate your changes to the
@@ -1881,7 +1881,7 @@ This buffer displays the following columns :
 error number | line number | column number | filename | line content
 
 ------------------------------------------------------------------------------
-NARROW CURRENT FILE			*wheeltree-dedicated-buffers-narrow-file*
+NARROW CURRENT FILE			*torustree-dedicated-buffers-narrow-file*
 
 This function narrow the current file lines. In the dedicated buffer, you can :
 
@@ -1939,7 +1939,7 @@ Only visible lines are affected for this function : it's just a wrapper
 for |:substitute|
 
 ------------------------------------------------------------------------------
-NARROW ALL CIRCLE FILES			*wheeltree-dedicated-buffers-narrow-circle*
+NARROW ALL CIRCLE FILES			*torustree-dedicated-buffers-narrow-circle*
 
 This function narrow the lines of all circle files. In the dedicated
 buffer, you can :
@@ -1949,8 +1949,8 @@ buffer, you can :
 - navigate to current or selected line(s)
 - edit visible lines
 
-You can see it as a combination of |wheeltree-dedicated-buffers-grep| and
-|wheeltree-dedicated-buffers-grep-edit|.
+You can see it as a combination of |torustree-dedicated-buffers-grep| and
+|torustree-dedicated-buffers-grep-edit|.
 
 You can edit the lines content as much as you want, but avoid modifying
 the other fields. Adding or removing lines is currently not supported.
@@ -1971,7 +1971,7 @@ Substitution~
 
 The map `<M-s>` launch a |:substitute| wrapper. There are a
 few advantages to use it instead of a plain `:s/.../.../g`, see
-|wheeltree-dedicated-buffers-narrow-file|.
+|torustree-dedicated-buffers-narrow-file|.
 
 Context~
 
@@ -1979,7 +1979,7 @@ The map `<M-c>` adds context lines to each grep result. You're asked
 how many lines to add.
 
 ------------------------------------------------------------------------------
-YANK RING					*wheeltree-dedicated-buffers-yank*
+YANK RING					*torustree-dedicated-buffers-yank*
 
 As usual, you can filter the elements in insert mode.
 The available local maps are :
@@ -1994,7 +1994,7 @@ The available local maps are :
 
 Switching register~
 
-A yank dedicated buffer starts with the yank ring of the wheeltree default
+A yank dedicated buffer starts with the yank ring of the torustree default
 register.
 
 If you press `s`, a prompt asks you towards which register you want
@@ -2056,7 +2056,7 @@ Drawbacks :
 - less flexibility : it is not possible to use visual mode
 
 ------------------------------------------------------------------------------
-UNDO LIST				*wheeltree-dedicated-buffers-undolist*
+UNDO LIST				*torustree-dedicated-buffers-undolist*
 
 In this buffer, you can navigate in the undo tree of the related buffer.
 
@@ -2091,21 +2091,21 @@ This buffer displays the following columns :
 iden | time | written
 
 ------------------------------------------------------------------------------
-BATCH						*wheeltree-dedicated-buffers-batch*
+BATCH						*torustree-dedicated-buffers-batch*
 
-See |wheeltree-batch-command|.
+See |torustree-batch-command|.
 
 ------------------------------------------------------------------------------
-COMMAND OUTPUT					*wheeltree-dedicated-buffers-command*
+COMMAND OUTPUT					*torustree-dedicated-buffers-command*
 
-You can execute an ex or shell command and display the output in a wheeltree
+You can execute an ex or shell command and display the output in a torustree
 dedicated buffer. Shell commands must be prefixed by a `!`.
 
 Default mapping : `<M-w>:`
 
 Examples :
 
-- `<M-w>:` then `nmap <silent> <plug>(wheeltree-`
+- `<M-w>:` then `nmap <silent> <plug>(torustree-`
 - `<M-w>:` then `nmap <silent> <M-w>`
 - `<M-w>:` then `!ls -l % #`
 
@@ -2119,25 +2119,25 @@ Default mapping : `<M-w>&&`
 You can stop the process by using `<c-s>` in the dedicated buffer.
 
 ==============================================================================
-COMMANDS					*wheeltree-commands*
+COMMANDS					*torustree-commands*
 
-Meta command				|wheeltree-commands-meta|
-Wheeltree status				|wheeltree-commands-status|
-Straight navigation			|wheeltree-commands-straight-navigation|
-Prompt					|wheeltree-commands-prompt|
-Read and write				|wheeltree-commands-read-and-write|
-Dedicated buffers			|wheeltree-commands-dedicated-buffers|
-Batch					|wheeltree-commands-batch|
-Autogroup				|wheeltree-commands-autogroup|
-Disc operations				|wheeltree-commands-disc-operations|
-Wheeltree tree in disc			|wheeltree-commands-tree-in-disc|
+Meta command				|torustree-commands-meta|
+Torustree status				|torustree-commands-status|
+Straight navigation			|torustree-commands-straight-navigation|
+Prompt					|torustree-commands-prompt|
+Read and write				|torustree-commands-read-and-write|
+Dedicated buffers			|torustree-commands-dedicated-buffers|
+Batch					|torustree-commands-batch|
+Autogroup				|torustree-commands-autogroup|
+Disc operations				|torustree-commands-disc-operations|
+Torustree tree in disc			|torustree-commands-tree-in-disc|
 
 ------------------------------------------------------------------------------
-META COMMAND						*wheeltree-commands-meta*
+META COMMAND						*torustree-commands-meta*
 
 The main command is :
 
-:Wheeltree {subcommand}						*:Wheeltree*
+:Torustree {subcommand}						*:Torustree*
     Meta command that accepts a serie of sub-commands, described in
     the following sections. Completion of sub-commands and subsequent
     is available.
@@ -2146,232 +2146,232 @@ Hitting tab after a space yields all the candidates.
 
 Hitting tab after a word character filter the candidates with the word.
 
-There is a slight difference with the usual wheeltree completion, however :
+There is a slight difference with the usual torustree completion, however :
 if you want to filter with multi-patterns, separate them with a comma
 instead of a space, e.g. : >
 
-    :Wheeltree pr,t<tab> -> :Wheeltree prompt
+    :Torustree pr,t<tab> -> :Torustree prompt
 <
 
 You can also use a semicolon : >
 
-    :Wheeltree c;y<tab> -> :Wheeltree copy
+    :Torustree c;y<tab> -> :Torustree copy
 <
 
 Some subcommands expect a third word : >
 
-    :Wheeltree subcommand {action or file ...}
+    :Torustree subcommand {action or file ...}
 <
 
 In the help submenu of the main or meta menu, you have access to the
-list of available subcommands and actions for |:Wheeltree|.
+list of available subcommands and actions for |:Torustree|.
 
 ------------------------------------------------------------------------------
-WHEELTREE STATUS						*wheeltree-commands-status*
+TORUSTREE STATUS						*torustree-commands-status*
 
-:Wheeltree info						*:Wheeltree-info*
-	Print information of the current wheeltree status in the format
+:Torustree info						*:Torustree-info*
+	Print information of the current torustree status in the format
 	`torus > circle > location`.
 
-:Wheeltree jump						*:Wheeltree-jump*
-	Jump to current wheeltree location
+:Torustree jump						*:Torustree-jump*
+	Jump to current torustree location
 
-:Wheeltree follow						*:Wheeltree-follow*
-	Find closest location in wheeltree matching current file & cursor
+:Torustree follow						*:Torustree-follow*
+	Find closest location in torustree matching current file & cursor
 
 ------------------------------------------------------------------------------
-STRAIGHT NAVIGATION			*wheeltree-commands-straight-navigation*
+STRAIGHT NAVIGATION			*torustree-commands-straight-navigation*
 
-:Wheeltree next-location
+:Torustree next-location
 	Go to next location
 
-:Wheeltree previous-location
+:Torustree previous-location
 	Go to previous location
 
-:Wheeltree next-circle
+:Torustree next-circle
 	Go to next circle
 
-:Wheeltree previous-circle
+:Torustree previous-circle
 	Go to previous circle
 
-:Wheeltree next-torus
+:Torustree next-torus
 	Go to next torus
 
-:Wheeltree previous-torus
+:Torustree previous-torus
 	Go to previous torus
 
 History~
 
-:Wheeltree newer
+:Torustree newer
 	Go to newer location in history
 
-:Wheeltree older
+:Torustree older
 	Go to older location in history
 
-:Wheeltree newer-in-circle
+:Torustree newer-in-circle
 	Go to newer location in same circle
 
-:Wheeltree older-in-circle
+:Torustree older-in-circle
 	Go to older location in same circle
 
-:Wheeltree newer-in-torus
+:Torustree newer-in-torus
 	Go to newer location in same torus
 
-:Wheeltree older-in-torus
+:Torustree older-in-torus
 	Go to older location in same torus
 
 Alternate~
 
-:Wheeltree alternate-anywhere
+:Torustree alternate-anywhere
 	Alternate two last locations in history
 
-:Wheeltree alternate-same-torus
+:Torustree alternate-same-torus
 	Alternate two last locations in the same torus
 
-:Wheeltree alternate-same-circle
+:Torustree alternate-same-circle
 	Alternate two last locations in the same circle
 
-:Wheeltree alternate-other-torus
+:Torustree alternate-other-torus
 	Alternate two last locations in distinct torus
 
-:Wheeltree alternate-other-circle
+:Torustree alternate-other-circle
 	Alternate two last locations in distinct circle
 
-:Wheeltree alternate-same-torus-other-circle
+:Torustree alternate-same-torus-other-circle
 	Alternate two last locations in the same torus, but not in the same
 	circle
 
-:Wheeltree alternate-window
+:Torustree alternate-window
 	Alternate two last windows in any tab
 
 ------------------------------------------------------------------------------
-PROMPT							*wheeltree-commands-prompt*
+PROMPT							*torustree-commands-prompt*
 
-:Wheeltree prompt {action}						*:Wheeltree-prompt*
+:Torustree prompt {action}						*:Torustree-prompt*
     Launch prompting function given by action.
 
 Examples : >
 
-    :Wheeltree prompt location
-    :Wheeltree prompt history
+    :Torustree prompt location
+    :Torustree prompt history
 >
 
 ------------------------------------------------------------------------------
-READ AND WRITE					*wheeltree-commands-read-and-write*
+READ AND WRITE					*torustree-commands-read-and-write*
 
-:Wheeltree prompt read-wheeltree					*:Wheeltree-prompt-read-wheeltree*
-	Load wheeltree from file. The plugin will ask you the file name.
-	File completion in `g:wheeltree_config.storage.wheeltree.folder` is available.
+:Torustree prompt read-torustree					*:Torustree-prompt-read-torustree*
+	Load torustree from file. The plugin will ask you the file name.
+	File completion in `g:wheeltree_config.storage.torustree.folder` is available.
 	Leaving empty choose the [file] under brackets.
-	Inserting the special value `=` choose `g:wheeltree_config.storage.wheeltree.name`.
+	Inserting the special value `=` choose `g:wheeltree_config.storage.torustree.name`.
 
-:Wheeltree prompt write-wheeltree					*:Wheeltree-prompt-write-wheeltree*
-	Save wheeltree in file. The plugin will ask you the file name.
-	File completion in `g:wheeltree_config.storage.wheeltree.folder` is available.
+:Torustree prompt write-torustree					*:Torustree-prompt-write-torustree*
+	Save torustree in file. The plugin will ask you the file name.
+	File completion in `g:wheeltree_config.storage.torustree.folder` is available.
 	Leaving empty choose the [file] under brackets.
-	Inserting the special value `=` choose `g:wheeltree_config.storage.wheeltree.name`.
+	Inserting the special value `=` choose `g:wheeltree_config.storage.torustree.name`.
 
-:Wheeltree prompt read-session				*:Wheeltree-prompt-read-session*
+:Torustree prompt read-session				*:Torustree-prompt-read-session*
 	Load session from file. The plugin will ask you the file name.
 	File completion in `g:wheeltree_config.storage.session.folder` is available.
 	Leaving empty choose the [file] under brackets.
 	Inserting the special value `=` choose `g:wheeltree_config.storage.session.name`.
 
-:Wheeltree prompt write-session				*:Wheeltree-prompt-write-session*
+:Torustree prompt write-session				*:Torustree-prompt-write-session*
 	Save session in file. The plugin will ask you the file name.
 	File completion in `g:wheeltree_config.storage.session.folder` is available.
 	Leaving empty choose the [file] under brackets.
 	Inserting the special value `=` choose `g:wheeltree_config.storage.session.name`.
 
 ------------------------------------------------------------------------------
-DEDICATED BUFFERS				*wheeltree-commands-dedicated-buffers*
+DEDICATED BUFFERS				*torustree-commands-dedicated-buffers*
 
-:Wheeltree dedibuf {action}						*:Wheeltree-dedibuf*
+:Torustree dedibuf {action}						*:Torustree-dedibuf*
     Launch dedicated buffer function given by action.
 
 Examples : >
 
-    :Wheeltree dedibuf index-location
-    :Wheeltree dedibuf frecency
+    :Torustree dedibuf index-location
+    :Torustree dedibuf frecency
 >
 
 ------------------------------------------------------------------------------
-BATCH							*wheeltree-commands-batch*
+BATCH							*torustree-commands-batch*
 
-:Wheeltree batch {my_command}			      *:Wheeltree-batch*
+:Torustree batch {my_command}			      *:Torustree-batch*
 	Use the argument list to execute {my_command} on each location of the
 	current circle. The command can be a vim `:command` or an external shell
 	`!command`. The ouput is displayed in a dedicated buffer.
 
 Examples :
 
-- :Wheeltree batch !wc %
+- :Torustree batch !wc %
 
 Uses |:argdo| under the hood.
 
 ------------------------------------------------------------------------------
-AUTOGROUP						*wheeltree-commands-autogroup*
+AUTOGROUP						*torustree-commands-autogroup*
 
-:Wheeltree autogroup				       *:Wheeltree-autogroup*
+:Torustree autogroup				       *:Torustree-autogroup*
 	Autogroup locations of current torus using filename extensions or directories.
 	Creates a new torus where each group will occupy a circle.
 
 ------------------------------------------------------------------------------
-DISC OPERATIONS					*wheeltree-commands-disc-operations*
+DISC OPERATIONS					*torustree-commands-disc-operations*
 
-:Wheeltree mkdir {dirname}
+:Torustree mkdir {dirname}
 	Create recursively a directory if non existent
 
-:Wheeltree rename {source} {dest}
+:Torustree rename {source} {dest}
 	Rename a file
 
-:Wheeltree copy {source} {dest}
+:Torustree copy {source} {dest}
 	Copy a file
 
-:Wheeltree delete {filename}
+:Torustree delete {filename}
 	Delete a file
 
 ------------------------------------------------------------------------------
-WHEELTREE TREE IN DISC				*wheeltree-commands-tree-in-disc*
+TORUSTREE TREE IN DISC				*torustree-commands-tree-in-disc*
 
-:Wheeltree tree-script				*:WheelTreeScript*
+:Torustree tree-script				*:WheelTreeScript*
 	Write a shell script that generates a tree of links or copies
-	following the wheeltree hierarchy : torus/circle/location.
+	following the torustree hierarchy : torus/circle/location.
 	Unix systems only.
 	The generated script is a lot faster than
 	|:WheelSymlinkTree| or |:WheelCopiedTree|.
 
 
-:Wheeltree symlink-tree				*:WheelSymlinkTree*
-	Generate a tree of symlinks following the wheeltree hierarchy :
+:Torustree symlink-tree				*:WheelSymlinkTree*
+	Generate a tree of symlinks following the torustree hierarchy :
 	torus/circle/link-to-location-file.
 	Unix systems only.
 
 
-:Wheeltree copied-tree				*:WheelCopiedTree*
-	Generate a tree of copies following the wheeltree hierarchy :
+:Torustree copied-tree				*:WheelCopiedTree*
+	Generate a tree of copies following the torustree hierarchy :
 	torus/circle/link-to-location-file.
 	Unix systems only.
-	Useful to make a backup of the wheeltree files.
+	Useful to make a backup of the torustree files.
 
 ==============================================================================
-FUNCTIONS					        *wheeltree-functions*
+FUNCTIONS					        *torustree-functions*
 
-User interface			|wheeltree-functions-user-interface|
-Async process			|wheeltree-functions-async-process|
+User interface			|torustree-functions-user-interface|
+Async process			|torustree-functions-async-process|
 
 ------------------------------------------------------------------------------
-USER INTERFACE				*wheeltree-functions-user-interface*
+USER INTERFACE				*torustree-functions-user-interface*
 
 The functions used as User Interface are listed :
 
-- in the mappings of autoload/wheeltree/centre.vim
-- in the menus of autoload/wheeltree/crystal.vim
+- in the mappings of autoload/torustree/centre.vim
+- in the menus of autoload/torustree/crystal.vim
 
 ------------------------------------------------------------------------------
-ASYNC PROCESS					*wheeltree-functions-async-process*
+ASYNC PROCESS					*torustree-functions-async-process*
 
-wheeltree#wave#start({command}, {settings})		*wheeltree-wave-start*
+torustree#wave#start({command}, {settings})		*torustree-wave-start*
 	For Unix systems only. Neovim version.
 	Start an async command and display its output in a dedicated buffer.
 	You can filter buffer content, as usual.
@@ -2379,51 +2379,51 @@ wheeltree#wave#start({command}, {settings})		*wheeltree-wave-start*
 	  - new_buffer : whether to open a dedicated buffer
 	    before launching the process (true by default)
 
-wheeltree#ripple#start({command}, {settings})		*wheeltree-ripple-start*
+torustree#ripple#start({command}, {settings})		*torustree-ripple-start*
 	For Unix systems only. Vim version.
-	Same usage as |wheeltree#wave#start|.
+	Same usage as |torustree#wave#start|.
 
 ==============================================================================
-CONFIGURATION					    *wheeltree-configuration*
+CONFIGURATION					    *torustree-configuration*
 
-Vim options				|wheeltree-config-vim-options|
-Dictionary				|wheeltree-config-dictionary|
-Mappings				|wheeltree-config-mappings|
-Prefix					|wheeltree-config-prefix|
-Locate database				|wheeltree-config-locate-db|
-Grep ex command				|wheeltree-config-grep|
-Project markers				|wheeltree-config-project-markers|
-Auto chdir project			|wheeltree-config-project-auto-chdir|
-Wheeltree folder				|wheeltree-config-wheeltree-folder|
-Wheeltree name				|wheeltree-config-wheeltree-name|
-Autoread wheeltree				|wheeltree-config-wheeltree-autoread|
-Autowrite wheeltree				|wheeltree-config-wheeltree-autowrite|
-Session folder				|wheeltree-config-session-folder|
-Session file				|wheeltree-config-session-name|
-Autoread session			|wheeltree-config-session-autoread|
-Autowrite session			|wheeltree-config-session-autowrite|
-Backups					|wheeltree-config-backups|
-Max history 				|wheeltree-config-maxim-history|
-Max input history 			|wheeltree-config-maxim-input|
-Max MRU					|wheeltree-config-maxim-mru|
-Max yanks 				|wheeltree-config-maxim-yanks|
-Max yank size 				|wheeltree-config-maxim-yank-size|
-Max layers in dedicated buffers		|wheeltree-config-maxim-layers|
-Max number of tabs			|wheeltree-config-maxim-tabs|
-Max number of horizontal splits		|wheeltree-config-maxim-horizontal|
-Max number of vertical splits		|wheeltree-config-maxim-vertical|
-Completion                     		|wheeltree-config-completion|
-Frecency                     		|wheeltree-config-frecency|
-Messages				|wheeltree-config-display-message|
-Statusline in dedicated buffers		|wheeltree-config-display-statusline|
-Filter prompt in dedicated buffers	|wheeltree-config-display-prompt|
-Selection marker			|wheeltree-config-display-selection|
-Signs					|wheeltree-config-display-sign|
-Tabline					|wheeltree-config-tabline|
-Example					|wheeltree-config-example|
+Vim options				|torustree-config-vim-options|
+Dictionary				|torustree-config-dictionary|
+Mappings				|torustree-config-mappings|
+Prefix					|torustree-config-prefix|
+Locate database				|torustree-config-locate-db|
+Grep ex command				|torustree-config-grep|
+Project markers				|torustree-config-project-markers|
+Auto chdir project			|torustree-config-project-auto-chdir|
+Torustree folder				|torustree-config-torustree-folder|
+Torustree name				|torustree-config-torustree-name|
+Autoread torustree				|torustree-config-torustree-autoread|
+Autowrite torustree				|torustree-config-torustree-autowrite|
+Session folder				|torustree-config-session-folder|
+Session file				|torustree-config-session-name|
+Autoread session			|torustree-config-session-autoread|
+Autowrite session			|torustree-config-session-autowrite|
+Backups					|torustree-config-backups|
+Max history 				|torustree-config-maxim-history|
+Max input history 			|torustree-config-maxim-input|
+Max MRU					|torustree-config-maxim-mru|
+Max yanks 				|torustree-config-maxim-yanks|
+Max yank size 				|torustree-config-maxim-yank-size|
+Max layers in dedicated buffers		|torustree-config-maxim-layers|
+Max number of tabs			|torustree-config-maxim-tabs|
+Max number of horizontal splits		|torustree-config-maxim-horizontal|
+Max number of vertical splits		|torustree-config-maxim-vertical|
+Completion                     		|torustree-config-completion|
+Frecency                     		|torustree-config-frecency|
+Messages				|torustree-config-display-message|
+Statusline in dedicated buffers		|torustree-config-display-statusline|
+Filter prompt in dedicated buffers	|torustree-config-display-prompt|
+Selection marker			|torustree-config-display-selection|
+Signs					|torustree-config-display-sign|
+Tabline					|torustree-config-tabline|
+Example					|torustree-config-example|
 
 ------------------------------------------------------------------------------
-VIM OPTIONS					*wheeltree-config-vim-options*
+VIM OPTIONS					*torustree-config-vim-options*
 
 To facilitate the navigation between buffers, the following vim options
 can be useful : >
@@ -2433,9 +2433,9 @@ can be useful : >
 <
 
 If you don't want to activate these options, remember to write your
-files before using a wheeltree navigation tool.
+files before using a torustree navigation tool.
 
-To enable nice completion in prompting wheeltree functions : >
+To enable nice completion in prompting torustree functions : >
 
     set wildmenu
     set wildchar=<Tab>
@@ -2445,7 +2445,7 @@ To enable nice completion in prompting wheeltree functions : >
 See |'wildmode'| to adapt it to your taste.
 
 ------------------------------------------------------------------------------
-DICTIONARY					  *wheeltree-config-dictionary*
+DICTIONARY					  *torustree-config-dictionary*
 
 Customization is done using the `g:wheeltree_config` dictionary. You must
 first initialize it : >
@@ -2453,7 +2453,7 @@ first initialize it : >
 	let g:wheeltree_config                 = {}
 	let g:wheeltree_config.project         = {}
 	let g:wheeltree_config.storage         = {}
-	let g:wheeltree_config.storage.wheeltree   = {}
+	let g:wheeltree_config.storage.torustree   = {}
 	let g:wheeltree_config.storage.session = {}
 	let g:wheeltree_config.maxim           = {}
 	let g:wheeltree_config.completion      = {}
@@ -2464,31 +2464,31 @@ first initialize it : >
 <
 
 ------------------------------------------------------------------------------
-MAPPINGS					    *wheeltree-config-mappings*
+MAPPINGS					    *torustree-config-mappings*
 
 Determine how many default mappings are available : >
 
     let g:wheeltree_config.mappings = 10
 <
 
-See |wheeltree-mappings-levels| for more information.
+See |torustree-mappings-levels| for more information.
 
 Default : 0
 
 ------------------------------------------------------------------------------
-PREFIX						    *wheeltree-config-prefix*
+PREFIX						    *torustree-config-prefix*
 
 Prefix for mappings of level 0, 1, 2 : >
 
     let g:wheeltree_config.prefix = '<my-wonderful-prefix>'
 <
 
-See |wheeltree-mappings-prefix| for more information.
+See |torustree-mappings-prefix| for more information.
 
 Default : `<M-w>`
 
 ------------------------------------------------------------------------------
-LOCATE DATABASE			    		*wheeltree-config-locate-db*
+LOCATE DATABASE			    		*torustree-config-locate-db*
 
 If you want to use a custom database when using `locate` : >
 
@@ -2498,7 +2498,7 @@ If you want to use a custom database when using `locate` : >
 Default : empty
 
 ------------------------------------------------------------------------------
-GREP EX COMMAND			    		*wheeltree-config-grep*
+GREP EX COMMAND			    		*torustree-config-grep*
 
 Whether to use internal |:vimgrep| or external |:grep| to grep files : >
 
@@ -2510,7 +2510,7 @@ Whether to use internal |:vimgrep| or external |:grep| to grep files : >
 Default : internal vimgrep, in case external grep is not available.
 
 ------------------------------------------------------------------------------
-PROJECT MARKERS				*wheeltree-config-project-markers*
+PROJECT MARKERS				*torustree-config-project-markers*
 
 File(s) or directories(s) marking a project root. Can take a string or
 list value. : >
@@ -2525,7 +2525,7 @@ of the list is found in it
 Default : `'.git'`
 
 ------------------------------------------------------------------------------
-AUTO CHDIR PROJECT			*wheeltree-config-project-auto-chdir*
+AUTO CHDIR PROJECT			*torustree-config-project-auto-chdir*
 
 Try to change directory to project root if > 0 : >
 
@@ -2538,88 +2538,88 @@ To find the right folder, the plugin looks at files or dirs listed in
 Default : 0
 
 ------------------------------------------------------------------------------
-WHEELTREE FOLDER					   *wheeltree-config-wheeltree-folder*
+TORUSTREE FOLDER					   *torustree-config-torustree-folder*
 
-The plugin can save your wheeltree catégories & groups in wheeltree files.
+The plugin can save your torustree catégories & groups in torustree files.
 
-You can have as many wheeltree files as you want, they will be stored in
-a wheeltree folder.
+You can have as many torustree files as you want, they will be stored in
+a torustree folder.
 
 Folder where your wheels will be saved : >
 
-    let g:wheeltree_config.storage.wheeltree.folder = '~/.local/share/wheeltree'
+    let g:wheeltree_config.storage.torustree.folder = '~/.local/share/torustree'
 <
 
 It is highly recommended to define this folder and regularly save the
-wheeltree, either manually or automatically, using the autowrite config.
+torustree, either manually or automatically, using the autowrite config.
 
 Default~
 
-- vim : '~/.vim/wheeltree'
-- nvim : '~/.local/share/nvim/wheeltree'
+- vim : '~/.vim/torustree'
+- nvim : '~/.local/share/nvim/torustree'
 
 ------------------------------------------------------------------------------
-WHEELTREE NAME					    *wheeltree-config-wheeltree-name*
+TORUSTREE NAME					    *torustree-config-torustree-name*
 
-Name for the default wheeltree file : >
+Name for the default torustree file : >
 
-    let g:wheeltree_config.storage.wheeltree.name = 'wheeltree.vim'
+    let g:wheeltree_config.storage.torustree.name = 'torustree.vim'
 <
 
-This file will be located in `g:wheeltree_config.storage.wheeltree.folder`
+This file will be located in `g:wheeltree_config.storage.torustree.folder`
 
-Default : `wheeltree.vim`
+Default : `torustree.vim`
 
 ------------------------------------------------------------------------------
-AUTOREAD WHEELTREE				    *wheeltree-config-wheeltree-autoread*
+AUTOREAD TORUSTREE				    *torustree-config-torustree-autoread*
 
-Auto read wheeltree file on startup if non null : >
+Auto read torustree file on startup if non null : >
 
-    let g:wheeltree_config.storage.wheeltree.autoread = 1
+    let g:wheeltree_config.storage.torustree.autoread = 1
 <
 
 To enable it, you need to add an autocommand on vim enter : >
 
-    autocmd VimEnter * call wheeltree#void#init()
+    autocmd VimEnter * call torustree#void#init()
 <
 
 Default : 0
 
 ------------------------------------------------------------------------------
-AUTOWRITE WHEELTREE				    *wheeltree-config-wheeltree-autowrite*
+AUTOWRITE TORUSTREE				    *torustree-config-torustree-autowrite*
 
-Auto write wheeltree file on exit if non null : >
+Auto write torustree file on exit if non null : >
 
-    let g:wheeltree_config.storage.wheeltree.autowrite = 1
+    let g:wheeltree_config.storage.torustree.autowrite = 1
 <
 
 To enable it, you need to add an autocommand on vim leave : >
 
-    autocmd VimLeave * call wheeltree#void#exit()
+    autocmd VimLeave * call torustree#void#exit()
 <
 
 Default : 0
 
 ------------------------------------------------------------------------------
-SESSION FOLDER				   *wheeltree-config-session-folder*
+SESSION FOLDER				   *torustree-config-session-folder*
 
-Wheeltree can save your tabs & windows layout in session files.
+Torustree can save your tabs & windows layout in session files.
 
 You can have as many session files as you want, they will be stored in
 a session folder.
 
 Folder where your sessions will be saved : >
 
-    let g:wheeltree_config.storage.session.folder = '~/.local/share/wheeltree/session'
+    let g:wheeltree_config.storage.session.folder = '~/.local/share/torustree/session'
 <
 
 Default~
 
-- vim : '~/.vim/wheeltree/session'
-- nvim : '~/.local/share/nvim/wheeltree/session'
+- vim : '~/.vim/torustree/session'
+- nvim : '~/.local/share/nvim/torustree/session'
 
 ------------------------------------------------------------------------------
-SESSION NAME					   *wheeltree-config-session-name*
+SESSION NAME					   *torustree-config-session-name*
 
 Name for the default session file : >
 
@@ -2631,7 +2631,7 @@ This file will be located in `g:wheeltree_config.storage.session.folder`
 Default : `session.vim`
 
 ------------------------------------------------------------------------------
-AUTOREAD SESSION			    *wheeltree-config-session-autoread*
+AUTOREAD SESSION			    *torustree-config-session-autoread*
 
 Auto read current or default session file on startup if non null : >
 
@@ -2640,13 +2640,13 @@ Auto read current or default session file on startup if non null : >
 
 To enable it, you need to add an autocommand on vim enter : >
 
-  autocmd VimEnter * call wheeltree#void#init()
+  autocmd VimEnter * call torustree#void#init()
 <
 
 Default : 0
 
 ------------------------------------------------------------------------------
-AUTOWRITE SESSION			    *wheeltree-config-session-autowrite*
+AUTOWRITE SESSION			    *torustree-config-session-autowrite*
 
 Auto write current or default session file on exit if non null : >
 
@@ -2655,21 +2655,21 @@ Auto write current or default session file on exit if non null : >
 
 To enable it, you need to add an autocommand on vim leave : >
 
-    autocmd VimLeave * call wheeltree#void#exit()
+    autocmd VimLeave * call torustree#void#exit()
 <
 
 Default : 0
 
 ------------------------------------------------------------------------------
-BACKUPS						    *wheeltree-config-backups*
+BACKUPS						    *torustree-config-backups*
 
-Number of backups for wheeltree and session files : >
+Number of backups for torustree and session files : >
 
     let g:wheeltree_config.storage.backups = 3
 <
 
-Assuming your wheeltree file is `wheeltree.vim`, the backups will be named
-`wheeltree.vim.1`, `wheeltree.vim.2`, `wheeltree.vim.3`, and so on.
+Assuming your torustree file is `torustree.vim`, the backups will be named
+`torustree.vim.1`, `torustree.vim.2`, `torustree.vim.3`, and so on.
 
 It is recommended to use backups, in case things get messed up
 accidentally.
@@ -2677,9 +2677,9 @@ accidentally.
 Default : 3
 
 ------------------------------------------------------------------------------
-MAX NUMBER OF ELEMENTS IN HISTORY		   *wheeltree-config-maxim-history*
+MAX NUMBER OF ELEMENTS IN HISTORY		   *torustree-config-maxim-history*
 
-Maximum number of elements in the wheeltree history : >
+Maximum number of elements in the torustree history : >
 
     let g:wheeltree_config.maxim.history = 400
 <
@@ -2687,7 +2687,7 @@ Maximum number of elements in the wheeltree history : >
 Default : 500
 
 ------------------------------------------------------------------------------
-MAX NUMBER OF ELEMENTS IN INPUT HISTORY		   *wheeltree-config-maxim-input*
+MAX NUMBER OF ELEMENTS IN INPUT HISTORY		   *torustree-config-maxim-input*
 
 Maximum number of elements in the input history : >
 
@@ -2697,7 +2697,7 @@ Maximum number of elements in the input history : >
 Default : 500
 
 ------------------------------------------------------------------------------
-MAX NUMBER OF ELEMENTS IN MRU			*wheeltree-config-maxim-mru*
+MAX NUMBER OF ELEMENTS IN MRU			*torustree-config-maxim-mru*
 
 Maximum number of elements in mru : >
 
@@ -2707,7 +2707,7 @@ Maximum number of elements in mru : >
 Default : 500
 
 ------------------------------------------------------------------------------
-MAX NUMBER OF ELEMENTS IN YANK RING		   *wheeltree-config-maxim-yanks*
+MAX NUMBER OF ELEMENTS IN YANK RING		   *torustree-config-maxim-yanks*
 
 Maximum number of elements in the yank ring for unnamed register : >
 
@@ -2724,7 +2724,7 @@ Maximum number of elements in the yank ring for other registers : >
 Default : 50
 
 ------------------------------------------------------------------------------
-MAX NUMBER OF LINES OF A YANK			   *wheeltree-config-maxim-yank-lines*
+MAX NUMBER OF LINES OF A YANK			   *torustree-config-maxim-yank-lines*
 
 Maximum number of lines of a yank added in the yank ring : >
 
@@ -2734,7 +2734,7 @@ Maximum number of lines of a yank added in the yank ring : >
 Default : 30
 
 ------------------------------------------------------------------------------
-MAX SIZE OF A YANK				   *wheeltree-config-maxim-yank-size*
+MAX SIZE OF A YANK				   *torustree-config-maxim-yank-size*
 
 Maximum size of a yank added in the yank ring, in bytes : >
 
@@ -2744,7 +2744,7 @@ Maximum size of a yank added in the yank ring, in bytes : >
 Default : 3000
 
 ------------------------------------------------------------------------------
-MAX LAYERS IN DEDICATED BUFFERS		    *wheeltree-config-maxim-layers*
+MAX LAYERS IN DEDICATED BUFFERS		    *torustree-config-maxim-layers*
 
 Maximum size of layer ring in dedicated buffers : >
 
@@ -2754,7 +2754,7 @@ Maximum size of layer ring in dedicated buffers : >
 Default : 5
 
 ------------------------------------------------------------------------------
-MAX NUMBER OF TABS			    *wheeltree-config-maxim-tabs*
+MAX NUMBER OF TABS			    *torustree-config-maxim-tabs*
 
 Maximum number of tabs in tab layouts : >
 
@@ -2764,7 +2764,7 @@ Maximum number of tabs in tab layouts : >
 Default : 15
 
 ------------------------------------------------------------------------------
-MAX NUMBER OR HORIZONTAL SPLITS	    	*wheeltree-config-maxim-horizontal*
+MAX NUMBER OR HORIZONTAL SPLITS	    	*torustree-config-maxim-horizontal*
 
 Maximum number of horizontal splits in layouts : >
 
@@ -2774,7 +2774,7 @@ Maximum number of horizontal splits in layouts : >
 Default : 3
 
 ------------------------------------------------------------------------------
-MAX NUMBER OR VERTICAL SPLITS		    *wheeltree-config-maxim-vertical*
+MAX NUMBER OR VERTICAL SPLITS		    *torustree-config-maxim-vertical*
 
 Maximum number of vertical splits in layouts : >
 
@@ -2784,7 +2784,7 @@ Maximum number of vertical splits in layouts : >
 Default : 4
 
 ------------------------------------------------------------------------------
-COMPLETION					    *wheeltree-config-completion*
+COMPLETION					    *torustree-config-completion*
 
 To enable a kind of fuzzy-vowels completion : >
 
@@ -2811,10 +2811,10 @@ Overrrides vocalize and wordize settings.
 
 Default : 0
 
-See |wheeltree-prompting-functions-completion| for more information.
+See |torustree-prompting-functions-completion| for more information.
 
 ------------------------------------------------------------------------------
-FRECENCY				    	    *wheeltree-config-frecency*
+FRECENCY				    	    *torustree-config-frecency*
 
 The frecency (frequent & recent) algorithm is very simple :
 
@@ -2841,7 +2841,7 @@ Default~
 - penalty : 1
 
 ------------------------------------------------------------------------------
-STATUSLINE IN DEDICATED BUFFERS		    	*wheeltree-config-display-statusline*
+STATUSLINE IN DEDICATED BUFFERS		    	*torustree-config-display-statusline*
 
 By default, dedicated buffers status is displayed in the statusline. If
 you'd rather have it printed in the echo area, just set the statusline
@@ -2858,9 +2858,9 @@ The highlight group is `WheelStatusLine`. You can customize it : >
 <
 
 ------------------------------------------------------------------------------
-MESSAGES				    	*wheeltree-config-display_message*
+MESSAGES				    	*torustree-config-display_message*
 
-You can ask wheeltree to print one-line message on dedicated buffers status : >
+You can ask torustree to print one-line message on dedicated buffers status : >
 
     let g:wheeltree_config.display.dedibuf_msg = 'one-line'
 <
@@ -2881,13 +2881,13 @@ option to a minimum of 3 : >
 <
 
 ------------------------------------------------------------------------------
-FILTER PROMPT IN REGULAR DEDICATED BUFFERS	*wheeltree-config-display-prompt*
+FILTER PROMPT IN REGULAR DEDICATED BUFFERS	*torustree-config-display-prompt*
 
 You can customize the filter prompt in dedicated buffers.
 
 For regular dedicated buffer, _without_ `BufWriteCmd` autocommand : >
 
-    let g:wheeltree_config.display.prompt = 'wheeltree $ '
+    let g:wheeltree_config.display.prompt = 'torustree $ '
 <
 
 Default : '☯ '
@@ -2895,13 +2895,13 @@ Default : '☯ '
 For writable dedicated buffer, _with_ `BufWriteCmd` autocommand : >
 
 
-    let g:wheeltree_config.display.prompt_writable = 'wheeltree # '
+    let g:wheeltree_config.display.prompt_writable = 'torustree # '
 <
 
 Default : '☈ '
 
 ------------------------------------------------------------------------------
-SELECTION MARKER				*wheeltree-config-display-selection*
+SELECTION MARKER				*torustree-config-display-selection*
 
 You can customize the selection marker in dedicated buffers : >
 
@@ -2912,14 +2912,14 @@ You can customize the selection marker in dedicated buffers : >
 Default : '☰ '
 
 ------------------------------------------------------------------------------
-SIGNS						*wheeltree-config-display-sign*
+SIGNS						*torustree-config-display-sign*
 
 Switch~
 
 By default, signs are displayed at :
 
-- wheeltree locations
-- cursor line after a (neo)vim native jump using Wheeltree interface
+- torustree locations
+- cursor line after a (neo)vim native jump using Torustree interface
 
 You can disable it if you want : >
 
@@ -2930,7 +2930,7 @@ Default : 1
 
 Settings~
 
-The sign settings for wheeltree location can be modified : >
+The sign settings for torustree location can be modified : >
 
 
     let g:wheeltree_config.display.sign.settings = { 'text' : '@' }
@@ -2940,7 +2940,7 @@ Default : { 'text' : '☯' }
 
 Native settings~
 
-Sign settings for (neo)vim native navigation using Wheeltree interface : >
+Sign settings for (neo)vim native navigation using Torustree interface : >
 
 
     let g:wheeltree_config.display.sign.native_settings = { 'text' : '*' }
@@ -2951,13 +2951,13 @@ Default : { 'text' : '✻' }
 See also |sign.txt| and |:sign|.
 
 ------------------------------------------------------------------------------
-TABLINE					*wheeltree-config-tabline*
+TABLINE					*torustree-config-tabline*
 
 Text~
 
-If you want wheeltree to manage your tabline, use this function : >
+If you want torustree to manage your tabline, use this function : >
 
-  set tabline=%!wheeltree#status#tabline()
+  set tabline=%!torustree#status#tabline()
 <
 
 The format is :
@@ -2968,10 +2968,10 @@ The format is :
 
 Gui tabs of gvim~
 
-If you are using gui tabs in gvim, you can ask wheeltree to manage the
+If you are using gui tabs in gvim, you can ask torustree to manage the
 labels : >
 
-  set guitablabel=%{wheeltree#status#guitablabel()}
+  set guitablabel=%{torustree#status#guitablabel()}
 <
 
 Gui tabs of nvim-qt~
@@ -2987,7 +2987,7 @@ If you prefer using text tabs even in nvim-qt, simply put : >
 in your `ginit.vim`.
 
 ------------------------------------------------------------------------------
-EXAMPLE						        *wheeltree-config-example*
+EXAMPLE						        *torustree-config-example*
 
 Here is an example of a complete configuration : >
 
@@ -2996,7 +2996,7 @@ Here is an example of a complete configuration : >
     let g:wheeltree_config                 = {}
     let g:wheeltree_config.project         = {}
     let g:wheeltree_config.storage         = {}
-    let g:wheeltree_config.storage.wheeltree   = {}
+    let g:wheeltree_config.storage.torustree   = {}
     let g:wheeltree_config.storage.session = {}
     let g:wheeltree_config.maxim           = {}
     let g:wheeltree_config.completion      = {}
@@ -3023,22 +3023,22 @@ Here is an example of a complete configuration : >
     let g:wheeltree_config.project.auto_chdir = 1
 
     " The folder where toruses and circles will be stored and read
-    let g:wheeltree_config.storage.wheeltree.folder = '~/.local/share/wheeltree'
-    " Name of the default wheeltree file
-    let g:wheeltree_config.storage.wheeltree.name = 'wheeltree.vim'
-    " Auto read wheeltree file on startup if > 0
-    let g:wheeltree_config.storage.wheeltree.autoread = 1
-    " Auto write wheeltree file on exit if > 0
-    let g:wheeltree_config.storage.wheeltree.autowrite = 1
+    let g:wheeltree_config.storage.torustree.folder = '~/.local/share/torustree'
+    " Name of the default torustree file
+    let g:wheeltree_config.storage.torustree.name = 'torustree.vim'
+    " Auto read torustree file on startup if > 0
+    let g:wheeltree_config.storage.torustree.autoread = 1
+    " Auto write torustree file on exit if > 0
+    let g:wheeltree_config.storage.torustree.autowrite = 1
     " The folder where sessions will be stored and read
-    let g:wheeltree_config.storage.session.folder = '~/.local/share/wheeltree/session'
+    let g:wheeltree_config.storage.session.folder = '~/.local/share/torustree/session'
     " Name of the default session file
     let g:wheeltree_config.storage.session.name = 'session.vim'
     " Auto read default session file on startup if > 0
     let g:wheeltree_config.storage.session.autoread = 1
     " Auto write default session file on exit if > 0
     let g:wheeltree_config.storage.session.autowrite = 1
-    " Number of backups for wheeltree & session files
+    " Number of backups for torustree & session files
     let g:wheeltree_config.storage.backups = 5
 
     " ---- Maximum number of elements in history
@@ -3079,18 +3079,18 @@ Here is an example of a complete configuration : >
 
     " ---- Mandala & leaf status in statusline ?
     let g:wheeltree_config.display.statusline = 1
-    " ---- Wheeltree dedibuf message : one-line or multi-line
+    " ---- Torustree dedibuf message : one-line or multi-line
     let g:wheeltree_config.display.dedibuf_msg = 'one-line'
     " ---- Filter prompt in dedicated buffers
-    "let g:wheeltree_config.display.prompt = 'wheeltree $ '
-    "let g:wheeltree_config.display.prompt_writable = 'wheeltree # '
+    "let g:wheeltree_config.display.prompt = 'torustree $ '
+    "let g:wheeltree_config.display.prompt_writable = 'torustree # '
     " ---- Selection marker in dedicated buffers
     "let g:wheeltree_config.display.selection = '-> '
     " ---- Signs
     let g:wheeltree_config.display.sign.switch = 1
-    " ---- Signs at wheeltree locations
+    " ---- Signs at torustree locations
     "let g:wheeltree_config.display.sign.settings = { 'text' : '@' }
-    " ---- Signs after using Wheeltree interface to native navigation (buffer, marker, jump, change, tag, ...)
+    " ---- Signs after using Torustree interface to native navigation (buffer, marker, jump, change, tag, ...)
     "let g:wheeltree_config.display.sign.native_settings = { 'text' : '*' }
 
     let g:wheeltree_config.debug = 0
@@ -3098,29 +3098,29 @@ Here is an example of a complete configuration : >
 <
 
 ==============================================================================
-AUTOCOMMANDS					   *wheeltree-autocommands*
+AUTOCOMMANDS					   *torustree-autocommands*
 
-Auto group			|wheeltree-autocommands-auto-group|
-Auto read			|wheeltree-autocommands-auto-read|
-Auto write			|wheeltree-autocommands-auto-write|
-Auto update			|wheeltree-autocommands-auto-update|
-Auto update alternate window	|wheeltree-autocommands-auto-update-alternate-window|
-Before jump			|wheeltree-autocommands-before-jump|
-Before organize			|wheeltree-autocommands-before-organize|
-Before write			|wheeltree-autocommands-before-write|
-After jump			|wheeltree-autocommands-after-jump|
-Auto follow			|wheeltree-autocommands-auto-follow|
-After native			|wheeltree-autocommands-after-native|
-MRU files			|wheeltree-autocommands-mru-files|
-Yank ring			|wheeltree-autocommands-yank|
-Example				|wheeltree-autocommands-example|
+Auto group			|torustree-autocommands-auto-group|
+Auto read			|torustree-autocommands-auto-read|
+Auto write			|torustree-autocommands-auto-write|
+Auto update			|torustree-autocommands-auto-update|
+Auto update alternate window	|torustree-autocommands-auto-update-alternate-window|
+Before jump			|torustree-autocommands-before-jump|
+Before organize			|torustree-autocommands-before-organize|
+Before write			|torustree-autocommands-before-write|
+After jump			|torustree-autocommands-after-jump|
+Auto follow			|torustree-autocommands-auto-follow|
+After native			|torustree-autocommands-after-native|
+MRU files			|torustree-autocommands-mru-files|
+Yank ring			|torustree-autocommands-yank|
+Example				|torustree-autocommands-example|
 
 ------------------------------------------------------------------------------
-AUTO GROUP				*wheeltree-autocommands-autogroup*
+AUTO GROUP				*torustree-autocommands-autogroup*
 
-It's a good idea to group all your wheeltree autocommands, e.g. : >
+It's a good idea to group all your torustree autocommands, e.g. : >
 
-    augroup wheeltree
+    augroup torustree
 	" -- clear the group
 	autocmd!
 	" -- add your autocommands
@@ -3130,64 +3130,64 @@ It's a good idea to group all your wheeltree autocommands, e.g. : >
     augroup END
 <
 
-This way, you can easily check the list of your wheeltree autocommands with : >
+This way, you can easily check the list of your torustree autocommands with : >
 
-    autocmd wheeltree
+    autocmd torustree
 <
 
-Be aware that the autogroup `wheeltree-mandala` is used for dedicated buffers
+Be aware that the autogroup `torustree-mandala` is used for dedicated buffers
 local autocommands, so you can't use this name.
 
 ------------------------------------------------------------------------------
-AUTO READ				*wheeltree-autocommands-auto-read*
+AUTO READ				*torustree-autocommands-auto-read*
 
-To enable autoread of the wheeltree file, you need to add an autocommand
+To enable autoread of the torustree file, you need to add an autocommand
 on vim enter : >
 
-    autocmd VimEnter * call wheeltree#void#init()
+    autocmd VimEnter * call torustree#void#init()
 <
 
 ------------------------------------------------------------------------------
-AUTO WRITE				*wheeltree-autocommands-auto-write*
+AUTO WRITE				*torustree-autocommands-auto-write*
 
-To enable autowrite of the wheeltree file, you need to add an autocommand
+To enable autowrite of the torustree file, you need to add an autocommand
 on vim leave : >
 
-    autocmd VimLeave * call wheeltree#void#exit()
+    autocmd VimLeave * call torustree#void#exit()
 <
 
 ------------------------------------------------------------------------------
-AUTO UPDATE					*wheeltree-autocommands-auto-update*
+AUTO UPDATE					*torustree-autocommands-auto-update*
 
 By default, locations are only updated manually, with `<M-w><M-$>`. This
-way, you can update the wheeltree only when you want to do so.
+way, you can update the torustree only when you want to do so.
 
 Nevertheless, if you want to update your cursor position each time you
 leave a buffer, you can use the classic BufLeave event : >
 
-  autocmd BufLeave * call wheeltree#vortex#update()
+  autocmd BufLeave * call torustree#vortex#update()
 <
 
 ------------------------------------------------------------------------------
-AUTO UPDATE ALTERNATE WINDOW	*wheeltree-autocommands-auto-update-alternate-window*
+AUTO UPDATE ALTERNATE WINDOW	*torustree-autocommands-auto-update-alternate-window*
 
 If you wish to use the generalized alternate window command, for all windows
 in all tabs : >
 
-  autocmd BufLeave * call wheeltree#caduceus#update_window()
+  autocmd BufLeave * call torustree#caduceus#update_window()
 <
 
 ------------------------------------------------------------------------------
-BEFORE JUMP					*wheeltree-autocommands-before-jump*
+BEFORE JUMP					*torustree-autocommands-before-jump*
 
 It is possible to update automatically your locations before each
-jump to a new wheeltree location. Just add the update function to the
+jump to a new torustree location. Just add the update function to the
 `WheelBeforeJump` user event : >
 
-    autocmd User WheelBeforeJump call wheeltree#vortex#update()
+    autocmd User WheelBeforeJump call torustree#vortex#update()
 <
 
-This autocmd is run before any jump, as soon as you use a wheeltree navigation
+This autocmd is run before any jump, as soon as you use a torustree navigation
 function :
 
 - next/previous element
@@ -3196,13 +3196,13 @@ function :
 - ...
 
 ------------------------------------------------------------------------------
-BEFORE ORGANIZE				*wheeltree-autocommands-before-organize*
+BEFORE ORGANIZE				*torustree-autocommands-before-organize*
 
 To update automatically your locations before each operation involving a
-wheeltree element, just add the update function to the `WheelBeforeOrganize`
+torustree element, just add the update function to the `WheelBeforeOrganize`
 user event : >
 
-    autocmd User WheelBeforeOrganize call wheeltree#vortex#update()
+    autocmd User WheelBeforeOrganize call torustree#vortex#update()
 <
 
 This autocmd is run before each organizing function :
@@ -3215,19 +3215,19 @@ This autocmd is run before each organizing function :
 - ...
 
 ------------------------------------------------------------------------------
-BEFORE WRITE				*wheeltree-autocommands-before-write*
+BEFORE WRITE				*torustree-autocommands-before-write*
 
-To update automatically your locations before writing the wheeltree to a file,
+To update automatically your locations before writing the torustree to a file,
 just add the update function to the `WheelBeforeWrite` user event : >
 
-    autocmd User WheelBeforeWrite call wheeltree#vortex#update()
+    autocmd User WheelBeforeWrite call torustree#vortex#update()
 <
 
 ------------------------------------------------------------------------------
-AFTER JUMP				*wheeltree-autocommands-after-jump*
+AFTER JUMP				*torustree-autocommands-after-jump*
 
-The `WheelAfterJump` user event happens after any jump to a wheeltree
-location, as soon as you use a wheeltree navigation function.
+The `WheelAfterJump` user event happens after any jump to a torustree
+location, as soon as you use a torustree navigation function.
 
 You can use it to add a post-jump operation.
 
@@ -3242,19 +3242,19 @@ This example opens recursively the folds under the cursor line : >
 <
 
 ------------------------------------------------------------------------------
-AUTO FOLLOW			   		*wheeltree-autocommands-auto-follow*
+AUTO FOLLOW			   		*torustree-autocommands-auto-follow*
 
 On switching tab or window~
 
-If you wish the wheeltree location to auto-follow the current buffer each
+If you wish the torustree location to auto-follow the current buffer each
 time you enter a window, you can add this autocommand : >
 
-    autocmd WinEnter * call wheeltree#projection#follow()
+    autocmd WinEnter * call torustree#projection#follow()
 <
 
 This means that each time you enter a tab or a window by using a native
 command (like |gt|, |:tabnext|, |CTRL-W_CTRL-W| and so on), the plugin
-will check if the current file name is in the wheeltree. If true, it will
+will check if the current file name is in the torustree. If true, it will
 adjust its state to match the file and cursor position.
 
 Launch it manually~
@@ -3269,100 +3269,100 @@ case you need them in your workflow.
 If you want to trigger the auto-follow process when you edit a file with a
 native vim command (like |:edit|), just add it to the `BufRead` event : >
 
-    autocmd BufRead * call wheeltree#projection#follow()
+    autocmd BufRead * call torustree#projection#follow()
 <
 
 Same thing when you enter a buffer with a native vim command (like
 |:buffer|), just add it to the `BufEnter` event : >
 
-    autocmd BufEnter * call wheeltree#projection#follow()
+    autocmd BufEnter * call torustree#projection#follow()
 <
 
 ------------------------------------------------------------------------------
-AFTER NATIVE					*wheeltree-autocommands-after-native*
+AFTER NATIVE					*torustree-autocommands-after-native*
 
-The `WheelAfterNative` user event happens after any jump using a Wheeltree
+The `WheelAfterNative` user event happens after any jump using a Torustree
 interface to a native (neo)vim function.
 
 You can use it to auto-follow after a native operation : >
 
-    autocmd User WheelAfterNative call wheeltree#projection#follow()
+    autocmd User WheelAfterNative call torustree#projection#follow()
 <
 
 ------------------------------------------------------------------------------
-MRU FILES				    *wheeltree-autocommands-mru-files*
+MRU FILES				    *torustree-autocommands-mru-files*
 
 If you want to record a list of the files you edited without adding them
-to the wheeltree : >
+to the torustree : >
 
-  autocmd BufRead * call wheeltree#attic#record()
+  autocmd BufRead * call torustree#attic#record()
 <
 
 ------------------------------------------------------------------------------
-YANK RING					*wheeltree-autocommands-yank*
+YANK RING					*torustree-autocommands-yank*
 
 If you want to record your yanks/delete, you can add this autommand to
 your init file : >
 
- autocmd TextYankPost * call wheeltree#codex#add()
+ autocmd TextYankPost * call torustree#codex#add()
 <
 
 ------------------------------------------------------------------------------
-EXAMPLE					    *wheeltree-autocommands-example*
+EXAMPLE					    *torustree-autocommands-example*
 
 Here is an example of a complete autocommands configuration : >
 
-    augroup wheeltree
+    augroup torustree
 	" Clear the group
 	autocmd!
 	" On vim enter, for autoreading
-	autocmd VimEnter * call wheeltree#void#init()
+	autocmd VimEnter * call torustree#void#init()
 	" On vim leave, for autowriting
-	autocmd VimLeave * call wheeltree#void#exit()
+	autocmd VimLeave * call torustree#void#exit()
 	" Update location line & col before leaving a window
-	autocmd BufLeave * call wheeltree#vortex#update()
+	autocmd BufLeave * call torustree#vortex#update()
 	" For the generalized alternate window command, for all windows in all tabs
-	autocmd BufLeave * call wheeltree#caduceus#update_window()
+	autocmd BufLeave * call torustree#caduceus#update_window()
 	" Executed before jumping to a location
-	autocmd User WheelBeforeJump call wheeltree#vortex#update()
-	" Executed before organizing the wheeltree
-	autocmd User WheelBeforeOrganize call wheeltree#vortex#update()
-	" Executed before writing the wheeltree
-	autocmd User WheelBeforeWrite call wheeltree#vortex#update()
+	autocmd User WheelBeforeJump call torustree#vortex#update()
+	" Executed before organizing the torustree
+	autocmd User WheelBeforeOrganize call torustree#vortex#update()
+	" Executed before writing the torustree
+	autocmd User WheelBeforeWrite call torustree#vortex#update()
 	" Executed after jumping to a location
 	"autocmd User WheelAfterJump norm zMzx
-	" For current wheeltree location to auto follow window changes
-	autocmd WinEnter * call wheeltree#projection#follow()
-	" For current wheeltree location to follow on editing, buffer loading
-	"autocmd BufRead * call wheeltree#projection#follow()
-	" For current wheeltree location to follow on entering buffer
-	"autocmd BufEnter * call wheeltree#projection#follow()
-	" Executed after a native jump using Wheeltree interface (buffer, marker, jump, change, tag, ...)
-	"autocmd User WheelAfterNative call wheeltree#projection#follow()
-	" Add current non-wheeltree file to MRU files
-	autocmd BufRead * call wheeltree#attic#record()
+	" For current torustree location to auto follow window changes
+	autocmd WinEnter * call torustree#projection#follow()
+	" For current torustree location to follow on editing, buffer loading
+	"autocmd BufRead * call torustree#projection#follow()
+	" For current torustree location to follow on entering buffer
+	"autocmd BufEnter * call torustree#projection#follow()
+	" Executed after a native jump using Torustree interface (buffer, marker, jump, change, tag, ...)
+	"autocmd User WheelAfterNative call torustree#projection#follow()
+	" Add current non-torustree file to MRU files
+	autocmd BufRead * call torustree#attic#record()
 	" To record your yanks in the yank ring
-	autocmd TextYankPost * call wheeltree#codex#add()
+	autocmd TextYankPost * call torustree#codex#add()
     augroup END
 <
 
 ==============================================================================
-MAPPINGS						    *wheeltree-mappings*
+MAPPINGS						    *torustree-mappings*
 
-Levels				|wheeltree-mappings-levels|
-Prefix				|wheeltree-mappings-prefix|
-Mnemonic			|wheeltree-mappings-mnemonic|
-Level 0				|wheeltree-mappings-level-0|
-Level 1				|wheeltree-mappings-level-1|
-Level 2				|wheeltree-mappings-level-2|
-Level 10			|wheeltree-mappings-level-10|
-Level 20			|wheeltree-mappings-level-20|
-Define your own maps		|wheeltree-mappings-define-your-own-maps|
-Exhaustive list			|wheeltree-mappings-exhaustive-list|
-Other ideas			|wheeltree-mappings-ideas|
+Levels				|torustree-mappings-levels|
+Prefix				|torustree-mappings-prefix|
+Mnemonic			|torustree-mappings-mnemonic|
+Level 0				|torustree-mappings-level-0|
+Level 1				|torustree-mappings-level-1|
+Level 2				|torustree-mappings-level-2|
+Level 10			|torustree-mappings-level-10|
+Level 20			|torustree-mappings-level-20|
+Define your own maps		|torustree-mappings-define-your-own-maps|
+Exhaustive list			|torustree-mappings-exhaustive-list|
+Other ideas			|torustree-mappings-ideas|
 
 ------------------------------------------------------------------------------
-LEVELS						    *wheeltree-mappings-levels*
+LEVELS						    *torustree-mappings-levels*
 
 The mappings are organized in levels :
 
@@ -3382,11 +3382,11 @@ E.g., if you set it to 2 : >
 mappings levels 0, 1 and 2 will be available.
 
 Level 1 or 2 is fine for most usages. Level 10 is interesting if you are
-looking for ideas of prefixless mappings. See |wheeltree-mappings-level-0| and
+looking for ideas of prefixless mappings. See |torustree-mappings-level-0| and
 subsequent for more information.
 
 ------------------------------------------------------------------------------
-PREFIX						    *wheeltree-mappings-prefix*
+PREFIX						    *torustree-mappings-prefix*
 
 Default mappings of levels 0, 1, 2 use a prefix key. This prefix is `<M-w>` by
 default. You can customize it : >
@@ -3405,7 +3405,7 @@ In the following discussion, I assume that you have kept the default
 `<M-w>` prefix.
 
 ------------------------------------------------------------------------------
-MNEMONIC					*wheeltree-mappings-mnemonic*
+MNEMONIC					*torustree-mappings-mnemonic*
 
 Most mappings respect the following convention :
 
@@ -3415,13 +3415,13 @@ Most mappings respect the following convention :
 - prefix + `<M-letter>` : alternative operation
 
 ------------------------------------------------------------------------------
-LEVEL 0						*wheeltree-mappings-level-0*
+LEVEL 0						*torustree-mappings-level-0*
 
 Menus~
 
-The most useful mapping to discover wheeltree functions is `<M-w><M-m>` : it
+The most useful mapping to discover torustree functions is `<M-w><M-m>` : it
 launches a menu in a dedicated buffer, and from there you can trigger
-all sort of actions on the Wheeltree. See |wheeltree-dedicated-buffers-menu|
+all sort of actions on the Torustree. See |torustree-dedicated-buffers-menu|
 for more information.
 
 | Prefix + | With default prefix | Action                  |
@@ -3445,8 +3445,8 @@ Sync~
 Read / Write file~
 
 | Prefix + | With default prefix | Action                 |
-| r        | <M-w>r              | Load wheeltree from file   |
-| w        | <M-w>w              | Save wheeltree to file     |
+| r        | <M-w>r              | Load torustree from file   |
+| w        | <M-w>w              | Save torustree to file     |
 | -------- | ------------------- | ---------------------- |
 | R        | <M-w>R              | Load session from file |
 | W        | <M-w>W              | Save session to file   |
@@ -3486,14 +3486,14 @@ Add~
 | ---------- | --------------------- | ---------------------------------- |
 | a          | <M-w>a                | Add location to the current circle |
 | <C-a>      | <M-w><C-a>            | Add circle to the current torus    |
-| A          | <M-w>A                | Add torus to the wheeltree             |
+| A          | <M-w>A                | Add torus to the torustree             |
 | ---------- | --------------------- | ---------------------------------- |
 | +f         | <M-w>+f               | Edit and add a file                |
 | +b         | <M-w>+b               | Edit and add a buffer              |
 | *          | <M-w>*                | Add files matching glob            |
 
 ------------------------------------------------------------------------------
-LEVEL 1						*wheeltree-mappings-level-1*
+LEVEL 1						*torustree-mappings-level-1*
 
 Switch~
 
@@ -3529,7 +3529,7 @@ Reorder~
 | ---------- | --------------------- | ---------------------------------------- |
 | @o         | <M-w>@o               | Reorder locations in current circle      |
 | @<C-o>     | <M-w>@<C-o>           | Reorder circles in current torus         |
-| @O         | <M-w>@O               | Reorder toruses in wheeltree                 |
+| @O         | <M-w>@O               | Reorder toruses in torustree                 |
 
 Rename~
 
@@ -3547,7 +3547,7 @@ Dedicated buffers :
 | ---------- | --------------------- | ---------------------------------------- |
 | @n         | <M-w>@n               | Rename locations in current circle       |
 | @<C-n>     | <M-w>@<C-n>           | Rename circles in current torus          |
-| @N         | <M-w>@N               | Rename toruses in wheeltree                  |
+| @N         | <M-w>@N               | Rename toruses in torustree                  |
 
 Delete~
 
@@ -3585,10 +3585,10 @@ Dedicated buffers :
 | ---------- | --------------------- | ---------------------------------------- |
 | @c         | <M-w>@c               | Copy or move locations in current circle |
 | @<M-c>     | <M-w>@<M-c>           | Copy or move circles in current torus    |
-| @C         | <M-w>@C               | Copy or move toruses in wheeltree            |
+| @C         | <M-w>@C               | Copy or move toruses in torustree            |
 
 ------------------------------------------------------------------------------
-LEVEL 2						*wheeltree-mappings-level-2*
+LEVEL 2						*torustree-mappings-level-2*
 
 Buffers~
 
@@ -3629,7 +3629,7 @@ Prompting functions :
 | Prefix + | With default prefix | Action                                      |
 | -------- | ------------------- | ------------------------------------------- |
 | f        | <M-w>f              | Find file in current directory tree         |
-| u        | <M-w>u              | Most recently used files not found in wheeltree |
+| u        | <M-w>u              | Most recently used files not found in torustree |
 
 Dedicated buffers :
 
@@ -3637,7 +3637,7 @@ Dedicated buffers :
 | -------- | ------------------- | ------------------------------------------- |
 | <M-f>    | <M-w><M-f>          | Find file in current directory tree         |
 | &f       | <M-w>&f             | Search files with find in async mode        |
-| <M-u>    | <M-w><M-u>          | Most recently used files not found in wheeltree |
+| <M-u>    | <M-w><M-u>          | Most recently used files not found in torustree |
 | l        | <M-w>l              | Search files with locate                    |
 
 Search inside files~
@@ -3681,7 +3681,7 @@ Reorganize~
 
 | Prefix + | With default prefix | Action                    |
 | -------- | ------------------- | ------------------------- |
-| <M-r>    | <M-w><M-r>          | Reorganize wheeltree elements |
+| <M-r>    | <M-w><M-r>          | Reorganize torustree elements |
 | <C-r>    | <M-w><C-r>          | Reorganize tabs & windows |
 
 Narrow~
@@ -3795,9 +3795,9 @@ with `<M-w>z`.
 | z<down>    | <M-w>z<down>          | Rotate windows clockwise              |
 
 ------------------------------------------------------------------------------
-LEVEL 10					*wheeltree-mappings-level-10*
+LEVEL 10					*torustree-mappings-level-10*
 
-The level 10 offers mappings without prefix for the most used wheeltree
+The level 10 offers mappings without prefix for the most used torustree
 functions. You can set the mapping level to 10 to activate them, or
 adapt them to your taste and add them to your init file.
 
@@ -3808,8 +3808,8 @@ Maps table~
 | <M-=>          | Meta menu                                       |
 | <M-m>          | Main menu                                       |
 | -------------- | ---------------------------------------------   |
-| <M-i>          | Wheeltree dashboard : torus > circle > location     |
-| <M-$>          | Sync up : find closest wheeltree location           |
+| <M-i>          | Torustree dashboard : torus > circle > location     |
+| <M-$>          | Sync up : find closest torustree location           |
 | <C-$>          | Sync down : jump to current location            |
 | -------------- | ---------------------------------------------   |
 | <M-PageUp>     | Go to previous location                         |
@@ -3828,7 +3828,7 @@ Maps table~
 | -------------- | ---------------------------------------------   |
 | <M-x>          | Prompt for a location in index to switch to     |
 | <M-S-x>        | Index of toruses > circles > locations          |
-| <M-C-x>        | Choose element in wheeltree folding tree            |
+| <M-C-x>        | Choose element in torustree folding tree            |
 | -------------- | ---------------------------------------------   |
 | <M-Home>       | Go to newer location in history                 |
 | <M-End>        | Go to older location in history                 |
@@ -3866,7 +3866,7 @@ Maps table~
 | -------------- | ---------------------------------------------   |
 | <M-Insert>     | Add location to the current circle              |
 | <M-Del>        | Delete current location                         |
-| <M-r>          | Reorganize wheeltree elements                       |
+| <M-r>          | Reorganize torustree elements                       |
 | -------------- | ---------------------------------------------   |
 | <M-C-r>        | Reorganize tabs and windows                     |
 | -------------- | ---------------------------------------------   |
@@ -3877,7 +3877,7 @@ Maps table~
 | <M-f>          | Find, prompting function                        |
 | <M-C-f>        | Find, dedicated buffer                          |
 | <M-C-&>        | Async find                                      |
-| <M-u>          | Most Recently Used files not found in wheeltree     |
+| <M-u>          | Most Recently Used files not found in torustree     |
 | <M-l>          | Locate                                          |
 | -------------- | ---------------------------------------------   |
 | <M-o>          | Occur in current file, prompting function       |
@@ -3913,112 +3913,112 @@ level to less than 10, then copy and adapt some of the following lines : >
     let nmap = 'nmap <silent>'
     let vmap = 'vmap <silent>'
     " Menus
-    exe nmap '<m-m>          <plug>(wheeltree-menu-main)'
-    exe nmap '<m-=>          <plug>(wheeltree-menu-meta)'
+    exe nmap '<m-m>          <plug>(torustree-menu-main)'
+    exe nmap '<m-=>          <plug>(torustree-menu-meta)'
     " Sync
-    exe nmap '<m-i>          <plug>(wheeltree-info)'
-    exe nmap '<m-$>          <plug>(wheeltree-sync-up)'
-    exe nmap '<c-$>          <plug>(wheeltree-sync-down)'
-    " ---- navigate in the wheeltree
+    exe nmap '<m-i>          <plug>(torustree-info)'
+    exe nmap '<m-$>          <plug>(torustree-sync-up)'
+    exe nmap '<c-$>          <plug>(torustree-sync-down)'
+    " ---- navigate in the torustree
     " --  next / previous
-    exe nmap '<m-pageup>   <plug>(wheeltree-previous-location)'
-    exe nmap '<m-pagedown> <plug>(wheeltree-next-location)'
-    exe nmap '<c-pageup>   <plug>(wheeltree-previous-circle)'
-    exe nmap '<c-pagedown> <plug>(wheeltree-next-circle)'
-    exe nmap '<s-pageup>   <plug>(wheeltree-previous-torus)'
-    exe nmap '<s-pagedown> <plug>(wheeltree-next-torus)'
+    exe nmap '<m-pageup>   <plug>(torustree-previous-location)'
+    exe nmap '<m-pagedown> <plug>(torustree-next-location)'
+    exe nmap '<c-pageup>   <plug>(torustree-previous-circle)'
+    exe nmap '<c-pagedown> <plug>(torustree-next-circle)'
+    exe nmap '<s-pageup>   <plug>(torustree-previous-torus)'
+    exe nmap '<s-pagedown> <plug>(torustree-next-torus)'
     " -- switch
-    exe nmap '<m-cr>        <plug>(wheeltree-prompt-location)'
-    exe nmap '<c-cr>        <plug>(wheeltree-prompt-circle)'
-    exe nmap '<s-cr>        <plug>(wheeltree-prompt-torus)'
-    exe nmap '<m-space>     <plug>(wheeltree-dedibuf-location)'
-    exe nmap '<c-space>     <plug>(wheeltree-dedibuf-circle)'
-    exe nmap '<s-space>     <plug>(wheeltree-dedibuf-torus)'
+    exe nmap '<m-cr>        <plug>(torustree-prompt-location)'
+    exe nmap '<c-cr>        <plug>(torustree-prompt-circle)'
+    exe nmap '<s-cr>        <plug>(torustree-prompt-torus)'
+    exe nmap '<m-space>     <plug>(torustree-dedibuf-location)'
+    exe nmap '<c-space>     <plug>(torustree-dedibuf-circle)'
+    exe nmap '<s-space>     <plug>(torustree-dedibuf-torus)'
     " -- index
-    exe nmap '<m-x>         <plug>(wheeltree-prompt-index)'
-    exe nmap '<m-s-x>       <plug>(wheeltree-dedibuf-index)'
-    exe nmap '<m-c-x>       <plug>(wheeltree-dedibuf-index-tree)'
+    exe nmap '<m-x>         <plug>(torustree-prompt-index)'
+    exe nmap '<m-s-x>       <plug>(torustree-dedibuf-index)'
+    exe nmap '<m-c-x>       <plug>(torustree-dedibuf-index-tree)'
     " -- history
-    exe nmap '<m-home>      <plug>(wheeltree-history-newer)'
-    exe nmap '<m-end>       <plug>(wheeltree-history-older)'
-    exe nmap '<c-home>      <plug>(wheeltree-history-newer-in-circle)'
-    exe nmap '<c-end>       <plug>(wheeltree-history-older-in-circle)'
-    exe nmap '<s-home>      <plug>(wheeltree-history-newer-in-torus)'
-    exe nmap '<s-end>       <plug>(wheeltree-history-older-in-torus)'
-    exe nmap '<m-h>         <plug>(wheeltree-prompt-history)'
-    exe nmap '<m-c-h>       <plug>(wheeltree-dedibuf-history)'
+    exe nmap '<m-home>      <plug>(torustree-history-newer)'
+    exe nmap '<m-end>       <plug>(torustree-history-older)'
+    exe nmap '<c-home>      <plug>(torustree-history-newer-in-circle)'
+    exe nmap '<c-end>       <plug>(torustree-history-older-in-circle)'
+    exe nmap '<s-home>      <plug>(torustree-history-newer-in-torus)'
+    exe nmap '<s-end>       <plug>(torustree-history-older-in-torus)'
+    exe nmap '<m-h>         <plug>(torustree-prompt-history)'
+    exe nmap '<m-c-h>       <plug>(torustree-dedibuf-history)'
     " -- alternate
-    exe nmap '<c-^>          <plug>(wheeltree-alternate-anywhere)'
-    exe nmap '<m-^>          <plug>(wheeltree-alternate-same-circle)'
-    exe nmap '<m-c-^>        <plug>(wheeltree-alternate-same-torus-other-circle)'
+    exe nmap '<c-^>          <plug>(torustree-alternate-anywhere)'
+    exe nmap '<m-^>          <plug>(torustree-alternate-same-circle)'
+    exe nmap '<m-c-^>        <plug>(torustree-alternate-same-torus-other-circle)'
     " -- frecency
-    exe nmap '<m-e>         <plug>(wheeltree-prompt-frecency)'
-    exe nmap '<m-c-e>       <plug>(wheeltree-dedibuf-frecency)'
-    " ---- navigate using Wheeltree interface to vim native tools
+    exe nmap '<m-e>         <plug>(torustree-prompt-frecency)'
+    exe nmap '<m-c-e>       <plug>(torustree-dedibuf-frecency)'
+    " ---- navigate using Torustree interface to vim native tools
     " -- buffers
-    exe nmap '<m-b>          <plug>(wheeltree-prompt-buffer)'
-    exe nmap '<m-c-b>        <plug>(wheeltree-dedibuf-buffer)'
-    exe nmap '<m-s-b>        <plug>(wheeltree-dedibuf-buffer-all)'
+    exe nmap '<m-b>          <plug>(torustree-prompt-buffer)'
+    exe nmap '<m-c-b>        <plug>(torustree-dedibuf-buffer)'
+    exe nmap '<m-s-b>        <plug>(torustree-dedibuf-buffer-all)'
     " -- tabs & windows : visible buffers
-    exe nmap '<m-v>          <plug>(wheeltree-prompt-tabwin)'
-    exe nmap '<m-c-v>        <plug>(wheeltree-dedibuf-tabwin-tree)'
-    exe nmap '<m-s-v>        <plug>(wheeltree-dedibuf-tabwin)'
+    exe nmap '<m-v>          <plug>(torustree-prompt-tabwin)'
+    exe nmap '<m-c-v>        <plug>(torustree-dedibuf-tabwin-tree)'
+    exe nmap '<m-s-v>        <plug>(torustree-dedibuf-tabwin)'
     " -- (neo)vim lists
-    exe nmap "<m-'>          <plug>(wheeltree-prompt-marker)"
-    exe nmap "<m-k>          <plug>(wheeltree-prompt-marker)"
-    exe nmap '<m-j>          <plug>(wheeltree-prompt-jump)'
-    exe nmap '<m-,>          <plug>(wheeltree-prompt-change)'
-    exe nmap '<m-c>          <plug>(wheeltree-prompt-change)'
-    exe nmap '<m-t>          <plug>(wheeltree-prompt-tag)'
-    exe nmap "<m-c-k>        <plug>(wheeltree-dedibuf-marker)"
-    exe nmap '<m-c-j>        <plug>(wheeltree-dedibuf-jump)'
-    exe nmap '<m-;>          <plug>(wheeltree-dedibuf-change)'
-    exe nmap '<m-c-t>        <plug>(wheeltree-dedibuf-tag)'
-    " ---- organize the wheeltree
-    exe nmap '<m-insert>     <plug>(wheeltree-prompt-add-here)'
-    exe nmap '<m-del>        <plug>(wheeltree-prompt-delete-location)'
-    exe nmap '<m-r>          <plug>(wheeltree-dedibuf-reorganize)'
+    exe nmap "<m-'>          <plug>(torustree-prompt-marker)"
+    exe nmap "<m-k>          <plug>(torustree-prompt-marker)"
+    exe nmap '<m-j>          <plug>(torustree-prompt-jump)'
+    exe nmap '<m-,>          <plug>(torustree-prompt-change)'
+    exe nmap '<m-c>          <plug>(torustree-prompt-change)'
+    exe nmap '<m-t>          <plug>(torustree-prompt-tag)'
+    exe nmap "<m-c-k>        <plug>(torustree-dedibuf-marker)"
+    exe nmap '<m-c-j>        <plug>(torustree-dedibuf-jump)'
+    exe nmap '<m-;>          <plug>(torustree-dedibuf-change)'
+    exe nmap '<m-c-t>        <plug>(torustree-dedibuf-tag)'
+    " ---- organize the torustree
+    exe nmap '<m-insert>     <plug>(torustree-prompt-add-here)'
+    exe nmap '<m-del>        <plug>(torustree-prompt-delete-location)'
+    exe nmap '<m-r>          <plug>(torustree-dedibuf-reorganize)'
     " ---- organize other things
-    exe nmap '<m-c-r>        <plug>(wheeltree-dedibuf-reorg-tabwin)'
+    exe nmap '<m-c-r>        <plug>(torustree-dedibuf-reorg-tabwin)'
     " ---- refactoring
-    exe nmap '<m-c-g>        <plug>(wheeltree-dedibuf-grep-edit)'
-    exe nmap '<m-n>          <plug>(wheeltree-dedibuf-narrow-operator)'
-    exe vmap '<m-n>          <plug>(wheeltree-dedibuf-narrow)'
-    exe nmap '<m-c-n>        <plug>(wheeltree-dedibuf-narrow-circle)'
+    exe nmap '<m-c-g>        <plug>(torustree-dedibuf-grep-edit)'
+    exe nmap '<m-n>          <plug>(torustree-dedibuf-narrow-operator)'
+    exe vmap '<m-n>          <plug>(torustree-dedibuf-narrow)'
+    exe nmap '<m-c-n>        <plug>(torustree-dedibuf-narrow-circle)'
     " ---- search
     " -- files
-    exe nmap '<m-f>          <plug>(wheeltree-prompt-find)'
-    exe nmap '<m-c-f>        <plug>(wheeltree-dedibuf-find)'
-    exe nmap '<m-c-&>        <plug>(wheeltree-dedibuf-async-find)'
-    exe nmap '<m-u>          <plug>(wheeltree-prompt-mru)'
-    exe nmap '<m-c-u>        <plug>(wheeltree-dedibuf-mru)'
-    exe nmap '<m-l>          <plug>(wheeltree-dedibuf-locate)'
+    exe nmap '<m-f>          <plug>(torustree-prompt-find)'
+    exe nmap '<m-c-f>        <plug>(torustree-dedibuf-find)'
+    exe nmap '<m-c-&>        <plug>(torustree-dedibuf-async-find)'
+    exe nmap '<m-u>          <plug>(torustree-prompt-mru)'
+    exe nmap '<m-c-u>        <plug>(torustree-dedibuf-mru)'
+    exe nmap '<m-l>          <plug>(torustree-dedibuf-locate)'
     " -- inside files
-    exe nmap '<m-o>          <plug>(wheeltree-prompt-occur)'
-    exe nmap '<m-c-o>        <plug>(wheeltree-dedibuf-occur)'
-    exe nmap '<m-g>          <plug>(wheeltree-dedibuf-grep)'
-    exe nmap '<m-s-o>        <plug>(wheeltree-prompt-outline)'
-    exe nmap '<c-s-o>        <plug>(wheeltree-dedibuf-outline)'
+    exe nmap '<m-o>          <plug>(torustree-prompt-occur)'
+    exe nmap '<m-c-o>        <plug>(torustree-dedibuf-occur)'
+    exe nmap '<m-g>          <plug>(torustree-dedibuf-grep)'
+    exe nmap '<m-s-o>        <plug>(torustree-prompt-outline)'
+    exe nmap '<c-s-o>        <plug>(torustree-dedibuf-outline)'
     " ---- yank ring
-    exe nmap '<m-y>          <plug>(wheeltree-prompt-yank-plain-linewise-after)'
-    exe nmap '<m-p>          <plug>(wheeltree-prompt-yank-plain-charwise-after)'
-    exe nmap '<m-s-y>        <plug>(wheeltree-prompt-yank-plain-linewise-before)'
-    exe nmap '<m-s-p>        <plug>(wheeltree-prompt-yank-plain-charwise-before)'
-    exe nmap '<m-c-y>        <plug>(wheeltree-dedibuf-yank-plain)'
-    exe nmap '<m-c-p>        <plug>(wheeltree-dedibuf-yank-list)'
+    exe nmap '<m-y>          <plug>(torustree-prompt-yank-plain-linewise-after)'
+    exe nmap '<m-p>          <plug>(torustree-prompt-yank-plain-charwise-after)'
+    exe nmap '<m-s-y>        <plug>(torustree-prompt-yank-plain-linewise-before)'
+    exe nmap '<m-s-p>        <plug>(torustree-prompt-yank-plain-charwise-before)'
+    exe nmap '<m-c-y>        <plug>(torustree-dedibuf-yank-plain)'
+    exe nmap '<m-c-p>        <plug>(torustree-dedibuf-yank-list)'
     " ---- undo list
-    exe nmap '<m-s-u>        <plug>(wheeltree-dedibuf-undo-list)'
+    exe nmap '<m-s-u>        <plug>(torustree-dedibuf-undo-list)'
     " ---- ex or shell command output
-    exe nmap '<m-!>          <plug>(wheeltree-dedibuf-command)'
-    exe nmap '<m-&>          <plug>(wheeltree-dedibuf-async)'
+    exe nmap '<m-!>          <plug>(torustree-dedibuf-command)'
+    exe nmap '<m-&>          <plug>(torustree-dedibuf-async)'
     " ---- dedicated buffers
-    exe nmap '<m-tab>        <plug>(wheeltree-mandala-add)'
-    exe nmap '<m-backspace>  <plug>(wheeltree-mandala-delete)'
-    exe nmap '<m-left>       <plug>(wheeltree-mandala-backward)'
-    exe nmap '<m-right>      <plug>(wheeltree-mandala-forward)'
-    exe nmap '<c-up>         <plug>(wheeltree-mandala-switch)'
+    exe nmap '<m-tab>        <plug>(torustree-mandala-add)'
+    exe nmap '<m-backspace>  <plug>(torustree-mandala-delete)'
+    exe nmap '<m-left>       <plug>(torustree-mandala-backward)'
+    exe nmap '<m-right>      <plug>(torustree-mandala-forward)'
+    exe nmap '<c-up>         <plug>(torustree-mandala-switch)'
     " ---- layouts
-    exe nmap '<m-z>          <plug>(wheeltree-zoom)'
+    exe nmap '<m-z>          <plug>(torustree-zoom)'
 <
 
 Overwrite some level 10 maps~
@@ -4027,7 +4027,7 @@ If you agree with almost all the proposed level 10 maps, except a few
 one, a simple solution is to overwrite some maps after all plugins have
 been loaded. Example : >
 
-  " your wheeltree config
+  " your torustree config
   let g:wheeltree_config.mappings = 10
   " ...
 
@@ -4056,13 +4056,13 @@ can cause a strange in the empty buffer at startup. To avoid it, add : >
 to your vimrc. If it doesn't work, try to rise the delay.
 
 ------------------------------------------------------------------------------
-LEVEL 20						*wheeltree-mappings-level-20*
+LEVEL 20						*torustree-mappings-level-20*
 
 For debugging only.
 
 | Prefix + | With default prefix | Action                               |
 | -------- | ------------------- | ------------------------------------ |
-| ZZ       | <M-w>ZZ             | Reset wheeltree variables to empty wheeltree |
+| ZZ       | <M-w>ZZ             | Reset torustree variables to empty torustree |
 | Ze       | <M-w>Ze             | Clear echo area                      |
 | Zm       | <M-w>Zm             | Clear (neo)vim messages              |
 | Zs       | <M-w>Zs             | Clear locations margin signs         |
@@ -4070,33 +4070,33 @@ For debugging only.
 | Z<M-h>   | <M-w>Z<M-h>         | History circuit, dedicated buffer    |
 
 ------------------------------------------------------------------------------
-DEFINE YOUR OWN MAPS			*wheeltree-mappings-define-your-own-maps*
+DEFINE YOUR OWN MAPS			*torustree-mappings-define-your-own-maps*
 
 The recommended approach is to use plug maps. Example : >
 
-    nmap <silent> <M-m> <plug>(wheeltree-menu-main)
+    nmap <silent> <M-m> <plug>(torustree-menu-main)
 <
 
-Plug maps are middle men between wheeltree autoload functions and user
+Plug maps are middle men between torustree autoload functions and user
 mappings, so you have to use recursive maps. The above example would
 not work with |:nnoremap|.
 
 You can also use the meta-command : >
 
-    nnoremap <silent> <M-m> :Wheeltree dedibuf menu-main<cr>
+    nnoremap <silent> <M-m> :Torustree dedibuf menu-main<cr>
 <
 
 In that case, no need for a recursive map.
 
 ------------------------------------------------------------------------------
-EXHAUSTIVE LIST					*wheeltree-mappings-exhaustive-list*
+EXHAUSTIVE LIST					*torustree-mappings-exhaustive-list*
 
 In the help submenu of the main or meta menu, you have access to :
 
-- the list of current wheeltree mappings
+- the list of current torustree mappings
 - the list of available mappings
 
-You can then browse the maps and plugs in a dedicated wheeltree buffer. It
+You can then browse the maps and plugs in a dedicated torustree buffer. It
 is only a command output collector though, you can not launch any map
 from there.
 
@@ -4110,330 +4110,330 @@ Menus~
 
 | Plug maps                | Description  |
 | ------------------------ | ------------ |
-| <plug>(wheeltree-menu-main)  | main menu    |
-| <plug>(wheeltree-menu-meta)  | meta menu    |
+| <plug>(torustree-menu-main)  | main menu    |
+| <plug>(torustree-menu-meta)  | meta menu    |
 
 Dashboard~
 
 | Plug maps           | Description  |
 | ------------------- | ------------ |
-| <plug>(wheeltree-info)  | dashboard    |
+| <plug>(torustree-info)  | dashboard    |
 
 Sync up & down~
 
 | Plug maps                 | Description                            |
 | ------------------------- | -------------------------------------- |
-| <plug>(wheeltree-sync-down)   | jump to current file & pos in wheeltree    |
-| <plug>(wheeltree-sync-up)     | follow current file                    |
+| <plug>(torustree-sync-down)   | jump to current file & pos in torustree    |
+| <plug>(torustree-sync-up)     | follow current file                    |
 
 Load & save~
 
 | Plug maps                          | Description            |
 | ---------------------------------- | ---------------------- |
-| <plug>(wheeltree-prompt-read-wheeltree)    | read wheeltree from file   |
-| <plug>(wheeltree-prompt-write-wheeltree)   | save wheeltree to file     |
-| <plug>(wheeltree-prompt-read-session)  | read wheeltree from file   |
-| <plug>(wheeltree-prompt-write-session) | save wheeltree to file     |
+| <plug>(torustree-prompt-read-torustree)    | read torustree from file   |
+| <plug>(torustree-prompt-write-torustree)   | save torustree to file     |
+| <plug>(torustree-prompt-read-session)  | read torustree from file   |
+| <plug>(torustree-prompt-write-session) | save torustree to file     |
 
-Navigate in the wheeltree~
+Navigate in the torustree~
 
 | Plug maps                                       | Description                               |
 | ----------------------------------------------- | ----------------------------------------- |
-| <plug>(wheeltree-previous-location)                 | go to previous location                   |
-| <plug>(wheeltree-next-location)                     | go to next location                       |
-| <plug>(wheeltree-previous-circle)                   | go to previous circle                     |
-| <plug>(wheeltree-next-circle)                       | go to next circle                         |
-| <plug>(wheeltree-previous-torus)                    | go to previous torus                      |
-| <plug>(wheeltree-next-torus)                        | go to next torus                          |
+| <plug>(torustree-previous-location)                 | go to previous location                   |
+| <plug>(torustree-next-location)                     | go to next location                       |
+| <plug>(torustree-previous-circle)                   | go to previous circle                     |
+| <plug>(torustree-next-circle)                       | go to next circle                         |
+| <plug>(torustree-previous-torus)                    | go to previous torus                      |
+| <plug>(torustree-next-torus)                        | go to next torus                          |
 | ----------------------------------------------- | ----------------------------------------- |
-| <plug>(wheeltree-prompt-location)                   | switch location                           |
-| <plug>(wheeltree-prompt-circle)                     | switch circle                             |
-| <plug>(wheeltree-prompt-torus)                      | switch torus                              |
-| <plug>(wheeltree-prompt-multi-switch)               | switch torus, circle & location           |
-| <plug>(wheeltree-dedibuf-location)                  | switch location                           |
-| <plug>(wheeltree-dedibuf-circle)                    | switch circle                             |
-| <plug>(wheeltree-dedibuf-torus)                     | switch torus                              |
+| <plug>(torustree-prompt-location)                   | switch location                           |
+| <plug>(torustree-prompt-circle)                     | switch circle                             |
+| <plug>(torustree-prompt-torus)                      | switch torus                              |
+| <plug>(torustree-prompt-multi-switch)               | switch torus, circle & location           |
+| <plug>(torustree-dedibuf-location)                  | switch location                           |
+| <plug>(torustree-dedibuf-circle)                    | switch circle                             |
+| <plug>(torustree-dedibuf-torus)                     | switch torus                              |
 | ----------------------------------------------- | ----------------------------------------- |
-| <plug>(wheeltree-prompt-index)                      | switch location in index                  |
-| <plug>(wheeltree-prompt-index-circles)              | switch circle in index                    |
-| <plug>(wheeltree-dedibuf-index)                     | index of locations                        |
-| <plug>(wheeltree-dedibuf-index-circles)             | index of circles                          |
-| <plug>(wheeltree-dedibuf-index-tree)                | index of locations in tree fold format    |
+| <plug>(torustree-prompt-index)                      | switch location in index                  |
+| <plug>(torustree-prompt-index-circles)              | switch circle in index                    |
+| <plug>(torustree-dedibuf-index)                     | index of locations                        |
+| <plug>(torustree-dedibuf-index-circles)             | index of circles                          |
+| <plug>(torustree-dedibuf-index-tree)                | index of locations in tree fold format    |
 | ----------------------------------------------- | ----------------------------------------- |
-| <plug>(wheeltree-history-newer)                     | go to previous location in history        |
-| <plug>(wheeltree-history-older)                     | go to next location in history            |
-| <plug>(wheeltree-history-newer-in-circle)           | go to previous location in circle         |
-| <plug>(wheeltree-history-older-in-circle)           | go to next location in circle             |
-| <plug>(wheeltree-history-newer-in-torus)            | go to previous location in torus          |
-| <plug>(wheeltree-history-older-in-torus)            | go to next location in torus              |
-| <plug>(wheeltree-prompt-history)                    | switch to element in history              |
-| <plug>(wheeltree-dedibuf-history)                   | go to location in history                 |
-| <plug>(wheeltree-prompt-frecency)                   | switch to element in frecency             |
-| <plug>(wheeltree-dedibuf-frecency)                  | go to location in frecency                |
+| <plug>(torustree-history-newer)                     | go to previous location in history        |
+| <plug>(torustree-history-older)                     | go to next location in history            |
+| <plug>(torustree-history-newer-in-circle)           | go to previous location in circle         |
+| <plug>(torustree-history-older-in-circle)           | go to next location in circle             |
+| <plug>(torustree-history-newer-in-torus)            | go to previous location in torus          |
+| <plug>(torustree-history-older-in-torus)            | go to next location in torus              |
+| <plug>(torustree-prompt-history)                    | switch to element in history              |
+| <plug>(torustree-dedibuf-history)                   | go to location in history                 |
+| <plug>(torustree-prompt-frecency)                   | switch to element in frecency             |
+| <plug>(torustree-dedibuf-frecency)                  | go to location in frecency                |
 | ----------------------------------------------- | ----------------------------------------- |
-| <plug>(wheeltree-alternate-anywhere)                | alternate with last location              |
-| <plug>(wheeltree-alternate-same-torus)              | alternate locations in same torus         |
-| <plug>(wheeltree-alternate-same-circle)             | alternate locations in same circle        |
-| <plug>(wheeltree-alternate-other-torus)             | alternate locations in other torus        |
-| <plug>(wheeltree-alternate-other-circle)            | alternate locations in other circle       |
-| <plug>(wheeltree-alternate-same-torus-other-circle) | alternate in same torus, but other circle |
-| <plug>(wheeltree-alternate-window)                  | alternate window in any tab               |
-| <plug>(wheeltree-alternate-menu)                    | menu to alternate                         |
+| <plug>(torustree-alternate-anywhere)                | alternate with last location              |
+| <plug>(torustree-alternate-same-torus)              | alternate locations in same torus         |
+| <plug>(torustree-alternate-same-circle)             | alternate locations in same circle        |
+| <plug>(torustree-alternate-other-torus)             | alternate locations in other torus        |
+| <plug>(torustree-alternate-other-circle)            | alternate locations in other circle       |
+| <plug>(torustree-alternate-same-torus-other-circle) | alternate in same torus, but other circle |
+| <plug>(torustree-alternate-window)                  | alternate window in any tab               |
+| <plug>(torustree-alternate-menu)                    | menu to alternate                         |
 
-Navigate using Wheeltree interface to vim native tools~
+Navigate using Torustree interface to vim native tools~
 
 | Plug maps                            | Description                              |
 | ------------------------------------ | ---------------------------------------- |
-| <plug>(wheeltree-prompt-buffer)          | switch to buffer                         |
-| <plug>(wheeltree-dedibuf-buffer)         | buffers                                  |
-| <plug>(wheeltree-dedibuf-buffer-all)     | all buffers, including unlisted ones     |
+| <plug>(torustree-prompt-buffer)          | switch to buffer                         |
+| <plug>(torustree-dedibuf-buffer)         | buffers                                  |
+| <plug>(torustree-dedibuf-buffer-all)     | all buffers, including unlisted ones     |
 | ------------------------------------ | ---------------------------------------- |
-| <plug>(wheeltree-prompt-tabwin)          | visible buffers in tabs & windows        |
-| <plug>(wheeltree-dedibuf-tabwin)         | visible buffers in tabs & windows        |
-| <plug>(wheeltree-dedibuf-tabwin-tree)    | tabs & windows in tree fold format       |
+| <plug>(torustree-prompt-tabwin)          | visible buffers in tabs & windows        |
+| <plug>(torustree-dedibuf-tabwin)         | visible buffers in tabs & windows        |
+| <plug>(torustree-dedibuf-tabwin-tree)    | tabs & windows in tree fold format       |
 | ------------------------------------ | ---------------------------------------- |
-| <plug>(wheeltree-prompt-marker)          | switch to marker                         |
-| <plug>(wheeltree-prompt-jump)            | switch to jump                           |
-| <plug>(wheeltree-prompt-change)          | switch to change                         |
-| <plug>(wheeltree-prompt-tag)             | switch to tag                            |
-| <plug>(wheeltree-dedibuf-marker)         | markers                                  |
-| <plug>(wheeltree-dedibuf-jump)           | vim jumps                                |
-| <plug>(wheeltree-dedibuf-change)         | vim changes                              |
-| <plug>(wheeltree-dedibuf-tag)            | tags                                     |
+| <plug>(torustree-prompt-marker)          | switch to marker                         |
+| <plug>(torustree-prompt-jump)            | switch to jump                           |
+| <plug>(torustree-prompt-change)          | switch to change                         |
+| <plug>(torustree-prompt-tag)             | switch to tag                            |
+| <plug>(torustree-dedibuf-marker)         | markers                                  |
+| <plug>(torustree-dedibuf-jump)           | vim jumps                                |
+| <plug>(torustree-dedibuf-change)         | vim changes                              |
+| <plug>(torustree-dedibuf-tag)            | tags                                     |
 
-Organize the wheeltree~
+Organize the torustree~
 
 | Plug maps                                       | Description                              |
 | ----------------------------------------------- | ---------------------------------------- |
-| <plug>(wheeltree-prompt-add-here)                   | add current file in the current circle   |
-| <plug>(wheeltree-prompt-add-circle)                 | add a new circle                         |
-| <plug>(wheeltree-prompt-add-torus)                  | add a new torus                          |
-| <plug>(wheeltree-prompt-add-file)                   | add a file in the current circle         |
-| <plug>(wheeltree-prompt-add-buffer)                 | add a buffer in the current circle       |
-| <plug>(wheeltree-prompt-add-glob)                   | add files matching glob in circle        |
+| <plug>(torustree-prompt-add-here)                   | add current file in the current circle   |
+| <plug>(torustree-prompt-add-circle)                 | add a new circle                         |
+| <plug>(torustree-prompt-add-torus)                  | add a new torus                          |
+| <plug>(torustree-prompt-add-file)                   | add a file in the current circle         |
+| <plug>(torustree-prompt-add-buffer)                 | add a buffer in the current circle       |
+| <plug>(torustree-prompt-add-glob)                   | add files matching glob in circle        |
 | ----------------------------------------------- | ---------------------------------------- |
-| <plug>(wheeltree-dedibuf-reorder-location)          | reorder locations                        |
-| <plug>(wheeltree-dedibuf-reorder-circle)            | reorder circles                          |
-| <plug>(wheeltree-dedibuf-reorder-torus)             | reorder toruses                          |
+| <plug>(torustree-dedibuf-reorder-location)          | reorder locations                        |
+| <plug>(torustree-dedibuf-reorder-circle)            | reorder circles                          |
+| <plug>(torustree-dedibuf-reorder-torus)             | reorder toruses                          |
 | ----------------------------------------------- | ---------------------------------------- |
-| <plug>(wheeltree-prompt-rename-location)            | rename current location (not the file)   |
-| <plug>(wheeltree-prompt-rename-circle)              | rename current circle                    |
-| <plug>(wheeltree-prompt-rename-torus)               | rename current torus                     |
-| <plug>(wheeltree-prompt-rename-file)                | rename current file & location           |
-| <plug>(wheeltree-dedibuf-rename-location)           | rename locations                         |
-| <plug>(wheeltree-dedibuf-rename-circle)             | rename circles                           |
-| <plug>(wheeltree-dedibuf-rename-torus)              | rename toruses                           |
-| <plug>(wheeltree-dedibuf-rename-location-filename)  | rename locations & filenames             |
+| <plug>(torustree-prompt-rename-location)            | rename current location (not the file)   |
+| <plug>(torustree-prompt-rename-circle)              | rename current circle                    |
+| <plug>(torustree-prompt-rename-torus)               | rename current torus                     |
+| <plug>(torustree-prompt-rename-file)                | rename current file & location           |
+| <plug>(torustree-dedibuf-rename-location)           | rename locations                         |
+| <plug>(torustree-dedibuf-rename-circle)             | rename circles                           |
+| <plug>(torustree-dedibuf-rename-torus)              | rename toruses                           |
+| <plug>(torustree-dedibuf-rename-location-filename)  | rename locations & filenames             |
 | ----------------------------------------------- | --------------------------------------   |
-| <plug>(wheeltree-prompt-delete-location)            | delete current location                  |
-| <plug>(wheeltree-prompt-delete-circle)              | delete current circle                    |
-| <plug>(wheeltree-prompt-delete-torus)               | delete current torus                     |
+| <plug>(torustree-prompt-delete-location)            | delete current location                  |
+| <plug>(torustree-prompt-delete-circle)              | delete current circle                    |
+| <plug>(torustree-prompt-delete-torus)               | delete current torus                     |
 | ----------------------------------------------- | ---------------------------------------- |
-| <plug>(wheeltree-prompt-copy-location)              | copy current location                    |
-| <plug>(wheeltree-prompt-copy-circle)                | copy current circle                      |
-| <plug>(wheeltree-prompt-copy-torus)                 | copy current torus                       |
-| <plug>(wheeltree-prompt-move-location)              | move current location                    |
-| <plug>(wheeltree-prompt-move-circle)                | move current circle                      |
-| <plug>(wheeltree-dedibuf-copy-move-location)        | batch copy-move locations                |
-| <plug>(wheeltree-dedibuf-copy-move-circle)          | batch copy-move circles                  |
-| <plug>(wheeltree-dedibuf-copy-move-torus)           | batch copy-move toruses                  |
+| <plug>(torustree-prompt-copy-location)              | copy current location                    |
+| <plug>(torustree-prompt-copy-circle)                | copy current circle                      |
+| <plug>(torustree-prompt-copy-torus)                 | copy current torus                       |
+| <plug>(torustree-prompt-move-location)              | move current location                    |
+| <plug>(torustree-prompt-move-circle)                | move current circle                      |
+| <plug>(torustree-dedibuf-copy-move-location)        | batch copy-move locations                |
+| <plug>(torustree-dedibuf-copy-move-circle)          | batch copy-move circles                  |
+| <plug>(torustree-dedibuf-copy-move-torus)           | batch copy-move toruses                  |
 | ----------------------------------------------- | ---------------------------------------- |
-| <plug>(wheeltree-dedibuf-reorganize)                | reorganize wheeltree treeish structure       |
+| <plug>(torustree-dedibuf-reorganize)                | reorganize torustree treeish structure       |
 
 Organize other things~
 
 | Plug maps                           | Description                            |
 | ----------------------------------- | -------------------------------------- |
-| <plug>(wheeltree-dedibuf-reorg-tabwin)  | reorganize tabs & windows              |
+| <plug>(torustree-dedibuf-reorg-tabwin)  | reorganize tabs & windows              |
 
 Refactoring~
 
 | Plug maps                             | Description                            |
 | ------------------------------------- | -------------------------------------- |
-| <plug>(wheeltree-dedibuf-grep-edit)       | grep circle files in edit mode         |
+| <plug>(torustree-dedibuf-grep-edit)       | grep circle files in edit mode         |
 | ------------------------------------- | -------------------------------------- |
-| <plug>(wheeltree-dedibuf-narrow)          | narrow current file                    |
-| <plug>(wheeltree-dedibuf-narrow-operator) | narrow current file, operator pending  |
-| <plug>(wheeltree-dedibuf-narrow-circle)   | narrow all circle files                |
+| <plug>(torustree-dedibuf-narrow)          | narrow current file                    |
+| <plug>(torustree-dedibuf-narrow-operator) | narrow current file, operator pending  |
+| <plug>(torustree-dedibuf-narrow-circle)   | narrow all circle files                |
 
 Search files~
 
 | Plug maps                          | Description                              |
 | ---------------------------------- | --------------------------------------   |
-| <plug>(wheeltree-prompt-mru)           | switch to mru non wheeltree file             |
-| <plug>(wheeltree-dedibuf-mru)          | most recently used files                 |
+| <plug>(torustree-prompt-mru)           | switch to mru non torustree file             |
+| <plug>(torustree-dedibuf-mru)          | most recently used files                 |
 | ---------------------------------- | --------------------------------------   |
-| <plug>(wheeltree-dedibuf-locate)       | search file with locate                  |
-| <plug>(wheeltree-dedibuf-find)         | find file in current dir                 |
-| <plug>(wheeltree-dedibuf-async-find)   | search file with !find in async mode     |
+| <plug>(torustree-dedibuf-locate)       | search file with locate                  |
+| <plug>(torustree-dedibuf-find)         | find file in current dir                 |
+| <plug>(torustree-dedibuf-async-find)   | search file with !find in async mode     |
 
 Search inside files~
 
 | Plug maps                          | Description                            |
 | ---------------------------------- | -------------------------------------- |
-| <plug>(wheeltree-prompt-occur)         | switch to line in current file         |
-| <plug>(wheeltree-dedibuf-occur)        | occurences of pattern in current file  |
+| <plug>(torustree-prompt-occur)         | switch to line in current file         |
+| <plug>(torustree-dedibuf-occur)        | occurences of pattern in current file  |
 | ---------------------------------- | -------------------------------------- |
-| <plug>(wheeltree-dedibuf-grep)         | grep pattern in all circle files       |
-| <plug>(wheeltree-dedibuf-outline)      | headers in all circle files            |
+| <plug>(torustree-dedibuf-grep)         | grep pattern in all circle files       |
+| <plug>(torustree-dedibuf-outline)      | headers in all circle files            |
 
 Yank ring~
 
 | Plug maps                                       | Description                            |
 | ----------------------------------------------- | -------------------------------------- |
-| <plug>(wheeltree-prompt-switch-default-register)    | switch default register for yank ring  |
-| <plug>(wheeltree-prompt-yank-plain-linewise-after)  | yank ring plain, paste linewise after  |
-| <plug>(wheeltree-prompt-yank-plain-linewise-before) | yank ring plain, paste linewise before |
-| <plug>(wheeltree-prompt-yank-plain-charwise-after)  | yank ring plain, paste charwise after  |
-| <plug>(wheeltree-prompt-yank-plain-charwise-before) | yank ring plain, paste charwise before |
-| <plug>(wheeltree-prompt-yank-list-linewise-after)   | yank ring list, paste linewise after   |
-| <plug>(wheeltree-prompt-yank-list-linewise-before)  | yank ring list, paste linewise before  |
-| <plug>(wheeltree-prompt-yank-list-charwise-after)   | yank ring list, paste charwise after   |
-| <plug>(wheeltree-prompt-yank-list-charwise-before)  | yank ring list, paste charwise before  |
-| <plug>(wheeltree-dedibuf-yank-plain)                | yank ring in plain format              |
-| <plug>(wheeltree-dedibuf-yank-list)                 | yank ring in list format               |
+| <plug>(torustree-prompt-switch-default-register)    | switch default register for yank ring  |
+| <plug>(torustree-prompt-yank-plain-linewise-after)  | yank ring plain, paste linewise after  |
+| <plug>(torustree-prompt-yank-plain-linewise-before) | yank ring plain, paste linewise before |
+| <plug>(torustree-prompt-yank-plain-charwise-after)  | yank ring plain, paste charwise after  |
+| <plug>(torustree-prompt-yank-plain-charwise-before) | yank ring plain, paste charwise before |
+| <plug>(torustree-prompt-yank-list-linewise-after)   | yank ring list, paste linewise after   |
+| <plug>(torustree-prompt-yank-list-linewise-before)  | yank ring list, paste linewise before  |
+| <plug>(torustree-prompt-yank-list-charwise-after)   | yank ring list, paste charwise after   |
+| <plug>(torustree-prompt-yank-list-charwise-before)  | yank ring list, paste charwise before  |
+| <plug>(torustree-dedibuf-yank-plain)                | yank ring in plain format              |
+| <plug>(torustree-dedibuf-yank-list)                 | yank ring in list format               |
 
 Undo list~
 
 | Plug maps                        | Description                           |
 | -------------------------------- | ------------------------------------- |
-| <plug>(wheeltree-dedibuf-undo-list)  | go to undo state, compare with diff   |
+| <plug>(torustree-dedibuf-undo-list)  | go to undo state, compare with diff   |
 
 Ex or shell command output~
 
 | Plug maps                        | Description                             |
 | -------------------------------- | --------------------------------------- |
-| <plug>(wheeltree-dedibuf-command)    | output of ex or shell command           |
-| <plug>(wheeltree-dedibuf-async)      | output of shell command in async mode   |
+| <plug>(torustree-dedibuf-command)    | output of ex or shell command           |
+| <plug>(torustree-dedibuf-async)      | output of shell command in async mode   |
 
 Handling dedicated buffers~
 
 | Plug maps                                       | Description                            |
 | ----------------------------------------------- | -------------------------------------- |
-| <plug>(wheeltree-mandala-add)                       | add a new dedicated buffer             |
-| <plug>(wheeltree-mandala-delete)                    | delete current dedicated buffer        |
-| <plug>(wheeltree-mandala-forward)                   | go to next dedicated buffer            |
-| <plug>(wheeltree-mandala-backward)                  | go to previous dedicated buffer        |
-| <plug>(wheeltree-mandala-switch)                    | switch to another dedicated buffer     |
+| <plug>(torustree-mandala-add)                       | add a new dedicated buffer             |
+| <plug>(torustree-mandala-delete)                    | delete current dedicated buffer        |
+| <plug>(torustree-mandala-forward)                   | go to next dedicated buffer            |
+| <plug>(torustree-mandala-backward)                  | go to previous dedicated buffer        |
+| <plug>(torustree-mandala-switch)                    | switch to another dedicated buffer     |
 
 Layouts~
 
 | Plug maps                                       | Description                            |
 | ----------------------------------------------- | -------------------------------------- |
-| <plug>(wheeltree-layout-zoom)                       | one tab, one window                    |
-| <plug>(wheeltree-layout-tabs-locations)             | one location of current circle per tab |
-| <plug>(wheeltree-layout-tabs-circles)               | one circle of current torus per tab    |
-| <plug>(wheeltree-layout-tabs-toruses)               | one torus per tab                      |
+| <plug>(torustree-layout-zoom)                       | one tab, one window                    |
+| <plug>(torustree-layout-tabs-locations)             | one location of current circle per tab |
+| <plug>(torustree-layout-tabs-circles)               | one circle of current torus per tab    |
+| <plug>(torustree-layout-tabs-toruses)               | one torus per tab                      |
 | ----------------------------------------------- | -------------------------------------- |
-| <plug>(wheeltree-layout-split-locations)            | one location per split                 |
-| <plug>(wheeltree-layout-split-circles)              | one circle per split                   |
-| <plug>(wheeltree-layout-split-toruses)              | one torus per split                    |
-| <plug>(wheeltree-layout-vsplit-locations)           | one location per vertical split        |
-| <plug>(wheeltree-layout-vsplit-circles)             | one circle per vertical split          |
-| <plug>(wheeltree-layout-vsplit-toruses)             | one torus per vertical split           |
+| <plug>(torustree-layout-split-locations)            | one location per split                 |
+| <plug>(torustree-layout-split-circles)              | one circle per split                   |
+| <plug>(torustree-layout-split-toruses)              | one torus per split                    |
+| <plug>(torustree-layout-vsplit-locations)           | one location per vertical split        |
+| <plug>(torustree-layout-vsplit-circles)             | one circle per vertical split          |
+| <plug>(torustree-layout-vsplit-toruses)             | one torus per vertical split           |
 | ----------------------------------------------- | -------------------------------------- |
-| <plug>(wheeltree-layout-main-top-locations)         | locations in main top layout           |
-| <plug>(wheeltree-layout-main-top-circles)           | circles in main top layout             |
-| <plug>(wheeltree-layout-main-top-toruses)           | toruses in main top layout             |
-| <plug>(wheeltree-layout-main-left-locations)        | locations in main top layout           |
-| <plug>(wheeltree-layout-main-left-circles)          | circles in main top layout             |
-| <plug>(wheeltree-layout-main-left-toruses)          | toruses in main top layout             |
-| <plug>(wheeltree-layout-grid-locations)             | locations in grid layout               |
-| <plug>(wheeltree-layout-grid-circles)               | circles in grid layout                 |
-| <plug>(wheeltree-layout-grid-toruses)               | toruses in grid layout                 |
-| <plug>(wheeltree-layout-tab-win-torus)              | torus in tabs, circles in windows      |
-| <plug>(wheeltree-layout-tab-win-circle)             | circles in tabs, locations in windows  |
+| <plug>(torustree-layout-main-top-locations)         | locations in main top layout           |
+| <plug>(torustree-layout-main-top-circles)           | circles in main top layout             |
+| <plug>(torustree-layout-main-top-toruses)           | toruses in main top layout             |
+| <plug>(torustree-layout-main-left-locations)        | locations in main top layout           |
+| <plug>(torustree-layout-main-left-circles)          | circles in main top layout             |
+| <plug>(torustree-layout-main-left-toruses)          | toruses in main top layout             |
+| <plug>(torustree-layout-grid-locations)             | locations in grid layout               |
+| <plug>(torustree-layout-grid-circles)               | circles in grid layout                 |
+| <plug>(torustree-layout-grid-toruses)               | toruses in grid layout                 |
+| <plug>(torustree-layout-tab-win-torus)              | torus in tabs, circles in windows      |
+| <plug>(torustree-layout-tab-win-circle)             | circles in tabs, locations in windows  |
 | ----------------------------------------------- | -------------------------------------- |
-| <plug>(wheeltree-layout-rotate-counter-clockwise)   | rotate windows counter clockwise       |
-| <plug>(wheeltree-layout-rotate-clockwise)           | rotate windows clockwise               |
+| <plug>(torustree-layout-rotate-counter-clockwise)   | rotate windows counter clockwise       |
+| <plug>(torustree-layout-rotate-clockwise)           | rotate windows clockwise               |
 
 Miscellaneous~
 
 | Plug maps                     | Description                                |
 | ----------------------------- | ------------------------------------------ |
-| <plug>(wheeltree-spiral-cursor)   | put the cursor in a golden ratio position  |
+| <plug>(torustree-spiral-cursor)   | put the cursor in a golden ratio position  |
 
 Debug~
 
 | Plug maps                              | Description                            |
 | -------------------------------------- | -------------------------------------- |
-| <plug>(wheeltree-debug-fresh-wheeltree)        | empty the wheeltree for debugging purpose  |
-| <plug>(wheeltree-debug-clear-echo-area)    | clear echo area                        |
-| <plug>(wheeltree-prompt-history-circuit)   | history circuit                        |
-| <plug>(wheeltree-dedibuf-history-circuit)  | history circuit                        |
+| <plug>(torustree-debug-fresh-torustree)        | empty the torustree for debugging purpose  |
+| <plug>(torustree-debug-clear-echo-area)    | clear echo area                        |
+| <plug>(torustree-prompt-history-circuit)   | history circuit                        |
+| <plug>(torustree-dedibuf-history-circuit)  | history circuit                        |
 
 ------------------------------------------------------------------------------
-OTHER IDEAS				*wheeltree-mappings-ideas*
+OTHER IDEAS				*torustree-mappings-ideas*
 
 Some maps that you may find useful if the super key `<D-*>` bindings
 work in your setup : >
 
     " index of locations in torus > circle > location format
-    nmap <silent> <d-x>       <plug>(wheeltree-dedibuf-index)
+    nmap <silent> <d-x>       <plug>(torustree-dedibuf-index)
     " index of locations, open in new tab
-    nmap <silent> <d-cr>      <cmd>call wheeltree#vortex#helix('tab')<cr>
+    nmap <silent> <d-cr>      <cmd>call torustree#vortex#helix('tab')<cr>
 
     " history
-    nmap <silent> <d-h>       <plug>(wheeltree-dedibuf-history)
+    nmap <silent> <d-h>       <plug>(torustree-dedibuf-history)
     " alternate
-    nmap <silent> <d-^>       <plug>(wheeltree-alternate-other-torus)
+    nmap <silent> <d-^>       <plug>(torustree-alternate-other-torus)
     " frecency
-    nmap <silent> <d-e>       <plug>(wheeltree-dedibuf-frecency)
+    nmap <silent> <d-e>       <plug>(torustree-dedibuf-frecency)
 
     " visible buffers in tabs & windows
-    nmap <silent> <d-v>       <plug>(wheeltree-dedibuf-tabwin)
+    nmap <silent> <d-v>       <plug>(torustree-dedibuf-tabwin)
 
-    nmap <silent> <d-o>       <plug>(wheeltree-dedibuf-occur)
-    nmap <silent> <d-b>       <plug>(wheeltree-dedibuf-buffer-all)
-    nmap <silent> <d-k>       <plug>(wheeltree-dedibuf-marker)
-    nmap <silent> <d-j>       <plug>(wheeltree-dedibuf-jump)
-    nmap <silent> <d-c>       <plug>(wheeltree-dedibuf-change)
-    nmap <silent> <d-t>       <plug>(wheeltree-dedibuf-tag)
+    nmap <silent> <d-o>       <plug>(torustree-dedibuf-occur)
+    nmap <silent> <d-b>       <plug>(torustree-dedibuf-buffer-all)
+    nmap <silent> <d-k>       <plug>(torustree-dedibuf-marker)
+    nmap <silent> <d-j>       <plug>(torustree-dedibuf-jump)
+    nmap <silent> <d-c>       <plug>(torustree-dedibuf-change)
+    nmap <silent> <d-t>       <plug>(torustree-dedibuf-tag)
 
     " narrow
-    nmap <silent> <d-n>       <plug>(wheeltree-dedibuf-narrow-operator)
-    vmap <silent> <d-n>       <plug>(wheeltree-dedibuf-narrow)
+    nmap <silent> <d-n>       <plug>(torustree-dedibuf-narrow-operator)
+    vmap <silent> <d-n>       <plug>(torustree-dedibuf-narrow)
 
     " yank ring
-    nmap <silent> <c-p>       <plug>(wheeltree-prompt-yank-plain-linewise-before)
-    nmap <silent> <c-n>       <plug>(wheeltree-prompt-yank-plain-linewise-after)
-    nmap <silent> <d-y>       <plug>(wheeltree-dedibuf-yank-plain)
-    nmap <silent> <d-p>       <plug>(wheeltree-dedibuf-yank-list)
+    nmap <silent> <c-p>       <plug>(torustree-prompt-yank-plain-linewise-before)
+    nmap <silent> <c-n>       <plug>(torustree-prompt-yank-plain-linewise-after)
+    nmap <silent> <d-y>       <plug>(torustree-dedibuf-yank-plain)
+    nmap <silent> <d-p>       <plug>(torustree-dedibuf-yank-list)
 
     " undo list
-    nmap <silent> <d-u>       <plug>(wheeltree-dedibuf-undo-list)
+    nmap <silent> <d-u>       <plug>(torustree-dedibuf-undo-list)
 
     " reorganize tabs & windows (visible buffers)
-    nmap <silent> <d-r> <plug>(wheeltree-reorg-tabwin)
+    nmap <silent> <d-r> <plug>(torustree-reorg-tabwin)
 
     " j on the end of the buffer -> beginning
-    nmap <silent> j <cmd>call wheeltree#mandala#wrap_down()<cr>
+    nmap <silent> j <cmd>call torustree#mandala#wrap_down()<cr>
     " k on the beginning of the buffer -> end
-    nmap <silent> k <cmd>call wheeltree#mandala#wrap_up()<cr>
+    nmap <silent> k <cmd>call torustree#mandala#wrap_up()<cr>
 
     " clear search highlight and center the cursor with Fibonacci ratio
-    nmap <silent> <c-l> <cmd>nohlsearch<cr><plug>(wheeltree-spiral-cursor)
-    imap <silent> <c-l> <esc><cmd>nohlsearch<cr><plug>(wheeltree-spiral-cursor)a
+    nmap <silent> <c-l> <cmd>nohlsearch<cr><plug>(torustree-spiral-cursor)
+    imap <silent> <c-l> <esc><cmd>nohlsearch<cr><plug>(torustree-spiral-cursor)a
 <
 
 ==============================================================================
-EXAMPLES						*wheeltree-examples*
+EXAMPLES						*torustree-examples*
 
-Display some locations in tabs		   |wheeltree-examples-locations-in-tabs|
-Display vim files in splits	 	   |wheeltree-examples-matching-files-in-splits|
-Search and replace with grep edit	   |wheeltree-examples-search-replace-grep|
-Search and replace with narrow circle	   |wheeltree-examples-search-replace-narrow|
-Add a tab with a similar file		   |wheeltree-examples-similar-tab|
-List all tag of a kind 		 	   |wheeltree-examples-tag-kind|
+Display some locations in tabs		   |torustree-examples-locations-in-tabs|
+Display vim files in splits	 	   |torustree-examples-matching-files-in-splits|
+Search and replace with grep edit	   |torustree-examples-search-replace-grep|
+Search and replace with narrow circle	   |torustree-examples-search-replace-narrow|
+Add a tab with a similar file		   |torustree-examples-similar-tab|
+List all tag of a kind 		 	   |torustree-examples-tag-kind|
 
 ------------------------------------------------------------------------------
-DISPLAY SOME LOCATIONS IN TABS	    *wheeltree-examples-locations-in-tabs*
+DISPLAY SOME LOCATIONS IN TABS	    *torustree-examples-locations-in-tabs*
 
 Just press `<M-w><Space>` to launch the location navigator, select the
 locations you want and press `t`.
 
 ------------------------------------------------------------------------------
-DISPLAY MATCHING FILES IN SPLITS    *wheeltree-examples-matching-files-in-split*
+DISPLAY MATCHING FILES IN SPLITS    *torustree-examples-matching-files-in-split*
 
 - `<M-w><Space>` to launch the location navigator
 - `i` to go to insert mode & filter line
@@ -4444,7 +4444,7 @@ DISPLAY MATCHING FILES IN SPLITS    *wheeltree-examples-matching-files-in-split*
 - `v` to open all selected locations in vertical splits
 
 ------------------------------------------------------------------------------
-SEARCH AND REPLACE WITH GREP EDIT     *wheeltree-examples-search-replace-grep*
+SEARCH AND REPLACE WITH GREP EDIT     *torustree-examples-search-replace-grep*
 
 Let's say you want to refactory some shell scripts, and replace
 `old_var_name` by `new_var_name`.
@@ -4485,7 +4485,7 @@ short form), in combination with |:substitute| : >
 <
 
 ------------------------------------------------------------------------------
-SEARCH AND REPLACE WITH NARROW CIRCLE    *wheeltree-examples-search-replace-narrow*
+SEARCH AND REPLACE WITH NARROW CIRCLE    *torustree-examples-search-replace-narrow*
 
 We open the narrow circle buffer with `<M-w>-c` and run a substitution
 with `<M-s>`.
@@ -4502,7 +4502,7 @@ You can then run a substitute on the visible lines and propagate your
 changes by writing the buffer.
 
 ------------------------------------------------------------------------------
-ADD A TAB WITH A SIMILAR FILE	    *wheeltree-examples-similar-tab*
+ADD A TAB WITH A SIMILAR FILE	    *torustree-examples-similar-tab*
 
 - press `<M-w><C-r>` to launch the tabs & windows organizer
 - copy the line with the tab you want to duplicate
@@ -4514,7 +4514,7 @@ ADD A TAB WITH A SIMILAR FILE	    *wheeltree-examples-similar-tab*
 - apply your changes with |:write|
 
 ------------------------------------------------------------------------------
-LIST ALL TAG OF A KIND				*wheeltree-examples-tag-kind*
+LIST ALL TAG OF A KIND				*torustree-examples-tag-kind*
 
 - launch the tag navigator with `<M-w><M-t>`
 - type `i` to go to insert mode on filter line
@@ -4523,19 +4523,19 @@ LIST ALL TAG OF A KIND				*wheeltree-examples-tag-kind*
   + ...
 
 ==============================================================================
-FILES							*wheeltree-files*
+FILES							*torustree-files*
 
 Plugin~
 
-plugin/wheeltree.vim :
+plugin/torustree.vim :
 
-- wheeltree initialization
+- torustree initialization
 - define commands
-- link <plug> maps to wheeltree functions
+- link <plug> maps to torustree functions
 
 After~
 
-after/plugin/wheeltree.vim :
+after/plugin/torustree.vim :
 
 - link keys to <plug> maps
 
@@ -4544,7 +4544,7 @@ level.
 
 Autoload~
 
-Here is a list of files in `autoload/wheeltree/`, and a brief description
+Here is a list of files in `autoload/torustree/`, and a brief description
 of the modules within them.
 
 | File              | Description                                        |
@@ -4555,7 +4555,7 @@ of the modules within them.
 | caduceus.vim      | alternate locations                                |
 | centre.vim        | commands & mappings                                |
 | chain.vim         | list helpers                                       |
-| chakra.vim        | signs on wheeltree locations                           |
+| chakra.vim        | signs on torustree locations                           |
 | clipper.vim       | yank dedicated buffer                              |
 | codex.vim         | yank ring                                          |
 | complete.vim      | completion functions                               |
@@ -4563,25 +4563,25 @@ of the modules within them.
 | crystal.vim       | internal constants                                 |
 | cuboctahedron.vim | full information of each mandala line              |
 | cuckoo.vim        | frecency : frequent & recent                       |
-| curve.vim         | activate wheeltree line in dedicated buffers           |
+| curve.vim         | activate torustree line in dedicated buffers           |
 | cylinder.vim      | dedicated buffers ring                             |
 | delta.vim         | undo & diff                                        |
 | diadem.vim        | internal constants for commands                    |
-| disc.vim          | read & write wheeltree & session file                  |
-| flower.vim        | wheeltree content generators for prompt & mandalas     |
-| frigate.vim       | non-wheeltree navigation in dedicated buffers          |
+| disc.vim          | read & write torustree & session file                  |
+| flower.vim        | torustree content generators for prompt & mandalas     |
+| frigate.vim       | non-torustree navigation in dedicated buffers          |
 | gear.vim          | generic helpers                                    |
 | geode.vim         | internal constants for plugs & maps                |
 | group.vim         | auto grouping of files                             |
 | guru.vim          | help                                               |
-| harmony.vim       | write functions to reorganize wheeltree elements       |
-| helix.vim         | wheeltree indexes                                      |
+| harmony.vim       | write functions to reorganize torustree elements       |
+| helix.vim         | torustree indexes                                      |
 | helm.vim          | main & meta menus in dedicated buffers             |
-| kintsugi.vim      | check & fix wheeltree variables                        |
+| kintsugi.vim      | check & fix torustree variables                        |
 | kyusu.vim         | filters for prompt & dedicated buffers             |
 | lagrange.vim      | extrema helpers                                    |
 | labyrinth.vim     | commands to reproduce tab & win layout             |
-| line.vim          | activate non-wheeltree line in dedicated buffers       |
+| line.vim          | activate non-torustree line in dedicated buffers       |
 | loop.vim          | loops on dedicated buffers lines                   |
 | mandala.vim       | generic dedicated buffers                          |
 | matrix.vim        | nested lists & dictionaries                        |
@@ -4592,40 +4592,40 @@ of the modules within them.
 | origami.vim       | folding                                            |
 | ouroboros.vim     | clear, save & restore vars, maps, autocmds         |
 | pencil.vim        | selection in dedicated buffers                     |
-| pendulum.vim      | wheeltree history                                      |
-| perspective.vim   | non wheeltree content generators for prompt & mandalas |
+| pendulum.vim      | torustree history                                      |
+| perspective.vim   | non torustree content generators for prompt & mandalas |
 | polyphony.vim     | writable aspect of dedicated buffers               |
-| projection.vim    | find wheeltree location of current buffer              |
+| projection.vim    | find torustree location of current buffer              |
 | pyramid.vim       | mix of tabs & splits layouts                       |
 | quartz.vim        | internal constants for dedicated buffers menus     |
 | rectangle.vim     | tabs, windows & buffers                            |
-| referen.vim       | references to current wheeltree elements               |
+| referen.vim       | references to current torustree elements               |
 | ripple.vim        | async job for vim                                  |
 | river.vim         | navigation aspect of dedicated buffers             |
-| sailing.vim       | non wheeltree navigation                               |
+| sailing.vim       | non torustree navigation                               |
 | scroll.vim        | input history in dedicated buffers                 |
 | shadow.vim        | refactoring dedicated buffers                      |
 | spiral.vim        | golden ratio                                       |
-| status.vim        | print wheeltree status                                 |
+| status.vim        | print torustree status                                 |
 | symbol.vim        | tags                                               |
 | taijitu.vim       | ring helpers, circular routines                    |
 | teapot.vim        | filter aspect of dedicated buffers                 |
 | tower.vim         | menu layer in dedicated buffers                    |
-| tree.vim          | organize wheeltree element : add, rename, ...          |
+| tree.vim          | organize torustree element : add, rename, ...          |
 | triangle.vim      | undo & diff dedicated buffer                       |
 | unicode.vim       | unicode characters library                         |
 | upstream.vim      | parent leaf of context menu                        |
 | vector.vim        | batch operations on current group files            |
 | void.vim          | initiaze & reset variables                         |
-| vortex.vim        | navigation in the wheeltree                            |
+| vortex.vim        | navigation in the torustree                            |
 | waterclock.vim    | navigation in history & frecency                   |
 | wave.vim          | async job for neovim                               |
-| whirl.vim         | wheeltree navigation in dedicated buffers              |
-| yggdrasil.vim     | organize wheeltree in dedicated buffers                |
+| whirl.vim         | torustree navigation in dedicated buffers              |
+| yggdrasil.vim     | organize torustree in dedicated buffers                |
 
 Doc~
 
-doc/wheeltree.txt : this file :)
+doc/torustree.txt : this file :)
 
 Unused~
 

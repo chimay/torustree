@@ -1,5 +1,5 @@
 " vim: set filetype=vim:
-" Wheeltree - Vim Navigation Framework and Buffer Groups Manager
+" Torustree - Vim Navigation Framework and Buffer Groups Manager
 
 scriptencoding utf-8
 
@@ -9,7 +9,7 @@ endif
 
 let g:wheeltree_loaded = 1
 
-call wheeltree#void#foundation ()
-call wheeltree#centre#commands ()
-call wheeltree#centre#plugs ()
-call wheeltree#centre#cables ()
+call torustree#void#foundation ()
+call torustree#centre#commands ()
+call torustree#centre#plugs ()
+call torustree#centre#cables ()

@@ -9,36 +9,36 @@
 " Script constants
 
 if ! exists('s:mandala_options')
-	let s:mandala_options = wheeltree#crystal#fetch('mandala/options')
+	let s:mandala_options = torustree#crystal#fetch('mandala/options')
 	lockvar s:mandala_options
 endif
 
 if ! exists('s:map_keys')
-	let s:map_keys = wheeltree#crystal#fetch('map/keys')
+	let s:map_keys = torustree#crystal#fetch('map/keys')
 	lockvar s:map_keys
 endif
 
 if ! exists('s:mandala_autocmds_group')
-	let s:mandala_autocmds_group = wheeltree#crystal#fetch('mandala/autocmds/group')
+	let s:mandala_autocmds_group = torustree#crystal#fetch('mandala/autocmds/group')
 	lockvar s:mandala_autocmds_group
 endif
 
 if ! exists('s:mandala_autocmds_events')
-	let s:mandala_autocmds_events = wheeltree#crystal#fetch('mandala/autocmds/events')
+	let s:mandala_autocmds_events = torustree#crystal#fetch('mandala/autocmds/events')
 	lockvar s:mandala_autocmds_events
 endif
 
 if ! exists('s:mandala_vars')
-	let s:mandala_vars = wheeltree#crystal#fetch('mandala/vars')
+	let s:mandala_vars = torustree#crystal#fetch('mandala/vars')
 	lockvar s:mandala_vars
 endif
 
 " Init stack
 
-fun! wheeltree#layer#init ()
+fun! torustree#layer#init ()
 	" Init stack and buffer variables
 	" Last inserted layer is at index 0
-	call wheeltree#mandala#init ()
+	call torustree#mandala#init ()
 	if ! exists('b:wheel_stack')
 		let b:wheel_stack = {}
 		let stack = b:wheel_stack
@@ -50,20 +50,20 @@ endfun
 
 " State
 
-fun! wheeltree#layer#length ()
+fun! torustree#layer#length ()
 	" Layer stack length
 	return len(b:wheel_stack.layers)
 endfun
 
-fun! wheeltree#layer#bottom ()
+fun! torustree#layer#bottom ()
 	" Return layer index to be popped or replaced in stack
 	let top = b:wheel_stack.top
-	let length = wheeltree#layer#length ()
-	let bottom = wheeltree#gear#circular_minus (top, length)
+	let length = torustree#layer#length ()
+	let bottom = torustree#gear#circular_minus (top, length)
 	return bottom
 endfun
 
-fun! wheeltree#layer#stack (...)
+fun! torustree#layer#stack (...)
 	" Return stack of fieldname given by argument
 	" Return layer stack if no argument is given
 	" Useful for debugging
@@ -80,7 +80,7 @@ fun! wheeltree#layer#stack (...)
 	return field_stack
 endfun
 
-fun! wheeltree#layer#top_field (...)
+fun! torustree#layer#top_field (...)
 	" Return field given by fieldname at top of stack
 	" Return top of stack if no argument is given
 	let stack = b:wheel_stack
@@ -93,71 +93,71 @@ endfun
 
 " Clearing things
 
-fun! wheeltree#layer#clear_options ()
+fun! torustree#layer#clear_options ()
 	" Clear mandala local options
 	setlocal nofoldenable
 endfun
 
-fun! wheeltree#layer#clear_maps ()
+fun! torustree#layer#clear_maps ()
 	" Clear mandala local maps
-	call wheeltree#gear#unmap(s:map_keys)
+	call torustree#gear#unmap(s:map_keys)
 endfun
 
-fun! wheeltree#layer#clear_autocmds ()
+fun! torustree#layer#clear_autocmds ()
 	" Clear mandala local autocommands
 	let group = s:mandala_autocmds_group
 	let events = s:mandala_autocmds_events
-	call wheeltree#gear#clear_autocmds (group, events)
+	call torustree#gear#clear_autocmds (group, events)
 endfun
 
-fun! wheeltree#layer#clear_vars ()
+fun! torustree#layer#clear_vars ()
 	" Clear mandala local variables, except the layer stack
-	call wheeltree#gear#unlet (s:mandala_vars)
+	call torustree#gear#unlet (s:mandala_vars)
 endfun
 
-fun! wheeltree#layer#fresh ()
+fun! torustree#layer#fresh ()
 	" Fresh empty layer : clear mandala local data
-	call wheeltree#layer#clear_options ()
-	call wheeltree#layer#clear_maps ()
-	call wheeltree#layer#clear_autocmds ()
-	call wheeltree#layer#clear_vars ()
+	call torustree#layer#clear_options ()
+	call torustree#layer#clear_maps ()
+	call torustree#layer#clear_autocmds ()
+	call torustree#layer#clear_vars ()
 	" delete lines -> underscore _ = no storing register
 	silent! 1,$ delete _
 endfun
 
 " Saving things
 
-fun! wheeltree#layer#save_options ()
+fun! torustree#layer#save_options ()
 	" Save options
-	return wheeltree#gear#save_options (s:mandala_options)
+	return torustree#gear#save_options (s:mandala_options)
 endfun
 
-fun! wheeltree#layer#save_maps ()
+fun! torustree#layer#save_maps ()
 	" Save maps
-	return wheeltree#gear#save_maps (s:map_keys)
+	return torustree#gear#save_maps (s:map_keys)
 endfun
 
-fun! wheeltree#layer#save_autocmds ()
+fun! torustree#layer#save_autocmds ()
 	" Save autocommands
 	let group = s:mandala_autocmds_group
 	let events = s:mandala_autocmds_events
-	return wheeltree#gear#save_autocmds (group, events)
+	return torustree#gear#save_autocmds (group, events)
 endfun
 
 " Restoring things
 
-fun! wheeltree#layer#restore_autocmds (autodict)
+fun! torustree#layer#restore_autocmds (autodict)
 	" Restore autocommands
 	let group = s:mandala_autocmds_group
-	call wheeltree#gear#restore_autocmds (group, a:autodict)
+	call torustree#gear#restore_autocmds (group, a:autodict)
 endfun
 
 " Sync & swap
 
-fun! wheeltree#layer#syncdown ()
+fun! torustree#layer#syncdown ()
 	" Sync top of the stack to mandala state : vars, options, maps
-	if wheeltree#layer#length () == 0
-		echomsg 'wheeltree layer sync : empty stack.'
+	if torustree#layer#length () == 0
+		echomsg 'torustree layer sync : empty stack.'
 		return v:false
 	endif
 	let stack = b:wheel_stack
@@ -167,21 +167,21 @@ fun! wheeltree#layer#syncdown ()
 	let pseudo_file = layer.filename
 	execute 'silent file' pseudo_file
 	" options
-	call wheeltree#gear#restore_options (layer.options)
+	call torustree#gear#restore_options (layer.options)
 	" mappings
 	let mappings = deepcopy(layer.mappings)
-	call wheeltree#gear#restore_maps (mappings)
+	call torustree#gear#restore_maps (mappings)
 	" autocommands
 	let autodict = copy(layer.autocmds)
-	call wheeltree#layer#restore_autocmds (autodict)
+	call torustree#layer#restore_autocmds (autodict)
 	" lines, without filtering
 	let b:wheel_lines = copy(layer.lines)
 	" filtered mandala content
 	" layer.filtered should contain also the original first line, so we have
 	" to delete the first line added by :put in the replace routine
-	call wheeltree#mandala#replace (layer.filtered, 'delete')
+	call torustree#mandala#replace (layer.filtered, 'delete')
 	" cursor position
-	call wheeltree#gear#restore_cursor (layer.position)
+	call torustree#gear#restore_cursor (layer.position)
 	" address linked to cursor line & context
 	let b:wheel_address = copy(layer.address)
 	" selection
@@ -194,23 +194,23 @@ fun! wheeltree#layer#syncdown ()
 	setlocal nomodified
 endfun
 
-fun! wheeltree#layer#swap ()
+fun! torustree#layer#swap ()
 	" Swap mandala state and top of stack
-	call wheeltree#layer#init ()
+	call torustree#layer#init ()
 	let stack = b:wheel_stack
 	" -- Mandala state -> swap space
 	let swap = {}
 	" pseudo filename
 	let swap.filename = expand('%')
 	" options
-	let swap.options = wheeltree#layer#save_options ()
+	let swap.options = torustree#layer#save_options ()
 	" mappings
-	let swap.mappings = wheeltree#layer#save_maps ()
+	let swap.mappings = torustree#layer#save_maps ()
 	" autocommands
-	let swap.autocmds = wheeltree#layer#save_autocmds ()
+	let swap.autocmds = torustree#layer#save_autocmds ()
 	" lines, without filtering
 	if empty(b:wheel_lines)
-		let begin = wheeltree#mandala#first_data_line ()
+		let begin = torustree#mandala#first_data_line ()
 		let swap.lines = getline(begin, '$')
 	else
 		let swap.lines = copy(b:wheel_lines)
@@ -221,7 +221,7 @@ fun! wheeltree#layer#swap ()
 	let swap.position = getcurpos()
 	" address of cursor line
 	" useful for boomerang = context menus
-	let swap.address = wheeltree#line#address()
+	let swap.address = torustree#line#address()
 	" selected lines
 	let swap.selected = deepcopy(b:wheel_selected)
 	" settings
@@ -237,19 +237,19 @@ fun! wheeltree#layer#swap ()
 		let swap.reload = ''
 	endif
 	" -- Stack top -> mandala state
-	call wheeltree#layer#syncdown ()
+	call torustree#layer#syncdown ()
 	" -- Swap space -> top of stack
 	let stack.layers[stack.top] = swap
 endfun
 
 " Push & pop
 
-fun! wheeltree#layer#push ()
+fun! torustree#layer#push ()
 	" Push buffer content to the stack
 	" save modified local maps
-	call wheeltree#layer#init ()
+	call torustree#layer#init ()
 	let stack = b:wheel_stack
-	let length = wheeltree#layer#length ()
+	let length = torustree#layer#length ()
 	let maxim = g:wheeltree_config.maxim.layers
 	if length == 0
 		let stack.top = 0
@@ -261,21 +261,21 @@ fun! wheeltree#layer#push ()
 		call insert(stack.layers, {}, stack.top)
 	else
 		" new layer will replace the bottom
-		let stack.top = wheeltree#layer#bottom ()
+		let stack.top = torustree#layer#bottom ()
 	endif
 	" layer to fill / update
 	let layer = stack.layers[stack.top]
 	" pseudo filename
 	let layer.filename = expand('%')
 	" options
-	let layer.options = wheeltree#layer#save_options ()
+	let layer.options = torustree#layer#save_options ()
 	" mappings
-	let layer.mappings = wheeltree#layer#save_maps ()
+	let layer.mappings = torustree#layer#save_maps ()
 	" autocommands
-	let layer.autocmds = wheeltree#layer#save_autocmds ()
+	let layer.autocmds = torustree#layer#save_autocmds ()
 	" lines, without filtering
 	if empty(b:wheel_lines)
-		let begin = wheeltree#mandala#first_data_line ()
+		let begin = torustree#mandala#first_data_line ()
 		let layer.lines = getline(begin, '$')
 	else
 		let layer.lines = copy(b:wheel_lines)
@@ -286,7 +286,7 @@ fun! wheeltree#layer#push ()
 	let layer.position = getcurpos()
 	" address of cursor line
 	" useful for boomerang = context menus
-	let layer.address = wheeltree#line#address()
+	let layer.address = torustree#line#address()
 	" selected lines
 	if exists('b:wheel_selected')
 		let layer.selected = deepcopy(b:wheel_selected)
@@ -307,80 +307,80 @@ fun! wheeltree#layer#push ()
 	endif
 endfun
 
-fun! wheeltree#layer#pop ()
+fun! torustree#layer#pop ()
 	" Pop top of stack to the mandala state
-	let length = wheeltree#layer#length ()
+	let length = torustree#layer#length ()
 	if length == 0
-		echomsg 'wheeltree layer pop : empty stack.'
+		echomsg 'torustree layer pop : empty stack.'
 		return v:false
 	endif
 	" pop
-	call wheeltree#layer#syncdown ()
+	call torustree#layer#syncdown ()
 	let stack = b:wheel_stack
 	call remove(stack.layers, stack.top)
 	" update length
-	let length = wheeltree#layer#length ()
+	let length = torustree#layer#length ()
 	" update top index
 	if stack.top >= length
 		let stack.top = length - 1
 	endif
-	call wheeltree#status#layer ()
+	call torustree#status#layer ()
 endfun
 
 " Forward & backward
 
-fun! wheeltree#layer#forward ()
+fun! torustree#layer#forward ()
 	" Go forward in layer stack
-	let length = wheeltree#layer#length ()
+	let length = torustree#layer#length ()
 	if length == 0
-		echomsg 'wheeltree layer forward : empty stack.'
+		echomsg 'torustree layer forward : empty stack.'
 		return v:false
 	endif
 	let stack = b:wheel_stack
 	let top = stack.top
-	let length = wheeltree#layer#length ()
-	let stack.top = wheeltree#gear#circular_minus (top, length)
-	call wheeltree#layer#swap ()
-	call wheeltree#status#layer ()
+	let length = torustree#layer#length ()
+	let stack.top = torustree#gear#circular_minus (top, length)
+	call torustree#layer#swap ()
+	call torustree#status#layer ()
 endfun
 
-fun! wheeltree#layer#backward ()
+fun! torustree#layer#backward ()
 	" Go backward in layer stack
-	let length = wheeltree#layer#length ()
+	let length = torustree#layer#length ()
 	if length == 0
-		echomsg 'wheeltree layer backward : empty stack.'
+		echomsg 'torustree layer backward : empty stack.'
 		return v:false
 	endif
-	call wheeltree#layer#swap ()
+	call torustree#layer#swap ()
 	let top = b:wheel_stack.top
-	let length = wheeltree#layer#length ()
-	let b:wheel_stack.top = wheeltree#gear#circular_plus (top, length)
-	call wheeltree#status#layer ()
+	let length = torustree#layer#length ()
+	let b:wheel_stack.top = torustree#gear#circular_plus (top, length)
+	call torustree#status#layer ()
 endfun
 
 " Switch
 
-fun! wheeltree#layer#switch (...)
+fun! torustree#layer#switch (...)
 	" Switch to layer with completion
-	if wheeltree#layer#length () == 0
-		echomsg 'wheeltree layer switch : empty layer stack.'
+	if torustree#layer#length () == 0
+		echomsg 'torustree layer switch : empty layer stack.'
 		return v:false
 	endif
 	let prompt = 'Switch to layer : '
-	let complete = 'customlist,wheeltree#complete#layer'
+	let complete = 'customlist,torustree#complete#layer'
 	if a:0 > 0
 		let name = a:1
 	else
 		let name = input(prompt, '', complete)
 	endif
-	let name = wheeltree#mandala#pseudo (name)
-	let filenames = wheeltree#layer#stack ('filename')
+	let name = torustree#mandala#pseudo (name)
+	let filenames = torustree#layer#stack ('filename')
 	let stack = b:wheel_stack
 	let top = index(filenames, name)
 	if top < 0
 		return v:false
 	endif
 	let stack.top = top
-	call wheeltree#layer#swap ()
-	call wheeltree#status#layer ()
+	call torustree#layer#swap ()
+	call torustree#status#layer ()
 endfun

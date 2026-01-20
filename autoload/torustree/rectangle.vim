@@ -1,0 +1,220 @@
+" vim: set ft=vim fdm=indent iskeyword&:
+
+" Rectangle
+"
+" Tabs, windows & buffers
+
+" ---- script constants
+
+if exists('s:field_separ')
+	unlockvar s:field_separ
+endif
+let s:field_separ = torustree#crystal#fetch('separator/field')
+lockvar s:field_separ
+
+if exists('s:level_separ')
+	unlockvar s:level_separ
+endif
+let s:level_separ = torustree#crystal#fetch('separator/level')
+lockvar s:level_separ
+
+if exists('s:is_mandala_file')
+	unlockvar s:is_mandala_file
+endif
+let s:is_mandala_file = torustree#crystal#fetch('is_mandala_file')
+lockvar s:is_mandala_file
+
+" ---- helpers
+
+fun! torustree#rectangle#goto_previous ()
+	" Go to previous window in tab
+	noautocmd wincmd p
+endfun
+
+fun! torustree#rectangle#ratio ()
+	" Window width / height
+	" Real usable window width
+	" Credit : https://stackoverflow.com/questions/26315925/get-usable-window-width-in-vim-script
+	let width = winwidth(0)
+	let width -= ( (&number || &relativenumber) ? &numberwidth : 0 ) + &foldcolumn
+	let height = winheight(0)
+	" -- use round as nr2float
+	return round(width) / round(height)
+endfun
+
+" ---- tab, win, buffer number
+
+fun! torustree#rectangle#current ()
+	" Return dict with tab, window and buffer numbers of current window
+	let rectangle = {}
+	let rectangle.tabnum = tabpagenr()
+	let rectangle.winum = winnr()
+	let rectangle.winiden = win_getid()
+	let rectangle.bufnum = bufnr('%')
+	return rectangle
+endfun
+
+fun! torustree#rectangle#previous ()
+	" Return tab, window & buffer number of previous window
+	call torustree#rectangle#goto_previous ()
+	let previous = torustree#rectangle#current ()
+	call torustree#rectangle#goto_previous ()
+	return previous
+endfun
+
+fun! torustree#rectangle#goto (where)
+	" Go to window given by where
+	let where = a:where
+	let tabnum = where.tabnum
+	let winum = where.winum
+	let bufnum = where.bufnum
+	if tabnum != tabpagenr()
+		execute 'noautocmd tabnext' tabnum
+	endif
+	if winum != winnr()
+		execute 'noautocmd' winum 'wincmd w'
+	endif
+	if bufnum != bufnr()
+		execute 'hide buffer' bufnum
+	endif
+	return v:true
+endfun
+
+" ---- window containing a given buffer
+
+fun! torustree#rectangle#find_buffer (bufnum, scope = 'all')
+	" Go to window of buffer given by bufnum
+	" The window is the first one displaying bufnum buffer
+	" Optional argument :
+	"   - all : search in all tabs & windows
+	"   - tab : search only in current tab
+	let bufnum = a:bufnum
+	let scope = a:scope
+	" -- search in current tab
+	if scope ==# 'tab'
+		let winum = bufwinnr(bufnum)
+		if winum < 0
+			return v:false
+		endif
+		execute 'noautocmd' winum  'wincmd w'
+		return v:true
+	endif
+	" -- search everywhere
+	let winds = win_findbuf(bufnum)
+	if empty(winds)
+		return v:false
+	endif
+	let winiden = winds[0]
+	noautocmd call win_gotoid(winiden)
+	return v:true
+endfun
+
+fun! torustree#rectangle#find_or_load (bufnum)
+	" Go to window of buffer if visible, or load it in first window of tab
+	let bufnum = a:bufnum
+	if ! torustree#rectangle#find_buffer (bufnum)
+		noautocmd 1 wincmd w
+		execute 'hide buffer' bufnum
+	endif
+	return v:true
+endfun
+
+" ---- window(s) containing a given file
+
+fun! torustree#rectangle#rosace (filename, scope = 'all')
+	" Return list of window(s) id(s) displaying filename
+	" Optional argument :
+	"   - all : search in all tabs & windows
+	"   - tab : search only in current tab
+	let filename = a:filename
+	let scope = a:scope
+	let wins = win_findbuf(bufnr(filename))
+	if scope ==# 'tab'
+		let tabnum = tabpagenr()
+		eval wins->filter({ _, val -> win_id2tabwin(val)[0] == tabnum })
+	endif
+	return wins
+endfun
+
+fun! torustree#rectangle#tour ()
+	" Return closest candidate amongst windows displaying current location
+	" by exploring each one
+	" Search order :
+	"   - windows in current tab page
+	"   - windows anywhere
+	" Return v:false if no window display filename
+	let original = win_getid()
+	let coordin = torustree#referen#coordinates ()
+	let filename = torustree#referen#location().file
+	" ---- find window where closest = current torustree location
+	" -- current tab
+	let rosace = torustree#rectangle#rosace (filename, 'tab')
+	for window in rosace
+		noautocmd call win_gotoid(window)
+		let closest = torustree#projection#closest ()
+		if ! empty(closest) && closest == coordin
+			noautocmd call win_gotoid(original)
+			return window
+		endif
+	endfor
+	" -- anywhere
+	let rosace = torustree#rectangle#rosace (filename, 'all')
+	for window in rosace
+		noautocmd call win_gotoid(window)
+		let closest = torustree#projection#closest ()
+		if ! empty(closest) && closest == coordin
+			noautocmd call win_gotoid(original)
+			return window
+		endif
+	endfor
+	" ---- not found
+	noautocmd call win_gotoid(original)
+	return -1
+endfun
+
+" ---- lists of buffers
+
+fun! torustree#rectangle#hidden_buffers (scope = 'listed')
+	" Return list of hidden or unlisted buffers, with some exceptions
+	" Optional argument :
+	"   - listed (default) : don't return unlisted buffers
+	"   - all : also return unlisted buffers
+	" Exceptions :
+	"   - alternate buffer
+	"   - torustree dedicated buffers (mandalas)
+	let scope = a:scope
+	if scope ==# 'listed'
+		let buflist = getbufinfo({'buflisted' : 1})
+	elseif scope ==# 'all'
+		let buflist = getbufinfo()
+	else
+		echomsg 'torustree rectangle hidden buffers : bad optional argument'
+		return []
+	endif
+	let alternate = bufname('#')
+	let mandalas = g:wheeltree_bufring.mandalas
+	let hidden_nums = []
+	let hidden_names = []
+	for buffer in buflist
+		let bufnum = buffer.bufnr
+		let filename = buffer.name
+		let hide = buffer.hidden || ! buffer.listed
+		let not_alternate = filename !=# alternate
+		let not_mandala = ! torustree#chain#is_inside(bufnum, mandalas)
+		let not_wheel_filename = filename !~ s:is_mandala_file
+		if hide && not_alternate && not_mandala && not_wheel_filename
+			eval hidden_nums->add(bufnum)
+			eval hidden_names->add(filename)
+		endif
+	endfor
+	return [hidden_nums, hidden_names]
+endfun
+
+fun! torustree#rectangle#tab_buffers ()
+	" List of buffers in current tab, starting with current one
+	let bufnum = bufnr('%')
+	let buffers = tabpagebuflist()
+	let index = buffers->index(bufnum)
+	let buffers = buffers->torustree#taijitu#roll_left(index)
+	return buffers
+endfun
