@@ -14,7 +14,7 @@ fun! torustree#triangle#undolist ()
 	call torustree#mandala#template ()
 	call torustree#delta#mappings ()
 	call torustree#mandala#fill (lines)
-	let b:wheel_settings.undo_iden = torustree#delta#undo_iden(1)
+	let b:torustree_settings.undo_iden = torustree#delta#undo_iden(1)
 	" reload
 	call torustree#mandala#set_reload('torustree#triangle#undolist')
 endfun

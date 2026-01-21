@@ -8,11 +8,11 @@
 
 " ---- script constants
 
-if exists('s:wheel_write_functions')
-	unlockvar s:wheel_write_functions
+if exists('s:torustree_write_functions')
+	unlockvar s:torustree_write_functions
 endif
-let s:wheel_write_functions = torustree#crystal#fetch('function/write/torustree')
-lockvar s:wheel_write_functions
+let s:torustree_write_functions = torustree#crystal#fetch('function/write/torustree')
+lockvar s:torustree_write_functions
 
 if exists('s:mandala_autocmds_group')
 	unlockvar s:mandala_autocmds_group
@@ -36,7 +36,7 @@ lockvar s:field_separ_bar
 
 fun! torustree#polyphony#is_writable ()
 	" Whether mandala has BufWriteCmd autocommand
-	return b:wheel_nature.is_writable
+	return b:torustree_nature.is_writable
 endfun
 
 " ---- write autocommand & maps
@@ -55,7 +55,7 @@ fun! torustree#polyphony#choir (fun_name, arguments)
 		let funcall = 'call call(' .. string(fun_name) .. ', ' .. arguments .. ')'
 	else
 		" -- fun_name is the last part of the function
-		if fun_name->torustree#chain#is_inside(s:wheel_write_functions)
+		if fun_name->torustree#chain#is_inside(s:torustree_write_functions)
 			let full_fun_name = 'torustree#harmony#' .. fun_name
 		else
 			let full_fun_name = 'torustree#counterpoint#' .. fun_name
@@ -96,7 +96,7 @@ fun! torustree#polyphony#score (fun_name, ...)
 	let fun_name = a:fun_name
 	let arguments = deepcopy(a:000)
 	" ---- property
-	let b:wheel_nature.is_writable = v:true
+	let b:torustree_nature.is_writable = v:true
 	" ---- options
 	call torustree#mandala#unlock ()
 	setlocal buftype=acwrite
@@ -129,8 +129,8 @@ endfun
 fun! torustree#polyphony#update_var_lines ()
 	" Update lines in local mandala variables, from visible lines
 	" Affected :
-	"   - b:wheel_lines
-	"   - b:wheel_filter.lines
+	"   - b:torustree_lines
+	"   - b:torustree_filter.lines
 	if ! torustree#polyphony#is_writable ()
 		" if mandala is not writable, lines are not supposed to be modified
 		return v:false
@@ -142,9 +142,9 @@ fun! torustree#polyphony#update_var_lines ()
 			let visible = getline(linum)
 			let visible = torustree#pencil#unmarked (visible)
 			let line_index = torustree#teapot#line_index (linum)
-			let b:wheel_lines[line_index] = visible
+			let b:torustree_lines[line_index] = visible
 			let local_index = linum - start
-			let b:wheel_filter.lines[local_index] = visible
+			let b:torustree_filter.lines[local_index] = visible
 		endfor
 	else
 		let lines = getline(start, '$')
@@ -153,19 +153,19 @@ fun! torustree#polyphony#update_var_lines ()
 			let visible = lines[index]
 			let lines[index] = torustree#pencil#unmarked (visible)
 		endfor
-		let b:wheel_lines = lines
+		let b:torustree_lines = lines
 	endif
 	return v:true
 endfun
 
 fun! torustree#polyphony#update_selection_indexes ()
-	" Update selection indexes to b:wheel_lines / b:wheel_full
-	if empty(b:wheel_full)
-		let all_lines = b:wheel_lines
+	" Update selection indexes to b:torustree_lines / b:torustree_full
+	if empty(b:torustree_full)
+		let all_lines = b:torustree_lines
 	else
-		let all_lines = b:wheel_full
+		let all_lines = b:torustree_full
 	endif
-	let selection = b:wheel_selection
+	let selection = b:torustree_selection
 	let indexes = selection.indexes
 	let components = selection.components
 	let range = torustree#chain#rangelen(indexes)
@@ -187,15 +187,15 @@ fun! torustree#polyphony#append_in_var_lines (line, content)
 	let content = a:content
 	" ---- all lines
 	let line_index = torustree#teapot#line_index (line)
-	eval b:wheel_lines->insert(content, line_index + 1)
+	eval b:torustree_lines->insert(content, line_index + 1)
 	" ---- filtered lines
 	if ! torustree#teapot#is_filtered ()
 		return v:true
 	endif
 	let start = torustree#teapot#first_data_line ()
 	let next = line - start + 1
-	let filter_indexes = b:wheel_filter.indexes
-	let filter_lines = b:wheel_filter.lines
+	let filter_indexes = b:torustree_filter.indexes
+	let filter_lines = b:torustree_filter.lines
 	eval filter_indexes->insert(line_index + 1, next)
 	eval filter_lines->insert(content, next)
 	let length = len(filter_indexes)
@@ -210,15 +210,15 @@ fun! torustree#polyphony#delete_in_var_lines (line)
 	let line = a:line
 	" ---- delete in all lines
 	let line_index = torustree#teapot#line_index (line)
-	eval b:wheel_lines->remove(line_index)
+	eval b:torustree_lines->remove(line_index)
 	" ---- delete in filtered lines
 	if ! torustree#teapot#is_filtered ()
 		return v:true
 	endif
 	let start = torustree#teapot#first_data_line ()
 	let index = line - start
-	let filter_indexes = b:wheel_filter.indexes
-	let filter_lines = b:wheel_filter.lines
+	let filter_indexes = b:torustree_filter.indexes
+	let filter_lines = b:torustree_filter.lines
 	eval filter_indexes->remove(index)
 	eval filter_lines->remove(index)
 	let length = len(filter_indexes)
@@ -298,18 +298,18 @@ fun! torustree#polyphony#context ()
 	let context_lines = str2nr(context_lines)
 	call torustree#polyphony#update_var_lines ()
 	" ---- remove previous context
-	let pattern = b:wheel_settings.pattern
-	eval b:wheel_lines->filter({ _, val -> val =~ pattern })
+	let pattern = b:torustree_settings.pattern
+	eval b:torustree_lines->filter({ _, val -> val =~ pattern })
 	" ---- no context
 	if context_lines <= 0
 		call torustree#polyphony#update_selection_indexes ()
 		call torustree#teapot#filter('dont-update')
-		return b:wheel_lines
+		return b:torustree_lines
 	endif
 	" ---- add new context
 	let contextualized = []
 	let done = []
-	for record in b:wheel_lines
+	for record in b:torustree_lines
 		let fields = split(record, s:field_separ)
 		let bufnum = str2nr(fields[0])
 		let linum = str2nr(fields[1])
@@ -344,7 +344,7 @@ fun! torustree#polyphony#context ()
 		endfor
 	endfor
 	" ---- replace old content
-	let b:wheel_lines = contextualized
+	let b:torustree_lines = contextualized
 	call torustree#polyphony#update_selection_indexes ()
 	call torustree#teapot#filter('dont-update')
 	" ---- coda
@@ -532,7 +532,7 @@ endfun
 fun! torustree#polyphony#filter_maps ()
 	" Local filter maps for hybrid filter/write mode
 	" ---- property
-	let b:wheel_nature.has_filter = v:true
+	let b:torustree_nature.has_filter = v:true
 	" ---- normal mode
 	nnoremap <buffer> <ins> <cmd>call torustree#teapot#goto_filter_line('insert')<cr>
 	nnoremap <buffer> <m-i> <cmd>call torustree#teapot#goto_filter_line('insert')<cr>
@@ -580,7 +580,7 @@ fun! torustree#polyphony#navigation_maps (settings)
 	" Define whirl maps & set navigation property
 	let settings = copy(a:settings)
 	" ---- property
-	let b:wheel_nature.has_navigation = v:true
+	let b:torustree_nature.has_navigation = v:true
 	" ---- maps
 	let nmap = 'nnoremap <buffer>'
 	let loopnav = '<cmd>call torustree#loop#navigation('

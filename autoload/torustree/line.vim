@@ -40,7 +40,7 @@ fun! torustree#line#buffer (settings)
 	endif
 	call torustree#origami#view_cursor ()
 	call torustree#chakra#place_native ()
-	silent doautocmd User WheelAfterNative
+	silent doautocmd User TorustreeAfterNative
 	return win_getid ()
 endfun
 
@@ -58,7 +58,7 @@ fun! torustree#line#tabwin (settings)
 	doautocmd WinEnter
 	call torustree#origami#view_cursor ()
 	call torustree#chakra#place_native ()
-	silent doautocmd User WheelAfterNative
+	silent doautocmd User TorustreeAfterNative
 	return win_getid ()
 endfun
 
@@ -77,7 +77,7 @@ fun! torustree#line#tabwin_tree (settings)
 	doautocmd WinEnter
 	call torustree#origami#view_cursor ()
 	call torustree#chakra#place_native ()
-	silent doautocmd User WheelAfterNative
+	silent doautocmd User TorustreeAfterNative
 	return win_getid ()
 endfun
 
@@ -111,7 +111,7 @@ fun! torustree#line#locate (settings)
 	execute 'silent hide edit' filename
 	call torustree#origami#view_cursor ()
 	call torustree#chakra#place_native ()
-	silent doautocmd User WheelAfterNative
+	silent doautocmd User TorustreeAfterNative
 	return win_getid ()
 endfun
 
@@ -127,7 +127,7 @@ fun! torustree#line#find (settings)
 	execute 'silent hide edit' filename
 	call torustree#origami#view_cursor ()
 	call torustree#chakra#place_native ()
-	silent doautocmd User WheelAfterNative
+	silent doautocmd User TorustreeAfterNative
 	return win_getid ()
 endfun
 
@@ -148,7 +148,7 @@ fun! torustree#line#occur (settings)
 	call cursor(line, 1)
 	call torustree#origami#view_cursor ()
 	call torustree#chakra#place_native ()
-	silent doautocmd User WheelAfterNative
+	silent doautocmd User TorustreeAfterNative
 	return win_getid ()
 endfun
 
@@ -173,7 +173,7 @@ fun! torustree#line#grep (settings)
 	" ---- coda
 	call torustree#origami#view_cursor ()
 	call torustree#chakra#place_native ()
-	silent doautocmd User WheelAfterNative
+	silent doautocmd User TorustreeAfterNative
 	return win_getid ()
 endfun
 
@@ -192,7 +192,7 @@ fun! torustree#line#marker (settings)
 	execute "normal! `" .. mark
 	call torustree#origami#view_cursor ()
 	call torustree#chakra#place_native ()
-	silent doautocmd User WheelAfterNative
+	silent doautocmd User TorustreeAfterNative
 	return win_getid ()
 endfun
 
@@ -212,7 +212,7 @@ fun! torustree#line#jump (settings)
 	call cursor(linum, colnum)
 	call torustree#origami#view_cursor ()
 	call torustree#chakra#place_native ()
-	silent doautocmd User WheelAfterNative
+	silent doautocmd User TorustreeAfterNative
 	return win_getid ()
 endfun
 
@@ -232,7 +232,7 @@ fun! torustree#line#change (settings)
 	call cursor(linum, colnum)
 	call torustree#origami#view_cursor ()
 	call torustree#chakra#place_native ()
-	silent doautocmd User WheelAfterNative
+	silent doautocmd User TorustreeAfterNative
 	return win_getid ()
 endfun
 
@@ -255,7 +255,7 @@ fun! torustree#line#tag (settings)
 	endif
 	call torustree#origami#view_cursor ()
 	call torustree#chakra#place_native ()
-	silent doautocmd User WheelAfterNative
+	silent doautocmd User TorustreeAfterNative
 	return win_getid ()
 endfun
 
@@ -274,7 +274,7 @@ fun! torustree#line#narrow_file (settings)
 	call cursor(linum, 1)
 	call torustree#origami#view_cursor ()
 	call torustree#chakra#place_native ()
-	silent doautocmd User WheelAfterNative
+	silent doautocmd User TorustreeAfterNative
 	return win_getid ()
 endfun
 
@@ -311,7 +311,7 @@ fun! torustree#line#narrow_circle (settings)
 	" ---- coda
 	call torustree#origami#view_cursor ()
 	call torustree#chakra#place_native ()
-	silent doautocmd User WheelAfterNative
+	silent doautocmd User TorustreeAfterNative
 	return win_getid ()
 endfun
 
@@ -470,5 +470,5 @@ fun! torustree#line#undo_diff (bufnum)
 	diffthis
 	" ---- back to mandala
 	call torustree#cylinder#recall ()
-	let b:wheel_settings.diff_buf = diff_buf
+	let b:torustree_settings.diff_buf = diff_buf
 endfun

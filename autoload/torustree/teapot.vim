@@ -8,13 +8,13 @@
 
 fun! torustree#teapot#has_filter ()
 	" Whether mandala has filter in first line, false otherwise
-	return b:wheel_nature.has_filter
+	return b:torustree_nature.has_filter
 endfun
 
 fun! torustree#teapot#is_filtered ()
 	" Whether mandala is filtered
-	"return ! empty(b:wheel_filter.indexes)
-	return ! empty(b:wheel_filter.words)
+	"return ! empty(b:torustree_filter.indexes)
+	return ! empty(b:torustree_filter.words)
 endfun
 
 fun! torustree#teapot#first_data_line ()
@@ -27,10 +27,10 @@ fun! torustree#teapot#first_data_line ()
 	endif
 endfun
 
-" ---- global index of visible in line in b:wheel_lines
+" ---- global index of visible in line in b:torustree_lines
 
 fun! torustree#teapot#line_index (...)
-	" Return index of visible line number in b:wheel_lines
+	" Return index of visible line number in b:torustree_lines
 	" Visible line may be filtered
 	" Default : current line number
 	if a:0 > 0
@@ -41,7 +41,7 @@ fun! torustree#teapot#line_index (...)
 	let shift = torustree#teapot#first_data_line ()
 	let index = linum - shift
 	if torustree#teapot#is_filtered ()
-		let indexlist = b:wheel_filter.indexes
+		let indexlist = b:torustree_filter.indexes
 		"echomsg index indexlist indexlist[index]
 		return indexlist[index]
 	else
@@ -147,19 +147,19 @@ fun! torustree#teapot#filter (update = 'update', lock = 'lock')
 		call torustree#polyphony#update_var_lines ()
 	endif
 	if empty(wordlist)
-		let lines = b:wheel_lines
-		let b:wheel_filter.words = []
-		let b:wheel_filter.indexes = []
-		let b:wheel_filter.lines = []
+		let lines = b:torustree_lines
+		let b:torustree_filter.words = []
+		let b:torustree_filter.indexes = []
+		let b:torustree_filter.lines = []
 		call torustree#origami#close ()
 	else
 		call torustree#scroll#record(wordlist)
 		let matrix = torustree#kyusu#gaiwan (wordlist)
 		let indexes = matrix[0]
 		let lines = matrix[1]
-		let b:wheel_filter.words = wordlist
-		let b:wheel_filter.indexes = indexes
-		let b:wheel_filter.lines = lines
+		let b:torustree_filter.words = wordlist
+		let b:torustree_filter.indexes = indexes
+		let b:torustree_filter.lines = lines
 		call torustree#origami#open ()
 	endif
 	call torustree#mandala#replace (lines, 'prompt-first', lock)
@@ -177,10 +177,10 @@ fun! torustree#teapot#reset (update = 'update', lock = 'lock')
 	if update ==# 'update'
 		call torustree#polyphony#update_var_lines ()
 	endif
-	let lines = b:wheel_lines
-	let b:wheel_filter.words = []
-	let b:wheel_filter.indexes = []
-	let b:wheel_filter.lines = []
+	let lines = b:torustree_lines
+	let b:torustree_filter.words = []
+	let b:torustree_filter.indexes = []
+	let b:torustree_filter.lines = []
 	call torustree#mandala#replace (lines, 'empty-prompt-first', lock)
 	call torustree#pencil#show (lock)
 	call torustree#origami#close ()
@@ -212,7 +212,7 @@ endfun
 
 fun! torustree#teapot#all_lines ()
 	" Return all, unfiltered, unmarked lines
-	return b:wheel_lines
+	return b:torustree_lines
 endfun
 
 " ---- mappings
@@ -281,7 +281,7 @@ endfun
 fun! torustree#teapot#mappings ()
 	" Define filter maps & set property
 	" ---- filter property
-	let b:wheel_nature.has_filter = v:true
+	let b:torustree_nature.has_filter = v:true
 	let goto_filter = 'torustree#teapot#goto_filter_line'
 	let wrapper = 'torustree#teapot#wrapper'
 	" ---- normal mode

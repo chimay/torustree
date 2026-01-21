@@ -39,17 +39,17 @@ if exists('s:menu_save_and_load')
 	unlockvar! s:menu_save_and_load
 endif
 let s:menu_save_and_load = [
-			\ ['save torustree', 'torustree#disc#write_wheel'],
-			\ ['load torustree', 'torustree#disc#read_wheel'],
+			\ ['save torustree', 'torustree#disc#write_torustree'],
+			\ ['load torustree', 'torustree#disc#read_torustree'],
 			\ ['save session', 'torustree#disc#write_session'],
 			\ ['load session', 'torustree#disc#read_session'],
 			\ ]
 lockvar! s:menu_save_and_load
 
-if exists('s:menu_wheel_navigation')
-	unlockvar! s:menu_wheel_navigation
+if exists('s:menu_torustree_navigation')
+	unlockvar! s:menu_torustree_navigation
 endif
-let s:menu_wheel_navigation = [
+let s:menu_torustree_navigation = [
 			\ ['previous location' ,  "torustree#vortex#previous('location')"],
 			\ ['next location' ,  "torustree#vortex#next('location')"],
 			\ ['previous circle' ,  "torustree#vortex#previous('circle')"],
@@ -77,7 +77,7 @@ let s:menu_wheel_navigation = [
 			\ ['go to location in history' ,  'torustree#whirl#history'],
 			\ ['go to location in frecency' ,  'torustree#whirl#frecency'],
 			\ ]
-lockvar! s:menu_wheel_navigation
+lockvar! s:menu_torustree_navigation
 
 if exists('s:menu_native_navigation')
 	unlockvar! s:menu_native_navigation
@@ -94,10 +94,10 @@ let s:menu_native_navigation = [
 			\ ]
 lockvar! s:menu_native_navigation
 
-if exists('s:menu_organize_wheel')
-	unlockvar! s:menu_organize_wheel
+if exists('s:menu_organize_torustree')
+	unlockvar! s:menu_organize_torustree
 endif
-let s:menu_organize_wheel = [
+let s:menu_organize_torustree = [
 			\ ['add a new torus' ,  'torustree#tree#add_torus'],
 			\ ['add a new circle' ,  'torustree#tree#add_circle'],
 			\ ['add new location at cursor' ,  'torustree#tree#add_here'],
@@ -128,7 +128,7 @@ let s:menu_organize_wheel = [
 			\ ['copy or move locations' ,  "torustree#yggdrasil#copy_move('location')"],
 			\ ['reorganize torustree' ,  'torustree#yggdrasil#reorganize'],
 			\ ]
-lockvar! s:menu_organize_wheel
+lockvar! s:menu_organize_torustree
 
 if exists('s:menu_organize_native')
 	unlockvar! s:menu_organize_native

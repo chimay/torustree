@@ -70,9 +70,9 @@ fun! torustree#whirl#tree ()
 	call torustree#origami#folding_options ()
 	call torustree#mandala#fill(lines)
 	" properties
-	let b:wheel_nature.is_treeish = v:true
+	let b:torustree_nature.is_treeish = v:true
 	" full information
-	let b:wheel_full = torustree#cuboctahedron#tree ()
+	let b:torustree_full = torustree#cuboctahedron#tree ()
 	" reload
 	call torustree#mandala#set_reload('torustree#whirl#tree')
 endfun

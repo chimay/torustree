@@ -201,8 +201,8 @@ fun! torustree#rectangle#hidden_buffers (scope = 'listed')
 		let hide = buffer.hidden || ! buffer.listed
 		let not_alternate = filename !=# alternate
 		let not_mandala = ! torustree#chain#is_inside(bufnum, mandalas)
-		let not_wheel_filename = filename !~ s:is_mandala_file
-		if hide && not_alternate && not_mandala && not_wheel_filename
+		let not_torustree_filename = filename !~ s:is_mandala_file
+		if hide && not_alternate && not_mandala && not_torustree_filename
 			eval hidden_nums->add(bufnum)
 			eval hidden_names->add(filename)
 		endif

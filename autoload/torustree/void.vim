@@ -5,6 +5,12 @@
 " Initialization of variables
 "
 " Enter the void, and ride the torustree
+"
+" Concepts :
+"
+" - location : contains a file path and a cursor position
+" - circle : a group of locations
+" - forest : a list of folder tree
 
 " ---- script constants
 
@@ -43,10 +49,10 @@ fun! torustree#void#torustree ()
 	if ! exists('g:torustree')
 		let g:torustree = {}
 	endif
-	if ! has_key(g:torustree, 'locations')
+	if ! has_key(g:torustree, 'circle')
 		let g:torustree.locations = []
 	endif
-	if ! has_key(g:torustree, 'trees')
+	if ! has_key(g:torustree, 'forest')
 		let g:torustree.trees = []
 	endif
 	if ! has_key(g:torustree, 'glossary')
@@ -469,8 +475,8 @@ fun! torustree#void#volatile ()
 	" ---- First time read / write
 	if ! has_key(g:torustree_volatile, 'first')
 		let g:torustree_volatile.first = {}
-		let g:torustree_volatile.first.write_wheel = v:true
-		let g:torustree_volatile.first.read_wheel = v:true
+		let g:torustree_volatile.first.write_torustree = v:true
+		let g:torustree_volatile.first.read_torustree = v:true
 		let g:torustree_volatile.first.write_session = v:true
 		let g:torustree_volatile.first.read_session = v:true
 	endif
@@ -577,7 +583,7 @@ fun! torustree#void#init ()
 	let verbose = v:false
 	" ---- read torustree
 	if g:torustree_config.storage.torustree.autoread > 0
-		call torustree#disc#read_wheel ('', keep_tabwins, verbose)
+		call torustree#disc#read_torustree ('', keep_tabwins, verbose)
 	endif
 	" ---- read session
 	if g:torustree_config.storage.session.autoread > 0
@@ -600,7 +606,7 @@ fun! torustree#void#exit ()
 	endif
 	" ---- save torustree, and unlet
 	if g:torustree_config.storage.torustree.autowrite > 0
-		call torustree#disc#write_wheel('', verbose)
+		call torustree#disc#write_torustree('', verbose)
 	endif
 	call torustree#void#wipe_mandalas ()
 	call torustree#void#vanish ()
@@ -608,12 +614,12 @@ endfun
 
 " ---- fresh empty torustree, for testing
 
-fun! torustree#void#fresh_wheel ()
+fun! torustree#void#fresh_torustree ()
 	" Fresh empty torustree variables
 	let prompt = 'Write old torustree to file before emptying torustree ?'
 	let confirm = confirm(prompt, "&Yes\n&No", 1)
 	if confirm == 1
-		call torustree#disc#write_wheel ()
+		call torustree#disc#write_torustree ()
 	endif
 	let varlist = [
 				\ 'g:torustree',

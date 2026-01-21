@@ -203,7 +203,7 @@ endfun
 
 " ---- current file in torustree ?
 
-fun! torustree#referen#is_in_wheel (...)
+fun! torustree#referen#is_in_torustree (...)
 	" Whether filename argument is in torustree
 	" Default optional argument : current filename
 	if a:0 > 0
@@ -211,9 +211,9 @@ fun! torustree#referen#is_in_wheel (...)
 	else
 		let filename = expand('%:p')
 	endif
-	let wheel_files = torustree#helix#files ()
-	let is_in_wheel = torustree#chain#is_inside(filename, wheel_files)
-	return is_in_wheel
+	let torustree_files = torustree#helix#files ()
+	let is_in_torustree = torustree#chain#is_inside(filename, torustree_files)
+	return is_in_torustree
 endfun
 
 " ---- element lists

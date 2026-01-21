@@ -235,7 +235,7 @@ endfun
 
 fun! torustree#tree#add_here ()
 	" Add here to circle
-	silent doautocmd User WheelBeforeOrganize
+	silent doautocmd User TorustreeBeforeOrganize
 	let here = torustree#vortex#here()
 	call torustree#tree#add_location(here)
 endfun
@@ -252,7 +252,7 @@ fun! torustree#tree#add_file (...)
 	if empty(file)
 		return v:false
 	endif
-	silent doautocmd User WheelBeforeOrganize
+	silent doautocmd User TorustreeBeforeOrganize
 	execute 'hide edit' file
 	call torustree#tree#add_here()
 	return v:true
@@ -275,7 +275,7 @@ fun! torustree#tree#add_buffer (...)
 	if empty(buffer)
 		return v:false
 	endif
-	silent doautocmd User WheelBeforeOrganize
+	silent doautocmd User TorustreeBeforeOrganize
 	execute 'hide buffer' buffer
 	call torustree#tree#add_here()
 	return v:true
@@ -293,7 +293,7 @@ fun! torustree#tree#add_glob (...)
 	if empty(glob)
 		return []
 	endif
-	silent doautocmd User WheelBeforeOrganize
+	silent doautocmd User TorustreeBeforeOrganize
 	" add first torus if needed
 	if empty(g:torustree.toruses)
 		call torustree#tree#add_torus()
@@ -371,7 +371,7 @@ fun! torustree#tree#rename (level, ...)
 		return v:false
 	endif
 	" ---- user update autocmd
-	silent doautocmd User WheelBeforeOrganize
+	silent doautocmd User TorustreeBeforeOrganize
 	" ---- rename
 	let old = current.name
 	let current.name = new
@@ -436,7 +436,7 @@ fun! torustree#tree#rename_file (...)
 	execute 'silent file' new_filename
 	silent write!
 	" ---- user update autocmd
-	silent doautocmd User WheelBeforeOrganize
+	silent doautocmd User TorustreeBeforeOrganize
 	" ---- adapt torustree variables to new_filename
 	call torustree#tree#adapt_to_filename (old_filename, new_filename)
 	" ---- rename location
@@ -462,7 +462,7 @@ fun! torustree#tree#remove (level, name)
 		return v:false
 	endif
 	" ---- user update autocmd
-	silent doautocmd User WheelBeforeOrganize
+	silent doautocmd User TorustreeBeforeOrganize
 	" ---- remove from elements list
 	eval elements->remove(index)
 	" ---- adjust current index if necessary
@@ -512,7 +512,7 @@ fun! torustree#tree#delete (level, ask = 'confirm')
 		return v:false
 	endif
 	" ---- user update autocmd
-	silent doautocmd User WheelBeforeOrganize
+	silent doautocmd User TorustreeBeforeOrganize
 	" ---- remove
 	let length = len(elements)
 	let upper_level_name = torustree#referen#upper_level_name (level)
@@ -586,7 +586,7 @@ fun! torustree#tree#copy_move (level, mode, ...)
 		echomsg 'torustree copy/move : mode must be copy or move'
 	endif
 	" ---- user update autocmd
-	silent doautocmd User WheelBeforeOrganize
+	silent doautocmd User TorustreeBeforeOrganize
 	" ---- copy / move
 	if level ==# 'torus'
 		" mode must be copy at this stage

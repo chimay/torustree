@@ -53,7 +53,7 @@ fun! torustree#book#indexes_to_keep ()
 	" Used to keep ring length <= g:torustree_config.maxim.layers
 	let maxim = g:torustree_config.maxim.layers
 	" ring
-	let ring = b:wheel_ring
+	let ring = b:torustree_ring
 	let current = ring.current
 	let leaves = ring.leaves
 	let length = len(leaves)
@@ -87,7 +87,7 @@ fun! torustree#book#limit ()
 	" Used to keep ring length <= g:torustree_config.maxim.layers
 	let maxim = g:torustree_config.maxim.layers
 	" ring
-	let ring = b:wheel_ring
+	let ring = b:torustree_ring
 	let leaves = ring.leaves
 	let length = len(leaves)
 	" still under maxim : nothing to do
@@ -162,11 +162,11 @@ endfun
 
 fun! torustree#book#init ()
 	" Init ring
-	if exists('b:wheel_ring')
+	if exists('b:torustree_ring')
 		return v:false
 	endif
-	let b:wheel_ring = {}
-	let ring = b:wheel_ring
+	let b:torustree_ring = {}
+	let ring = b:torustree_ring
 	let ring.current = 0
 	let ring.leaves = [ torustree#book#template () ]
 	return v:true
@@ -178,9 +178,9 @@ fun! torustree#book#ring (...)
 	" Return ring of field given by optional argument
 	" Return all book (leaves ring) if no argument is given
 	if a:0 == 0
-		return b:wheel_ring.leaves
+		return b:torustree_ring.leaves
 	endif
-	let ring = b:wheel_ring
+	let ring = b:torustree_ring
 	let fieldname = a:1
 	let field_ring = []
 	for elem in ring.leaves
@@ -193,7 +193,7 @@ endfun
 fun! torustree#book#previous (...)
 	" Return previous field given by optional argument
 	" Return previous leaf if no argument is given
-	let ring = b:wheel_ring
+	let ring = b:torustree_ring
 	let length = len(ring.leaves)
 	if length == 0
 		echomsg 'torustree book previous : empty leaf ring (should not happen)'
@@ -214,7 +214,7 @@ endfun
 fun! torustree#book#current (...)
 	" Return current field given by optional argument
 	" Return current leaf if no argument is given
-	let ring = b:wheel_ring
+	let ring = b:torustree_ring
 	let length = len(ring.leaves)
 	if length == 0
 		echomsg 'torustree book previous : empty leaf ring (should not happen)'
@@ -231,7 +231,7 @@ endfun
 fun! torustree#book#next (...)
 	" Return next field given by optional argument
 	" Return next leaf if no argument is given
-	let ring = b:wheel_ring
+	let ring = b:torustree_ring
 	let length = len(ring.leaves)
 	if length == 0
 		echomsg 'torustree book next : empty leaf ring (should not happen)'
@@ -288,7 +288,7 @@ fun! torustree#book#syncup ()
 	" -- update visible lines -> local vars lines
 	call torustree#polyphony#update_var_lines ()
 	" -- leaves ring
-	let ring = b:wheel_ring
+	let ring = b:torustree_ring
 	" -- leaf to fill / update
 	let current = ring.current
 	let leaf = ring.leaves[current]
@@ -301,19 +301,19 @@ fun! torustree#book#syncup ()
 	" -- autocommands
 	let leaf.autocmds = torustree#book#save_autocmds ()
 	" -- general qualities
-	let leaf.nature = copy(b:wheel_nature)
+	let leaf.nature = copy(b:torustree_nature)
 	" -- related
-	let leaf.related = b:wheel_related
+	let leaf.related = b:torustree_related
 	" -- all original lines
-	let leaf.lines = copy(b:wheel_lines)
+	let leaf.lines = copy(b:torustree_lines)
 	" -- all original full lines information
-	let leaf.full = deepcopy(b:wheel_full)
+	let leaf.full = deepcopy(b:torustree_full)
 	" -- filter
-	let leaf.filter = deepcopy(b:wheel_filter)
+	let leaf.filter = deepcopy(b:torustree_filter)
 	" -- selection
-	let leaf.selection = deepcopy(b:wheel_selection)
+	let leaf.selection = deepcopy(b:torustree_selection)
 	" -- preview
-	let leaf.preview = copy(b:wheel_preview)
+	let leaf.preview = copy(b:torustree_preview)
 	" -- cursor
 	" position
 	call torustree#teapot#filter_to_default_line ()
@@ -322,9 +322,9 @@ fun! torustree#book#syncup ()
 	" virtual selection of cursor line : useful for context menus
 	let cursor.selection = torustree#pencil#virtual()
 	" -- settings
-	let leaf.settings = deepcopy(b:wheel_settings)
+	let leaf.settings = deepcopy(b:torustree_settings)
 	" -- reload
-	let leaf.reload = b:wheel_reload
+	let leaf.reload = b:torustree_reload
 	return v:true
 endfun
 
@@ -332,7 +332,7 @@ fun! torustree#book#syncdown ()
 	" Sync current leaf in ring to mandala state
 	" state = vars, options, maps, autocmds
 	" -- leaves ring
-	let ring = b:wheel_ring
+	let ring = b:torustree_ring
 	" -- leaf to activate
 	let current = ring.current
 	let leaf = ring.leaves[current]
@@ -348,16 +348,16 @@ fun! torustree#book#syncdown ()
 	let autodict = deepcopy(leaf.autocmds)
 	call torustree#book#restore_autocmds (autodict)
 	" -- general qualities
-	let b:wheel_nature = copy(leaf.nature)
+	let b:torustree_nature = copy(leaf.nature)
 	" -- related
-	let b:wheel_related = leaf.related
+	let b:torustree_related = leaf.related
 	" -- all original lines
-	let b:wheel_lines = copy(leaf.lines)
+	let b:torustree_lines = copy(leaf.lines)
 	" -- all original full lines information
-	let b:wheel_full = deepcopy(leaf.full)
+	let b:torustree_full = deepcopy(leaf.full)
 	" -- filter
 	let filter = deepcopy(leaf.filter)
-	let b:wheel_filter = filter
+	let b:torustree_filter = filter
 	if torustree#teapot#has_filter ()
 		" filter available
 		if torustree#teapot#is_filtered ()
@@ -366,28 +366,28 @@ fun! torustree#book#syncdown ()
 			call torustree#teapot#set_prompt (filter.words)
 		else
 			" not filtered
-			let visible_lines = b:wheel_lines
+			let visible_lines = b:torustree_lines
 			call torustree#teapot#set_prompt ()
 		endif
 		call torustree#mandala#replace (visible_lines, 'keep-first')
 	else
 		" no filter
-		let visible_lines = b:wheel_lines
+		let visible_lines = b:torustree_lines
 		call torustree#mandala#replace (visible_lines, 'delete-first')
 	endif
 	" -- selection
-	let b:wheel_selection = deepcopy(leaf.selection)
+	let b:torustree_selection = deepcopy(leaf.selection)
 	call torustree#pencil#show ()
 	" -- preview
-	let b:wheel_preview = copy(leaf.preview)
+	let b:torustree_preview = copy(leaf.preview)
 	" -- cursor
 	let cursor = deepcopy(leaf.cursor)
 	" position ; must be done after mandala#replace
 	call torustree#gear#restore_cursor (cursor.position)
 	" -- settings
-	let b:wheel_settings = deepcopy(leaf.settings)
+	let b:torustree_settings = deepcopy(leaf.settings)
 	" -- reload
-	let b:wheel_reload = leaf.reload
+	let b:torustree_reload = leaf.reload
 	" -- tell (neo)vim the buffer is to be considered not modified
 	setlocal nomodified
 	call torustree#status#mandala_leaf ()
@@ -413,7 +413,7 @@ fun! torustree#book#add (clear_mandala = 'dont-clear')
 	call torustree#book#syncup ()
 	" -- new leaf
 	let leaf = torustree#book#template ()
-	let ring = b:wheel_ring
+	let ring = b:torustree_ring
 	let next = ring.current + 1
 	eval ring.leaves->insert(leaf, next)
 	let ring.current = next
@@ -427,7 +427,7 @@ endfun
 
 fun! torustree#book#delete ()
 	" Delete current leaf in ring
-	let ring = b:wheel_ring
+	let ring = b:torustree_ring
 	let leaves = ring.leaves
 	let length = len(leaves)
 	" -- do not delete element from empty ring
@@ -468,7 +468,7 @@ fun! torustree#book#forward ()
 		call torustree#book#delete ()
 	endif
 	call torustree#book#syncup ()
-	let ring = b:wheel_ring
+	let ring = b:torustree_ring
 	let length = len(ring.leaves)
 	if length == 0
 		echomsg 'torustree layer forward : empty ring'
@@ -487,7 +487,7 @@ fun! torustree#book#backward ()
 		call torustree#book#delete ()
 	endif
 	call torustree#book#syncup ()
-	let ring = b:wheel_ring
+	let ring = b:torustree_ring
 	let length = len(ring.leaves)
 	if length == 0
 		echomsg 'torustree layer backward : empty ring'
@@ -508,7 +508,7 @@ fun! torustree#book#switch (...)
 		call torustree#book#delete ()
 	endif
 	call torustree#book#syncup ()
-	let ring = b:wheel_ring
+	let ring = b:torustree_ring
 	let length = len(ring.leaves)
 	if length == 0
 		echomsg 'torustree layer switch : empty layer ring'

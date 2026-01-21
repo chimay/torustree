@@ -4,7 +4,7 @@
 "
 " Preview for dedicated buffers
 "
-" Note : b:wheel_preview.follow has nothing to do
+" Note : b:torustree_preview.follow has nothing to do
 " with settings.follow. The latter is used to decide
 " whether to use projection#follow on target locations
 
@@ -12,18 +12,18 @@
 
 fun! torustree#orbiter#has_preview ()
 	" Whether current mandala has preview
-	return b:wheel_nature.has_preview
+	return b:torustree_nature.has_preview
 endfun
 
 " ---- functions
 
 fun! torustree#orbiter#preview ()
 	" Preview buffer matching current line
-	if ! b:wheel_preview.used
-		let b:wheel_preview.used = v:true
-		let b:wheel_preview.original = torustree#rectangle#previous ()
+	if ! b:torustree_preview.used
+		let b:torustree_preview.used = v:true
+		let b:torustree_preview.original = torustree#rectangle#previous ()
 	endif
-	let settings = b:wheel_settings
+	let settings = b:torustree_settings
 	call torustree#river#default (settings)
 	let cursor_info = torustree#pencil#cursor ()
 	let settings.selection.index = cursor_info.index
@@ -32,7 +32,7 @@ fun! torustree#orbiter#preview ()
 	call torustree#rectangle#goto_previous ()
 	call torustree#projection#follow ()
 	" ---- user update autocmd
-	silent doautocmd User WheelBeforeJump
+	silent doautocmd User TorustreeBeforeJump
 	" ---- call mandala function
 	let Fun = settings.function
 	let winiden = torustree#metafun#call (Fun, settings)
@@ -42,17 +42,17 @@ endfun
 
 fun! torustree#orbiter#switch_off ()
 	" Switch off preview local variables
-	let b:wheel_preview.used = v:false
-	let b:wheel_preview.follow = v:false
-	let b:wheel_preview.original = {}
+	let b:torustree_preview.used = v:false
+	let b:torustree_preview.follow = v:false
+	let b:torustree_preview.original = {}
 endfun
 
 fun! torustree#orbiter#original ()
 	" Restore original buffer
-	if ! b:wheel_preview.used
+	if ! b:torustree_preview.used
 		return {}
 	endif
-	let original = copy(b:wheel_preview.original)
+	let original = copy(b:torustree_preview.original)
 	call torustree#orbiter#switch_off ()
 	call torustree#rectangle#goto (original)
 	call torustree#projection#follow ()
@@ -62,12 +62,12 @@ endfun
 
 fun! torustree#orbiter#follow ()
 	" Preview current line each time the cursor move with j/k
-	if ! b:wheel_preview.used
-		let b:wheel_preview.used = v:true
-		let b:wheel_preview.original = torustree#rectangle#previous ()
+	if ! b:torustree_preview.used
+		let b:torustree_preview.used = v:true
+		let b:torustree_preview.original = torustree#rectangle#previous ()
 	endif
 	call torustree#orbiter#preview ()
-	let b:wheel_preview.follow = v:true
+	let b:torustree_preview.follow = v:true
 endfun
 
 fun! torustree#orbiter#unfollow ()
@@ -77,7 +77,7 @@ endfun
 
 fun! torustree#orbiter#toggle_follow ()
 	" Toggle preview following
-	if b:wheel_preview.follow
+	if b:torustree_preview.follow
 		call torustree#orbiter#unfollow ()
 	else
 		call torustree#orbiter#follow ()
@@ -90,5 +90,5 @@ fun! torustree#orbiter#mappings ()
 	nnoremap <buffer> o <cmd>call torustree#orbiter#original()<cr>
 	nnoremap <buffer> f <cmd>call torustree#orbiter#toggle_follow()<cr>
 	" ---- properties
-	let b:wheel_nature.has_preview = v:true
+	let b:torustree_nature.has_preview = v:true
 endfun

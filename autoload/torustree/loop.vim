@@ -59,7 +59,7 @@ fun! torustree#loop#navigation (settings)
 		" go to last destination
 		call win_gotoid (winiden)
 	else
-		" no need to trigger WheelBeforeJump : the operation is already done
+		" no need to trigger TorustreeBeforeJump : the operation is already done
 		" vortex#update overrides native navigation signs
 		" by location signs on some files
 		call torustree#cylinder#recall ('dont-trigger')

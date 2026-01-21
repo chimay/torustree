@@ -2339,16 +2339,16 @@ TORUSTREE TREE IN DISC				*torustree-commands-tree-in-disc*
 	following the torustree hierarchy : torus/circle/location.
 	Unix systems only.
 	The generated script is a lot faster than
-	|:WheelSymlinkTree| or |:WheelCopiedTree|.
+	|:TorustreeSymlinkTree| or |:TorustreeCopiedTree|.
 
 
-:Torustree symlink-tree				*:WheelSymlinkTree*
+:Torustree symlink-tree				*:TorustreeSymlinkTree*
 	Generate a tree of symlinks following the torustree hierarchy :
 	torus/circle/link-to-location-file.
 	Unix systems only.
 
 
-:Torustree copied-tree				*:WheelCopiedTree*
+:Torustree copied-tree				*:TorustreeCopiedTree*
 	Generate a tree of copies following the torustree hierarchy :
 	torus/circle/link-to-location-file.
 	Unix systems only.
@@ -2545,7 +2545,7 @@ The plugin can save your torustree catégories & groups in torustree files.
 You can have as many torustree files as you want, they will be stored in
 a torustree folder.
 
-Folder where your wheels will be saved : >
+Folder where your torustrees will be saved : >
 
     let g:torustree_config.storage.torustree.folder = '~/.local/share/torustree'
 <
@@ -2852,9 +2852,9 @@ option to zero : >
 
 Default : 1
 
-The highlight group is `WheelStatusLine`. You can customize it : >
+The highlight group is `TorustreeStatusLine`. You can customize it : >
 
-    highlight WheelStatusLine guifg=#5b3c11 guibg=#0 gui=bold,reverse
+    highlight TorustreeStatusLine guifg=#5b3c11 guibg=#0 gui=bold,reverse
 <
 
 ------------------------------------------------------------------------------
@@ -3182,9 +3182,9 @@ BEFORE JUMP					*torustree-autocommands-before-jump*
 
 It is possible to update automatically your locations before each
 jump to a new torustree location. Just add the update function to the
-`WheelBeforeJump` user event : >
+`TorustreeBeforeJump` user event : >
 
-    autocmd User WheelBeforeJump call torustree#vortex#update()
+    autocmd User TorustreeBeforeJump call torustree#vortex#update()
 <
 
 This autocmd is run before any jump, as soon as you use a torustree navigation
@@ -3199,10 +3199,10 @@ function :
 BEFORE ORGANIZE				*torustree-autocommands-before-organize*
 
 To update automatically your locations before each operation involving a
-torustree element, just add the update function to the `WheelBeforeOrganize`
+torustree element, just add the update function to the `TorustreeBeforeOrganize`
 user event : >
 
-    autocmd User WheelBeforeOrganize call torustree#vortex#update()
+    autocmd User TorustreeBeforeOrganize call torustree#vortex#update()
 <
 
 This autocmd is run before each organizing function :
@@ -3218,27 +3218,27 @@ This autocmd is run before each organizing function :
 BEFORE WRITE				*torustree-autocommands-before-write*
 
 To update automatically your locations before writing the torustree to a file,
-just add the update function to the `WheelBeforeWrite` user event : >
+just add the update function to the `TorustreeBeforeWrite` user event : >
 
-    autocmd User WheelBeforeWrite call torustree#vortex#update()
+    autocmd User TorustreeBeforeWrite call torustree#vortex#update()
 <
 
 ------------------------------------------------------------------------------
 AFTER JUMP				*torustree-autocommands-after-jump*
 
-The `WheelAfterJump` user event happens after any jump to a torustree
+The `TorustreeAfterJump` user event happens after any jump to a torustree
 location, as soon as you use a torustree navigation function.
 
 You can use it to add a post-jump operation.
 
 This example folds everything except the cursor line : >
 
-    autocmd User WheelAfterJump norm zMzx
+    autocmd User TorustreeAfterJump norm zMzx
 <
 
 This example opens recursively the folds under the cursor line : >
 
-    autocmd User WheelAfterJump norm zCzO
+    autocmd User TorustreeAfterJump norm zCzO
 <
 
 ------------------------------------------------------------------------------
@@ -3281,12 +3281,12 @@ Same thing when you enter a buffer with a native vim command (like
 ------------------------------------------------------------------------------
 AFTER NATIVE					*torustree-autocommands-after-native*
 
-The `WheelAfterNative` user event happens after any jump using a Torustree
+The `TorustreeAfterNative` user event happens after any jump using a Torustree
 interface to a native (neo)vim function.
 
 You can use it to auto-follow after a native operation : >
 
-    autocmd User WheelAfterNative call torustree#projection#follow()
+    autocmd User TorustreeAfterNative call torustree#projection#follow()
 <
 
 ------------------------------------------------------------------------------
@@ -3324,13 +3324,13 @@ Here is an example of a complete autocommands configuration : >
 	" For the generalized alternate window command, for all windows in all tabs
 	autocmd BufLeave * call torustree#caduceus#update_window()
 	" Executed before jumping to a location
-	autocmd User WheelBeforeJump call torustree#vortex#update()
+	autocmd User TorustreeBeforeJump call torustree#vortex#update()
 	" Executed before organizing the torustree
-	autocmd User WheelBeforeOrganize call torustree#vortex#update()
+	autocmd User TorustreeBeforeOrganize call torustree#vortex#update()
 	" Executed before writing the torustree
-	autocmd User WheelBeforeWrite call torustree#vortex#update()
+	autocmd User TorustreeBeforeWrite call torustree#vortex#update()
 	" Executed after jumping to a location
-	"autocmd User WheelAfterJump norm zMzx
+	"autocmd User TorustreeAfterJump norm zMzx
 	" For current torustree location to auto follow window changes
 	autocmd WinEnter * call torustree#projection#follow()
 	" For current torustree location to follow on editing, buffer loading
@@ -3338,7 +3338,7 @@ Here is an example of a complete autocommands configuration : >
 	" For current torustree location to follow on entering buffer
 	"autocmd BufEnter * call torustree#projection#follow()
 	" Executed after a native jump using Torustree interface (buffer, marker, jump, change, tag, ...)
-	"autocmd User WheelAfterNative call torustree#projection#follow()
+	"autocmd User TorustreeAfterNative call torustree#projection#follow()
 	" Add current non-torustree file to MRU files
 	autocmd BufRead * call torustree#attic#record()
 	" To record your yanks in the yank ring

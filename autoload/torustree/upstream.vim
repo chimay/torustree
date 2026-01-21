@@ -39,7 +39,7 @@ fun! torustree#upstream#is_selection_empty ()
 endfun
 
 fun! torustree#upstream#line_index (line)
-	" Return index of parent line number in parent b:wheel_lines
+	" Return index of parent line number in parent b:torustree_lines
 	let line = a:line
 	let shift = torustree#upstream#first_data_line ()
 	let index = line - shift

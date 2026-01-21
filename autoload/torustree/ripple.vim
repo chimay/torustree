@@ -33,7 +33,7 @@ endfun
 fun! torustree#ripple#template (mandala_type)
 	" Job buffer template
 	call torustree#mandala#template ()
-	let b:wheel_nature.is_writable = v:true
+	let b:torustree_nature.is_writable = v:true
 	setlocal noreadonly
 	setlocal modifiable
 endfun

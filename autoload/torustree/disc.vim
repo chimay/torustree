@@ -368,11 +368,11 @@ endfun
 
 " ---- torustree file
 
-fun! torustree#disc#write_wheel_file (wheel_file, ...)
+fun! torustree#disc#write_torustree_file (torustree_file, ...)
 	" Write all torustree variables to torustree file
 	" Optional arguments :
 	"   - verbose
-	let wheel_file = a:wheel_file
+	let torustree_file = a:torustree_file
 	if a:0 > 0
 		let verbose = a:1
 	else
@@ -383,46 +383,46 @@ fun! torustree#disc#write_wheel_file (wheel_file, ...)
 		return v:false
 	endif
 	" ---- create directory if needed
-	let directory = fnamemodify(wheel_file, ':h')
+	let directory = fnamemodify(torustree_file, ':h')
 	let returnstring = torustree#disc#mkdir(directory)
 	if returnstring ==# 'failure'
 		return v:false
 	endif
 	" ---- user update autocmd
-	silent doautocmd User WheelBeforeWrite
+	silent doautocmd User TorustreeBeforeWrite
 	" ---- convert old data
-	call torustree#kintsugi#wheel_file ()
+	call torustree#kintsugi#torustree_file ()
 	" ---- backups
-	call torustree#disc#roll_backups(wheel_file, g:torustree_config.storage.backups)
+	call torustree#disc#roll_backups(torustree_file, g:torustree_config.storage.backups)
 	" ---- write
 	"echomsg 'Writing torustree variables to file ..'
 	" -- replace >
-	call torustree#disc#writefile('g:torustree', wheel_file, '>')
+	call torustree#disc#writefile('g:torustree', torustree_file, '>')
 	" -- append >>
-	call torustree#disc#writefile('g:torustree_helix', wheel_file, '>>')
-	call torustree#disc#writefile('g:torustree_grid', wheel_file, '>>')
-	call torustree#disc#writefile('g:torustree_files', wheel_file, '>>')
-	call torustree#disc#writefile('g:torustree_history', wheel_file, '>>')
-	call torustree#disc#writefile('g:torustree_input', wheel_file, '>>')
-	call torustree#disc#writefile('g:torustree_shelve', wheel_file, '>>')
-	call torustree#disc#writefile('g:torustree_attic', wheel_file, '>>')
-	call torustree#disc#writefile('g:torustree_yank', wheel_file, '>>')
+	call torustree#disc#writefile('g:torustree_helix', torustree_file, '>>')
+	call torustree#disc#writefile('g:torustree_grid', torustree_file, '>>')
+	call torustree#disc#writefile('g:torustree_files', torustree_file, '>>')
+	call torustree#disc#writefile('g:torustree_history', torustree_file, '>>')
+	call torustree#disc#writefile('g:torustree_input', torustree_file, '>>')
+	call torustree#disc#writefile('g:torustree_shelve', torustree_file, '>>')
+	call torustree#disc#writefile('g:torustree_attic', torustree_file, '>>')
+	call torustree#disc#writefile('g:torustree_yank', torustree_file, '>>')
 	" ---- coda
 	if verbose
 		call torustree#status#clear ()
-		let wheel_name = fnamemodify(wheel_file, ':t')
-		echomsg 'writing torustree to' wheel_name
+		let torustree_name = fnamemodify(torustree_file, ':t')
+		echomsg 'writing torustree to' torustree_name
 	endif
 	return v:true
 endfun
 
-fun! torustree#disc#read_wheel_file (wheel_file, ...)
+fun! torustree#disc#read_torustree_file (torustree_file, ...)
 	" Read all torustree variables from torustree file
 	" Optional arguments :
 	"   - torustree file
 	"   - keep_tabwins
 	"   - verbose
-	let wheel_file = a:wheel_file
+	let torustree_file = a:torustree_file
 	if a:0 > 0
 		let keep_tabwins = a:1
 	else
@@ -434,15 +434,15 @@ fun! torustree#disc#read_wheel_file (wheel_file, ...)
 		let verbose = v:true
 	endif
 	" ---- check
-	if ! filereadable(wheel_file)
+	if ! filereadable(torustree_file)
 		echomsg 'torustree disc read torustree : torustree file does not exist'
 		return v:false
 	endif
 	" ---- read file
 	"echomsg 'Reading torustree variables from file ..'
-	call torustree#disc#readfile (wheel_file)
+	call torustree#disc#readfile (torustree_file)
 	" ---- convert old data
-	call torustree#kintsugi#wheel_file ()
+	call torustree#kintsugi#torustree_file ()
 	" ---- complete vars
 	call torustree#void#foundation ()
 	" ---- keep tabs & wins ?
@@ -452,148 +452,148 @@ fun! torustree#disc#read_wheel_file (wheel_file, ...)
 	" ---- coda
 	if verbose
 		call torustree#status#clear ()
-		let wheel_name = fnamemodify(wheel_file, ':t')
-		echomsg 'reading torustree from' wheel_name
+		let torustree_name = fnamemodify(torustree_file, ':t')
+		echomsg 'reading torustree from' torustree_name
 	endif
 	return v:true
 endfun
 
-fun! torustree#disc#write_wheel (...)
+fun! torustree#disc#write_torustree (...)
 	" Write all torustree variables to torustree file, in auto or prompt mode
 	" If given file is empty string, defaults to g:torustree_config.storage.torustree.name
 	" If no file is given, ask which file to use
 	" ---- automatic mode
 	if a:0 > 0
 		if ! empty(a:1)
-			let wheel_file = fnamemodify(a:1, ':p')
+			let torustree_file = fnamemodify(a:1, ':p')
 		else
-			let wheel_folder = g:torustree_config.storage.torustree.folder
-			let wheel_folder = fnamemodify(wheel_folder, ':p')
-			if wheel_folder[-1:] !=# '/'
-				let wheel_folder = wheel_folder .. '/'
+			let torustree_folder = g:torustree_config.storage.torustree.folder
+			let torustree_folder = fnamemodify(torustree_folder, ':p')
+			if torustree_folder[-1:] !=# '/'
+				let torustree_folder = torustree_folder .. '/'
 			endif
 			if ! empty(g:torustree_shelve.current.torustree)
-				let wheel_name = g:torustree_shelve.current.torustree
+				let torustree_name = g:torustree_shelve.current.torustree
 			else
-				let wheel_name = g:torustree_config.storage.torustree.name
+				let torustree_name = g:torustree_config.storage.torustree.name
 			endif
-			let wheel_file = wheel_folder .. wheel_name
+			let torustree_file = torustree_folder .. torustree_name
 		endif
-		let arglist = [wheel_file] + a:000[1:]
-		return call('torustree#disc#write_wheel_file', arglist)
+		let arglist = [torustree_file] + a:000[1:]
+		return call('torustree#disc#write_torustree_file', arglist)
 	endif
 	" ---- torustree folder
-	let wheel_folder = g:torustree_config.storage.torustree.folder
-	let wheel_folder = fnamemodify(wheel_folder, ':p')
-	if wheel_folder[-1:] !=# '/'
-		let wheel_folder = wheel_folder .. '/'
+	let torustree_folder = g:torustree_config.storage.torustree.folder
+	let torustree_folder = fnamemodify(torustree_folder, ':p')
+	if torustree_folder[-1:] !=# '/'
+		let torustree_folder = torustree_folder .. '/'
 	endif
 	" ---- create directory if needed
-	let returnstring = torustree#disc#mkdir(wheel_folder)
+	let returnstring = torustree#disc#mkdir(torustree_folder)
 	if returnstring ==# 'failure'
 		return v:false
 	endif
 	" ---- default torustree file
 	if ! empty(g:torustree_shelve.current.torustree)
-		let default_wheel = g:torustree_shelve.current.torustree
+		let default_torustree = g:torustree_shelve.current.torustree
 	else
-		let default_wheel = g:torustree_config.storage.torustree.name
+		let default_torustree = g:torustree_config.storage.torustree.name
 	endif
-	let default_wheel = fnamemodify(default_wheel, ':t')
+	let default_torustree = fnamemodify(default_torustree, ':t')
 	" ---- prompt for torustree file
 	let current_dir = getcwd()
-	execute 'lcd' wheel_folder
+	execute 'lcd' torustree_folder
 	let prompt = 'Write torustree file ? '
-	let prompt ..= '[' .. default_wheel .. '] '
+	let prompt ..= '[' .. default_torustree .. '] '
 	let complete = 'customlist,torustree#complete#file'
-	let wheel_name = input(prompt, '', complete)
-	if empty(wheel_name)
-		let wheel_name = default_wheel
-	elseif wheel_name ==# '='
-		let wheel_name = g:torustree_config.storage.torustree.name
+	let torustree_name = input(prompt, '', complete)
+	if empty(torustree_name)
+		let torustree_name = default_torustree
+	elseif torustree_name ==# '='
+		let torustree_name = g:torustree_config.storage.torustree.name
 	endif
 	execute 'lcd' current_dir
 	" ---- torustree file path
-	let wheel_file = wheel_folder .. wheel_name
+	let torustree_file = torustree_folder .. torustree_name
 	" ---- torustree without backup extension
-	let wheel_name = substitute(wheel_name, '\.[0-9]\+$', '', '')
-	let wheel_file = substitute(wheel_file, '\.[0-9]\+$', '', '')
+	let torustree_name = substitute(torustree_name, '\.[0-9]\+$', '', '')
+	let torustree_file = substitute(torustree_file, '\.[0-9]\+$', '', '')
 	" ---- write torustree
-	let success = torustree#disc#write_wheel_file(wheel_file)
+	let success = torustree#disc#write_torustree_file(torustree_file)
 	" ---- update current torustree in shelve
 	if success
-		let g:torustree_shelve.current.torustree = wheel_name
+		let g:torustree_shelve.current.torustree = torustree_name
 	endif
 endfun
 
-fun! torustree#disc#read_wheel (...)
+fun! torustree#disc#read_torustree (...)
 	" Read all torustree variables from torustree file, in auto or prompt mode
 	" If given file is empty string, defaults to g:torustree_config.storage.torustree.name
 	" If no file is given, ask which file to use
 	" ---- automatic mode
 	if a:0 > 0
 		if ! empty(a:1)
-			let wheel_file = fnamemodify(a:1, ':p')
+			let torustree_file = fnamemodify(a:1, ':p')
 		else
-			let wheel_folder = g:torustree_config.storage.torustree.folder
-			let wheel_folder = fnamemodify(wheel_folder, ':p')
-			if wheel_folder[-1:] !=# '/'
-				let wheel_folder = wheel_folder .. '/'
+			let torustree_folder = g:torustree_config.storage.torustree.folder
+			let torustree_folder = fnamemodify(torustree_folder, ':p')
+			if torustree_folder[-1:] !=# '/'
+				let torustree_folder = torustree_folder .. '/'
 			endif
 			if ! empty(g:torustree_shelve.current.torustree)
-				let wheel_name = g:torustree_shelve.current.torustree
+				let torustree_name = g:torustree_shelve.current.torustree
 			else
-				let wheel_name = g:torustree_config.storage.torustree.name
+				let torustree_name = g:torustree_config.storage.torustree.name
 			endif
-			let wheel_file = wheel_folder .. wheel_name
+			let torustree_file = torustree_folder .. torustree_name
 		endif
-		let arglist = [wheel_file] + a:000[1:]
-		return call('torustree#disc#read_wheel_file', arglist)
+		let arglist = [torustree_file] + a:000[1:]
+		return call('torustree#disc#read_torustree_file', arglist)
 	endif
 	" ---- save last state of previous torustree
 	if g:torustree_config.storage.torustree.autowrite > 0
 		let verbose = v:false
-		call torustree#disc#write_wheel ('', verbose)
+		call torustree#disc#write_torustree ('', verbose)
 	endif
 	" ---- torustree folder
-	let wheel_folder = g:torustree_config.storage.torustree.folder
-	let wheel_folder = fnamemodify(wheel_folder, ':p')
-	if wheel_folder[-1:] !=# '/'
-		let wheel_folder = wheel_folder .. '/'
+	let torustree_folder = g:torustree_config.storage.torustree.folder
+	let torustree_folder = fnamemodify(torustree_folder, ':p')
+	if torustree_folder[-1:] !=# '/'
+		let torustree_folder = torustree_folder .. '/'
 	endif
-	if ! isdirectory(wheel_folder)
-		echomsg 'torustree disc read torustree :' wheel_folder  'does not exist'
+	if ! isdirectory(torustree_folder)
+		echomsg 'torustree disc read torustree :' torustree_folder  'does not exist'
 		return v:false
 	endif
 	" ---- default torustree name
 	if ! empty(g:torustree_shelve.current.torustree)
-		let default_wheel = g:torustree_shelve.current.torustree
+		let default_torustree = g:torustree_shelve.current.torustree
 	else
-		let default_wheel = g:torustree_config.storage.torustree.name
+		let default_torustree = g:torustree_config.storage.torustree.name
 	endif
-	let default_wheel = fnamemodify(default_wheel, ':t')
+	let default_torustree = fnamemodify(default_torustree, ':t')
 	" ---- prompt for torustree name
 	let current_dir = getcwd()
-	execute 'lcd' wheel_folder
+	execute 'lcd' torustree_folder
 	let prompt = 'Read torustree file ? '
-	let prompt ..= '[' .. default_wheel .. '] '
+	let prompt ..= '[' .. default_torustree .. '] '
 	let complete = 'customlist,torustree#complete#file'
-	let wheel_name = input(prompt, '', complete)
-	if empty(wheel_name)
-		let wheel_name = default_wheel
-	elseif wheel_name ==# '='
-		let wheel_name = g:torustree_config.storage.torustree.name
+	let torustree_name = input(prompt, '', complete)
+	if empty(torustree_name)
+		let torustree_name = default_torustree
+	elseif torustree_name ==# '='
+		let torustree_name = g:torustree_config.storage.torustree.name
 	endif
 	execute 'lcd' current_dir
 	" ---- torustree file path
-	let wheel_file = wheel_folder .. wheel_name
+	let torustree_file = torustree_folder .. torustree_name
 	" ---- read torustree
-	let success = torustree#disc#read_wheel_file(wheel_file)
+	let success = torustree#disc#read_torustree_file(torustree_file)
 	" ---- torustree without backup extension
-	let wheel_name = substitute(wheel_name, '\.[0-9]\+$', '', '')
+	let torustree_name = substitute(torustree_name, '\.[0-9]\+$', '', '')
 	" ---- update current torustree in shelve
 	if success
-		let g:torustree_shelve.current.torustree = wheel_name
+		let g:torustree_shelve.current.torustree = torustree_name
 	endif
 endfun
 
@@ -943,10 +943,10 @@ fun! torustree#disc#symlink_tree (...)
 	let old_dir = execute('pwd')[1:]
 	let cd_soil = 'cd ' .. soil
 	call execute(cd_soil)
-	let mkdir_wheel = 'mkdir -p torustree'
-	call system(mkdir_wheel)
-	let cd_wheel = 'cd torustree'
-	call execute(cd_wheel)
+	let mkdir_torustree = 'mkdir -p torustree'
+	call system(mkdir_torustree)
+	let cd_torustree = 'cd torustree'
+	call execute(cd_torustree)
 	let counter = 0
 	for torus in g:torustree.toruses
 		let torus_dir = torus.name
@@ -1008,10 +1008,10 @@ fun! torustree#disc#copied_tree ()
 	let old_dir = execute('pwd')[1:]
 	let cd_soil = 'cd ' .. soil
 	call execute(cd_soil)
-	let mkdir_wheel = 'mkdir -p torustree'
-	call system(mkdir_wheel)
-	let cd_wheel = 'cd torustree'
-	call execute(cd_wheel)
+	let mkdir_torustree = 'mkdir -p torustree'
+	call system(mkdir_torustree)
+	let cd_torustree = 'cd torustree'
+	call execute(cd_torustree)
 	let counter = 0
 	for torus in g:torustree.toruses
 		let torus_dir = torus.name

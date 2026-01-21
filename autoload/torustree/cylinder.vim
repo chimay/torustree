@@ -42,7 +42,7 @@ fun! torustree#cylinder#update_type ()
 	let bufring = g:torustree_bufring
 	let current = bufring.current
 	let types = bufring.types
-	let types[current] = b:wheel_nature.type
+	let types[current] = b:torustree_nature.type
 endfun
 
 fun! torustree#cylinder#check ()
@@ -170,7 +170,7 @@ fun! torustree#cylinder#recall (autocmd = 'trigger')
 	let autocmd = a:autocmd
 	call torustree#cylinder#check ()
 	if autocmd ==# 'trigger'
-		silent doautocmd User WheelBeforeJump
+		silent doautocmd User TorustreeBeforeJump
 	endif
 	return torustree#cylinder#goto_or_load ()
 endfun
@@ -323,8 +323,8 @@ fun! torustree#cylinder#delete_unused ()
 		let bufnum = buffer.bufnr
 		let filename = buffer.name
 		let not_mandala = ! torustree#chain#is_inside(bufnum, mandalas)
-		let wheel_filename = filename =~ s:is_mandala_file
-		if not_mandala && wheel_filename
+		let torustree_filename = filename =~ s:is_mandala_file
+		if not_mandala && torustree_filename
 			eval numlist->add(bufnum)
 			eval filelist->add(filename)
 		endif
@@ -379,7 +379,7 @@ fun! torustree#cylinder#close ()
 		return v:false
 	endif
 	" -- original window & buffer before preview
-	let original = copy(b:wheel_preview.original)
+	let original = copy(b:torustree_preview.original)
 	" -- mandala buffer
 	if winnr('$') > 1
 		noautocmd close

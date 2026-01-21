@@ -34,7 +34,7 @@ fun! torustree#counterpoint#grep_edit (ask = 'confirm')
 	if ! torustree#polyphony#confirm (a:ask)
 		return v:false
 	endif
-	" -- update b:wheel_lines
+	" -- update b:torustree_lines
 	call torustree#polyphony#update_var_lines ()
 	" -- list of (modified) lines
 	let linelist = torustree#teapot#all_lines ()
@@ -77,11 +77,11 @@ fun! torustree#counterpoint#narrow_file (ask = 'confirm')
 		return v:false
 	endif
 	" -- buffer
-	let bufnum = b:wheel_related.bufnum
+	let bufnum = b:torustree_related.bufnum
 	if bufnum ==# 'undefined'
 		return v:false
 	endif
-	" -- update b:wheel_lines
+	" -- update b:torustree_lines
 	call torustree#polyphony#update_var_lines ()
 	" -- reset filter
 	" -- easier since some lines are potentially added
@@ -143,7 +143,7 @@ fun! torustree#counterpoint#narrow_circle (ask = 'confirm')
 	if ! torustree#polyphony#confirm (a:ask)
 		return v:false
 	endif
-	" ---- update b:wheel_lines
+	" ---- update b:torustree_lines
 	call torustree#polyphony#update_var_lines ()
 	" ---- buffers with disabled folds
 	" ---- folding is too slow

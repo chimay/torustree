@@ -6,11 +6,11 @@
 
 " ---- script constants
 
-if exists('s:wheel_content_generators')
-	unlockvar s:wheel_content_generators
+if exists('s:torustree_content_generators')
+	unlockvar s:torustree_content_generators
 endif
-let s:wheel_content_generators = torustree#crystal#fetch('function/generator/torustree')
-lockvar s:wheel_content_generators
+let s:torustree_content_generators = torustree#crystal#fetch('function/generator/torustree')
+lockvar s:torustree_content_generators
 
 " ---- default values
 
@@ -32,7 +32,7 @@ fun! torustree#river#default (settings)
 		let settings.target = 'here'
 	endif
 	if ! has_key(settings, 'related')
-		let settings.related = b:wheel_related
+		let settings.related = b:torustree_related
 	endif
 	if ! has_key(settings, 'follow')
 		let settings.follow = v:false
@@ -48,7 +48,7 @@ fun! torustree#river#mappings (settings)
 	" Define whirl maps & set navigation property
 	let settings = copy(a:settings)
 	" ---- property
-	let b:wheel_nature.has_navigation = v:true
+	let b:torustree_nature.has_navigation = v:true
 	" ---- maps
 	let nmap = 'nnoremap <buffer>'
 	let loopnav = '<cmd>call torustree#loop#navigation('
@@ -99,7 +99,7 @@ endfun
 fun! torustree#river#generic (type)
 	" Generic whirl buffer
 	let type = a:type
-	if type->torustree#chain#is_inside(s:wheel_content_generators)
+	if type->torustree#chain#is_inside(s:torustree_content_generators)
 		let Generator = function('torustree#flower#' .. type)
 	else
 		let Generator = function('torustree#perspective#' .. type)

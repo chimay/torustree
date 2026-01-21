@@ -8,7 +8,7 @@
 
 fun! torustree#pencil#has_selection ()
 	" Whether mandala has selection
-	return b:wheel_nature.has_selection
+	return b:torustree_nature.has_selection
 endfun
 
 fun! torustree#pencil#is_selection_empty ()
@@ -16,7 +16,7 @@ fun! torustree#pencil#is_selection_empty ()
 	if torustree#boomerang#is_context_menu ()
 		return v:false
 	endif
-	return empty(b:wheel_selection.indexes)
+	return empty(b:torustree_selection.indexes)
 endfun
 
 fun! torustree#pencil#is_selected (...)
@@ -29,7 +29,7 @@ fun! torustree#pencil#is_selected (...)
 		let linum = line('.')
 	endif
 	let index = torustree#teapot#line_index (linum)
-	let reference = b:wheel_selection.indexes
+	let reference = b:torustree_selection.indexes
 	return index->torustree#chain#is_inside(reference)
 endfun
 
@@ -88,7 +88,7 @@ fun! torustree#pencil#cursor (...)
 	let index = torustree#teapot#line_index (linum)
 	" ---- component
 	if torustree#cuboctahedron#is_treeish ()
-		let component = copy(b:wheel_full[index])
+		let component = copy(b:torustree_full[index])
 	else
 		let cursor_line = getline(linum)
 		let component = torustree#pencil#unmarked (cursor_line)
@@ -139,8 +139,8 @@ fun! torustree#pencil#select (...)
 	if torustree#pencil#is_selected (linum)
 		return v:false
 	endif
-	" ---- update b:wheel_selection
-	let selection = b:wheel_selection
+	" ---- update b:torustree_selection
+	let selection = b:torustree_selection
 	let cursor_info = torustree#pencil#cursor (linum)
 	let index = cursor_info.index
 	let component = cursor_info.component
@@ -175,8 +175,8 @@ fun! torustree#pencil#clear (...)
 	if ! torustree#pencil#is_selected (linum)
 		return v:false
 	endif
-	" ---- update b:wheel_selection
-	let selection = b:wheel_selection
+	" ---- update b:torustree_selection
+	let selection = b:torustree_selection
 	let cursor_info = torustree#pencil#cursor (linum)
 	" -- indexes
 	let index = cursor_info.index
@@ -287,7 +287,7 @@ fun! torustree#pencil#show (lock = 'lock')
 	let start = torustree#teapot#first_data_line ()
 	let lastline = line('$')
 	let linelist = getline(start, '$')
-	let reference = b:wheel_selection.indexes
+	let reference = b:torustree_selection.indexes
 	call torustree#mandala#unlock ()
 	for linum in range(start, lastline)
 		let index = torustree#teapot#line_index (linum)
@@ -312,7 +312,7 @@ fun! torustree#pencil#syncdown ()
 	let start = torustree#teapot#first_data_line ()
 	let lastline = line('$')
 	let linelist = getline(start, '$')
-	let reference = b:wheel_selection.indexes
+	let reference = b:torustree_selection.indexes
 	call torustree#mandala#unlock ()
 	for linum in range(start, lastline)
 		let index = torustree#teapot#line_index (linum)
@@ -343,7 +343,7 @@ fun! torustree#pencil#selection ()
 	if torustree#pencil#is_selection_empty ()
 		return torustree#pencil#virtual ()
 	endif
-	return b:wheel_selection
+	return b:torustree_selection
 endfun
 
 " ---- mappings
@@ -351,7 +351,7 @@ endfun
 fun! torustree#pencil#mappings ()
 	" Define selection maps & set property
 	" -- selection property
-	let b:wheel_nature.has_selection = v:true
+	let b:torustree_nature.has_selection = v:true
 	" -- normal mode
 	nnoremap <buffer> <space> <cmd>call torustree#pencil#toggle()<cr>
 	nnoremap <buffer> =       <cmd>call torustree#pencil#toggle()<cr>

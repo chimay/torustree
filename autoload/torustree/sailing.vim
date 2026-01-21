@@ -31,7 +31,7 @@ fun! torustree#sailing#find (...)
 	execute 'hide edit' file
 	call torustree#origami#view_cursor ()
 	call torustree#chakra#place_native ()
-	silent doautocmd User WheelAfterNative
+	silent doautocmd User TorustreeAfterNative
 	return win_getid ()
 endfun
 
@@ -49,7 +49,7 @@ fun! torustree#sailing#mru ()
 	normal! '"
 	call torustree#origami#view_cursor ()
 	call torustree#chakra#place_native ()
-	silent doautocmd User WheelAfterNative
+	silent doautocmd User TorustreeAfterNative
 	return win_getid ()
 endfun
 
@@ -66,7 +66,7 @@ fun! torustree#sailing#occur ()
 	call cursor(linum, 1)
 	call torustree#origami#view_cursor ()
 	call torustree#chakra#place_native ()
-	silent doautocmd User WheelAfterNative
+	silent doautocmd User TorustreeAfterNative
 	return win_getid ()
 endfun
 
@@ -85,7 +85,7 @@ fun! torustree#sailing#buffer ()
 	call cursor(linum, 1)
 	call torustree#origami#view_cursor ()
 	call torustree#chakra#place_native ()
-	silent doautocmd User WheelAfterNative
+	silent doautocmd User TorustreeAfterNative
 	return win_getid ()
 endfun
 
@@ -106,7 +106,7 @@ fun! torustree#sailing#tabwin ()
 	doautocmd WinEnter
 	call torustree#origami#view_cursor ()
 	call torustree#chakra#place_native ()
-	silent doautocmd User WheelAfterNative
+	silent doautocmd User TorustreeAfterNative
 	return win_getid ()
 endfun
 
@@ -123,7 +123,7 @@ fun! torustree#sailing#marker ()
 	execute "normal `" .. mark
 	call torustree#origami#view_cursor ()
 	call torustree#chakra#place_native ()
-	silent doautocmd User WheelAfterNative
+	silent doautocmd User TorustreeAfterNative
 	return win_getid ()
 endfun
 
@@ -143,7 +143,7 @@ fun! torustree#sailing#jump ()
 	call cursor(linum, colnum)
 	call torustree#origami#view_cursor ()
 	call torustree#chakra#place_native ()
-	silent doautocmd User WheelAfterNative
+	silent doautocmd User TorustreeAfterNative
 	return win_getid ()
 endfun
 
@@ -161,7 +161,7 @@ fun! torustree#sailing#change ()
 	call cursor(linum, colnum)
 	call torustree#origami#view_cursor ()
 	call torustree#chakra#place_native ()
-	silent doautocmd User WheelAfterNative
+	silent doautocmd User TorustreeAfterNative
 	return win_getid ()
 endfun
 
@@ -188,7 +188,7 @@ fun! torustree#sailing#tag ()
 	endif
 	call torustree#origami#view_cursor ()
 	call torustree#chakra#place_native ()
-	silent doautocmd User WheelAfterNative
+	silent doautocmd User TorustreeAfterNative
 	return win_getid ()
 endfun
 
@@ -225,6 +225,6 @@ fun! torustree#sailing#outline ()
 	call cursor(line, col)
 	call torustree#origami#view_cursor ()
 	call torustree#chakra#place_native ()
-	silent doautocmd User WheelAfterNative
+	silent doautocmd User TorustreeAfterNative
 	return win_getid ()
 endfun

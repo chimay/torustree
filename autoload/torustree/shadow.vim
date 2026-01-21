@@ -107,14 +107,14 @@ fun! torustree#shadow#narrow_file (...) range
 	call torustree#mandala#common_maps ()
 	let settings = #{
 				\ function : 'torustree#line#narrow_file',
-				\ bufnum : b:wheel_related.bufnum
+				\ bufnum : b:torustree_related.bufnum
 				\ }
 	call torustree#polyphony#template (settings)
 	call torustree#polyphony#action_maps ('file')
 	call torustree#polyphony#score ('narrow_file')
 	call torustree#mandala#fill (lines)
 	" -- settings
-	let b:wheel_settings = settings
+	let b:torustree_settings = settings
 	" -- reload
 	call torustree#mandala#set_reload('torustree#shadow#narrow_file', first, last)
 endfun
@@ -152,7 +152,7 @@ fun! torustree#shadow#narrow_circle (...)
 	call torustree#polyphony#score ('narrow_circle')
 	call torustree#mandala#fill (lines)
 	" ---- settings
-	let b:wheel_settings = settings
+	let b:torustree_settings = settings
 	" ---- reload
 	call torustree#mandala#set_reload('torustree#shadow#narrow_circle', pattern, sieve)
 	echomsg 'adding or removing lines is not supported'

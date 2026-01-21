@@ -70,9 +70,9 @@ fun! torustree#frigate#tabwin_tree ()
 	call torustree#origami#folding_options ('tabwin_folding_text')
 	call torustree#mandala#fill (lines)
 	" properties
-	let b:wheel_nature.is_treeish = v:true
+	let b:torustree_nature.is_treeish = v:true
 	" full information
-	let b:wheel_full = torustree#cuboctahedron#tabwin ()
+	let b:torustree_full = torustree#cuboctahedron#tabwin ()
 	" reload
 	call torustree#mandala#set_reload('torustree#frigate#tabwin_tree')
 	" Context menu
@@ -292,8 +292,8 @@ fun! torustree#frigate#grep (...)
 	" Context menu
 	call torustree#boomerang#launch_map ('grep')
 	" Useful if we choose edit mode on the context menu
-	let b:wheel_settings.pattern = pattern
-	let b:wheel_settings.sieve = sieve
+	let b:torustree_settings.pattern = pattern
+	let b:torustree_settings.sieve = sieve
 	return lines
 endfun
 

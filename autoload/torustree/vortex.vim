@@ -144,7 +144,7 @@ fun! torustree#vortex#jump (where = 'search-window')
 	" ---- view in fold
 	call torustree#origami#view_cursor ()
 	" ---- user autocmd
-	silent doautocmd User WheelAfterJump
+	silent doautocmd User TorustreeAfterJump
 	" ---- cursor
 	call torustree#spiral#cursor ()
 	" ---- update signs
@@ -181,7 +181,7 @@ endfun
 fun! torustree#vortex#voice (level, name)
 	" Adjust variables of level to name & perform user update autocmd
 	" ---- user update autocmd
-	silent doautocmd User WheelBeforeJump
+	silent doautocmd User TorustreeBeforeJump
 	" ---- tune
 	return torustree#vortex#tune (a:level, a:name)
 endfun
@@ -195,7 +195,7 @@ fun! torustree#vortex#interval (coordin)
 		echomsg 'torustree vortex interval : [' join(coordin) '] should contain 2 elements'
 	endif
 	" ---- user update autocmd
-	silent doautocmd User WheelBeforeJump
+	silent doautocmd User TorustreeBeforeJump
 	" ---- tune
 	let indexes[0] = torustree#vortex#tune ('torus', coordin[0])
 	if indexes[0] >= 0
@@ -214,7 +214,7 @@ fun! torustree#vortex#chord (coordin)
 		return indexes
 	endif
 	" ---- user update autocmd
-	silent doautocmd User WheelBeforeJump
+	silent doautocmd User TorustreeBeforeJump
 	" ---- tune
 	let indexes[0] = torustree#vortex#tune ('torus', coordin[0])
 	if indexes[0] >= 0
@@ -239,7 +239,7 @@ fun! torustree#vortex#previous (level, where = 'search-window')
 		return -1
 	endif
 	" ---- user update autocmd
-	silent doautocmd User WheelBeforeJump
+	silent doautocmd User TorustreeBeforeJump
 	" ---- tune
 	let index = upper.current
 	let elements = torustree#referen#elements(upper)
@@ -259,7 +259,7 @@ fun! torustree#vortex#next (level, where = 'search-window')
 		return -1
 	endif
 	" ---- user update autocmd
-	silent doautocmd User WheelBeforeJump
+	silent doautocmd User TorustreeBeforeJump
 	" ---- tune
 	let index = upper.current
 	let elements = torustree#referen#elements(upper)
@@ -295,7 +295,7 @@ fun! torustree#vortex#multi_switch (where = 'search-window')
 	" Optional argument : see vortex#jump optional argument
 	let where = a:where
 	" ---- user update autocmd
-	silent doautocmd User WheelBeforeJump
+	silent doautocmd User TorustreeBeforeJump
 	" ---- tune
 	let indexes = [-1, -1, -1]
 	for level in s:referen_coordin

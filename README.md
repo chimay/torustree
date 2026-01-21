@@ -476,13 +476,13 @@ augroup torustree
   " For the generalized alternate window command, for all windows in all tabs
   autocmd BufLeave * call torustree#caduceus#update_window()
   " Executed before jumping to a location
-  autocmd User WheelBeforeJump call torustree#vortex#update()
+  autocmd User TorustreeBeforeJump call torustree#vortex#update()
   " Executed before organizing the torustree
-  autocmd User WheelBeforeOrganize call torustree#vortex#update()
+  autocmd User TorustreeBeforeOrganize call torustree#vortex#update()
   " Executed before writing the torustree
-  autocmd User WheelBeforeWrite call torustree#vortex#update()
+  autocmd User TorustreeBeforeWrite call torustree#vortex#update()
   " Executed after jumping to a location
-  "autocmd User WheelAfterJump norm zMzx
+  "autocmd User TorustreeAfterJump norm zMzx
   " For current torustree location to auto follow window changes
   autocmd WinEnter * call torustree#projection#follow()
   " For current torustree location to follow on editing, buffer loading
@@ -490,7 +490,7 @@ augroup torustree
   " For current torustree location to follow on entering buffer
   "autocmd BufEnter * call torustree#projection#follow()
   " Executed after using Torustree interface to a native jump (buffer, marker, jump, change, tag, ...)
-  "autocmd User WheelAfterNative call torustree#projection#follow()
+  "autocmd User TorustreeAfterNative call torustree#projection#follow()
   " Add current non-torustree file to MRU files
   autocmd BufRead * call torustree#attic#record()
   " To record your yanks in the yank ring

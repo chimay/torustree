@@ -29,7 +29,7 @@ lockvar s:menu_list
 
 fun! torustree#helm#is_menu ()
 	" Whether mandala leaf is a menu
-	return b:wheel_nature.class =~ '^menu'
+	return b:torustree_nature.class =~ '^menu'
 endfun
 
 " ---- folding
@@ -94,10 +94,10 @@ fun! torustree#helm#main ()
 	" ---- folding
 	call torustree#helm#folding_options ()
 	" -- properties
-	let b:wheel_nature.class = 'menu/main'
-	let b:wheel_nature.has_filter = v:true
+	let b:torustree_nature.class = 'menu/main'
+	let b:torustree_nature.has_filter = v:true
 	" ---- save settings
-	let b:wheel_settings = settings
+	let b:torustree_settings = settings
 endfun
 
 fun! torustree#helm#meta ()

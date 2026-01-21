@@ -26,7 +26,7 @@ fun! torustree#boomerang#is_context_menu ()
 	if ! torustree#cylinder#is_mandala ()
 		return v:false
 	endif
-	return b:wheel_nature.class ==# 'menu/context'
+	return b:torustree_nature.class ==# 'menu/context'
 endfun
 
 fun! torustree#boomerang#hidden_buffers (action)
@@ -88,7 +88,7 @@ endfun
 fun! torustree#boomerang#menu (dictname)
 	" Build context menu
 	let dictname = 'context/' .. a:dictname
-	let settings = deepcopy(b:wheel_settings)
+	let settings = deepcopy(b:torustree_settings)
 	" close is false for space & tab
 	" within tower#staircase -> tower#mappings
 	let menuset = #{
@@ -109,7 +109,7 @@ endfun
 fun! torustree#boomerang#navigation (target)
 	" Navigation actions
 	let target = a:target
-	let settings = b:wheel_settings
+	let settings = b:torustree_settings
 	let settings.menu.action = 'navigation'
 	if ! target->torustree#chain#is_inside(s:mandala_targets)
 		return v:false
@@ -123,7 +123,7 @@ fun! torustree#boomerang#buffer (action)
 	" Buffers actions
 	" Only called for non navigation actions
 	let action = a:action
-	let settings = b:wheel_settings
+	let settings = b:torustree_settings
 	let settings.menu.action = action
 	if action ==# 'delete'
 		call torustree#loop#buffer_delete ()
@@ -140,7 +140,7 @@ endfun
 fun! torustree#boomerang#tabwin (action)
 	" Buffers visible in tabs & wins
 	let action = a:action
-	let settings = b:wheel_settings
+	let settings = b:torustree_settings
 	let settings.menu.action = action
 	if action ==# 'open'
 		" tell loop#navigation to not care about opening a new
@@ -165,7 +165,7 @@ endfun
 fun! torustree#boomerang#grep (action)
 	" Grep actions
 	let action = a:action
-	let settings = b:wheel_settings
+	let settings = b:torustree_settings
 	let settings.menu.action = action
 	if action ==# 'quickfix'
 		call torustree#cylinder#close ()
@@ -177,8 +177,8 @@ fun! torustree#boomerang#yank (action)
 	" Yank actions
 	" action = before / after
 	let action = a:action
-	let settings = b:wheel_settings
+	let settings = b:torustree_settings
 	let settings.menu.action = action
-	let mode = b:wheel_settings.mode
+	let mode = b:torustree_settings.mode
 	call torustree#line#paste_{mode} (action, 'open')
 endfun

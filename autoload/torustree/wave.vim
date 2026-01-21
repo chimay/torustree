@@ -29,7 +29,7 @@ fun! s:out (chan, data, event) dict
 	let last = line('$')
 	let text = text[:-2]
 	call appendbufline(bufnum, last, text)
-	call extend(b:wheel_lines, text)
+	call extend(b:torustree_lines, text)
 endfun
 
 fun! s:err (chan, data, event) dict
@@ -39,7 +39,7 @@ fun! s:err (chan, data, event) dict
 	let text = split(data, "\r")
 	let last = line('$')
 	call appendbufline(bufnum, last, text)
-	call extend(b:wheel_lines, text)
+	call extend(b:torustree_lines, text)
 endfun
 
 fun! s:exit (chan, data, event) dict
@@ -62,7 +62,7 @@ let s:callbacks = {
 fun! torustree#wave#template (mandala_type)
 	" Job buffer template
 	call torustree#mandala#template ()
-	let b:wheel_nature.is_writable = v:true
+	let b:torustree_nature.is_writable = v:true
 	setlocal noreadonly
 	setlocal modifiable
 endfun

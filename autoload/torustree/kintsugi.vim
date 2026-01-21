@@ -245,7 +245,7 @@ fun! torustree#kintsugi#post ()
 	endif
 endfun
 
-fun! torustree#kintsugi#wheel_file ()
+fun! torustree#kintsugi#torustree_file ()
 	" Convert old data structure to new one
 	" Run in read / write torustree file
 	" ---- history

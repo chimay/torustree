@@ -172,10 +172,10 @@ lockvar! s:sign_settings_native
 
 " ---- functions
 
-if exists('s:function_generator_wheel')
-	unlockvar! s:function_generator_wheel
+if exists('s:function_generator_torustree')
+	unlockvar! s:function_generator_torustree
 endif
-let s:function_generator_wheel = [
+let s:function_generator_torustree = [
 			\ 'execute',
 			\ 'element',
 			\ 'rename',
@@ -188,7 +188,7 @@ let s:function_generator_wheel = [
 			\ 'history_circuit',
 			\ 'frecency',
 			\ ]
-lockvar! s:function_generator_wheel
+lockvar! s:function_generator_torustree
 
 if exists('s:function_generator_native')
 	unlockvar! s:function_generator_native
@@ -213,10 +213,10 @@ let s:function_generator_native = [
 			\ ]
 lockvar! s:function_generator_native
 
-if exists('s:function_write_wheel')
-	unlockvar! s:function_write_wheel
+if exists('s:function_write_torustree')
+	unlockvar! s:function_write_torustree
 endif
-let s:function_write_wheel = [
+let s:function_write_torustree = [
 			\ 'reorder',
 			\ 'rename',
 			\ 'rename_file',
@@ -224,7 +224,7 @@ let s:function_write_wheel = [
 			\ 'copy_move',
 			\ 'reorganize',
 			\ ]
-lockvar! s:function_write_wheel
+lockvar! s:function_write_torustree
 
 if exists('s:function_write_native')
 	unlockvar! s:function_write_native
@@ -424,14 +424,14 @@ if exists('s:mandala_vars')
 	unlockvar! s:mandala_vars
 endif
 let s:mandala_vars = [
-			\ 'b:wheel_nature',
-			\ 'b:wheel_related',
-			\ 'b:wheel_lines',
-			\ 'b:wheel_full',
-			\ 'b:wheel_filter',
-			\ 'b:wheel_selection',
-			\ 'b:wheel_settings',
-			\ 'b:wheel_reload',
+			\ 'b:torustree_nature',
+			\ 'b:torustree_related',
+			\ 'b:torustree_lines',
+			\ 'b:torustree_full',
+			\ 'b:torustree_filter',
+			\ 'b:torustree_selection',
+			\ 'b:torustree_settings',
+			\ 'b:torustree_reload',
 			\ ]
 lockvar! s:mandala_vars
 

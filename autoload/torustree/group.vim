@@ -47,7 +47,7 @@ fun! torustree#group#torus(method)
 	let prompt = 'Write old torustree to file before autogrouping ?'
 	let confirm = confirm(prompt, "&Yes\n&No", 1)
 	if confirm == 1
-		call torustree#disc#write_wheel ()
+		call torustree#disc#write_torustree ()
 	endif
 	let method = a:method
 	let name = torustree#referen#current('torus').name

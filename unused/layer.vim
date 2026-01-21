@@ -39,9 +39,9 @@ fun! torustree#layer#init ()
 	" Init stack and buffer variables
 	" Last inserted layer is at index 0
 	call torustree#mandala#init ()
-	if ! exists('b:wheel_stack')
-		let b:wheel_stack = {}
-		let stack = b:wheel_stack
+	if ! exists('b:torustree_stack')
+		let b:torustree_stack = {}
+		let stack = b:torustree_stack
 		" index of top layer
 		let stack.top = -1
 		let stack.layers = []
@@ -52,12 +52,12 @@ endfun
 
 fun! torustree#layer#length ()
 	" Layer stack length
-	return len(b:wheel_stack.layers)
+	return len(b:torustree_stack.layers)
 endfun
 
 fun! torustree#layer#bottom ()
 	" Return layer index to be popped or replaced in stack
-	let top = b:wheel_stack.top
+	let top = b:torustree_stack.top
 	let length = torustree#layer#length ()
 	let bottom = torustree#gear#circular_minus (top, length)
 	return bottom
@@ -68,9 +68,9 @@ fun! torustree#layer#stack (...)
 	" Return layer stack if no argument is given
 	" Useful for debugging
 	if a:0 == 0
-		return b:wheel_stack.layers
+		return b:torustree_stack.layers
 	endif
-	let stack = b:wheel_stack
+	let stack = b:torustree_stack
 	let fieldname = a:1
 	let field_stack = []
 	for elem in stack.layers
@@ -83,7 +83,7 @@ endfun
 fun! torustree#layer#top_field (...)
 	" Return field given by fieldname at top of stack
 	" Return top of stack if no argument is given
-	let stack = b:wheel_stack
+	let stack = b:torustree_stack
 	if a:0 == 0
 		return stack.layers[stack.top]
 	endif
@@ -160,7 +160,7 @@ fun! torustree#layer#syncdown ()
 		echomsg 'torustree layer sync : empty stack.'
 		return v:false
 	endif
-	let stack = b:wheel_stack
+	let stack = b:torustree_stack
 	let top = stack.top
 	let layer = stack.layers[top]
 	" pseudo filename
@@ -175,7 +175,7 @@ fun! torustree#layer#syncdown ()
 	let autodict = copy(layer.autocmds)
 	call torustree#layer#restore_autocmds (autodict)
 	" lines, without filtering
-	let b:wheel_lines = copy(layer.lines)
+	let b:torustree_lines = copy(layer.lines)
 	" filtered mandala content
 	" layer.filtered should contain also the original first line, so we have
 	" to delete the first line added by :put in the replace routine
@@ -183,13 +183,13 @@ fun! torustree#layer#syncdown ()
 	" cursor position
 	call torustree#gear#restore_cursor (layer.position)
 	" address linked to cursor line & context
-	let b:wheel_address = copy(layer.address)
+	let b:torustree_address = copy(layer.address)
 	" selection
-	let b:wheel_selected = deepcopy(layer.selected)
+	let b:torustree_selected = deepcopy(layer.selected)
 	" settings
-	let b:wheel_settings = deepcopy(layer.settings)
+	let b:torustree_settings = deepcopy(layer.settings)
 	" reload
-	let b:wheel_reload = layer.reload
+	let b:torustree_reload = layer.reload
 	" Tell (neo)vim the buffer is to be considered not modified
 	setlocal nomodified
 endfun
@@ -197,7 +197,7 @@ endfun
 fun! torustree#layer#swap ()
 	" Swap mandala state and top of stack
 	call torustree#layer#init ()
-	let stack = b:wheel_stack
+	let stack = b:torustree_stack
 	" -- Mandala state -> swap space
 	let swap = {}
 	" pseudo filename
@@ -209,11 +209,11 @@ fun! torustree#layer#swap ()
 	" autocommands
 	let swap.autocmds = torustree#layer#save_autocmds ()
 	" lines, without filtering
-	if empty(b:wheel_lines)
+	if empty(b:torustree_lines)
 		let begin = torustree#mandala#first_data_line ()
 		let swap.lines = getline(begin, '$')
 	else
-		let swap.lines = copy(b:wheel_lines)
+		let swap.lines = copy(b:torustree_lines)
 	endif
 	" filtered content
 	let swap.filtered = getline(1, '$')
@@ -223,16 +223,16 @@ fun! torustree#layer#swap ()
 	" useful for boomerang = context menus
 	let swap.address = torustree#line#address()
 	" selected lines
-	let swap.selected = deepcopy(b:wheel_selected)
+	let swap.selected = deepcopy(b:torustree_selected)
 	" settings
-	if exists('b:wheel_settings')
-		let swap.settings = b:wheel_settings
+	if exists('b:torustree_settings')
+		let swap.settings = b:torustree_settings
 	else
 		let swap.settings = {}
 	endif
 	" reload
-	if exists('b:wheel_reload')
-		let swap.reload = b:wheel_reload
+	if exists('b:torustree_reload')
+		let swap.reload = b:torustree_reload
 	else
 		let swap.reload = ''
 	endif
@@ -248,7 +248,7 @@ fun! torustree#layer#push ()
 	" Push buffer content to the stack
 	" save modified local maps
 	call torustree#layer#init ()
-	let stack = b:wheel_stack
+	let stack = b:torustree_stack
 	let length = torustree#layer#length ()
 	let maxim = g:torustree_config.maxim.layers
 	if length == 0
@@ -274,11 +274,11 @@ fun! torustree#layer#push ()
 	" autocommands
 	let layer.autocmds = torustree#layer#save_autocmds ()
 	" lines, without filtering
-	if empty(b:wheel_lines)
+	if empty(b:torustree_lines)
 		let begin = torustree#mandala#first_data_line ()
 		let layer.lines = getline(begin, '$')
 	else
-		let layer.lines = copy(b:wheel_lines)
+		let layer.lines = copy(b:torustree_lines)
 	endif
 	" filtered content
 	let layer.filtered = getline(1, '$')
@@ -288,20 +288,20 @@ fun! torustree#layer#push ()
 	" useful for boomerang = context menus
 	let layer.address = torustree#line#address()
 	" selected lines
-	if exists('b:wheel_selected')
-		let layer.selected = deepcopy(b:wheel_selected)
+	if exists('b:torustree_selected')
+		let layer.selected = deepcopy(b:torustree_selected)
 	else
 		let layer.selected = []
 	endif
 	" settings
-	if exists('b:wheel_settings')
-		let layer.settings = deepcopy(b:wheel_settings)
+	if exists('b:torustree_settings')
+		let layer.settings = deepcopy(b:torustree_settings)
 	else
 		let layer.settings = {}
 	endif
 	" reload
-	if exists('b:wheel_reload')
-		let layer.reload = b:wheel_reload
+	if exists('b:torustree_reload')
+		let layer.reload = b:torustree_reload
 	else
 		let layer.reload = ''
 	endif
@@ -316,7 +316,7 @@ fun! torustree#layer#pop ()
 	endif
 	" pop
 	call torustree#layer#syncdown ()
-	let stack = b:wheel_stack
+	let stack = b:torustree_stack
 	call remove(stack.layers, stack.top)
 	" update length
 	let length = torustree#layer#length ()
@@ -336,7 +336,7 @@ fun! torustree#layer#forward ()
 		echomsg 'torustree layer forward : empty stack.'
 		return v:false
 	endif
-	let stack = b:wheel_stack
+	let stack = b:torustree_stack
 	let top = stack.top
 	let length = torustree#layer#length ()
 	let stack.top = torustree#gear#circular_minus (top, length)
@@ -352,9 +352,9 @@ fun! torustree#layer#backward ()
 		return v:false
 	endif
 	call torustree#layer#swap ()
-	let top = b:wheel_stack.top
+	let top = b:torustree_stack.top
 	let length = torustree#layer#length ()
-	let b:wheel_stack.top = torustree#gear#circular_plus (top, length)
+	let b:torustree_stack.top = torustree#gear#circular_plus (top, length)
 	call torustree#status#layer ()
 endfun
 
@@ -375,7 +375,7 @@ fun! torustree#layer#switch (...)
 	endif
 	let name = torustree#mandala#pseudo (name)
 	let filenames = torustree#layer#stack ('filename')
-	let stack = b:wheel_stack
+	let stack = b:torustree_stack
 	let top = index(filenames, name)
 	if top < 0
 		return v:false

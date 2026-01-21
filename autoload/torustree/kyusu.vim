@@ -204,7 +204,7 @@ fun! torustree#kyusu#intermix (wordlist, index, value, ternar)
 	" Like kyusu#steep, but take special keywords into account
 	" Arguments :
 	"   - wordlist : filtering words
-	"   - index : index in b:wheel_lines of value
+	"   - index : index in b:torustree_lines of value
 	"   - value : mandala line tested with wordlist
 	"   - ternar : ternary switches
 	"     + selection
@@ -217,7 +217,7 @@ fun! torustree#kyusu#intermix (wordlist, index, value, ternar)
 	let ternar = a:ternar
 	" ---- selection
 	let sel_ter = ternar.selection
-	let sel_indexes = b:wheel_selection.indexes
+	let sel_indexes = b:torustree_selection.indexes
 	let found = index->torustree#chain#is_inside(sel_indexes)
 	let yang = sel_ter != 1 || found
 	let yin = sel_ter != -1 || ! found
@@ -289,7 +289,7 @@ fun! torustree#kyusu#gaiwan (wordlist)
 	"   - =s[selection] enable selection only filter
 	"   - !=s[selection] enable non-selection only filter
 	let wordlist = copy(a:wordlist)
-	let linelist = copy(b:wheel_lines)
+	let linelist = copy(b:torustree_lines)
 	if empty(wordlist)
 		let filtered_indexes = torustree#chain#rangelen(linelist)
 		let filtered_values = linelist

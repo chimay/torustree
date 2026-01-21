@@ -44,7 +44,7 @@ fun! torustree#attic#record (...)
 		return v:false
 	endif
 	" ---- only add non torustree files
-	if torustree#referen#is_in_wheel ()
+	if torustree#referen#is_in_torustree ()
 		return v:false
 	endif
 	" ---- do not add mandala buffer

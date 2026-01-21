@@ -83,9 +83,9 @@ fun! torustree#perspective#buffer (scope = 'listed')
 		endif
 		" check for nameless or mandalas buffers
 		let is_nameless = empty(filename)
-		let is_wheel_buffer = torustree#chain#is_inside(bufnum, mandalas)
-		let has_wheel_filename = filename =~ s:is_mandala_file
-		if is_nameless || is_wheel_buffer || has_wheel_filename
+		let is_torustree_buffer = torustree#chain#is_inside(bufnum, mandalas)
+		let has_torustree_filename = filename =~ s:is_mandala_file
+		if is_nameless || is_torustree_buffer || has_torustree_filename
 			continue
 		endif
 		" add to the returnlist
@@ -266,9 +266,9 @@ fun! torustree#perspective#jump ()
 		endif
 		" check for nameless or mandalas buffers
 		let is_nameless = empty(filename)
-		let is_wheel_buffer = torustree#chain#is_inside(bufnum, mandalas)
-		let has_wheel_filename = filename =~ s:is_mandala_file
-		if is_nameless || is_wheel_buffer || has_wheel_filename
+		let is_torustree_buffer = torustree#chain#is_inside(bufnum, mandalas)
+		let has_torustree_filename = filename =~ s:is_mandala_file
+		if is_nameless || is_torustree_buffer || has_torustree_filename
 			continue
 		endif
 		" loaded ?

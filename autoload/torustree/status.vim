@@ -122,7 +122,7 @@ fun! torustree#status#leaves ()
 	endif
 	let nature = torustree#book#ring ('nature')
 	let types = nature->map({ _, val -> val.type })
-	let current = b:wheel_ring.current
+	let current = b:torustree_ring.current
 	let types[current] =  '[' .. types[current] .. ']'
 	return types
 endfun
@@ -137,7 +137,7 @@ fun! torustree#status#statusline ()
 	let mandalas = join(mandalas)
 	let leaves = torustree#status#leaves ()
 	let leaves = join(leaves)
-	let statusline = '%#WheelStatusLine# '
+	let statusline = '%#TorustreeStatusLine# '
 	let statusline ..= 'mandalas: '
 	let statusline ..= mandalas
 	let statusline ..= s:field_separ

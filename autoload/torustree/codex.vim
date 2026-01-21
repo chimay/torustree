@@ -207,8 +207,8 @@ fun! torustree#codex#mandala_switch (mode)
 		let type ..= symbols_dict[register]
 	endif
 	" ---- properties
-	let b:wheel_nature.type = type
-	let b:wheel_settings.yank.register = register
+	let b:torustree_nature.type = type
+	let b:torustree_settings.yank.register = register
 	" ---- lines
 	let lines = torustree#perspective#yank_mandala(mode, register)
 	call torustree#teapot#reset ()

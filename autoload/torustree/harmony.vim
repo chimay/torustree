@@ -47,7 +47,7 @@ fun! torustree#harmony#reorder (level, ask = 'confirm')
 	if ! torustree#polyphony#confirm (a:ask)
 		return v:false
 	endif
-	silent doautocmd User WheelBeforeOrganize
+	silent doautocmd User TorustreeBeforeOrganize
 	" ---- update lines in local vars from visible lines
 	call torustree#polyphony#update_var_lines ()
 	" ---- reorder
@@ -91,7 +91,7 @@ fun! torustree#harmony#rename (level, ask = 'confirm')
 	if ! torustree#polyphony#confirm (a:ask)
 		return v:false
 	endif
-	silent doautocmd User WheelBeforeOrganize
+	silent doautocmd User TorustreeBeforeOrganize
 	" ---- update lines in local vars from visible lines
 	call torustree#polyphony#update_var_lines ()
 	" ---- rename
@@ -134,7 +134,7 @@ fun! torustree#harmony#rename_file (ask = 'confirm')
 	if ! torustree#polyphony#confirm (a:ask)
 		return v:false
 	endif
-	silent doautocmd User WheelBeforeOrganize
+	silent doautocmd User TorustreeBeforeOrganize
 	" ---- update lines in local vars from visible lines
 	call torustree#polyphony#update_var_lines ()
 	" ---- init
@@ -217,7 +217,7 @@ fun! torustree#harmony#delete (level, ask = 'confirm')
 	if ! torustree#polyphony#confirm (a:ask)
 		return v:false
 	endif
-	silent doautocmd User WheelBeforeOrganize
+	silent doautocmd User TorustreeBeforeOrganize
 	" ----  update lines in local vars from visible lines
 	call torustree#polyphony#update_var_lines ()
 	" ----  delete
@@ -264,7 +264,7 @@ fun! torustree#harmony#copy_move (level, ask = 'confirm')
 	if ! torustree#polyphony#confirm (a:ask)
 		return v:false
 	endif
-	silent doautocmd User WheelBeforeOrganize
+	silent doautocmd User TorustreeBeforeOrganize
 	" ---- update lines in local vars from visible lines
 	call torustree#polyphony#update_var_lines ()
 	" ---- mode : copy or move
@@ -366,12 +366,12 @@ fun! torustree#harmony#reorganize (ask = 'confirm')
 	if ! torustree#polyphony#confirm (a:ask)
 		return v:false
 	endif
-	silent doautocmd User WheelBeforeOrganize
+	silent doautocmd User TorustreeBeforeOrganize
 	" ---- save old torustree before reorganizing
 	let prompt = 'Write old torustree to file before reorganizing ?'
 	let confirm = confirm(prompt, "&Yes\n&No", 1)
 	if confirm == 1
-		call torustree#disc#write_wheel ()
+		call torustree#disc#write_torustree ()
 	endif
 	" ---- update lines in local vars from visible lines
 	call torustree#polyphony#update_var_lines ()

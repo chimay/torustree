@@ -62,7 +62,7 @@ fun! torustree#pendulum#distinct_coordin (index, one, unused, two)
 	endif
 endfun
 
-fun! torustree#pendulum#coordin_inside_wheel (unused, entry)
+fun! torustree#pendulum#coordin_inside_torustree (unused, entry)
 	" Return true if coordin of entry belongs to the torustree
 	" unused argument is for compatibility with filter()
 	let entry = a:entry
@@ -173,7 +173,7 @@ endfun
 
 fun! torustree#pendulum#broom ()
 	" Remove history entries that do not belong to the torustree anymore
-	let Filter = function('torustree#pendulum#coordin_inside_wheel')
+	let Filter = function('torustree#pendulum#coordin_inside_torustree')
 	" -- history line
 	let timeline = g:torustree_history.line
 	eval timeline->filter(Filter)

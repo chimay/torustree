@@ -40,8 +40,8 @@ endfun
 
 fun! torustree#delta#last (bufnum)
 	" Set buffer to last undo state
-	if has_key(b:wheel_settings, 'undo_iden')
-		let iden = b:wheel_settings.undo_iden
+	if has_key(b:torustree_settings, 'undo_iden')
+		let iden = b:torustree_settings.undo_iden
 	else
 		let iden = torustree#delta#undo_iden (1)
 	endif
@@ -54,7 +54,7 @@ endfun
 
 fun! torustree#delta#close_diff (bufnum)
 	" Wipe copy or original buffer
-	let diff_buf = b:wheel_settings.diff_buf
+	let diff_buf = b:torustree_settings.diff_buf
 	execute 'silent bwipe!' diff_buf
 	call torustree#rectangle#find_or_load (a:bufnum)
 	diffoff
@@ -65,7 +65,7 @@ endfun
 
 fun! torustree#delta#mappings ()
 	" Maps for undo list mandala
-	let bufnum = b:wheel_related.bufnum
+	let bufnum = b:torustree_related.bufnum
 	let map = 'nnoremap <buffer>'
 	let coda = ')<cr>'
 	" earlier or later

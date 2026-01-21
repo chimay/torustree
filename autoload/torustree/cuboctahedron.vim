@@ -16,7 +16,7 @@
 
 fun! torustree#cuboctahedron#is_treeish ()
 	" Whether mandala has a folded treeish structure
-	return b:wheel_nature.is_treeish
+	return b:torustree_nature.is_treeish
 endfun
 
 " ---- information

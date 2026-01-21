@@ -145,8 +145,8 @@ fun! torustree#tower#staircase (menuset, settings = {})
 	let lines = torustree#matrix#items2keys (items)
 	call torustree#mandala#fill (lines)
 	" ---- properties
-	let b:wheel_nature.class = menuset.class
-	let b:wheel_nature.has_filter = v:true
+	let b:torustree_nature.class = menuset.class
+	let b:torustree_nature.has_filter = v:true
 	" ---- save settings
-	let b:wheel_settings = settings
+	let b:torustree_settings = settings
 endfun

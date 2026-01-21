@@ -43,62 +43,62 @@ lockvar s:mandala_vars
 fun! torustree#mandala#init ()
 	" Init mandala buffer variables
 	" -- general qualities
-	if ! exists('b:wheel_nature')
-		let b:wheel_nature = {}
-		let b:wheel_nature.empty = v:true
-		let b:wheel_nature.class = 'generic'
-		let b:wheel_nature.type = 'empty'
-		let b:wheel_nature.is_treeish = v:false
-		let b:wheel_nature.is_writable = v:false
-		let b:wheel_nature.has_filter = v:false
-		let b:wheel_nature.has_selection = v:false
-		let b:wheel_nature.has_preview = v:false
-		let b:wheel_nature.has_navigation = v:false
+	if ! exists('b:torustree_nature')
+		let b:torustree_nature = {}
+		let b:torustree_nature.empty = v:true
+		let b:torustree_nature.class = 'generic'
+		let b:torustree_nature.type = 'empty'
+		let b:torustree_nature.is_treeish = v:false
+		let b:torustree_nature.is_writable = v:false
+		let b:torustree_nature.has_filter = v:false
+		let b:torustree_nature.has_selection = v:false
+		let b:torustree_nature.has_preview = v:false
+		let b:torustree_nature.has_navigation = v:false
 	endif
 	" -- related buffer
-	if ! exists('b:wheel_related')
-		let b:wheel_related = {}
-		let b:wheel_related.tabnum = 'undefined'
-		let b:wheel_related.winum = 'undefined'
-		let b:wheel_related.winiden = 'undefined'
-		let b:wheel_related.bufnum = 'undefined'
+	if ! exists('b:torustree_related')
+		let b:torustree_related = {}
+		let b:torustree_related.tabnum = 'undefined'
+		let b:torustree_related.winum = 'undefined'
+		let b:torustree_related.winiden = 'undefined'
+		let b:torustree_related.bufnum = 'undefined'
 	endif
 	" -- all original lines
-	if ! exists('b:wheel_lines')
-		let b:wheel_lines = []
+	if ! exists('b:torustree_lines')
+		let b:torustree_lines = []
 	endif
 	" -- all original full information
 	" -- useful for treeish buffers
-	if ! exists('b:wheel_full')
-		let b:wheel_full = []
+	if ! exists('b:torustree_full')
+		let b:torustree_full = []
 	endif
 	" -- filter
-	if ! exists('b:wheel_filter')
-		let b:wheel_filter = {}
-		let b:wheel_filter.words = []
-		let b:wheel_filter.indexes = []
-		let b:wheel_filter.lines = []
+	if ! exists('b:torustree_filter')
+		let b:torustree_filter = {}
+		let b:torustree_filter.words = []
+		let b:torustree_filter.indexes = []
+		let b:torustree_filter.lines = []
 	endif
 	" -- selection
-	if ! exists('b:wheel_selection')
-		let b:wheel_selection = {}
-		let b:wheel_selection.indexes = []
-		let b:wheel_selection.components = []
+	if ! exists('b:torustree_selection')
+		let b:torustree_selection = {}
+		let b:torustree_selection.indexes = []
+		let b:torustree_selection.components = []
 	endif
 	" -- preview
-	if ! exists('b:wheel_preview')
-		let b:wheel_preview = {}
-		let b:wheel_preview.used = v:false
-		let b:wheel_preview.follow = v:false
-		let b:wheel_preview.original = {}
+	if ! exists('b:torustree_preview')
+		let b:torustree_preview = {}
+		let b:torustree_preview.used = v:false
+		let b:torustree_preview.follow = v:false
+		let b:torustree_preview.original = {}
 	endif
 	" -- settings for action on line
-	if ! exists('b:wheel_settings')
-		let b:wheel_settings = {}
+	if ! exists('b:torustree_settings')
+		let b:torustree_settings = {}
 	endif
 	" -- reload function
-	if ! exists('b:wheel_reload')
-		let b:wheel_reload = ''
+	if ! exists('b:torustree_reload')
+		let b:torustree_reload = ''
 	endif
 	" -- leaf ring
 	call torustree#book#init ()
@@ -110,14 +110,14 @@ fun! torustree#mandala#refresh ()
 	" Refresh mandala buffer : unfilter & deselect all
 	" e.g. when reloading
 	" -- filter
-	let b:wheel_filter = {}
-	let b:wheel_filter.words = []
-	let b:wheel_filter.indexes = []
-	let b:wheel_filter.lines = []
+	let b:torustree_filter = {}
+	let b:torustree_filter.words = []
+	let b:torustree_filter.indexes = []
+	let b:torustree_filter.lines = []
 	" -- selection
-	let b:wheel_selection = {}
-	let b:wheel_selection.indexes = []
-	let b:wheel_selection.components = []
+	let b:torustree_selection = {}
+	let b:torustree_selection.indexes = []
+	let b:torustree_selection.components = []
 endfun
 
 " ---- wrap
@@ -143,7 +143,7 @@ fun! torustree#mandala#wrap_up ()
 		" can also be mapped in regular buffer
 		return v:true
 	endif
-	if b:wheel_preview.follow
+	if b:torustree_preview.follow
 		call torustree#orbiter#preview ()
 	endif
 	return v:true
@@ -169,7 +169,7 @@ fun! torustree#mandala#wrap_down ()
 		" can also be mapped in regular buffer
 		return v:true
 	endif
-	if b:wheel_preview.follow
+	if b:torustree_preview.follow
 		call torustree#orbiter#preview ()
 	endif
 	return v:true
@@ -179,12 +179,12 @@ endfun
 
 fun! torustree#mandala#is_empty ()
 	" Whether mandala is empty
-	return b:wheel_nature.empty
+	return b:torustree_nature.empty
 endfun
 
 fun! torustree#mandala#type ()
 	" Type of a mandala buffer
-	return b:wheel_nature.type
+	return b:torustree_nature.type
 endfun
 
 " ---- clearing things
@@ -231,11 +231,11 @@ endfun
 fun! torustree#mandala#set_type (type)
 	" Set mandala type
 	let type = a:type
-	let b:wheel_nature.type = type
+	let b:torustree_nature.type = type
 	if type ==# 'empty'
-		let b:wheel_nature.empty = v:true
+		let b:torustree_nature.empty = v:true
 	else
-		let b:wheel_nature.empty = v:false
+		let b:torustree_nature.empty = v:false
 		call torustree#cylinder#update_type ()
 	endif
 endfun
@@ -264,7 +264,7 @@ fun! torustree#mandala#goto_related ()
 	if ! torustree#cylinder#is_mandala ()
 		return v:false
 	endif
-	let bufnum = b:wheel_related.bufnum
+	let bufnum = b:torustree_related.bufnum
 	if bufnum ==# 'undefined'
 		wincmd p
 		return 'undefined'
@@ -350,7 +350,7 @@ fun! torustree#mandala#template (...)
 	" Template with filter & input history
 	" No selection, preview or fold
 	if a:0 > 0
-		let b:wheel_settings = a:1
+		let b:torustree_settings = a:1
 	endif
 	call torustree#mandala#common_maps ()
 	" filter
@@ -373,7 +373,7 @@ fun! torustree#mandala#blank (type)
 	call torustree#mandala#set_type (type)
 	call torustree#mandala#common_options ()
 	" ---- set related buffer
-	let b:wheel_related = torustree#mandala#guess_related ()
+	let b:torustree_related = torustree#mandala#guess_related ()
 endfun
 
 " ---- content
@@ -381,10 +381,10 @@ endfun
 fun! torustree#mandala#set_var_lines ()
 	" Set lines in local mandala variables, from visible lines
 	" Affected :
-	"   - b:wheel_lines
+	"   - b:torustree_lines
 	let start = torustree#teapot#first_data_line ()
 	let lines = getline(start, '$')
-	let b:wheel_lines = lines
+	let b:torustree_lines = lines
 	return v:true
 endfun
 
@@ -440,7 +440,7 @@ fun! torustree#mandala#fill (content, first = 'empty-prompt-first')
 	" Arguments : see mandala#replace
 	" ---- replace old content, fill if empty
 	call torustree#mandala#replace(a:content, a:first)
-	" -- fill b:wheel_lines
+	" -- fill b:torustree_lines
 	call torustree#mandala#set_var_lines ()
 	" ---- cursor on first data line
 	let first_data_line = torustree#teapot#first_data_line ()
@@ -483,26 +483,26 @@ fun! torustree#mandala#set_reload(...)
 		return ''
 	endif
 	let reload = call('torustree#mandala#reload_string', a:000)
-	let b:wheel_reload = reload
+	let b:torustree_reload = reload
 	return reload
 endfun
 
 fun! torustree#mandala#reload ()
 	" Reload current mandala
 	" ---- save type
-	let type = b:wheel_nature.type
+	let type = b:torustree_nature.type
 	" ---- mark the buffer as empty, to avoid adding a leaf in mandala#blank
 	call torustree#mandala#set_type ('empty')
 	" ---- reinitialize buffer vars
 	call torustree#mandala#refresh ()
 	" ---- reload content
-	if ! empty(b:wheel_reload)
-		let function = b:wheel_reload
+	if ! empty(b:torustree_reload)
+		let function = b:torustree_reload
 		call torustree#metafun#call (function)
 		call torustree#status#message('torustree :', function, 'reloaded')
 	else
-		" if b:wheel_reload is empty, replace the buffer with b:wheel_lines
-		call torustree#mandala#replace (b:wheel_lines)
+		" if b:torustree_reload is empty, replace the buffer with b:torustree_lines
+		call torustree#mandala#replace (b:torustree_lines)
 		" restore type
 		call torustree#mandala#set_type (type)
 		echomsg 'torustree : content reloaded'
