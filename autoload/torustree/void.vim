@@ -9,7 +9,8 @@
 " Concepts :
 "
 " - location : contains a file path and a cursor position
-" - circle : a group of locations
+" - stone : alias for location
+" - circle : a group of locations, or a stone circle
 " - forest : a list of folder tree
 
 " ---- script constants
@@ -49,18 +50,19 @@ fun! torustree#void#torustree ()
 	if ! exists('g:torustree')
 		let g:torustree = {}
 	endif
+	" ---- locations group
 	if ! has_key(g:torustree, 'circle')
 		let g:torustree.locations = []
 	endif
+	" ---- list of subtrees
 	if ! has_key(g:torustree, 'forest')
-		let g:torustree.trees = []
+		let g:torustree.forest = []
 	endif
-	if ! has_key(g:torustree, 'glossary')
-		let g:torustree.glossary = []
+	" ---- if true : current path is in local circle
+	if ! has_key(g:torustree, 'here')
+		let g:torustree.here = v:true
 	endif
-	if ! has_key(g:torustree, 'current')
-		let g:torustree.current = -1
-	endif
+	" ---- last time current path was in local circle
 	if ! has_key(g:torustree, 'timestamp')
 		let g:torustree.timestamp = -1
 	endif

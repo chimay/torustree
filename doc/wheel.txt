@@ -226,6 +226,7 @@ encounter some problem, please let me know.
 STEP BY STEP						*torustree-step-by-step*
 
 Prefix				    |torustree-sbs-prefix|
+Help				    |wheel-sbs-help|
 One map to ring them all	    |torustree-sbs-one-map-to-ring-them-all|
 One command to launch them all	    |torustree-sbs-one-command-to-launch-them-all|
 First circles			    |torustree-sbs-first-circles|
@@ -244,6 +245,11 @@ mapping prefix : >
 
 ------------------------------------------------------------------------------
 ONE MAP TO RING THEM ALL		*torustree-sbs-one-map-to-ring-them-all*
+
+To see the list of all wheel mappings, just press `<M-w>?`.
+
+------------------------------------------------------------------------------
+ONE MAP TO RING THEM ALL		*wheel-sbs-one-map-to-ring-them-all*
 
 To get an overview of the Torustree, I suggest you take a look at the main
 menu. Press `<M-w><M-m>` and a new window will appear, listing the actions

@@ -36,6 +36,7 @@ if exists('s:plugs_normal')
 	unlockvar! s:plugs_normal
 endif
 let s:plugs_normal = [
+			\ [ 'torustree-help-mappings'                     , 'torustree#guru#mappings'                                 ] ,
 			\ [ 'torustree-menu-main'                         , 'torustree#helm#main'                                     ] ,
 			\ [ 'torustree-menu-meta'                         , 'torustree#helm#meta'                                     ] ,
 			\ [ 'torustree-info'                              , 'torustree#status#dashboard'                              ] ,
@@ -216,6 +217,7 @@ if exists('s:maps_level_0_normal')
 	unlockvar! s:maps_level_0_normal
 endif
 let s:maps_level_0_normal = [
+			\ [ '?'            , 'torustree-help-mappings'                      ] ,
 			\ [ '<m-m>'        , 'torustree-menu-main'                          ] ,
 			\ [ '='            , 'torustree-menu-meta'                          ] ,
 			\ [ 'i'            , 'torustree-info'                               ] ,
@@ -241,12 +243,11 @@ let s:maps_level_0_normal = [
 			\ [ '<m-^>'        , 'torustree-alternate-same-circle'              ] ,
 			\ [ '<m-c-^>'      , 'torustree-alternate-same-torus-other-circle'  ] ,
 			\ [ '^'            , 'torustree-alternate-menu'                     ] ,
-			\ [ 'a'            , 'torustree-prompt-add-here'                    ] ,
-			\ [ '<c-a>'        , 'torustree-prompt-add-circle'                  ] ,
-			\ [ 'A'            , 'torustree-prompt-add-torus'                   ] ,
-			\ [ '+f'           , 'torustree-prompt-add-file'                    ] ,
-			\ [ '+b'           , 'torustree-prompt-add-buffer'                  ] ,
-			\ [ '*'            , 'torustree-prompt-add-glob'                    ] ,
+			\ [ 'ah'           , 'torustree-prompt-add-here'                    ] ,
+			\ [ 'af'           , 'torustree-prompt-add-file'                    ] ,
+			\ [ 'ab'           , 'torustree-prompt-add-buffer'                  ] ,
+			\ [ 'a*'           , 'torustree-prompt-add-glob'                    ] ,
+			\ [ 'at'           , 'torustree-prompt-add-tree'                    ] ,
 			\ ]
 lockvar! s:maps_level_0_normal
 
