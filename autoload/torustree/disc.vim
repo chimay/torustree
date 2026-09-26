@@ -767,7 +767,7 @@ fun! torustree#disc#read_session (...)
 		return call('torustree#disc#read_session_file', arglist)
 	endif
 	" ---- save last state of previous session
-	if g:torustree_config.storage.session.autowrite > 0
++	if g:torustree_config.storage.session.autowrite > 0 && ! empty(g:torustree_shelve.current.session)
 		let verbose = v:false
 		call torustree#disc#write_session ('', verbose)
 	endif
