@@ -4559,79 +4559,79 @@ Autoload~
 Here is a list of files in `autoload/torustree/`, and a brief description
 of the modules within them.
 
-| File              | Description                                        |
-| ----------------- | -------------------------------------------------- |
-| attic.vim         | most recently used files                           |
-| book.vim          | layer ring for each dedicated buffer               |
-| boomerang.vim     | context menus in dedicated buffers                 |
-| caduceus.vim      | alternate locations                                |
-| centre.vim        | commands & mappings                                |
-| chain.vim         | list helpers                                       |
+| File              | Description                                            |
+| ----------------- | ------------------------------------------------------ |
+| attic.vim         | most recently used files                               |
+| book.vim          | layer ring for each dedicated buffer                   |
+| boomerang.vim     | context menus in dedicated buffers                     |
+| caduceus.vim      | alternate locations                                    |
+| centre.vim        | commands & mappings                                    |
+| chain.vim         | list helpers                                           |
 | chakra.vim        | signs on torustree locations                           |
-| clipper.vim       | yank dedicated buffer                              |
-| codex.vim         | yank ring                                          |
-| complete.vim      | completion functions                               |
-| counterpoint.vim  | write functions to reorganize native elements      |
-| crystal.vim       | internal constants                                 |
-| cuboctahedron.vim | full information of each mandala line              |
-| cuckoo.vim        | frecency : frequent & recent                       |
+| clipper.vim       | yank dedicated buffer                                  |
+| codex.vim         | yank ring                                              |
+| complete.vim      | completion functions                                   |
+| counterpoint.vim  | write functions to reorganize native elements          |
+| crystal.vim       | internal constants                                     |
+| cuboctahedron.vim | full information of each mandala line                  |
+| cuckoo.vim        | frecency : frequent & recent                           |
 | curve.vim         | activate torustree line in dedicated buffers           |
-| cylinder.vim      | dedicated buffers ring                             |
-| delta.vim         | undo & diff                                        |
-| diadem.vim        | internal constants for commands                    |
+| cylinder.vim      | dedicated buffers ring                                 |
+| delta.vim         | undo & diff                                            |
+| diadem.vim        | internal constants for commands                        |
 | disc.vim          | read & write torustree & session file                  |
 | flower.vim        | torustree content generators for prompt & mandalas     |
 | frigate.vim       | non-torustree navigation in dedicated buffers          |
-| gear.vim          | generic helpers                                    |
-| geode.vim         | internal constants for plugs & maps                |
-| group.vim         | auto grouping of files                             |
-| guru.vim          | help                                               |
+| gear.vim          | generic helpers                                        |
+| geode.vim         | internal constants for plugs & maps                    |
+| group.vim         | auto grouping of files                                 |
+| guru.vim          | help                                                   |
 | harmony.vim       | write functions to reorganize torustree elements       |
 | helix.vim         | torustree indexes                                      |
-| helm.vim          | main & meta menus in dedicated buffers             |
+| helm.vim          | main & meta menus in dedicated buffers                 |
 | kintsugi.vim      | check & fix torustree variables                        |
-| kyusu.vim         | filters for prompt & dedicated buffers             |
-| lagrange.vim      | extrema helpers                                    |
-| labyrinth.vim     | commands to reproduce tab & win layout             |
+| kyusu.vim         | filters for prompt & dedicated buffers                 |
+| lagrange.vim      | extrema helpers                                        |
+| labyrinth.vim     | commands to reproduce tab & win layout                 |
 | line.vim          | activate non-torustree line in dedicated buffers       |
-| loop.vim          | loops on dedicated buffers lines                   |
-| mandala.vim       | generic dedicated buffers                          |
-| matrix.vim        | nested lists & dictionaries                        |
-| metafun.vim       | functional helpers : functions of functions        |
-| mirror.vim        | organize native vim elements                       |
-| mosaic.vim        | windows & tabs layouts                             |
-| orbiter.vim       | preview for dedicated buffers                      |
-| origami.vim       | folding                                            |
-| ouroboros.vim     | clear, save & restore vars, maps, autocmds         |
-| pencil.vim        | selection in dedicated buffers                     |
+| loop.vim          | loops on dedicated buffers lines                       |
+| mandala.vim       | generic dedicated buffers                              |
+| matrix.vim        | nested lists & dictionaries                            |
+| metafun.vim       | functional helpers : functions of functions            |
+| mirror.vim        | organize native vim elements                           |
+| mosaic.vim        | windows & tabs layouts                                 |
+| orbiter.vim       | preview for dedicated buffers                          |
+| origami.vim       | folding                                                |
+| ouroboros.vim     | clear, save & restore vars, maps, autocmds             |
+| pencil.vim        | selection in dedicated buffers                         |
 | pendulum.vim      | torustree history                                      |
 | perspective.vim   | non torustree content generators for prompt & mandalas |
-| polyphony.vim     | writable aspect of dedicated buffers               |
+| polyphony.vim     | writable aspect of dedicated buffers                   |
 | projection.vim    | find torustree location of current buffer              |
-| pyramid.vim       | mix of tabs & splits layouts                       |
-| quartz.vim        | internal constants for dedicated buffers menus     |
-| rectangle.vim     | tabs, windows & buffers                            |
+| pyramid.vim       | mix of tabs & splits layouts                           |
+| quartz.vim        | internal constants for dedicated buffers menus         |
+| rectangle.vim     | tabs, windows & buffers                                |
 | referen.vim       | references to current torustree elements               |
-| ripple.vim        | async job for vim                                  |
-| river.vim         | navigation aspect of dedicated buffers             |
+| ripple.vim        | async job for vim                                      |
+| river.vim         | navigation aspect of dedicated buffers                 |
 | sailing.vim       | non torustree navigation                               |
-| scroll.vim        | input history in dedicated buffers                 |
-| shadow.vim        | refactoring dedicated buffers                      |
-| spiral.vim        | golden ratio                                       |
+| scroll.vim        | input history in dedicated buffers                     |
+| shadow.vim        | refactoring dedicated buffers                          |
+| spiral.vim        | golden ratio                                           |
 | status.vim        | print torustree status                                 |
-| symbol.vim        | tags                                               |
-| taijitu.vim       | ring helpers, circular routines                    |
-| teapot.vim        | filter aspect of dedicated buffers                 |
-| tower.vim         | menu layer in dedicated buffers                    |
+| symbol.vim        | tags                                                   |
+| taijitu.vim       | ring helpers, circular routines                        |
+| teapot.vim        | filter aspect of dedicated buffers                     |
+| tower.vim         | menu layer in dedicated buffers                        |
 | tree.vim          | organize torustree element : add, rename, ...          |
-| triangle.vim      | undo & diff dedicated buffer                       |
-| unicode.vim       | unicode characters library                         |
-| upstream.vim      | parent leaf of context menu                        |
-| vector.vim        | batch operations on current group files            |
-| void.vim          | initiaze & reset variables                         |
+| triangle.vim      | undo & diff dedicated buffer                           |
+| unicode.vim       | unicode characters library                             |
+| upstream.vim      | parent leaf of context menu                            |
+| vector.vim        | batch operations on current group files                |
+| void.vim          | initiaze & reset variables                             |
 | vortex.vim        | navigation in the torustree                            |
-| waterclock.vim    | navigation in history & frecency                   |
-| wave.vim          | async job for neovim                               |
+| waterclock.vim    | navigation in history & frecency                       |
+| wave.vim          | async job for neovim                                   |
 | whirl.vim         | torustree navigation in dedicated buffers              |
 | yggdrasil.vim     | organize torustree in dedicated buffers                |
 

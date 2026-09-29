@@ -11,7 +11,11 @@
 " - location : contains a file path and a cursor position
 " - stone : alias for location
 " - circle : a group of locations, or a stone circle
-" - forest : a list of folder tree
+" - forest : a list of directory trees
+" - soil : generic container for a circle and a forest
+" - torustree : root forest
+"   + current
+"     * depth : current depth
 
 " ---- script constants
 
@@ -29,7 +33,39 @@ fun! torustree#void#nope (...)
 	return a:000
 endfun
 
-" ---- helpers
+" ---- templates
+
+fun! torustree#void#folder(init = {})
+	" Generate template for circle list container and metadata
+	" Optional argument : init dict
+	let template = a:init
+	if ! has_key(template, 'list')
+		let template.list = []
+	endif
+	if ! has_key(template, 'glossary')
+		let template.glossary = []
+	endif
+	if ! has_key(template, 'current')
+		let template.current = -1
+	endif
+	return template
+endfun
+
+fun! torustree#void#directory(init = {})
+	" Generate template for tree list container and metadata
+	" Optional argument : init dict
+	let template = a:init
+	if ! has_key(template, 'list')
+		let template.list = []
+	endif
+	if ! has_key(template, 'glossary')
+		let template.glossary = []
+	endif
+	if ! has_key(template, 'current')
+		let template.current = -1
+	endif
+	return template
+endfun
 
 fun! torustree#void#template(init)
 	" Generate template to add to g:torustree lists
@@ -52,7 +88,7 @@ fun! torustree#void#torustree ()
 	endif
 	" ---- locations group
 	if ! has_key(g:torustree, 'circle')
-		let g:torustree.locations = []
+		let g:torustree.circle = []
 	endif
 	" ---- list of subtrees
 	if ! has_key(g:torustree, 'forest')
