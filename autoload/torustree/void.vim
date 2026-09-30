@@ -67,6 +67,8 @@ fun! torustree#void#directory(init = {})
 	return template
 endfun
 
+" -- legacy
+
 fun! torustree#void#template(init)
 	" Generate template to add to g:torustree lists
 	" Name = name in argument
