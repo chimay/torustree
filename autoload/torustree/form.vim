@@ -46,7 +46,7 @@ fun! torustree#form#forest (init = {})
 endfun
 
 fun! torustree#form#tree (init = {})
-	" Template for forest and circle container, aka land, and metadata
+	" Template for forest and circle container, aka tree, and metadata
 	" Optional argument : init dict
 	let template = a:init
 	if ! has_key(template, 'circle')

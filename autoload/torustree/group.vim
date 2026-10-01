@@ -54,11 +54,11 @@ fun! torustree#group#torus(method)
 	let name ..= '-by-' .. method
 	let fun = 'torustree#group#' .. method
 	let groups = torustree#group#dispatch(fun)
-	if torustree#tree#add_torus (name)
+	if torustree#land#add_torus (name)
 		for [key, localist] in items(groups)
-			call torustree#tree#add_circle (key)
+			call torustree#land#add_circle (key)
 			for location in localist
-				call torustree#tree#add_location (location, 'dont-record')
+				call torustree#land#add_location (location, 'dont-record')
 			endfor
 		endfor
 	endif

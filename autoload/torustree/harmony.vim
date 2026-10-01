@@ -157,7 +157,7 @@ fun! torustree#harmony#rename_file (ask = 'confirm')
 	for index in range(len_lines)
 		let fields = split(lines[index], s:field_separ)
 		let old_name = glossary[index]
-		let new_name = torustree#tree#format_name(fields[0])
+		let new_name = torustree#land#format_name(fields[0])
 		" -- check not empty
 		if empty(old_name) || empty(new_name)
 			echomsg 'torustree harmony rename : location name cannot be empty'
@@ -200,7 +200,7 @@ fun! torustree#harmony#rename_file (ask = 'confirm')
 			execute 'bwipe!' old_filename
 		endif
 		" -- rename file in all involved locations of the torustree
-		call torustree#tree#adapt_to_filename (old_filename, new_filename)
+		call torustree#land#adapt_to_filename (old_filename, new_filename)
 	endfor
 	call torustree#rectangle#goto_previous ()
 	call torustree#vortex#jump()
@@ -321,7 +321,7 @@ fun! torustree#harmony#copy_move (level, ask = 'confirm')
 			" mode must be copy at this stage
 			let index = g:torustree.glossary->index(name)
 			let torus = deepcopy(g:torustree.toruses[index])
-			call torustree#tree#insert_torus (torus)
+			call torustree#land#insert_torus (torus)
 		endfor
 	else
 		let upper = torustree#referen#upper (level)
@@ -333,7 +333,7 @@ fun! torustree#harmony#copy_move (level, ask = 'confirm')
 			let elem = deepcopy(elements[index])
 			eval travellers->add(elem)
 			if mode ==# 'move'
-				call torustree#tree#remove (level, elem.name)
+				call torustree#land#remove (level, elem.name)
 			endif
 		endfor
 	endif
@@ -341,12 +341,12 @@ fun! torustree#harmony#copy_move (level, ask = 'confirm')
 	if level ==# 'circle'
 		call torustree#vortex#voice ('torus', destination)
 		for circle in travellers
-			call torustree#tree#insert_circle (circle)
+			call torustree#land#insert_circle (circle)
 		endfor
 	elseif level ==# 'location'
 		call torustree#vortex#interval (coordin)
 		for location in travellers
-			call torustree#tree#insert_location (location)
+			call torustree#land#insert_location (location)
 		endfor
 	endif
 	let g:torustree.timestamp = torustree#pendulum#timestamp ()
@@ -388,16 +388,16 @@ fun! torustree#harmony#reorganize (ask = 'confirm')
 		if line =~ pat_fold_one
 			" -- torus line
 			let torus = split(line)[0]
-			call torustree#tree#add_torus(torus)
+			call torustree#land#add_torus(torus)
 		elseif line =~ pat_fold_two
 			" -- circle line
 			let circle = split(line)[0]
-			call torustree#tree#add_circle(circle)
+			call torustree#land#add_circle(circle)
 		elseif line =~ pat_dict
 			" -- location line
 			let location = eval(line)
 			" -- no pendulum#record in tree#insert_location
-			call torustree#tree#insert_location(location)
+			call torustree#land#insert_location(location)
 		endif
 	endfor
 	" ---- rebuild location index

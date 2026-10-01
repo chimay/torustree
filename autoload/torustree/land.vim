@@ -30,7 +30,7 @@ lockvar s:field_separ
 
 " ---- helpers
 
-fun! torustree#tree#is_in_circle (location, circle)
+fun! torustree#land#is_in_circle (location, circle)
 	" Whether file & cursor position is in circle
 	let local = a:location
 	let present = 0
@@ -42,7 +42,7 @@ fun! torustree#tree#is_in_circle (location, circle)
 	return present
 endfun
 
-fun! torustree#tree#format_name (name)
+fun! torustree#land#format_name (name)
 	" Format element name to avoid annoying characters
 	let name = a:name
 	if name ==# '%'
@@ -56,27 +56,27 @@ fun! torustree#tree#format_name (name)
 	return name
 endfun
 
-fun! torustree#tree#name ()
+fun! torustree#land#name ()
 	" Prompt for a location name and return it
 	let prompt = 'Location name ? '
 	let complete = 'customlist,torustree#complete#current_file'
 	let name = input(prompt, '', complete)
-	let name = torustree#tree#format_name (name)
+	let name = torustree#land#format_name (name)
 	return name
 endfun
 
-fun! torustree#tree#add_name (location)
+fun! torustree#land#add_name (location)
 	" Fill the name key of location and return it
 	let location = a:location
 	if ! has_key(location, 'name') || empty(location.name)
-		let location.name = torustree#tree#name ()
+		let location.name = torustree#land#name ()
 	endif
 	return location.name
 endfun
 
 " ---- insert existent element
 
-fun! torustree#tree#insert_torus (torus)
+fun! torustree#land#insert_torus (torus)
 	" Insert torus into torustree
 	" No confirm prompt, no jump : internal use only
 	let torus = a:torus
@@ -87,7 +87,7 @@ fun! torustree#tree#insert_torus (torus)
 	if torustree#chain#is_inside(name, glossary)
 		let complete = 'customlist,torustree#complete#torus'
 		let name = input('Clone torus with name ? ', '', complete)
-		let name = torustree#tree#format_name (name)
+		let name = torustree#land#format_name (name)
 	endif
 	if empty(name)
 		call torustree#status#message('Torus name cannot be empty')
@@ -105,7 +105,7 @@ fun! torustree#tree#insert_torus (torus)
 	return v:true
 endfun
 
-fun! torustree#tree#insert_circle (circle)
+fun! torustree#land#insert_circle (circle)
 	" Insert circle into current torus
 	" No confirm prompt, no jump : internal use only
 	let circle = a:circle
@@ -116,7 +116,7 @@ fun! torustree#tree#insert_circle (circle)
 	if torustree#chain#is_inside(name, glossary)
 		let complete = 'customlist,torustree#complete#circle'
 		let name = input('Insert circle with name ? ', '', complete)
-		let name = torustree#tree#format_name (name)
+		let name = torustree#land#format_name (name)
 	endif
 	if empty(name)
 		call torustree#status#message('Circle name cannot be empty')
@@ -134,7 +134,7 @@ fun! torustree#tree#insert_circle (circle)
 	return v:true
 endfun
 
-fun! torustree#tree#insert_location (location)
+fun! torustree#land#insert_location (location)
 	" Insert location into current circle
 	" No confirm prompt, no jump : internal use only
 	let location = a:location
@@ -146,7 +146,7 @@ fun! torustree#tree#insert_location (location)
 	if torustree#chain#is_inside(name, glossary)
 		let complete = 'customlist,torustree#complete#location'
 		let name = input('Insert location with name ? ', '', complete)
-		let name = torustree#tree#format_name (name)
+		let name = torustree#land#format_name (name)
 	endif
 	if empty(name)
 		call torustree#status#message('Location name cannot be empty')
@@ -166,7 +166,7 @@ endfun
 
 " ---- add new element
 
-fun! torustree#tree#add_tree (...)
+fun! torustree#land#add_tree (...)
 	" Add folder tree
 	if a:0 > 0
 		let tree_name = a:1
@@ -174,7 +174,7 @@ fun! torustree#tree#add_tree (...)
 		let tree_name = input('New tree name ? ')
 	endif
 	" ---- tree name
-	let tree_name = torustree#tree#format_name (tree_name)
+	let tree_name = torustree#land#format_name (tree_name)
 	if empty(tree_name)
 		call torustree#status#message('Tree name cannot be empty')
 		return v:false
@@ -197,14 +197,14 @@ fun! torustree#tree#add_tree (...)
 	return v:true
 endfun
 
-fun! torustree#tree#add_location (location, optional = 'default')
+fun! torustree#land#add_location (location, optional = 'default')
 	" Add location
 	let location = a:location
 	let optional = a:optional
 	let torus = g:torustree.toruses[g:torustree.current]
 	let circle = torus.circles[torus.current]
 	" ---- location name
-	let name = torustree#tree#add_name (location)
+	let name = torustree#land#add_name (location)
 	if empty(name)
 		call torustree#status#message('Location name cannot be empty')
 		return v:false
@@ -233,14 +233,14 @@ fun! torustree#tree#add_location (location, optional = 'default')
 	return v:true
 endfun
 
-fun! torustree#tree#add_here ()
+fun! torustree#land#add_here ()
 	" Add here to circle
 	silent doautocmd User TorustreeBeforeOrganize
 	let here = torustree#vortex#here()
-	call torustree#tree#add_location(here)
+	call torustree#land#add_location(here)
 endfun
 
-fun! torustree#tree#add_file (...)
+fun! torustree#land#add_file (...)
 	" Add file to circle
 	if a:0 > 0
 		let file = a:1
@@ -254,11 +254,11 @@ fun! torustree#tree#add_file (...)
 	endif
 	silent doautocmd User TorustreeBeforeOrganize
 	execute 'hide edit' file
-	call torustree#tree#add_here()
+	call torustree#land#add_here()
 	return v:true
 endfun
 
-fun! torustree#tree#add_buffer (...)
+fun! torustree#land#add_buffer (...)
 	" Add buffer to circle
 	if a:0 > 0
 		let buffer = a:1
@@ -277,11 +277,11 @@ fun! torustree#tree#add_buffer (...)
 	endif
 	silent doautocmd User TorustreeBeforeOrganize
 	execute 'hide buffer' buffer
-	call torustree#tree#add_here()
+	call torustree#land#add_here()
 	return v:true
 endfun
 
-fun! torustree#tree#add_glob (...)
+fun! torustree#land#add_glob (...)
 	" Add all files matching a glob pattern
 	if a:0 > 0
 		let glob = a:1
@@ -296,17 +296,17 @@ fun! torustree#tree#add_glob (...)
 	silent doautocmd User TorustreeBeforeOrganize
 	" add first torus if needed
 	if empty(g:torustree.toruses)
-		call torustree#tree#add_torus()
+		call torustree#land#add_torus()
 	endif
 	" add files to a new circle ?
 	let answer = confirm('Create new circle ?', "&Yes\n&No", 2)
 	if answer == 1
-		call torustree#tree#add_circle()
+		call torustree#land#add_circle()
 	endif
 	" add first circle if needed
 	let torus = g:torustree.toruses[g:torustree.current]
 	if empty(torus.circles)
-		call torustree#tree#add_circle()
+		call torustree#land#add_circle()
 	endif
 	" add files
 	let filelist = glob(glob, v:false, v:true)
@@ -316,7 +316,7 @@ fun! torustree#tree#add_glob (...)
 		let location.file = fnamemodify(filename, ':p')
 		let location.line = 1
 		let location.col = 1
-		call torustree#tree#insert_location(location)
+		call torustree#land#insert_location(location)
 	endfor
 	" jump to first location of circle, if not empty
 	let circle = torustree#referen#current('circle')
@@ -329,7 +329,7 @@ endfun
 
 " ---- rename
 
-fun! torustree#tree#rename (level, ...)
+fun! torustree#land#rename (level, ...)
 	" Rename current element at level -> new
 	let level = a:level
 	if torustree#referen#is_empty (level)
@@ -358,7 +358,7 @@ fun! torustree#tree#rename (level, ...)
 	let upper = torustree#referen#upper (level)
 	let current = torustree#referen#current (level)
 	" ---- name
-	let new = torustree#tree#format_name (new)
+	let new = torustree#land#format_name (new)
 	if empty(new)
 		call torustree#status#message(level, 'name cannot be empty')
 		return v:false
@@ -385,7 +385,7 @@ endfun
 
 " -- rename file
 
-fun! torustree#tree#adapt_to_filename (old_filename, new_filename)
+fun! torustree#land#adapt_to_filename (old_filename, new_filename)
 	" Adapt torustree variables to new_filename
 	let old_filename = a:old_filename
 	let new_filename = a:new_filename
@@ -404,7 +404,7 @@ fun! torustree#tree#adapt_to_filename (old_filename, new_filename)
 	call torustree#helix#rename_file(old_filename, new_filename)
 endfun
 
-fun! torustree#tree#rename_file (...)
+fun! torustree#land#rename_file (...)
 	" Rename current file in filesystem & in the torustree
 	if torustree#referen#is_empty ('location')
 		echomsg 'torustree rename file : location is empty'
@@ -438,15 +438,15 @@ fun! torustree#tree#rename_file (...)
 	" ---- user update autocmd
 	silent doautocmd User TorustreeBeforeOrganize
 	" ---- adapt torustree variables to new_filename
-	call torustree#tree#adapt_to_filename (old_filename, new_filename)
+	call torustree#land#adapt_to_filename (old_filename, new_filename)
 	" ---- rename location
-	call torustree#tree#rename('location')
+	call torustree#land#rename('location')
 	return v:true
 endfun
 
 " ---- remove
 
-fun! torustree#tree#remove (level, name)
+fun! torustree#land#remove (level, name)
 	" Remove element given by name at level
 	" No confirm prompt, no jump : internal use only
 	let level = a:level
@@ -485,7 +485,7 @@ endfun
 
 " -- delete
 
-fun! torustree#tree#delete (level, ask = 'confirm')
+fun! torustree#land#delete (level, ask = 'confirm')
 	" Delete current element at level
 	" Optional argument :
 	"   - confirm : ask confirmation
@@ -535,7 +535,7 @@ endfun
 
 " ---- copy / move
 
-fun! torustree#tree#copy_move (level, mode, ...)
+fun! torustree#land#copy_move (level, mode, ...)
 	" Copy or move element of level
 	" level can be :
 	"   - circle : move circle to another torus
@@ -581,7 +581,7 @@ fun! torustree#tree#copy_move (level, mode, ...)
 			echomsg 'torustree : move location to current circle = noop'
 			return v:false
 		endif
-		call torustree#tree#remove (level, element.name)
+		call torustree#land#remove (level, element.name)
 	elseif mode !=# 'copy'
 		echomsg 'torustree copy/move : mode must be copy or move'
 	endif
@@ -590,24 +590,24 @@ fun! torustree#tree#copy_move (level, mode, ...)
 	" ---- copy / move
 	if level ==# 'torus'
 		" mode must be copy at this stage
-		call torustree#tree#insert_torus (element)
+		call torustree#land#insert_torus (element)
 	elseif level ==# 'circle'
 		call torustree#vortex#voice ('torus', destination)
-		call torustree#tree#insert_circle (element)
+		call torustree#land#insert_circle (element)
 	elseif level ==# 'location'
 		call torustree#vortex#interval (coordin)
-		call torustree#tree#insert_location (element)
+		call torustree#land#insert_location (element)
 	endif
 	call torustree#vortex#jump ()
 	return v:true
 endfun
 
-fun! torustree#tree#copy (level)
+fun! torustree#land#copy (level)
 	" Copy element of level
-	call torustree#tree#copy_move(a:level, 'copy')
+	call torustree#land#copy_move(a:level, 'copy')
 endfun
 
-fun! torustree#tree#move (level)
+fun! torustree#land#move (level)
 	" Move element of level
-	call torustree#tree#copy_move(a:level, 'move')
+	call torustree#land#copy_move(a:level, 'move')
 endfun

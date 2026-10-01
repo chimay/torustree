@@ -125,7 +125,7 @@ fun! torustree#vortex#jump (where = 'search-window')
 			let prompt = 'File not found. Delete broken location ?'
 			let confirm = confirm(prompt, "&Yes\n&No", 1)
 			if confirm == 1
-				call torustree#tree#delete('location', 'force')
+				call torustree#land#delete('location', 'force')
 			endif
 			return v:false
 		endif
