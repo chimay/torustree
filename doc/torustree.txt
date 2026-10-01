@@ -4581,6 +4581,7 @@ of the modules within them.
 | diadem.vim        | internal constants for commands                        |
 | disc.vim          | read & write torustree & session file                  |
 | flower.vim        | torustree content generators for prompt & mandalas     |
+| form.vim          | templates                                              |
 | frigate.vim       | non-torustree navigation in dedicated buffers          |
 | gear.vim          | generic helpers                                        |
 | geode.vim         | internal constants for plugs & maps                    |
