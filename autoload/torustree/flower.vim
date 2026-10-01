@@ -79,7 +79,7 @@ fun! torustree#flower#rename_file ()
 		return []
 	endif
 	let glossary = circle.glossary
-	let locations = circle.locations
+	let locations = circle.stones
 	let filenames = locations->map({ _, val -> val.file })
 	let returnlist = []
 	let len_circle = len(locations)
@@ -116,7 +116,7 @@ fun! torustree#flower#tree ()
 		for circle in torus.circles
 			let entry = circle.name .. s:fold_2
 			eval returnlist->add(entry)
-			for location in circle.locations
+			for location in circle.stones
 				let entry = location.name
 				eval returnlist->add(entry)
 			endfor
@@ -135,7 +135,7 @@ fun! torustree#flower#reorganize ()
 		for circle in torus.circles
 			let entry = circle.name .. s:fold_2
 			eval returnlist->add(entry)
-			for location in circle.locations
+			for location in circle.stones
 				let entry = string(location)
 				eval returnlist->add(entry)
 			endfor

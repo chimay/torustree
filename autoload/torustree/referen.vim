@@ -78,8 +78,8 @@ fun! torustree#referen#location (...)
 		let cur_torus = g:torustree.toruses[g:torustree.current]
 		if ! empty(cur_torus.circles)
 			let cur_circle = cur_torus.circles[cur_torus.current]
-			if ! empty(cur_circle.locations)
-				let cur_location = cur_circle.locations[cur_circle.current]
+			if ! empty(cur_circle.stones)
+				let cur_location = cur_circle.stones[cur_circle.current]
 			endif
 		endif
 	endif
@@ -234,7 +234,7 @@ fun! torustree#referen#elements (dict)
 	elseif has_key(dict, 'circles')
 		return dict.circles
 	elseif has_key(dict, 'locations')
-		return dict.locations
+		return dict.stones
 	else
 		echomsg 'torustree referen elements : arg should be the torustree, a torus or a circle'
 		return []

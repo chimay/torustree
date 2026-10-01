@@ -55,12 +55,6 @@ fun! torustree#form#tree (init = {})
 	if ! has_key(template, 'forest')
 		let template.forest = torustree#form#forest ()
 	endif
-	if ! has_key(template, 'glossary')
-		let template.glossary = []
-	endif
-	if ! has_key(template, 'current')
-		let template.current = -1
-	endif
 	return template
 endfun
 

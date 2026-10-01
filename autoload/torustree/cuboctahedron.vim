@@ -30,7 +30,7 @@ fun! torustree#cuboctahedron#tree ()
 		for circle in torus.circles
 			let entry = [torus.name, circle.name]
 			eval returnlist->add(entry)
-			for location in circle.locations
+			for location in circle.stones
 				let entry = [torus.name, circle.name, location.name]
 				eval returnlist->add(entry)
 			endfor

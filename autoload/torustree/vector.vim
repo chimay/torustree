@@ -27,7 +27,7 @@ fun! torustree#vector#files (sieve)
 		return []
 	endif
 	" Locations files
-	let locations = deepcopy(torustree#referen#circle().locations)
+	let locations = deepcopy(torustree#referen#circle().stones)
 	let files = locations->map({ _, val -> fnameescape(val.file) })
 	let directory = '\m^' .. getcwd() .. '/'
 	eval files->map({ _, path -> substitute(path, directory, '', '') })

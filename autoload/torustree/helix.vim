@@ -12,7 +12,7 @@ fun! torustree#helix#album ()
 	let album = []
 	for torus in g:torustree.toruses
 		for circle in torus.circles
-			for location in circle.locations
+			for location in circle.stones
 				let entry = [torus.name, circle.name, location]
 				let album = add(album, entry)
 			endfor
@@ -28,7 +28,7 @@ fun! torustree#helix#helix ()
 		let helix = []
 		for torus in g:torustree.toruses
 			for circle in torus.circles
-				for location in circle.locations
+				for location in circle.stones
 					let coordin = [torus.name, circle.name, location.name]
 					let helix = add(helix, coordin)
 				endfor
@@ -67,7 +67,7 @@ fun! torustree#helix#files ()
 		let files = []
 		for torus in g:torustree.toruses
 			for circle in torus.circles
-				for location in circle.locations
+				for location in circle.stones
 					let filename = location.file
 					let files = add(files, filename)
 				endfor

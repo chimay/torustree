@@ -897,7 +897,7 @@ fun! torustree#disc#tree_script (...)
 			let circle_dir = circle.name
 			eval script->add('mkdir -p ' .. circle_dir)
 			eval script->add('cd ' .. circle_dir)
-			for location in circle.locations
+			for location in circle.stones
 				let link = substitute(location.name, '/', '-', 'g')
 				let file = location.file
 				let make_link = command .. ' ' .. file .. ' ' .. link
@@ -961,7 +961,7 @@ fun! torustree#disc#symlink_tree (...)
 			call system(mkdir_circle)
 			let cd_circle = 'cd ' .. circle_dir
 			call execute(cd_circle)
-			for location in circle.locations
+			for location in circle.stones
 				let link = substitute(location.name, '/', '-', 'g')
 				let file = location.file
 				let make_link = 'ln -s ' .. file .. ' ' .. link
@@ -1026,7 +1026,7 @@ fun! torustree#disc#copied_tree ()
 			call system(mkdir_circle)
 			let cd_circle = 'cd ' .. circle_dir
 			call execute(cd_circle)
-			for location in circle.locations
+			for location in circle.stones
 				let backup = substitute(location.name, '/', '-', 'g')
 				let file = location.file
 				let make_backup = 'cp -n ' .. file .. ' ' .. backup

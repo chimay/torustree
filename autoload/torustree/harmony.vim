@@ -140,7 +140,7 @@ fun! torustree#harmony#rename_file (ask = 'confirm')
 	" ---- init
 	let circle = torustree#referen#circle ()
 	let glossary = circle.glossary
-	let locations = circle.locations
+	let locations = circle.stones
 	let lines = torustree#teapot#all_lines ()
 	let len_lines = len(lines)
 	let len_locations = len(locations)

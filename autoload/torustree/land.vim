@@ -1,10 +1,10 @@
 " vim: set ft=vim fdm=indent iskeyword&:
 
-" Tree
+" Land
 "
 " Organize torustree elements, prompt functions
 "
-" Tree of groups = circles
+" Tree of location groups = stones circles
 "
 " Adding
 " Renaming
@@ -34,7 +34,7 @@ fun! torustree#land#is_in_circle (location, circle)
 	" Whether file & cursor position is in circle
 	let local = a:location
 	let present = 0
-	for elem in a:circle.locations
+	for elem in a:circle.stones
 		if elem.file ==# local.file && elem.line == local.line
 			let present = 1
 		endif
@@ -157,7 +157,7 @@ fun! torustree#land#insert_location (location)
 		return v:false
 	endif
 	let location.name = name
-	eval circle.locations->torustree#chain#insert_next(index, location)
+	eval circle.stones->torustree#chain#insert_next(index, location)
 	let circle.current += 1
 	eval glossary->torustree#chain#insert_next(index, name)
 	let g:torustree.timestamp = torustree#pendulum#timestamp ()
@@ -221,7 +221,7 @@ fun! torustree#land#add_location (location, optional = 'default')
 	let infolist += [ 'in torus', torus.name, 'circle', circle.name ]
 	call torustree#status#message(infolist)
 	let index = circle.current
-	let locationlist = circle.locations
+	let locationlist = circle.stones
 	let glossary = circle.glossary
 	eval locationlist->torustree#chain#insert_next(index, location)
 	eval glossary->torustree#chain#insert_next(index, name)
@@ -320,7 +320,7 @@ fun! torustree#land#add_glob (...)
 	endfor
 	" jump to first location of circle, if not empty
 	let circle = torustree#referen#current('circle')
-	if ! empty(circle.locations)
+	if ! empty(circle.stones)
 		let circle.current = 0
 		call torustree#vortex#jump ()
 	endif
@@ -392,7 +392,7 @@ fun! torustree#land#adapt_to_filename (old_filename, new_filename)
 	" ---- rename file in all involved locations of the torustree
 	for torus in g:torustree.toruses
 		for circle in torus.circles
-			for location in circle.locations
+			for location in circle.stones
 				if location.file ==# old_filename
 					let location.file = new_filename
 				endif

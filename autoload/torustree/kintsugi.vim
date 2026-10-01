@@ -72,10 +72,10 @@ fun! torustree#kintsugi#glossaries ()
 	" Circle glossary
 	echomsg 'Checking circle glossary'
 	let ind = 0
-	let length = len(cur_circle.locations)
+	let length = len(cur_circle.stones)
 	let glossary = cur_circle.glossary
 	while ind < length
-		let location = cur_circle.locations[ind]
+		let location = cur_circle.stones[ind]
 		if location.name != glossary[ind]
 			let success = 0
 			if ind < len(glossary)

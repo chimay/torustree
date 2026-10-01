@@ -30,7 +30,7 @@ fun! torustree#group#dispatch(dispatcher)
 	let groups = {}
 	let torus = torustree#referen#current('torus')
 	for circle in torus.circles
-		for location in deepcopy(circle.locations)
+		for location in deepcopy(circle.stones)
 			let extension = Fun(location)
 			if ! has_key(groups, extension)
 				let groups[extension] = [location]
