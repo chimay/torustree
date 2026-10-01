@@ -4592,8 +4592,9 @@ of the modules within them.
 | helm.vim          | main & meta menus in dedicated buffers                 |
 | kintsugi.vim      | check & fix torustree variables                        |
 | kyusu.vim         | filters for prompt & dedicated buffers                 |
-| lagrange.vim      | extrema helpers                                        |
 | labyrinth.vim     | commands to reproduce tab & win layout                 |
+| lagrange.vim      | extrema helpers                                        |
+| land.vim          | organize torustree element : add, rename, ...          |
 | line.vim          | activate non-torustree line in dedicated buffers       |
 | loop.vim          | loops on dedicated buffers lines                       |
 | mandala.vim       | generic dedicated buffers                              |
@@ -4624,7 +4625,6 @@ of the modules within them.
 | taijitu.vim       | ring helpers, circular routines                        |
 | teapot.vim        | filter aspect of dedicated buffers                     |
 | tower.vim         | menu layer in dedicated buffers                        |
-| tree.vim          | organize torustree element : add, rename, ...          |
 | triangle.vim      | undo & diff dedicated buffer                           |
 | unicode.vim       | unicode characters library                             |
 | upstream.vim      | parent leaf of context menu                            |
