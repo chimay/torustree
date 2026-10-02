@@ -14,47 +14,67 @@
 "     * depth : depth of current tree
 
 fun! torustree#form#circle (init = {})
-	" Template for circle, aka location list, and metadata
+	" circle for circle, aka location list, and metadata
 	" Optional argument : init dict
-	let template = a:init
-	if ! has_key(template, 'stones')
-		let template.stones = []
+	let circle = a:init
+	if ! circle->has_key('stones')
+		let circle.stones = []
 	endif
-	if ! has_key(template, 'glossary')
-		let template.glossary = []
+	if ! circle->has_key('glossary')
+		let circle.glossary = []
 	endif
-	if ! has_key(template, 'current')
-		let template.current = -1
+	if ! circle->has_key('current')
+		let circle.current = -1
 	endif
-	return template
+	return circle
 endfun
 
 fun! torustree#form#forest (init = {})
-	" Template for tree list, aka forest, and metadata
+	" forest for tree list, aka forest, and metadata
 	" Optional argument : init dict
-	let template = a:init
-	if ! has_key(template, 'trees')
-		let template.trees = []
+	let forest = a:init
+	if ! forest->has_key('trees')
+		let forest.trees = []
 	endif
-	if ! has_key(template, 'glossary')
-		let template.glossary = []
+	if ! forest->has_key('glossary')
+		let forest.glossary = []
 	endif
-	if ! has_key(template, 'current')
-		let template.current = -1
+	if ! forest->has_key('current')
+		let forest.current = -1
 	endif
-	return template
+	return forest
 endfun
 
 fun! torustree#form#tree (init = {})
-	" Template for forest and circle container, aka tree, and metadata
+	" tree for forest and circle container, aka tree, and metadata
 	" Optional argument : init dict
-	let template = a:init
-	if ! has_key(template, 'circle')
-		let template.circle = torustree#form#circle ()
+	let tree = a:init
+	if ! tree->has_key('circle')
+		let tree.circle = torustree#form#circle ()
 	endif
-	if ! has_key(template, 'forest')
-		let template.forest = torustree#form#forest ()
+	if ! tree->has_key('forest')
+		let tree.forest = torustree#form#forest ()
 	endif
-	return template
+	return tree
 endfun
 
+fun! torustree#form#root_meta (init = {})
+	" meta for root tree metadata
+	" Optional argument : init dict
+	let meta = a:init
+	if ! meta->has_key('depth')
+		let meta.depth = 0
+	endif
+	return meta
+endfun
+
+fun! torustree#form#root (init_tree = {}, init_meta = {})
+	" torustree for root tree, aka torustree
+	" Optional argument : init dict
+	let torustree = torustree#form#tree (a:init_tree)
+	let meta = torustree#form#root_meta (a:init_meta)
+	for key in keys(meta)
+		let torustree[key] = meta[key]
+	endfor
+	return torustree
+endfun
