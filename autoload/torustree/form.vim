@@ -14,7 +14,7 @@
 "     * depth : depth of current tree
 
 fun! torustree#form#circle (init = {})
-	" circle for circle, aka location list, and metadata
+	" Stone circle, aka location list, and metadata
 	" Optional argument : init dict
 	let circle = a:init
 	if ! circle->has_key('stones')
@@ -30,7 +30,7 @@ fun! torustree#form#circle (init = {})
 endfun
 
 fun! torustree#form#forest (init = {})
-	" forest for tree list, aka forest, and metadata
+	" Forest, aka tree list, and metadata
 	" Optional argument : init dict
 	let forest = a:init
 	if ! forest->has_key('trees')
@@ -46,7 +46,7 @@ fun! torustree#form#forest (init = {})
 endfun
 
 fun! torustree#form#tree (init = {})
-	" tree for forest and circle container, aka tree, and metadata
+	" Stone circle and forest container, aka tree, and metadata
 	" Optional argument : init dict
 	let tree = a:init
 	if ! tree->has_key('circle')
@@ -59,7 +59,7 @@ fun! torustree#form#tree (init = {})
 endfun
 
 fun! torustree#form#root_meta (init = {})
-	" meta for root tree metadata
+	" Meta for root tree metadata
 	" Optional argument : init dict
 	let meta = a:init
 	if ! meta->has_key('depth')
@@ -69,7 +69,7 @@ fun! torustree#form#root_meta (init = {})
 endfun
 
 fun! torustree#form#root (init_tree = {}, init_meta = {})
-	" torustree for root tree, aka torustree
+	" Root tree, aka torustree
 	" Optional argument : init dict
 	let torustree = torustree#form#tree (a:init_tree)
 	let meta = torustree#form#root_meta (a:init_meta)
