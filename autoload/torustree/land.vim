@@ -68,7 +68,7 @@ endfun
 fun! torustree#land#add_name (location)
 	" Fill the name key of location and return it
 	let location = a:location
-	if ! has_key(location, 'name') || empty(location.name)
+	if ! location->has_key('name') || empty(location.name)
 		let location.name = torustree#land#name ()
 	endif
 	return location.name

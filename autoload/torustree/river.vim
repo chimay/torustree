@@ -17,27 +17,27 @@ lockvar s:torustree_content_generators
 fun! torustree#river#default (settings)
 	" Default settings values
 	let settings = a:settings
-	if ! has_key(settings, 'function')
+	if ! settings->has_key('function')
 		let settings.function = 'torustree#curve#switch'
 	endif
-	if ! has_key(settings, 'selection')
+	if ! settings->has_key('selection')
 		let settings.selection = {}
 		let settings.selection.index = -1
 		let settings.selection.component = ''
 	endif
-	if ! has_key(settings, 'level')
+	if ! settings->has_key('level')
 		let settings.level = 'location'
 	endif
-	if ! has_key(settings, 'target')
+	if ! settings->has_key('target')
 		let settings.target = 'here'
 	endif
-	if ! has_key(settings, 'related')
+	if ! settings->has_key('related')
 		let settings.related = b:torustree_related
 	endif
-	if ! has_key(settings, 'follow')
+	if ! settings->has_key('follow')
 		let settings.follow = v:false
 	endif
-	if ! has_key(settings, 'close')
+	if ! settings->has_key('close')
 		let settings.close = v:true
 	endif
 endfun

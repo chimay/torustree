@@ -223,7 +223,7 @@ fun! torustree#perspective#marker ()
 	call extend(marklist, getmarklist())
 	for marker in marklist
 		let mark = marker.mark[1:]
-		if has_key(marker, 'file')
+		if marker->has_key('file')
 			let filename = marker.file
 		else
 			let filename = expand('%')
@@ -259,7 +259,7 @@ fun! torustree#perspective#jump ()
 		endif
 		let linum = jump.lnum
 		let colnum = jump.col
-		if has_key(jump, 'filename')
+		if jump->has_key('filename')
 			let filename = jump.filename
 		else
 			let filename = bufname(bufnum)
@@ -480,7 +480,7 @@ fun! torustree#perspective#undolist ()
 	for elem in undolist
 		let iden = printf('%4d', elem.seq)
 		let time = torustree#pendulum#date_hour(elem.time)
-		if has_key(elem, 'save')
+		if elem->has_key('save')
 			let written = elem.save
 		else
 			let written = ''

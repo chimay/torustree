@@ -110,11 +110,11 @@ fun! torustree#referen#coordinates ()
 	" Torustree coordinates : names of current torus, circle and location
 	let [torus, circle, location] = torustree#referen#location('all')
 	let names = []
-	if has_key(torus, 'name')
+	if torus->has_key('name')
 		eval names->add(torus.name)
-		if has_key(circle, 'name')
+		if circle->has_key('name')
 			eval names->add(circle.name)
-			if has_key(location, 'name')
+			if location->has_key('name')
 				eval names->add(location.name)
 			endif
 		endif
@@ -229,11 +229,11 @@ fun! torustree#referen#elements (dict)
 	" - circles if dict is a torus
 	" - locations if dict is a circle
 	let dict = a:dict
-	if has_key(dict, 'toruses')
+	if dict->has_key('toruses')
 		return dict.toruses
-	elseif has_key(dict, 'circles')
+	elseif dict->has_key('circles')
 		return dict.circles
-	elseif has_key(dict, 'locations')
+	elseif dict->has_key('locations')
 		return dict.stones
 	else
 		echomsg 'torustree referen elements : arg should be the torustree, a torus or a circle'

@@ -184,7 +184,7 @@ fun! torustree#ouroboros#save_maps (keysdict)
 				continue
 			endif
 			if maparg.buffer == 1
-				if has_key(maparg, 'rhs')
+				if maparg->has_key('rhs')
 					let modemaps[key] = maparg.rhs
 				endif
 			else

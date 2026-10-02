@@ -61,7 +61,7 @@ endfun
 
 fun! torustree#complete#torus (arglead, cmdline, cursorpos)
 	" Complete torus name
-	if ! has_key(g:torustree, 'glossary')
+	if ! g:torustree->has_key('glossary')
 		return []
 	endif
 	let toruses = g:torustree.glossary
@@ -72,7 +72,7 @@ endfun
 fun! torustree#complete#circle (arglead, cmdline, cursorpos)
 	" Complete circle name
 	let cur_torus = torustree#referen#torus ()
-	if ! has_key(cur_torus, 'glossary')
+	if ! cur_torus->has_key('glossary')
 		return []
 	endif
 	let circles = cur_torus.glossary
@@ -83,7 +83,7 @@ endfun
 fun! torustree#complete#location (arglead, cmdline, cursorpos)
 	" Complete location name
 	let cur_circle = torustree#referen#circle ()
-	if ! has_key(cur_circle, 'glossary')
+	if ! cur_circle->has_key('glossary')
 		return []
 	endif
 	let locations = cur_circle.glossary

@@ -40,7 +40,7 @@ endfun
 
 fun! torustree#delta#last (bufnum)
 	" Set buffer to last undo state
-	if has_key(b:torustree_settings, 'undo_iden')
+	if b:torustree_settings->has_key('undo_iden')
 		let iden = b:torustree_settings.undo_iden
 	else
 		let iden = torustree#delta#undo_iden (1)

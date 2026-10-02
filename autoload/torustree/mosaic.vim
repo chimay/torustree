@@ -327,7 +327,7 @@ fun! torustree#mosaic#grid (settings)
 	" settings.done = [last_done_row, last_done_col]
 	" settings.maxim = [max_row, max_col]
 	let settings = a:settings
-	if ! has_key(settings, 'done')
+	if ! settings->has_key('done')
 		let settings.done = [0, 0]
 	endif
 	let row = settings.done[0]
@@ -374,7 +374,7 @@ fun! torustree#mosaic#transposed_grid (settings)
 	" settings.done = [last_done_row, last_done_col]
 	" settings.maxim = [max_row, max_col]
 	let settings = a:settings
-	if ! has_key(settings, 'done')
+	if ! settings->has_key('done')
 		let settings.done = [0, 0]
 	endif
 	let row = settings.done[0]

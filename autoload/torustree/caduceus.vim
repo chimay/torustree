@@ -98,7 +98,7 @@ fun! torustree#caduceus#alternate (mode)
 	if ! torustree#referen#location_matches_file ()
 		return torustree#vortex#jump ()
 	endif
-	if has_key(g:torustree_history.alternate, a:mode)
+	if g:torustree_history.alternate->has_key(a:mode)
 		let coordin = g:torustree_history.alternate[a:mode]
 		call torustree#vortex#chord(coordin)
 	endif
@@ -109,7 +109,7 @@ fun! torustree#caduceus#alternate_window ()
 	" Alternate with previous window in any tab,
 	" i.e. previous visible buffer
 	" Generalization of native vim : C-w p
-	if ! has_key(g:torustree_history.alternate, 'window')
+	if ! g:torustree_history.alternate->has_key('window')
 		return v:false
 	endif
 	let window = g:torustree_history.alternate.window

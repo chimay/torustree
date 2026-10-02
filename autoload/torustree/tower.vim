@@ -78,7 +78,7 @@ fun! torustree#tower#action (settings)
 		return v:false
 	endif
 	let key = cursor_line
-	if ! has_key(dict, key)
+	if ! dict->has_key(key)
 		echomsg 'torustree line menu : key not found'
 		return v:false
 	endif

@@ -208,7 +208,7 @@ fun! torustree#chain#indexes (list, sublist)
 	let stardict = {}
 	let indexes = []
 	for element in sublist
-		if ! has_key(stardict, element)
+		if ! stardict->has_key(element)
 			let where = list->index(element)
 		else
 			let start = stardict[element]

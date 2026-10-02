@@ -205,7 +205,7 @@ fun! torustree#status#tablabel (tabnum)
 	if win_num > 1
 		let label ..= '(' .. win_num .. ')'
 	endif
-	if ! has_key(g:torustree_shelve.layout, 'tabnames')
+	if ! g:torustree_shelve.layout->has_key('tabnames')
 		return label
 	endif
 	let tabnames = g:torustree_shelve.layout.tabnames
