@@ -170,7 +170,7 @@ fun! torustree#status#mandala_leaf ()
 		echo 'torustree buffers: ' join(mandalas) "\n"
 		return v:true
 	endif
-	let oneline = g:torustree_config.display.dedibuf ==# 'one-line'
+	let oneline = g:torustree_config.display.dedibuf_msg ==# 'one-line'
 	if oneline
 		echo 'torustree buf:' join(mandalas) '/ lay:' join(leaves)
 	else
